@@ -1,0 +1,338 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass book
+\begin_preamble
+\input{../../Cours/Templates/macrosHyperlinkEnglish.tex}
+\newcommand{\Dynela}{DynELA Finite Element Code}
+\end_preamble
+\options twoside
+\use_default_options false
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding default
+\fontencoding global
+\font_roman "bookman" "default"
+\font_sans "helvet" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 90 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures false
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement h
+\paperfontsize 11
+\spacing single
+\use_hyperref false
+\papersize a4paper
+\use_geometry true
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 1
+\use_package esint 0
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 3cm
+\rightmargin 1.5cm
+\bottommargin 2cm
+\headheight 1cm
+\headsep 1cm
+\footskip 1cm
+\secnumdepth 4
+\tocdepth 4
+\paragraph_separation skip
+\defskip medskip
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 2
+\paperpagestyle headings
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+Mathematics operators
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+startcontents[chapters]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+printmyminitoc
+\end_layout
+
+\end_inset
+
+
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+LETTRINE{T}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+his chapter deals with the mathematical implementations of the DynELA Finite
+ Element code.
+ In particular, we will present the classes used to store and manipulate
+ mathematical entities such as vectors, matrices, tensors, etc...
+\end_layout
+
+\begin_layout Section
+Vectors
+\end_layout
+
+\begin_layout Subsection
+Vec3D
+\end_layout
+
+\begin_layout Subsection
+Vectors
+\end_layout
+
+\begin_layout Section
+Tensors objects
+\end_layout
+
+\begin_layout Subsection
+Second order tensors
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\T=\left[\begin{array}{ccc}
+T_{11} & T_{12} & T_{13}\\
+T_{21} & T_{22} & T_{23}\\
+T_{31} & T_{32} & T_{33}
+\end{array}\right]
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Tensor2
+\end_layout
+
+\begin_layout Standard
+Internal storage of a second order tensor is a vector 
+\begin_inset Formula $\overrightarrow{t}$
+\end_inset
+
+ of 
+\begin_inset Formula $9$
+\end_inset
+
+ components in rows order, so that:
+\begin_inset Formula 
+\begin{equation}
+\left[\begin{array}{ccc}
+t_{0} & t_{1} & t_{2}\\
+t_{3} & t_{4} & t_{5}\\
+t_{6} & t_{7} & t_{8}
+\end{array}\right]=\left[\begin{array}{ccc}
+T_{11} & T_{12} & T_{13}\\
+T_{21} & T_{22} & T_{23}\\
+T_{31} & T_{32} & T_{33}
+\end{array}\right]
+\end{equation}
+
+\end_inset
+
+The inverse of a second order tensor is given by the method 
+\emph on
+Tensor2.getInverse()
+\emph default
+ thanks to the following expression:
+\begin_inset Formula 
+\begin{equation}
+\T^{-1}=\frac{1}{D}\left[\begin{array}{ccc}
+t_{4}t_{8}-t_{5}t_{7} & t_{2}t_{7}-t_{1}t_{8} & t_{1}t_{5}-t_{2}t_{4}\\
+t_{5}t_{6}-t_{3}t_{8} & t_{0}t_{8}-t_{2}t_{6} & t_{2}t_{3}-t_{0}t_{5}\\
+t_{3}t_{7}-t_{4}t_{6} & t_{1}t_{6}-t_{0}t_{7} & t_{0}t_{4}-t_{1}t_{3}
+\end{array}\right],
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $D$
+\end_inset
+
+ is given by:
+\begin_inset Formula 
+\begin{equation}
+D=t_{0}t_{4}t_{8}-t_{0}t_{5}t_{7}-t_{1}t_{3}t_{8}+t_{1}t_{5}t_{6}+t_{2}t_{3}t_{7}-t_{2}t_{4}t_{6}.
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{CppListing}
+\end_layout
+
+\begin_layout Plain Layout
+
+Tensor2 Tensor2::getInverse() const
+\end_layout
+
+\begin_layout Plain Layout
+
+Vec3D Tensor2::solve(const Vec3D &b) const
+\end_layout
+
+\begin_layout Plain Layout
+
+void Tensor2::polarDecomposeLnU(SymTensor2 &LnU, Tensor2 &R) const
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{CppListing}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+SymTensor2
+\end_layout
+
+\begin_layout Standard
+Internal storage of a symmetric second order tensor is a vector 
+\begin_inset Formula $\overrightarrow{t}$
+\end_inset
+
+ of 
+\begin_inset Formula $6$
+\end_inset
+
+ components, so that:
+\begin_inset Formula 
+\begin{equation}
+\left[\begin{array}{ccc}
+t_{0} & t_{1} & t_{2}\\
+t_{1} & t_{3} & t_{4}\\
+t_{2} & t_{4} & t_{5}
+\end{array}\right]=\left[\begin{array}{ccc}
+T_{11} & T_{12} & T_{13}\\
+T_{21} & T_{22} & T_{23}\\
+T_{31} & T_{32} & T_{33}
+\end{array}\right]
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Third order tensor
+\end_layout
+
+\begin_layout Subsection
+Fourth order tensor
+\end_layout
+
+\begin_layout Section
+Matrices
+\end_layout
+
+\begin_layout Subsection
+Matrices
+\end_layout
+
+\begin_layout Subsection
+Diagonal matrices
+\end_layout
+
+\end_body
+\end_document

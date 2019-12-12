@@ -1,0 +1,627 @@
+/***************************************************************************
+ *                                                                         *
+ *  DynELA Finite Element Code v 3.0                                       *
+ *  By Olivier PANTALE                                                     *
+ *                                                                         *
+ *  (c) Copyright 1997-2019                                                *
+ *                                                                         *
+ **************************************************************************/
+
+/*!
+  \file NodeSet.h
+  \brief Declaration file for the NodeSet class
+
+  This file is the declaration file for the NodeSet class.
+
+  \ingroup dnlFEM
+  \author &copy; Olivier PANTALE
+  \date 1997-2019
+*/
+
+#include <Explicit.h>
+#include <Node.h>
+#include <DynELA.h>
+#include <Domain.h>
+#include <NodalField.h>
+#include <BoundaryCondition.h>
+
+extern DynELA *dynelaData;
+
+//!constructeur par defaut de la classe Explicit
+/*!
+  Cette methode est le constructeur par defaut de la classe Explicit.
+En pratique, ici, on ne fait rien de plus que les allocations de memoire necessaires. On definit ici des valeurs par defaut pour ce solveur explicite, par exemple \f$\rho_b=0.8182\f$ et \f$\gamma_s=0.9\f$.
+  \author Olivier PANTALE
+  \since DynELA 1.0.0
+*/
+//-----------------------------------------------------------------------------
+Explicit::Explicit(char *newName) : Solver(newName)
+//-----------------------------------------------------------------------------
+{
+  _rho_b = defaultSpectralRadius;
+
+  computeChungHulbertIntegrationParameters();
+
+  /*   name="Explicit";
+
+  // valeur par defaut du rayon spectral
+//  _timeStepSafetyFactor = defaultSafetyFactor;
+
+  // calcul des parametres initiaux du schema de Chung-Hulbert
+
+  // par defaut, la frequence de time-step est continue
+//  _computeTimeStepFrequency=defaultComputeTimeStepFrequency;
+
+//  _computedTimeStep=0;
+//  _computedTimeStepDate=0;
+//  _previousTimeStepDate=0;
+//  _previousTimeStep=0;
+
+  timeStepMethod = PowerIteration;
+ */
+}
+
+//!constructeur par recopie de la classe Explicit
+/*!
+  Cette methode est le constructeur par recopie de la classe Explicit.
+  \warning La recopie n'est pas prevue ici, cette methode genere une erreur d'execution
+  \author Olivier PANTALE
+  \since DynELA 1.0.0
+*/
+//-----------------------------------------------------------------------------
+Explicit::Explicit(const Explicit &X)
+//-----------------------------------------------------------------------------
+{
+  std::cerr << "can't copy directely Explicit" << &X << std::endl;
+  exit(-1);
+}
+
+//!destructeur de la classe Explicit
+/*!
+  Cette methode est le destructeur de la classe Explicit.
+  \author Olivier PANTALE
+  \since DynELA 0.9.1
+*/
+//-----------------------------------------------------------------------------
+Explicit::~Explicit()
+//-----------------------------------------------------------------------------
+{
+}
+
+//!Calcul des parametres de l'integration de Chung-Hulbert
+/*!
+  Cette methode calcule les valeurs des parametres \f$\alpha_M\f$, \f$\beta\f$ et \f$\gamma\f$ pour le schema d'integration de Chung-Hulbert.
+  Le parametre \f$\alpha_M\f$ est defini e partir de la valeur de \f$\rho_b\f$ par la relation suivante: \f[\alpha_M=\frac{2\rho_b-1}{1+\rho_b}\f]
+  Le parametre \f$\beta\f$ est defini e partir de la valeur de \f$\rho_b\f$ par la relation suivante: \f[\beta=\frac{5-3\rho_b}{(1+\rho_b)^2(2-\rho_b)}\f]
+  Le parametre \f$\gamma\f$ est defini e partir de la valeur de \f$\alpha_M\f$ par la relation suivante: \f[\gamma=\frac{3}{2}-\alpha_M\f]
+  Le parametre \f$\Omega_s\f$ est defini e partir de la valeur de \f$\rho_b\f$ par la relation suivante: \f[\Omega_s=\sqrt{\frac{12(1+\rho_b)^3(2-\rho_b)}{10+15\rho_b-\rho_b^2+\rho_b^3-\rho_b^4}}\f]
+  \author Olivier PANTALE
+  \since DynELA 1.0.0
+*/
+//-----------------------------------------------------------------------------
+void Explicit::computeChungHulbertIntegrationParameters()
+//-----------------------------------------------------------------------------
+{
+  _alphaM = (2.0 * _rho_b - 1.0) / (1.0 + _rho_b);
+  _beta = (5.0 - 3.0 * _rho_b) / ((1.0 + _rho_b) * (1.0 + _rho_b) * (2.0 - _rho_b));
+  _gamma = 1.5 - _alphaM;
+  _omegaS = sqrt((12.0 * pow(1.0 + _rho_b, 3) * (2.0 - _rho_b)) /
+                 (10.0 + 15.0 * _rho_b - _rho_b * _rho_b + pow(_rho_b, 3) - pow(_rho_b, 4)));
+
+  // report operation in log file
+  if (dynelaData != NULL)
+  {
+    dynelaData->logFile << "Explicit : " << name << " dissipation factor set to " << _rho_b << "\n";
+    dynelaData->logFile << "  alphaM = " << _alphaM << "\n";
+    dynelaData->logFile << "  beta   = " << _beta << "\n";
+    dynelaData->logFile << "  gamma  = " << _gamma << "\n";
+    dynelaData->logFile << "  OmegaS = " << _omegaS << "\n";
+  }
+}
+
+//!Permet de definir l'amortissement du schema explicite
+/*!
+  Cette methode permet de definir l'ammortissement numerique introduit dans le schema d'integration numerique explicite en modifiant la valeur du rayon spectral e la frequence de bifurcation. La valeur numerique doit etre comprise dans l'intervalle: \f$\rho_{b}\in[0.0:1.0]\f$. Cette methode fait appel e la methode computeIntegrationParameters() afin de remettre e jour les parametres en fonction du nouveau rayon spectral.
+  \param val valeur du rayon spectral
+  \author Olivier PANTALE
+  \since DynELA 1.0.0
+*/
+//-----------------------------------------------------------------------------
+void Explicit::setDissipation(double dissipation)
+//-----------------------------------------------------------------------------
+{
+  if (dissipation < 0.0 || dissipation > 1.0)
+    fatalError("Explicit::setDissipation", "dissipation value out of range [0.0, 1.0]");
+
+  // affect the value
+  _rho_b = dissipation;
+
+  // recompute parameters
+  computeChungHulbertIntegrationParameters();
+}
+
+//-----------------------------------------------------------------------------
+void Explicit::solve(double solveUpToTime)
+//-----------------------------------------------------------------------------
+{
+  assert(domain != NULL);
+
+  // Verify if we need to run the solver
+  if (!timeIsBetweenBounds())
+  {
+    return;
+  }
+
+  dynelaData->logFile << "Solve up to " << solveUpToTime << "\n";
+  //printf("Solve up to %lf\n", solveUpToTime);
+
+  // Get the final time of computation
+  _solveUpToTime = solveUpToTime;
+
+  // Compute the Jacobian
+  dynelaData->cpuTimes.timer("Jacobian")->start();
+  domain->computeJacobian();
+  dynelaData->cpuTimes.timer("Jacobian")->stop();
+
+  // Compute the Mass Matrix if not already computed
+  domain->computeMassMatrix();
+
+  // Compute the Time Step enforcing computation
+  dynelaData->cpuTimes.timer("TimeStep")->start();
+  computeTimeStep(true);
+  dynelaData->cpuTimes.timer("TimeStep")->stop();
+
+  // Compute the Internal Forces
+  // domain->computeInternalForces();
+
+  while (domain->currentTime < _solveUpToTime)
+  {
+    // Initialisation of the step
+    initStep();
+
+    // Display advancing of solution
+    if ((currentIncrement % _reportFrequency == 0) || (currentIncrement == 1))
+    {
+      printf("%s inc=%ld time=%8.4E timeStep=%8.4E\n", domain->name.chars(), currentIncrement, domain->currentTime, timeStep);
+
+      // write the progress file
+      //progressWrite();
+    }
+
+    // Predictor phase
+    dynelaData->cpuTimes.timer("Predictor")->start();
+    computePredictions();
+    dynelaData->cpuTimes.timer("Predictor")->stop();
+
+    // Compute the Strains
+    dynelaData->cpuTimes.timer("Strains")->start();
+    domain->computeStrains();
+    dynelaData->cpuTimes.timer("Strains")->stop();
+
+    // Compute pressure increment
+    dynelaData->cpuTimes.timer("Pressure")->start();
+    domain->computePressure();
+    dynelaData->cpuTimes.timer("Pressure")->stop();
+
+    // calcul des contraintes au sein de l'element
+    dynelaData->cpuTimes.timer("Stress")->start();
+    domain->computeStress(timeStep);
+    dynelaData->cpuTimes.timer("Stress")->stop();
+
+    // Use objectivity
+    dynelaData->cpuTimes.timer("FinalRotation")->start();
+    domain->computeFinalRotation();
+    dynelaData->cpuTimes.timer("FinalRotation")->stop();
+
+    // Compute the Internal Forces
+    dynelaData->cpuTimes.timer("InternalForces")->start();
+    domain->computeInternalForces();
+    dynelaData->cpuTimes.timer("InternalForces")->stop();
+
+    // Solve the step
+    dynelaData->cpuTimes.timer("ExplicitSolve")->start();
+    explicitSolve();
+    dynelaData->cpuTimes.timer("ExplicitSolve")->stop();
+
+    dynelaData->cpuTimes.timer("Density")->start();
+    computeDensity();
+    dynelaData->cpuTimes.timer("Density")->stop();
+
+    // End step
+    endStep();
+
+    if (domain->currentTime < _solveUpToTime)
+    {
+      // Compute the Jacobian
+      dynelaData->cpuTimes.timer("Jacobian")->start();
+      domain->computeJacobian();
+      dynelaData->cpuTimes.timer("Jacobian")->stop();
+
+      // calcul du pas de temps critique de la structure
+      dynelaData->cpuTimes.timer("TimeStep")->start();
+      computeTimeStep();
+      dynelaData->cpuTimes.timer("TimeStep")->stop();
+    }
+
+    // Write the history files
+    //domain->writeHistoryFiles();
+  }
+
+  printf("%s inc=%ld time=%8.4E timeStep=%8.4E\n", domain->name.chars(), currentIncrement, domain->currentTime, timeStep);
+
+  /*  bool runStep;
+
+  // first we set the up-time
+  upTime=solveUpToTime;
+
+  // verification que l'on doit resoudre
+  runStep=timeIsBetweenBounds ();
+  if (!runStep) return;
+
+  // calcul preliminaire des matrices internes
+  // initialisation du step de calcul
+#ifdef computeCpuTimes
+  recordTimes.start("Internal_Matrices");
+#endif
+  domain->computeJacobian ();
+  // initialisation du step de calcul
+#ifdef computeCpuTimes
+  recordTimes.stop("Internal_Matrices");
+#endif
+  
+  // calcul de la matrice de masse
+#ifdef computeCpuTimes
+  recordTimes.start("Mass_Matrices");
+#endif
+  domain->computeMassMatrix ();
+#ifdef computeCpuTimes
+  recordTimes.stop("Mass_Matrices");
+#endif
+
+  // initial contact
+
+  // calcul des forces internes
+#ifdef computeCpuTimes
+  recordTimes.start("Internal_Forces");
+#endif
+  domain->computeInternalForces();
+#ifdef computeCpuTimes
+  recordTimes.stop("Internal_Forces");
+#endif
+
+  // calcul des forces d'inertie
+
+  // calcul des forces d'inertie par une mise en rotation de la structure
+
+  // calcul du pas de temps critique de la structure
+#ifdef computeCpuTimes
+  recordTimes.start("Time_Step");
+#endif
+  computeTimeStep(true);
+#ifdef computeCpuTimes
+  recordTimes.stop("Time_Step");
+#endif
+
+  // boucle sur le temps
+  while(runStep)
+    {
+      // initialisation du step de calcul
+#ifdef computeCpuTimes
+      recordTimes.start("Init_Step");
+#endif
+      initStep();
+#ifdef computeCpuTimes
+      recordTimes.stop("Init_Step");
+#endif
+
+      // affichage de l'increment courant tous les 100 increments
+#ifndef PRINT_Execution_Solve
+      if ((increment % frequencyReports == 0) || (increment == 1))
+	{
+#endif
+	  printf ("%s inc=%ld time=%8.4E timeStep=%8.4E\n", domain->name.chars(), increment,
+		  domain->getCurrentTime(), timeStep);
+
+	  // write the progress file
+	  progressWrite();
+#ifndef PRINT_Execution_Solve
+ 	}
+#endif
+
+      // prediction des quantites
+      // phase dite de prediction correspondant e l'algorithme explicite
+#ifdef computeCpuTimes
+      recordTimes.start("Predictions");
+#endif
+      computePredictions ();
+#ifdef computeCpuTimes
+      recordTimes.stop("Predictions");
+#endif
+      
+
+      // detection du contact
+
+
+      // initialisation de l'iteration de calcul
+#ifdef computeCpuTimes
+      recordTimes.start("Init_Iteration");
+#endif
+      initIteration(); 
+#ifdef computeCpuTimes
+      recordTimes.stop("Init_Iteration");
+#endif
+
+      // resolution implicite ou explicite de l'iteration
+#ifdef computeCpuTimes
+      recordTimes.start("Explicit_Solve");
+#endif
+      explicitSolve ();
+#ifdef computeCpuTimes
+      recordTimes.stop("Explicit_Solve");
+#endif
+
+      // fin du step
+#ifdef computeCpuTimes
+      recordTimes.start("End_Step");
+#endif
+      endStep();
+#ifdef computeCpuTimes
+      recordTimes.stop("End_Step");
+#endif
+
+      // test de fin de calcul
+      if (!timeIsBetweenBounds())
+	{
+	  runStep=false;
+	}
+
+      // si on continue le calcul
+      if (runStep)
+	{
+#ifdef computeCpuTimes
+	  recordTimes.start("Internal_Matrices");
+#endif
+	  domain->computeJacobian ();
+	  // initialisation du step de calcul
+#ifdef computeCpuTimes
+	  recordTimes.stop("Internal_Matrices");
+#endif
+
+	  // calcul du pas de temps critique de la structure
+#ifdef computeCpuTimes
+	  recordTimes.start("Time_Step");
+#endif
+	  computeTimeStep();
+#ifdef computeCpuTimes
+	  recordTimes.stop("Time_Step");
+#endif
+	}
+    }
+ */
+  // print the CPU times
+  //  recordTimes.report("CPU-TIMES");
+}
+
+//-----------------------------------------------------------------------------
+void Explicit::initStep()
+//-----------------------------------------------------------------------------
+{
+  // verification de la projection du temps par rapport au temps final
+  // pour ne pas depasser la bonne date
+  if (domain->currentTime + timeStep > _solveUpToTime)
+    timeStep = _solveUpToTime - domain->currentTime;
+
+  // mise a jour du temps
+  // domain->nextTime = domain->currentTime + timeStep;
+
+  // incrementation du nombre d'increments
+  currentIncrement++;
+}
+
+//!Phase de prediction des deplacements, vitesses et accelerations nodales
+/*!
+  La prediction se fait au niveau des deplacements, vitesses et accelerations nodales e partir des relations suivantes:
+  \f[\stackrel{\bullet\bullet}{x}_{n+1}=0\f]
+  \f[\stackrel{\bullet}{x}_{n+1}=\stackrel{\bullet}{x}_{n}+\Delta t(1-\gamma)\stackrel{\bullet\bullet}{x}_{n}\f]
+  \f[x_{n+1}=x_{n}+\Delta t\stackrel{\bullet}{x}_{n}+\Delta t^{2}\left(\frac{1}{2}-\beta\right)\stackrel{\bullet\bullet}{x}_{n}\f]
+  On applique egalement le respect des conditions aux limites imposees au travers de la methode BoundaryCondition::applyConstantOnCurrentFields().
+  \author Olivier PANTALE
+  \since DynELA 1.0.0
+*/
+//-----------------------------------------------------------------------------
+void Explicit::computePredictions()
+//-----------------------------------------------------------------------------
+{
+  Node *node;
+
+#ifdef PRINT_Execution_Solve
+  cout << "Predictions de displacement, speed et acceleration\n";
+#endif
+
+  // boucle sur les noeuds du domaine
+  for (long nodeId = 0; nodeId < domain->nodes.getSize(); nodeId++)
+  {
+    // recuperation du noeud courant
+    node = domain->nodes(nodeId);
+
+    // verification d'assertion
+#ifdef VERIF_assert
+    assert(node != NULL);
+#endif
+
+    // prediction du deplacement
+    node->newField->displacementInc = timeStep * node->currentField->speed + (0.5 - _beta) * timeStep * timeStep * node->currentField->acceleration;
+    //node->newField->displacement = node->currentField->displacement + node->newField->displacementInc;
+    /*  node->newField->displacementInc = node->currentField->acceleration;
+    node->newField->displacementInc *= timeStep * (0.5 - _beta);
+    node->newField->displacementInc += node->currentField->speed;
+    node->newField->displacementInc *= timeStep;
+ */
+
+    // prediction de la vitesse
+    node->newField->speed = node->currentField->speed + (1.0 - _gamma) * timeStep * node->currentField->acceleration;
+    /* node->newField->speed = node->currentField->acceleration;
+    node->newField->speed *= timeStep * (1.0 - _gamma);
+    node->newField->speed += node->currentField->speed; */
+
+    // prediction de l'acceleration
+    node->newField->acceleration = 0.0;
+
+    // application des conditions aux limites imposees
+    if (node->boundary != NULL)
+      node->boundary->applyConstantOnNewFields(node, domain->currentTime, timeStep);
+
+    //  node->newField->displacement = node->currentField->displacement + node->newField->displacementInc;
+  }
+}
+
+//!Resolution explicite de l'increment
+/*!
+  Cette methode effectue la resolution explicite de l'increment de temps. La methode explicite etant une methode directe, aucune iteration n'est necessaire ici, les quantites peuvent etre calculees directement en utilisante les relations suivantes:
+  \author Olivier PANTALE
+  \since DynELA 1.0.0
+*/
+//-----------------------------------------------------------------------------
+void Explicit::explicitSolve()
+//-----------------------------------------------------------------------------
+{
+  Node *node;
+
+#ifdef PRINT_Execution_Solve
+  cout << "Resolution explicite du pas de temps\n";
+#endif
+
+  // phase de calcul du terme d'acceleration global
+  //  $GLOBAL$ nd->newField->acceleration = $M^-1$ * (Fext - internalForces)
+  // Vector accVector = domain->massMatrix.getSolve(domain->internalForces);
+  domain->massMatrix.solve(domain->internalForces);
+
+  int numberOfDimensions = domain->getNumberOfDimensions();
+
+  // update du champ des accelerations
+  for (long nodeId = 0; nodeId < domain->nodes.getSize(); nodeId++)
+  {
+    node = domain->nodes(nodeId);
+
+    // mise a jour des accelerations
+    for (int dim = 0; dim < numberOfDimensions; dim++)
+      node->newField->acceleration(dim) = domain->internalForces(nodeId * numberOfDimensions + dim);
+
+    // mise e jour de l'acceleration materielle
+    node->newField->acceleration -= _alphaM * node->currentField->acceleration;
+    node->newField->acceleration /= (1.0 - _alphaM);
+
+    // mise e jour de la vitesse materielle
+    node->newField->speed += _gamma * timeStep * node->newField->acceleration;
+
+    // mise e jour du deplacement
+    node->newField->displacementInc += _beta * dnlSquare(timeStep) * node->newField->acceleration;
+
+    // application des conditions aux limites imposees
+    if (node->boundary != NULL)
+      node->boundary->applyConstantOnNewFields(node, domain->currentTime, timeStep);
+
+    // prise en compte du contact
+
+    // prise en compte des conditions aux limites
+    node->newField->displacement = node->currentField->displacement + node->newField->displacementInc;
+
+    // mise à jour de la position des noeuds
+    node->coordinates += node->newField->displacementInc;
+  }
+}
+
+//-----------------------------------------------------------------------------
+void Explicit::endStep()
+//-----------------------------------------------------------------------------
+{
+  // calcul des reactions
+
+  // update du time
+  updateTime();
+
+  // history file
+  /*  fprintf (domain->history_file, "%8.4E %8.4E %8.4E %8.4E\n", domain->getCurrentTime(), 
+	   timeStep , _computedTimeStep, domain->getTotalKineticEnergy ());
+  fflush (domain->history_file);
+ */
+
+  // sauvegarde des history file
+  domain->writeHistoryFiles();
+
+  // swap des valeurs nodales
+  domain->transfertQuantities();
+}
+
+//-----------------------------------------------------------------------------
+void Explicit::updateTime()
+//-----------------------------------------------------------------------------
+{
+  domain->currentTime += timeStep;
+}
+
+//-----------------------------------------------------------------------------
+void Explicit::computeDensity()
+//-----------------------------------------------------------------------------
+{
+  for (long elementId = 0; elementId < domain->elements.getSize(); elementId++)
+  {
+    domain->elements(elementId)->computeDensity();
+  }
+}
+
+//!Renvoie le parametre \f$\alpha_M\f$ de l'integration de Chung-Hulbert
+/*!
+  Cette methode renvoie la valeur du parametre \f$\alpha_M\f$ pour le schema d'integration de Chung-Hulbert.
+  \see computeIntegrationParameters()
+  \return valeur numerique de \f$\alpha_M\f$
+  \author Olivier PANTALE
+  \since DynELA 1.0.0
+
+//-----------------------------------------------------------------------------
+double Explicit::getAlphaM()
+//-----------------------------------------------------------------------------
+{
+  return alphaM;
+}
+
+//!Renvoie le parametre \f$\beta\f$ de l'integration de Chung-Hulbert
+/*!
+  Cette methode renvoie la valeur du parametre \f$\beta\f$ pour le schema d'integration de Chung-Hulbert.
+  \see computeIntegrationParameters()
+  \return valeur numerique de \f$\beta\f$
+  \author Olivier PANTALE
+  \since DynELA 1.0.0
+
+//-----------------------------------------------------------------------------
+double Explicit::getBeta()
+//-----------------------------------------------------------------------------
+{
+  return beta;
+}
+
+//!Renvoie le parametre \f$\_\f$ de l'integration de Chung-Hulbert
+/*!
+  Cette methode renvoie la valeur du parametre \f$\gamma\f$ pour le schema d'integration de Chung-Hulbert.
+  \see computeIntegrationParameters()
+  \return valeur numerique de \f$\gamma\f$
+  \author Olivier PANTALE
+  \since DynELA 1.0.0
+
+//-----------------------------------------------------------------------------
+double Explicit::getGamma()
+//-----------------------------------------------------------------------------
+{
+  return gamma;
+}
+
+//-----------------------------------------------------------------------------
+void Explicit::initIteration ()
+//-----------------------------------------------------------------------------
+{
+  // calcul des forces internes
+  domain->computeInternalForces();
+  
+  // calcul des forces externes
+}
+*/

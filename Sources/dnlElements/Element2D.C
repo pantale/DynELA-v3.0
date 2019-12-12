@@ -1,0 +1,141 @@
+/***************************************************************************
+ *                                                                         *
+ *  DynELA Finite Element Code v 3.0                                       *
+ *  By Olivier PANTALE                                                     *
+ *                                                                         *
+ *  (c) Copyright 1997-2019                                                *
+ *                                                                         *
+ **************************************************************************/
+
+/*!
+  \file Element2D.C
+  \brief Definition file for the Element2D class
+
+  This file is the definition file for the Element2D class.
+
+  \ingroup dnlElements
+  \author &copy; Olivier PANTALE
+  \date 1997-2019
+*/
+
+#include <Element2D.h>
+#include <NodalField.h>
+#include <Node.h>
+
+/* #include <IntegrationPoint.h>
+#include <Material.h>
+#include <DynELA.h>
+#include <io_Structure.h>
+//#include <Physic.h>
+#include <Domain.h> */
+
+//-----------------------------------------------------------------------------
+Element2D::Element2D(long elementNumber) : ElementPlane(elementNumber)
+//-----------------------------------------------------------------------------
+{
+}
+
+//-----------------------------------------------------------------------------
+Element2D::Element2D(const Element2D &element) : ElementPlane(element)
+//-----------------------------------------------------------------------------
+{
+  std::cout << "recopie d'un Element2D\n";
+}
+
+//-----------------------------------------------------------------------------
+Element2D::~Element2D()
+//-----------------------------------------------------------------------------
+{
+}
+
+//-----------------------------------------------------------------------------
+double Element2D::getRadiusAtIntegrationPoint()
+//-----------------------------------------------------------------------------
+{
+  fatalError("Element2D::getRadiusAtIntegrationPoint",
+             "Method is not callable\n");
+  return 0.0;
+}
+
+//!Calcul du gradient des deformations F
+///*!
+//Cette methode effectue le calcul du gradient des deformations F au point d'integration e l'instant time. La relation utilisee pour ce calcul est donnee par:
+//\f[  F=1+\frac{\partial \overrightarrow{u}}{\partial \overrightarrow{X}} \f]
+//\param F Tensor de retour pour le gradient des deformations F
+//\param time valeur permettant de selectionner le champ pour le deplacement (0 reference, 1 courant).
+//
+//-----------------------------------------------------------------------------
+void Element2D::computeDeformationGradient(Tensor2 &F, short time)
+//-----------------------------------------------------------------------------
+{
+  NodalField *field;
+  long nodeId;
+
+  // initialisation a Id de F
+  F.setToUnity();
+
+  // calcul de F en ajoutant le terme du/dX
+  for (nodeId = 0; nodeId < nodes.getSize(); nodeId++)
+  {
+    field = nodes(nodeId)->getNodalField(time);
+    F(0, 0) += _integrationPoint->dShapeFunction(nodeId, 0) * field->displacementInc(0);
+    F(0, 1) += _integrationPoint->dShapeFunction(nodeId, 1) * field->displacementInc(0);
+    F(1, 0) += _integrationPoint->dShapeFunction(nodeId, 0) * field->displacementInc(1);
+    F(1, 1) += _integrationPoint->dShapeFunction(nodeId, 1) * field->displacementInc(1);
+  }
+}
+
+//-----------------------------------------------------------------------------
+bool Element2D::checkLevel2()
+//-----------------------------------------------------------------------------
+{
+  return true;
+}
+
+//-----------------------------------------------------------------------------
+void Element2D::getdV_atIntPoint (Tensor2 & dv, short time)
+//-----------------------------------------------------------------------------
+{
+  NodalField *field;
+  long nodeId;
+
+  // initialisation a zero de dv
+  dv = 0.0;
+
+  // calcul de dv
+  for (nodeId = 0; nodeId < getNumberOfNodes(); nodeId++)
+    {
+      field = nodes (nodeId)->getNodalField (time);
+      dv (0, 0) += _integrationPoint->dShapeFunction (nodeId, 0) * field->speed (0);
+      dv (0, 1) += _integrationPoint->dShapeFunction (nodeId, 1) * field->speed (0);
+      dv (1, 0) += _integrationPoint->dShapeFunction (nodeId, 0) * field->speed (1);
+      dv (1, 1) += _integrationPoint->dShapeFunction (nodeId, 1) * field->speed (1);
+    }
+}
+
+/*
+
+
+//-----------------------------------------------------------------------------
+void Element2D::getdU_atIntPoint (Tensor2 & du, short time)
+//-----------------------------------------------------------------------------
+{
+  NodalField *field;
+  long k;
+
+  // initialisation a zero de du
+  du = 0.;
+
+  // calcul de du
+  for (k = 0; k < getNumberOfNodes(); k++)
+    {
+      field = nodes (k)->getNodalField (time);
+      du (0, 0) += _integrationPoint->dShapeFunction (k, 0) * field->displacementInc (0);
+      du (0, 1) += _integrationPoint->dShapeFunction (k, 1) * field->displacementInc (0);
+      du (1, 0) += _integrationPoint->dShapeFunction (k, 0) * field->displacementInc (1);
+      du (1, 1) += _integrationPoint->dShapeFunction (k, 1) * field->displacementInc (1);
+    }
+}
+
+
+*/

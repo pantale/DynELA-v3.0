@@ -1,0 +1,994 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass book
+\begin_preamble
+\input{../../Cours/Templates/macrosHyperlinkEnglish.tex}
+\newcommand{\Dynela}{DynELA Finite Element Code}
+\end_preamble
+\options twoside
+\use_default_options false
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding default
+\fontencoding global
+\font_roman "bookman" "default"
+\font_sans "helvet" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 90 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures false
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement h
+\paperfontsize 11
+\spacing single
+\use_hyperref false
+\papersize a4paper
+\use_geometry true
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 1
+\use_package esint 0
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 3cm
+\rightmargin 1.5cm
+\bottommargin 2cm
+\headheight 1cm
+\headsep 1cm
+\footskip 1cm
+\secnumdepth 4
+\tocdepth 4
+\paragraph_separation skip
+\defskip medskip
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 2
+\paperpagestyle headings
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+Curves utility
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+startcontents[chapters]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+printmyminitoc
+\end_layout
+
+\end_inset
+
+
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+LETTRINE{T}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+his chapter deals about the curves utility of the 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+Dynela
+\end_layout
+
+\end_inset
+
+.
+ This curve utility is a Python library used to produce plots (vector or
+ bitmap plots) from 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+Dynela
+\end_layout
+
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+history files by reading a configuration file describing the way to produce
+ those plots from a simple syntax language.
+ The core of the library uses the matplotlib library implemented using the
+ Python3 language.
+ With this curve utility library, it is therefore possible to produce output
+ graphics and curves directly from the python model file at the end of the
+ solve.
+\end_layout
+
+\begin_layout Section
+Introduction and presentation of the script
+\end_layout
+
+\begin_layout Subsection
+Usage of the Python script
+\end_layout
+
+\begin_layout Standard
+The Curve library is called from a Python script with the following minimal
+ form.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{PythonListing}
+\end_layout
+
+\begin_layout Plain Layout
+
+import dnlCurves              # Import the dnlCurve library
+\end_layout
+
+\begin_layout Plain Layout
+
+curves = dnlCurves.Curves()   # Creates an instance of the Curve object
+\end_layout
+
+\begin_layout Plain Layout
+
+curves.plotFile('Curves.ex')  # Plot the curves defined by the 'Curves.ex'
+ file
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{PythonListing}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Datafile format
+\end_layout
+
+\begin_layout Standard
+The datafile format is the plot file used by 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+Dynela
+\end_layout
+
+\end_inset
+
+.
+ This file is a text file with 
+\begin_inset Formula $\overrightarrow{x}$
+\end_inset
+
+ and 
+\begin_inset Formula $\overrightarrow{y}$
+\end_inset
+
+ datas defined by two or more series of floating point data on two or more
+ columns separated by spaces.
+ This file should contain two header lines on top and should conform to
+ the following for a datafile containing one data.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{PythonListing}
+\end_layout
+
+\begin_layout Plain Layout
+
+#DynELA_plot history file
+\end_layout
+
+\begin_layout Plain Layout
+
+#plotted :timeStep 
+\end_layout
+
+\begin_layout Plain Layout
+
+1.0596474E-06 1.0596474E-06 
+\end_layout
+
+\begin_layout Plain Layout
+
+1.0058495E-04 1.0572496E-06 
+\end_layout
+
+\begin_layout Plain Layout
+
+......
+\end_layout
+
+\begin_layout Plain Layout
+
+1.0000000E-02 1.4838518E-07 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{PythonListing}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this file, the very first line is ignored by the script, while the second
+ one is used to define the default name of the variable to be plotted (here
+ 'timeStep' in this case).
+ Here after is a example of a datafile containing more columns.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{PythonListing}
+\end_layout
+
+\begin_layout Plain Layout
+
+#DynELA_plot history file
+\end_layout
+
+\begin_layout Plain Layout
+
+#plotted :s11 s22 s33 
+\end_layout
+
+\begin_layout Plain Layout
+
+1.0596474E-06 1.0596474E+06 2.0596474E+06 -1.0596474E+06 
+\end_layout
+
+\begin_layout Plain Layout
+
+1.0058495E-04 1.0572496E+06 2.0572496E+06 -1.0572496E+06 
+\end_layout
+
+\begin_layout Plain Layout
+
+......
+\end_layout
+
+\begin_layout Plain Layout
+
+1.0000000E-02 1.4838518E+07 2.4838518E+07 -1.4838518E+07 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{PythonListing}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this case, one can specify which columns will be used for plotting the
+ curves as it will be presented just later.
+\end_layout
+
+\begin_layout Section
+Configuration file to define the plots
+\end_layout
+
+\begin_layout Standard
+A configuration file is used to define the plots and is read by the 
+\family sans
+curves.plotFile()
+\family default
+ method of the Curves object.
+ Global parameters are defined using the keyword 
+\family sans
+Parameters
+\family default
+ at the beginning of a line of the parameter file.
+ The keyword parameter is followed by a set of commands used to set some
+ global parameters for all the subsequent generated graphs by overwriting
+ the default parameters, before generating the very first graph.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{PythonListing}
+\end_layout
+
+\begin_layout Plain Layout
+
+Parameters, xname=Displacement x, crop=True
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{PythonListing}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Then all parameters can also be altered within the definition of a plot.
+ A definition of a plot is done by a line without the 
+\family sans
+Parameters
+\family default
+ keyword.
+ The first element on this line is the name of the generated graph, followed
+ by a set of parameters defining the generated plot.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{PythonListing}
+\end_layout
+
+\begin_layout Plain Layout
+
+# Plot of Temp.plot to Temp.svg file
+\end_layout
+
+\begin_layout Plain Layout
+
+Temp, name=$T$, Temp.plot
+\end_layout
+
+\begin_layout Plain Layout
+
+# Plot of column 1 of Stress.plot file to S11.svg file
+\end_layout
+
+\begin_layout Plain Layout
+
+S11, name=$
+\backslash
+sigma_{xx}$, legendlocate=topleft, Stress.plot[0:1]
+\end_layout
+
+\begin_layout Plain Layout
+
+# Plot of column 2 of Stress.plot file to S22.svg file
+\end_layout
+
+\begin_layout Plain Layout
+
+S22, name=$
+\backslash
+sigma_{yy}$, legendlocate=bottomleft, Stress.plot[0:2]
+\end_layout
+
+\begin_layout Plain Layout
+
+# Plot of dt.plot and Abaqus/Step.plot files to TimeStep.svg file
+\end_layout
+
+\begin_layout Plain Layout
+
+TimeStep, name=$
+\backslash
+Delta t$, dt.plot, name=$Abaqus 
+\backslash
+Delta t$, Abaqus/Step.plot
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{PythonListing}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In the proposed example we have the following.
+\end_layout
+
+\begin_layout Itemize
+Line 2: plots the content of the Temp.plot file with legend 
+\begin_inset Formula $T$
+\end_inset
+
+ in a Temp.svg file using default parameters.
+\end_layout
+
+\begin_layout Itemize
+Line 4: plots the content of the Stress.plot file with legend 
+\begin_inset Formula $\sigma_{xx}$
+\end_inset
+
+ in a S11.svg file using data from columns 
+\begin_inset Formula $0$
+\end_inset
+
+ for 
+\begin_inset Formula $\overrightarrow{x}$
+\end_inset
+
+ and from column 
+\begin_inset Formula $1$
+\end_inset
+
+ for 
+\begin_inset Formula $\overrightarrow{y}$
+\end_inset
+
+ and with a legend located in the top left part of the figure.
+\end_layout
+
+\begin_layout Itemize
+Line 6: plots the content of the Stress.plot file with legend 
+\begin_inset Formula $\sigma_{yy}$
+\end_inset
+
+ in a S22.svg file using data from columns 
+\begin_inset Formula $0$
+\end_inset
+
+ for 
+\begin_inset Formula $\overrightarrow{x}$
+\end_inset
+
+ and from column 
+\begin_inset Formula $2$
+\end_inset
+
+ for 
+\begin_inset Formula $\overrightarrow{y}$
+\end_inset
+
+ with a legend located in the bottom left part of the figure.
+\end_layout
+
+\begin_layout Itemize
+Line 8: plots the content of the dt.plot file with legend 
+\begin_inset Formula $\Delta t$
+\end_inset
+
+ and Abaqus/Step.plot file with legend 
+\begin_inset Formula $Abaqus\,\Delta t$
+\end_inset
+
+ in a TimeStep.svg file.
+\end_layout
+
+\begin_layout Standard
+As presented just before, 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+LaTeX
+\end_layout
+
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+can be used for names and legends by using the escape character 
+\begin_inset Formula $\$$
+\end_inset
+
+ and remembering that space character has to be defined by the combination
+ of an escape '
+\backslash
+' character followed by the space ' ' so that '
+\backslash
+ '.
+\end_layout
+
+\begin_layout Standard
+Comments can be inserted as presented briefly earlier by using the '#' character.
+ Everything after the '#' character and up to the end of the line is ignored
+ and treated as comment.
+ Blank lines are also allowed in the file to help human readability of the
+ file.
+\end_layout
+
+\begin_layout Subsection
+Global parameters for a graph
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+outputformat
+\family default
+ = <'format'>: is used to define the format of the output file, 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ie
+\end_layout
+
+\end_inset
+
+ pdf, svg, png,...
+ (default value is svg file).
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+transparent
+\family default
+ = <True, False>: is used to define if the background should be or not transpare
+nt (default value is False).
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+crop
+\family default
+ = <True, False>: is used to define if the output image should be or not
+ cropped (default value is False).
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+grid
+\family default
+ = <True, False>: is used to define if the output graph should contain or
+ not a grid (default value is True).
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+title
+\family default
+ = <'name'>: defines the title of the graph on the top part of the plot
+ ( default value 'Default title of the graph')
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+xname, yname
+\family default
+ = <'name'>: defines the names of the 
+\begin_inset Formula $\overrightarrow{x}$
+\end_inset
+
+ and 
+\begin_inset Formula $\overrightarrow{y}$
+\end_inset
+
+ axis for the plot (default value are 'x-axis' and 'y-axis').
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+titlefontsize
+\family default
+ = <size>: defines the font size of the title on the top part of the plot
+ (default value is 
+\begin_inset Formula $20$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+xfontsize, yfontsize
+\family default
+ = <size>: defines the font size of the 
+\begin_inset Formula $\overrightarrow{x}$
+\end_inset
+
+ and 
+\begin_inset Formula $\overrightarrow{y}$
+\end_inset
+
+ axis names for the plot (default value is 
+\begin_inset Formula $20$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+xlabelfontsize, ylabelfontsize
+\family default
+ = <size>: defines the font size of the values along the 
+\begin_inset Formula $\overrightarrow{x}$
+\end_inset
+
+ and 
+\begin_inset Formula $\overrightarrow{y}$
+\end_inset
+
+ axis for the plot (default value is 
+\begin_inset Formula $16$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+xrange, yrange
+\family default
+ = <range>: remaps the range of the curves for the 
+\begin_inset Formula $\overrightarrow{x}$
+\end_inset
+
+ and 
+\begin_inset Formula $\overrightarrow{y}$
+\end_inset
+
+ axis to the given value.
+ For example, setting 
+\family sans
+xrange=10
+\family default
+ will remap the x-data within the range 
+\begin_inset Formula $[0,10]$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+xscale, yscale
+\family default
+ = <range>: multiply the 
+\begin_inset Formula $\overrightarrow{x}$
+\end_inset
+
+ or the 
+\begin_inset Formula $\overrightarrow{y}$
+\end_inset
+
+ data by a given factor.
+ For example, setting 
+\family sans
+xscale=10
+\family default
+ will multiply all x-data by a factor of 
+\begin_inset Formula $10$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Plotting curve parameters
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+name
+\family default
+ = <'name'>: defines a new name for the next curve in the legend and overrides
+ the one defined by the datafile.
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+removename
+\family default
+ = <'name'>: removes from the names of the curves a given pattern for the
+ legends.
+ Example: 
+\family sans
+removename
+\family default
+ = -S11 will convert 'data-S11' into 'data'.
+ This is not a very useful method and one should prefer the 
+\family sans
+name
+\family default
+ command to redefine the name of the plotting curve.
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+linewidth
+\family default
+ = <'width'>: defines the line width for all subsequent plots (default value
+ is 
+\begin_inset Formula $2$
+\end_inset
+
+).
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+marks
+\family default
+ = <'symbol'>: is used to define the next marker to use for all subsequent
+ plots (default value is '').
+ If the value is void, markers are cycled through the default markers list.
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+marksnumber
+\family default
+ = <number>: defines the total number of markers on the curves for all subsequen
+t plots (default value is 
+\begin_inset Formula $20$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+markersize
+\family default
+ = <size>: defines the size of the marker symbols to use for all subsequent
+ plots (default value is 
+\begin_inset Formula $10$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Subsection
+Legend definition
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+legendcolumns
+\family default
+ = <columns>: defines the number of columns to use for the legend (default
+ value is 
+\begin_inset Formula $1$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+legendshadow
+\family default
+ = <True, False>: is used to define if the output graph legend should contain
+ or not a shadow box (default value is True).
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+legendanchor
+\family default
+ = <'position'>: defines the position of the legend anchor independently
+ from the legend position parameter.
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+legendposition
+\family default
+ = <'position'>: defines the position of the legend position independently
+ from the legend anchor parameter.
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+legendlocate
+\family default
+ = <'position'>: defines the position of the legend with the following four
+ options: 'topleft', 'topright', 'bottomleft' and 'bottomright' (default
+ value is 'topright').
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+legendfontsize
+\family default
+ = <size>: defines the font size of the text in the legend (default value
+ is 
+\begin_inset Formula $16$
+\end_inset
+
+).
+\end_layout
+
+\end_body
+\end_document

@@ -1,0 +1,1377 @@
+/***************************************************************************
+ *                                                                         *
+ *  DynELA Finite Element Code v 3.0                                       *
+ *  By Olivier PANTALE                                                     *
+ *                                                                         *
+ *  (c) Copyright 1997-2019                                                *
+ *                                                                         *
+ **************************************************************************/
+
+/*!
+  \file NodeSet.h
+  \brief Declaration file for the NodeSet class
+
+  This file is the declaration file for the NodeSet class.
+
+  \ingroup dnlFEM
+  \author &copy; Olivier PANTALE
+  \date 1997-2019
+*/
+
+#include <Domain.h>
+#include <Node.h>
+#include <Element.h>
+#include <NodeSet.h>
+#include <ElementSet.h>
+#include <NodalField.h>
+#include <Solver.h>
+#include <BoundaryCondition.h>
+#include <HistoryFile.h>
+#include <Parallel.h>
+
+//-----------------------------------------------------------------------------
+Domain::Domain(char *newName)
+//-----------------------------------------------------------------------------
+{
+  if (newName != NULL)
+    name = newName;
+
+  /*   name = "defaultDomain";
+
+  // initialisation par defaut
+  _numberOfDimensions = 0;
+
+  // attacher a global domain
+  history_file = NULL;
+
+  fmax0 = 0.0;
+
+  // redimensionner les listes pour gagner du temps dans les lectures
+  // on utilise des blocs de 100 allocations pour les noeuds et les elements
+  nodes.stackIncrement() = 100;
+  elements.stackIncrement() = 100;
+
+  nodes.redim(100);
+  elements.redim(100); */
+}
+
+//-----------------------------------------------------------------------------
+Domain::Domain(const Domain &domain)
+//-----------------------------------------------------------------------------
+{
+  /* 
+  _numberOfDimensions = domain._numberOfDimensions;
+  cerr << "erreur copie de Domain\n";
+  exit(-1); */
+}
+
+//-----------------------------------------------------------------------------
+Domain::~Domain()
+//-----------------------------------------------------------------------------
+{
+}
+
+//!Ajout d'un noeud e la grille courante
+/*!
+  Cette methode ajoute un noeud e la grille courante. Cette methode effectue des verifications de base comme par exemple la presence d'un noeud portant le meme numero que le nouveau noeud dans la liste. En cas de doublon, cette methode stoppe le processus de construction et renvoie une erreur.
+  \param newNode pointeur sur le nouveau noeud e ajouter e la grille
+  \return true si l'ajout du noeud est correct
+  \author Olivier PANTALE
+  \since DynELA 1.0.0
+*/
+//-----------------------------------------------------------------------------
+bool Domain::add(Node *newNode)
+//-----------------------------------------------------------------------------
+{
+  // search if not already in the list
+  if (nodes.dichotomySearch(substractNodesNumber, newNode->number) != NULL)
+  {
+    fatalError("Domain::add", "Node %ld already exists in the node list of this domain\n", newNode->number);
+  }
+
+  if ((nodes.getSize() >= 1) && (newNode->number < nodes.last()->number))
+  {
+    // add the node to the grid
+    nodes << newNode;
+
+    // qsort of the list if not sorted
+    nodes.sort(compareNodesNumber);
+  }
+  else
+  {
+    // add the node to the grid
+    nodes << newNode;
+  }
+
+  // return happy
+  return true;
+}
+
+//-----------------------------------------------------------------------------
+bool Domain::add(Element *newElement)
+//-----------------------------------------------------------------------------
+{
+  // search if not already in the list
+  if (elements.dichotomySearch(substractElementsNumber, newElement->number) != NULL)
+  {
+    fatalError("Domain::add", "Element %ld already exists in the element list of this Domain\n", newElement->number);
+  }
+
+  if ((elements.getSize() >= 1) && (newElement->number < elements.last()->number))
+  {
+    // add the element to the grid
+    elements << newElement;
+
+    // qsort of the list if not sorted
+    elements.sort(compareElementsNumber);
+  }
+  else
+  {
+    // add the element to the grid
+    elements << newElement;
+  }
+
+  // return happy
+  return true;
+}
+
+//-----------------------------------------------------------------------------
+void Domain::create(Element *newElement, long *listOfNodes)
+//-----------------------------------------------------------------------------
+{
+  Node *pNode;
+
+  // ajout de l'element e la grille et verification de sa non presence
+  add(newElement);
+
+  // add the reference to the grid of the element
+  // newElement->domain = this;
+
+  // construction de l'element et de ses noeuds
+  long nbOk = 0;
+
+  for (long j = 0; j < newElement->getNumberOfNodes(); j++)
+  {
+    if ((pNode = nodes.dichotomySearch(substractNodesNumber, listOfNodes[j])) != NULL)
+    {
+      // Add the node to the liste of nodes of the new element
+      newElement->addNode(pNode);
+
+      // Add the reference of the element to the current node
+      pNode->elements << newElement;
+
+      // Delete the node from the candidates
+      listOfNodes[j] = -1;
+
+      // Increment number of OK nodes
+      nbOk++;
+    }
+  }
+
+  if (nbOk != newElement->getNumberOfNodes())
+  {
+    for (long j = 0; j < newElement->getNumberOfNodes(); j++)
+    {
+      if (listOfNodes[j] != -1)
+        std::cout << "Node " << listOfNodes[j] << " doesn't exist in this grid\n";
+    }
+    fatalError("Domain::createElement", "some nodes not exist in this grid");
+  }
+}
+
+//!Add new nodes to the current NodeSet
+/*!
+  This method adds a set of existing nodes and a NodeSet. The nodes are specified by their identification numbers given in a variation range (start number, end number and increment). The nodes are then searched in the current grid of the current domain of the structure.
+  \warning Les noeuds ajoutes doivent etre presents dans la grille courante du domaine courant.
+  \param sNumber of start number in the list
+  \param eNumber of end number in the list
+  \param inc increment on the numbers (default = 1)
+*/
+//-----------------------------------------------------------------------------
+void Domain::add(NodeSet *nodeSet, long startNumber, long endNumber, long increment)
+//-----------------------------------------------------------------------------
+{
+  Node *node;
+
+  if (startNumber != -1)
+  {
+    if (endNumber == -1)
+    {
+      if ((node = getNodeByNum(startNumber)) == NULL)
+        fatalError("Domain::add", "Node %d not exist in current grid and domain", startNumber);
+
+      // add the node to the nodeSet
+      nodeSet->add(node);
+
+      // logFile
+      dynelaData->logFile << "node " << node->number << " added to node set " << nodeSet->name.chars() << "\n";
+    }
+    else
+    {
+      for (long i = startNumber; i <= endNumber; i += increment)
+      {
+        if ((node = getNodeByNum(i)) == NULL)
+        {
+          fatalError("Domain::add", "Node %d not exist in current grid and domain", i);
+        }
+
+        // add the node
+        nodeSet->add(node);
+
+        // logFile
+        dynelaData->logFile << "node " << node->number << " added to node set " << nodeSet->name.chars() << "\n";
+      }
+    }
+  }
+
+  // Add the nodeSet to the list if not exists
+  if (!nodesSets.contains(nodeSet))
+  {
+    nodesSets << nodeSet;
+    dynelaData->logFile << "NodeSet " << nodeSet->name.chars() << " added to " << dynelaData->name << "\n";
+  }
+}
+
+//!ajoute un ensemble d'elements e un ElementSet
+/*!
+  Cette methode ajoute un ensemble d'elements existant e un ElementSet. Les elements sont specifies par leurs numeros d'identification donne dans un intervalle de variation (numero de debut, numero de fin et increment). Les elements sont alors recherches dans la grille courante du domaine courant de la structure.
+  \warning Les elements ajoutes doivent etre presents dans la grille courante du domaine courant.
+  \param startNumber numero de depart dans la liste
+  \param endNumber numero de fin dans la liste
+  \param increment increment sur les numeros (par defaut = 1)
+  \author Olivier PANTALE
+  \version 0.9.5
+*/
+//-----------------------------------------------------------------------------
+void Domain::add(ElementSet *elementSet, long startNumber, long endNumber, long increment)
+//-----------------------------------------------------------------------------
+{
+  Element *element;
+
+  if (startNumber != -1)
+  {
+    if (endNumber == -1)
+    {
+      if ((element = getElementByNum(startNumber)) == NULL)
+        fatalError("Domain::add", "Node %d not exist in current grid and domain", startNumber);
+
+      // add the node to the elementSet
+      elementSet->add(element);
+
+      // logFile
+      dynelaData->logFile << "element " << element->number << " added to element set " << elementSet->name.chars() << "\n";
+    }
+    else
+    {
+      for (long i = startNumber; i <= endNumber; i += increment)
+      {
+        if ((element = getElementByNum(i)) == NULL)
+        {
+          fatalError("Domain::add", "Node %d not exist in current grid and domain", i);
+        }
+
+        // add the node
+        elementSet->add(element);
+
+        // logFile
+        dynelaData->logFile << "element " << element->number << " added to element set " << elementSet->name.chars() << "\n";
+      }
+    }
+  }
+
+  // Add the elementSet to the list if not exists
+  if (!elementsSets.contains(elementSet))
+  {
+    elementsSets << elementSet;
+
+    // logFile
+    dynelaData->logFile << "ElementSet " << elementSet->name.chars() << " added to " << dynelaData->name << "\n";
+  }
+}
+
+//!recherche d'un noeud dans la structure en fonction de son numero
+/*!
+  Cette methode recherche un noeud dans la structure en fonction de son numero et renvoie un pointeur sur celui-ci, ou NULL si celui-ci n'existe pas dans la structure. Le noeud est recherche sur la grille courante du domaine courant.
+  \param nodeNumber numero du noeud e rechercher
+  \return pointeur sur le noeud trouve ou NULL en cas d'echec de recherche
+  \version 1.0.0
+  \date 2002
+  \author Olivier PANTALE 
+*/
+//-----------------------------------------------------------------------------
+Node *Domain::getNodeByNum(long nodeNumber)
+//-----------------------------------------------------------------------------
+{
+  // pehaps it's just the last one (often assumed)
+  if (nodes.getSize() > 0)
+  {
+    if (nodes.last()->number == nodeNumber)
+      return nodes.last();
+  }
+
+  // no so search for it
+  return nodes.dichotomySearch(substractNodesNumber, nodeNumber);
+}
+
+//!recherche d'un element dans la structure en fonction de son numero
+/*!
+  Cette methode recherche un element dans la structure en fonction de son numero et renvoie un pointeur sur celui-ci, ou NULL si celui-ci n'existe pas dans la structure. L'element est recherche sur la grille courante du domaine courant.
+  \param elementNumber numero de l'element e rechercher
+  \return pointeur sur l'element trouve ou NULL en cas d'echec de recherche
+  \version 1.0.0
+  \date 2002
+  \author Olivier PANTALE 
+*/
+//-----------------------------------------------------------------------------
+Element *Domain::getElementByNum(long elementNumber)
+//-----------------------------------------------------------------------------
+{
+  // pehaps it's just the last one (often assumed)
+  if (elements.getSize() > 0)
+  {
+    if (elements.last()->number == elementNumber)
+      return elements.last();
+  }
+
+  // no so search for it
+  return elements.dichotomySearch(substractElementsNumber, elementNumber);
+}
+
+//-----------------------------------------------------------------------------
+bool Domain::checkTopology()
+//-----------------------------------------------------------------------------
+{
+  // Verify coherence of the elements
+  short family = elements(0)->getFamily();
+
+  for (long i = 1; i < elements.getSize(); i++)
+    if (family != elements(i)->getFamily())
+    {
+      std::cout << "Passing from ";
+      if (family == Element::Bidimensional)
+        std::cout << "2D";
+      if (family == Element::Axisymetric)
+        std::cout << "2D Axi";
+      if (family == Element::Threedimensional)
+        std::cout << "3D";
+      std::cout << " to ";
+      if (elements(i)->getFamily() == Element::Bidimensional)
+        std::cout << "2D\n";
+      if (elements(i)->getFamily() == Element::Axisymetric)
+        std::cout << "2D Axi\n";
+      if (elements(i)->getFamily() == Element::Threedimensional)
+        std::cout << "3D\n";
+      fatalError("Grid topology verification\n",
+                 "Mixed Topology found in element %d \n", i);
+      return false;
+    }
+
+  return true;
+}
+
+//-----------------------------------------------------------------------------
+bool Domain::initSolve()
+//-----------------------------------------------------------------------------
+{
+  //Solver *solver;
+
+  dynelaData->logFile << "\nInitializing domain : " << name << "\n";
+  // If list of element is void, nothing to do
+  if (elements.getSize() == 0)
+    return false;
+
+  // Set the dimension of the domain
+  _numberOfDimensions = elements(0)->getNumberOfDimensions();
+  dynelaData->logFile << "Grid topology set to " << (elements(0)->getFamily() == Element::Bidimensional ? "2D" : elements(0)->getFamily() == Element::Axisymetric ? "2D Axi" : "3D") << "\n";
+
+  // Check the topology of the domain
+  if (checkTopology())
+    dynelaData->logFile << "Topology of the Domain is OK\n";
+
+  // verification des elements par methode interne
+  dynelaData->logFile << "Verification of elements ... ";
+  for (long elementId = 0; elementId < elements.getSize(); elementId++)
+  {
+    elements(elementId)->check();
+  }
+  dynelaData->logFile << "Ok\n";
+
+  // Write informations in the log file
+  dynelaData->logFile << "Domain contains " << elements.getSize() << " elements and " << nodes.getSize() << " nodes\n";
+
+  // Initialize data
+  for (long elementId = 0; elementId < elements.getSize(); elementId++)
+  {
+    // recuperation de l'element
+    Element *pel = elements(elementId);
+#ifdef VERIF_assert
+    assert(pel != NULL);
+#endif
+
+    // Initialize data for the element
+    pel->initializeData();
+  }
+  dynelaData->logFile << elements.getSize() << " elements have been initialized\n";
+
+  // Saving the initial coordinates
+  /*   
+  dynelaData->logFile << "Saving initial coordinates ... ";
+  for (int nodeId = 0; nodeId < nodes.getSize(); nodeId++)
+  {
+    nodes(nodeId)->initialCoordinates = nodes(nodeId)->coordinates;
+  }
+  dynelaData->logFile << "ok\n";
+ */
+
+  // application des conditions initiales
+  dynelaData->logFile << "Applying initial conditions ... ";
+  for (int nodeId = 0; nodeId < nodes.getSize(); nodeId++)
+  {
+    if (nodes(nodeId)->boundary != NULL)
+      nodes(nodeId)->boundary->applyInitialOnCurrentFields(nodes(nodeId), 0, 0);
+  }
+  dynelaData->logFile << "Ok\n";
+  /*  
+   // Compact nodes list
+  dynelaData->logFile << "Compact nodes list ...\n";
+  nodes.compact();
+
+  // Compact elements list
+  dynelaData->logFile << "Compact elements list ...\n";
+  elements.compact();
+ // verification des interfaces
+  for (i = 0; i < interfaces.getSize(); i++)
+  {
+    dynelaData->logFile << "Interface " << i << " verification ...\n";
+    interfaces(i)->Init();
+    interfaces(i)->check();
+  }
+*/
+
+  // Get last time for all the solvers
+  currentTime = solver->startTime;
+
+  /*   double finalTimeOfPreviousSolver = 0.0;
+  if (solvers.getSize() > 0)
+  {
+    // get the init time of first solver
+    currentTime = solvers(0)->startTime;
+    // get the end time of first solver
+    finalTimeOfPreviousSolver = solvers(0)->endTime;
+  }
+ */
+
+  // Reverse link of the solver to this domain
+  solver->setDomain(this);
+
+  // init the solver
+  dynelaData->logFile << "Solver initialization ...\n";
+  solver->initialize();
+
+  // Loop over all the solvers of the Domain
+  /*   for (int solverId = 0; solverId < solvers.getSize(); solverId++)
+  {
+    // get the solver
+    solver = solvers(solverId);
+
+    // Reverse link of the solver to this domain
+    solver->setDomain(this);
+
+    // init the solver
+    dynelaData->logFile << "Solver " << solverId << " initialization ...\n";
+    solver->initialize();
+
+    // If there is at least two solvers
+    if (solverId > 0)
+    {
+      if (finalTimeOfPreviousSolver != solver->startTime)
+      {
+        fatalError("Solvers chain error found", "Solver %d has %lf start-time while previous solver end at %lf",
+                   solverId, solver->startTime, finalTimeOfPreviousSolver);
+      }
+      finalTimeOfPreviousSolver = solver->endTime;
+    }
+  }
+ 
+  // ajout des motions Lagrangienes pour tous les noeuds non definis
+  set = 0;
+  //  for (i=0; i<grids.getSize();i++)
+  for (j = 0; j < nodes.getSize(); j++)
+  {
+    if (nodes(j)->motion == NULL)
+    {
+      lagMotion *lag = new lagMotion;
+      lag->attachNode(nodes(j));
+      nodes(j)->attachNodeMotion(lag);
+      set++;
+    }
+  }
+  cout << set << " Lagrangian nodes created\n";
+
+    
+   for (long elementId=0;elementId<elements.getSize();elementId++)
+ {
+    elements(elementId)->computeJacobian(true);
+  }
+
+ */
+
+  // If parallel computation is requested
+  if (dynelaData->parallel != NULL)
+  {
+    // Dispatch base elements
+    dynelaData->parallel->dispatchElements(elements);
+  }
+
+  return (true);
+}
+
+//-----------------------------------------------------------------------------
+void Domain::computeMassMatrix(bool forceComputation)
+//-----------------------------------------------------------------------------
+{
+  // If already computed, then return
+  if (_massMatrixComputed && !forceComputation)
+    return;
+
+  long numberOfNodes, numberOfDDL;
+  long globalNodeNumber;
+  MatrixDiag elementMassMatrix;
+  Element *element = NULL;
+
+  // Matrice Masse avec initialisation
+  numberOfDDL = _numberOfDimensions * nodes.getSize();
+  massMatrix.redim(numberOfDDL);
+  //  massMatrix = 0.0;
+
+  for (long elementId = 0; elementId < elements.getSize(); elementId++)
+  {
+    // Get the current element
+    element = elements(elementId);
+
+    // nombre de noeuds de l'element
+    numberOfNodes = element->getNumberOfNodes();
+
+    // matrice elementMassMatrix
+    elementMassMatrix.redim(numberOfNodes);
+
+    // calcul de la matrice de masse sur l'element courant
+    element->computeMassMatrix(elementMassMatrix);
+
+    // assemblage de la matrice de masse
+    for (short nodeId = 0; nodeId < numberOfNodes; nodeId++)
+    {
+      // recuperation du numero global
+      globalNodeNumber = element->nodes(nodeId)->internalNumber();
+
+      // assemblage de M
+      for (short dim = 0; dim < _numberOfDimensions; dim++)
+        massMatrix(globalNodeNumber * _numberOfDimensions + dim) += elementMassMatrix(nodeId);
+    }
+  }
+
+  // flag de la masse
+  _massMatrixComputed = true;
+
+  // redistribution des masses sur les noeuds
+  for (long nodeId = 0; nodeId < nodes.getSize(); nodeId++)
+  {
+    // affectation de la masse au noeud
+    nodes(nodeId)->mass = massMatrix(nodes(nodeId)->internalNumber() * _numberOfDimensions);
+  }
+}
+
+//-----------------------------------------------------------------------------
+double Domain::getTotalMass()
+//-----------------------------------------------------------------------------
+{
+  double mass = 0.0;
+
+  for (long nodeId = 0; nodeId < nodes.getSize(); nodeId++)
+  {
+    mass += nodes(nodeId)->mass;
+  }
+  return (mass);
+}
+
+//-----------------------------------------------------------------------------
+double Domain::getTotalKineticEnergy()
+//-----------------------------------------------------------------------------
+{
+  double kineticEnergy = 0.0;
+
+  for (long nodeId = 0; nodeId < nodes.getSize(); nodeId++)
+  {
+    kineticEnergy += (nodes(nodeId)->mass * nodes(nodeId)->newField->speed.innerProduct()) / 2.0;
+  }
+  return (kineticEnergy);
+}
+
+//!Calcul du time step de minimal de la grille (Courant)
+/*!
+  Cette methode calcule le time step minimal de la grille e partir de la definition de la geometrie des elements et de la vitesse de propagation du son dans les elements de la structure. Cette relation est basee sur le critere de stabilite de Courant.
+  La relation utilisee pour ce calcul est donnee par:
+  \f[ \Delta t = \Delta t_{crit} \f] avec \f[ \Delta t_{crit}=\frac{l}{C_s} \f] calcule pour tous les elements de la grille dans laquelle \f$ l \f$ est la longueur caracteristique de l'element calculee par Element::getCharacteristicLength() et \f$ C_s \f$ est la vitesse de propagation d'une onde longitudinale dans l'element calculee par la methode Element::getElongationWaveSpeed().
+  \return valeur numerique de la valeur du timeStep critique de la grille
+  \author Olivier PANTALE
+  \since DynELA 1.0.0
+*/
+//-----------------------------------------------------------------------------
+double Domain::computeCourantTimeStep()
+//-----------------------------------------------------------------------------
+{
+  double characteristicLength;
+  double criticalTimeStep;
+  double elongationWaveSpeed;
+  double timeStep;
+
+  // initialisation de la longueur caracteristique de l'element 0
+  characteristicLength = elements(0)->getCharacteristicLength();
+
+  // vitesse du son dans l'element 0
+  elongationWaveSpeed = elements(0)->getElongationWaveSpeed();
+
+  // valeur critique du timeStep step
+  criticalTimeStep = characteristicLength / elongationWaveSpeed;
+
+  for (long elementId = 1; elementId < elements.getSize(); elementId++)
+  {
+    // longueur caracteristique de l'element
+    characteristicLength = elements(elementId)->getCharacteristicLength();
+
+    // vitesse du son dans l'element
+    elongationWaveSpeed = elements(elementId)->getElongationWaveSpeed();
+
+    // valeur critique
+    timeStep = characteristicLength / elongationWaveSpeed;
+
+    // minimum des valeurs
+    if (timeStep < criticalTimeStep)
+      criticalTimeStep = timeStep;
+  }
+  return criticalTimeStep;
+}
+
+//-----------------------------------------------------------------------------
+void Domain::add(Solver *newSolver)
+//-----------------------------------------------------------------------------
+{
+#ifdef VERIF_assert
+  assert(newSolver != NULL);
+#endif
+
+  // Add solver to the domain
+  // solvers << newSolver;
+  solver = newSolver;
+
+  // logFile
+  dynelaData->logFile << "Solver " << newSolver->name << " added to domain " << name << "\n";
+}
+
+//-----------------------------------------------------------------------------
+double Domain::getEndSolveTime()
+//-----------------------------------------------------------------------------
+{
+  // return solvers.last()->endTime;
+  return solver->endTime;
+}
+
+//-----------------------------------------------------------------------------
+bool Domain::solve(double solveUpToTime)
+//-----------------------------------------------------------------------------
+{
+  // If solveUpToTime is not defined, solve to the end in one step
+  if (solveUpToTime < 0)
+  {
+    // end time is the one of the last solver
+    // solveUpToTime = solvers.last()->endTime;
+    solveUpToTime = solver->endTime;
+  }
+
+  // Print message
+  printf("Run solver to %lf s - %4.1f %%\n", solveUpToTime, 100 * (currentTime / solver->endTime));
+
+  // Estimate end of computation
+  if (currentTime > 0)
+  {
+    double elapsedTime = dynelaData->cpuTimes.timer("Solver")->getCurrent();
+    int remainingTime = (elapsedTime - _lastElapsedTime) / (currentTime - _lastElapsedComputeTime) * (solver->endTime - currentTime);
+    int remainingHours, remainingMinutes, remainingSeconds;
+    int restOfTime;
+    int elapsedHours, elapsedMinutes, elapsedSeconds;
+    elapsedHours = elapsedTime / 3600;
+    restOfTime = int(elapsedTime) % 3600;
+    elapsedMinutes = restOfTime / 60;
+    elapsedSeconds = restOfTime % 60;
+    printf("Elapsed time %02d:%02d:%02d\n", elapsedHours, elapsedMinutes, elapsedSeconds);
+    remainingHours = remainingTime / 3600;
+    restOfTime = int(remainingTime) % 3600;
+    remainingMinutes = restOfTime / 60;
+    remainingSeconds = restOfTime % 60;
+    printf("Estimated end of computation in %02d:%02d:%02d\n", remainingHours, remainingMinutes, remainingSeconds);
+    _lastElapsedTime = elapsedTime;
+    _lastElapsedComputeTime = currentTime;
+  }
+
+  // check to see if time is in bounds
+  if (currentTime >= solveUpToTime)
+  {
+    dynelaData->logFile << "Current time greater than up time " << currentTime << " > " << solveUpToTime << "\n";
+
+    // End of computation and return
+    return false;
+  }
+
+  // Search the right solver
+  /*   bool solverFound = false;
+  for (short solverId = 0; solverId < solvers.getSize(); solverId++)
+  {
+    // get the solver
+    solver = solvers(solverId);
+    if (solver->timeIsBetweenBounds(currentTime))
+    {
+      solverFound = true;
+      break;
+    }
+  }
+  if (!solverFound)
+  {
+    fatalError("No solver available", "to compute at time=%10.3E\nup to time %10.3E", currentTime, solveUpToTime);
+  }
+ */
+  dynelaData->logFile << "Run solver: \n";
+
+  // Yeah, run the solver !!
+  solver->solve(solveUpToTime);
+
+  return true;
+  /*   long solverId;
+  // test si le fichier historique est ouvert
+  if (history_file == NULL)
+  {
+    String nm;
+    if (name == "")
+      nm = parsedFileName.before(sourceFileExtension) + ".plot";
+    else
+      nm = parsedFileName.before(sourceFileExtension) + "_" + name + ".plot";
+    history_file = fopen(nm.chars(), "w");
+
+    fprintf(history_file,
+            "#DynELA_plot : Time history of computation\n#plotted : Used_timeStep timeStep kinetic_energy\n");
+  }
+
+  //   if (solveUpToTime>solvers.last()->endTime)
+  //     {
+  //       fclose(history_file);
+  //       return false;
+  //     }
+ */
+}
+
+//!Calcule le determinant du Jacobien de tous les elements de la grille
+/*!
+  Cette methode calcule le Jacobien de tous les elements de la grille.
+  \author Olivier PANTALE
+  \since DynELA 1.0.0
+*/
+/*  //-----------------------------------------------------------------------------
+void Domain::computeJacobian()
+//-----------------------------------------------------------------------------
+{
+#ifdef PRINT_Execution_Solve
+  cout << "Compute Jacobian\n";
+#endif
+
+  for (long elementId = 0; elementId < elements.getSize(); elementId++)
+  {
+    if (elements(elementId)->computeJacobian() == false)
+    {
+      std::cerr << "Emergency save of the last result\n";
+      std::cerr << "Program aborted\n";
+      dynelaData->writeResultFile();
+      exit(-1);
+    }
+  }
+}  */
+
+/* //-----------------------------------------------------------------------------
+void Domain::computeJacobian()
+//-----------------------------------------------------------------------------
+{
+#ifdef PRINT_Execution_Solve
+  cout << "Compute Jacobian\n";
+#endif
+
+#pragma omp parallel
+  {
+    ElementsChunk *chunk = dynelaData->parallel->getElementsOfCurrentCore();
+
+    for (long elementId = 0; elementId < chunk->elements.getSize(); elementId++)
+    {
+      if (chunk->elements(elementId)->computeJacobian() == false)
+      {
+        std::cerr << "Emergency save of the last result\n";
+        std::cerr << "Program aborted\n";
+        dynelaData->writeResultFile();
+        exit(-1);
+      }
+    }
+  }
+} */
+
+//-----------------------------------------------------------------------------
+void Domain::computeJacobian()
+//-----------------------------------------------------------------------------
+{
+#pragma omp parallel
+  {
+    ElementsChunk *chunk = dynelaData->parallel->getElementsOfCurrentCore();
+
+    Element *pel = chunk->elements.first();
+    while ((pel = chunk->elements.currentUp()) != NULL)
+    {
+      if (pel->computeJacobian() == false)
+      {
+        std::cerr << "Emergency save of the last result\n";
+        std::cerr << "Program aborted\n";
+        dynelaData->writeResultFile();
+        exit(-1);
+      }
+    }
+  }
+}
+
+//-----------------------------------------------------------------------------
+void Domain::computeStrains()
+//-----------------------------------------------------------------------------
+{
+#pragma omp parallel
+  {
+    ElementsChunk *chunk = dynelaData->parallel->getElementsOfCurrentCore();
+
+    Element *pel = chunk->elements.first();
+    while ((pel = chunk->elements.currentUp()) != NULL)
+    {
+      pel->computeStrains();
+    }
+  }
+}
+
+/* //-----------------------------------------------------------------------------
+void Domain::computeStrains()
+//-----------------------------------------------------------------------------
+{
+#pragma omp parallel
+  {
+    ElementsChunk *chunk = dynelaData->parallel->getElementsOfCurrentCore();
+    for (long elementId = 0; elementId < chunk->elements.getSize(); elementId++)
+    {
+      chunk->elements(elementId)->computeStrains();
+    }
+  }
+} */
+
+/* //-----------------------------------------------------------------------------
+void Domain::computeStrains()
+//-----------------------------------------------------------------------------
+{
+  for (long elementId = 0; elementId < elements.getSize(); elementId++)
+  {
+    elements(elementId)->computeStrains();
+  }
+}
+ */
+//-----------------------------------------------------------------------------
+void Domain::computePressure()
+//-----------------------------------------------------------------------------
+{
+  for (long elementId = 0; elementId < elements.getSize(); elementId++)
+  {
+    elements(elementId)->computePressure();
+  }
+}
+
+//-----------------------------------------------------------------------------
+void Domain::computeStress(double timeStep)
+//-----------------------------------------------------------------------------
+{
+  for (long elementId = 0; elementId < elements.getSize(); elementId++)
+  {
+    elements(elementId)->computeStress(timeStep);
+  }
+}
+
+//-----------------------------------------------------------------------------
+void Domain::computeFinalRotation()
+//-----------------------------------------------------------------------------
+{
+  for (long elementId = 0; elementId < elements.getSize(); elementId++)
+  {
+    elements(elementId)->computeFinalRotation();
+  }
+}
+
+//-----------------------------------------------------------------------------
+void Domain::computeInternalForces()
+//-----------------------------------------------------------------------------
+{
+  Vector elementInternalForces;
+  long glob;
+
+  long numberOfDDL = _numberOfDimensions * nodes.getSize();
+
+#ifdef PRINT_Execution_Solve
+  cout << "Compute Internal Forces\n";
+#endif
+
+  // RAZ of internal forces vector
+  internalForces.redim(numberOfDDL);
+  // internalForces = 0.0;
+
+  // calcul des forces internes
+  for (long elementId = 0; elementId < elements.getSize(); elementId++)
+  {
+    // calcul des forces internes de l'element
+    elements(elementId)->computeInternalForces(elementInternalForces, solver->timeStep);
+
+    // assemblage des forces internes
+    for (long nodeId = 0; nodeId < elements(elementId)->nodes.getSize(); nodeId++)
+    {
+      // recuperation du numero global
+      glob = (elements(elementId)->nodes(nodeId)->internalNumber()) * _numberOfDimensions;
+
+      for (int dim = 0; dim < _numberOfDimensions; dim++)
+      {
+        // assemblage de F
+        internalForces(glob + dim) += elementInternalForces(nodeId * _numberOfDimensions + dim);
+      }
+    }
+  }
+}
+
+//-----------------------------------------------------------------------------
+void Domain::transfertQuantities()
+//-----------------------------------------------------------------------------
+{
+
+#ifdef PRINT_Execution_Solve
+  cout << "Quantities transfert\n";
+#endif
+
+  for (long nodeId = 0; nodeId < nodes.getSize(); nodeId++)
+  {
+    nodes(nodeId)->swapNodalFields();
+  }
+}
+
+//-----------------------------------------------------------------------------
+void Domain::writeHistoryFiles()
+//-----------------------------------------------------------------------------
+{
+  for (short historyId = 0; historyId < historyFiles.getSize(); historyId++)
+  {
+    historyFiles(historyId)->save(currentTime);
+  }
+}
+
+//-----------------------------------------------------------------------------
+void Domain::add(HistoryFile *newHistoryFile)
+//-----------------------------------------------------------------------------
+{
+#ifdef VERIF_assert
+  assert(newHistoryFile != NULL);
+#endif
+
+  // ajouter l'history file au domaine courant
+  historyFiles << newHistoryFile;
+
+  // logFile
+  dynelaData->logFile << "HistoryFile " << newHistoryFile->name << " linked to current domain\n";
+}
+/*
+//-----------------------------------------------------------------------------
+double Domain::computePowerIterationTimeStep()
+//-----------------------------------------------------------------------------
+{
+  double fmax = 0.0;
+  bool ok = false;
+  long iteration = 0;
+  double convergence;
+  double limite = maximumFrequencyConvergence;
+  long i, el;
+  Element *pel;
+  // double ray;
+
+  // matrices globales
+  long numberOfDDL = _numberOfDimensions * nodes.getSize();
+
+  long loop_el = elements.getSize();
+  for (el = 0; el < loop_el; el++)
+  {
+    // recuperation de l'element
+    pel = elements(el);
+
+    //calcul des forces elastiques
+    pel->computeElasticStiffnessMatrix(pel->stiffnessMatrix, false);
+  }
+
+  // initialisation du vecteur si besoin
+  //  fmax0=0;
+  if ((fmax0 == 0) || (EV_TimeStep.getSize() != numberOfDDL))
+  {
+    EV_TimeStep.redim(numberOfDDL);
+    EV_TimeStep(0) = 1.0;
+    for (i = 1; i < numberOfDDL; i++)
+      EV_TimeStep(i) = EV_TimeStep(i - 1) - 2. / (numberOfDDL - 1);
+  }
+
+  Vector loc;
+  Vector EV0;
+
+  while (!ok)
+  {
+    iteration++;
+    EV0 = EV_TimeStep;
+    EV_TimeStep = 0.0;
+    //  long loop_el=elements.getSize();
+    for (el = 0; el < loop_el; el++)
+    {
+      // recuperation de l'element
+      pel = elements(el);
+      loc.redim(pel->stiffnessMatrix.rows());
+      loc = 0.;
+      long loop_I = pel->nodes.getSize();
+      long *ind = new long[loop_I];
+      for (long I = 0; I < loop_I; I++)
+        ind[I] = pel->nodes(I)->Id;
+      loc.scatterFrom(EV0, ind, _numberOfDimensions);
+      loc = pel->stiffnessMatrix * loc;
+      EV_TimeStep.gatherFrom(loc, ind, _numberOfDimensions);
+      delete[] ind;
+    }
+
+    //      ray= EV0.dotProduct(EV_TimeStep)/EV0.dotProduct(massMatrix*EV0);
+    massMatrix.divideBy(EV_TimeStep);
+    fmax = EV_TimeStep.maxAbsoluteValue();
+
+    EV_TimeStep /= fmax;
+    convergence = dnlAbs(fmax - fmax0) / fmax;
+    //      convergence = dnlAbs(fmax-ray)/(fmax+ray);
+
+    // verifier si on a converge
+    if (convergence < limite)
+      ok = true;
+
+    fmax0 = fmax;
+
+    if (iteration > maximumFrequencyMaxIterations)
+    {
+      fatalError("Domain::computePowerIterationTimeStep", "power iteration method not converged %10.4E\n", convergence);
+    }
+  }
+
+  return sqrt(fmax);
+}
+
+//-----------------------------------------------------------------------------
+void Domain::print(ostream &os) const
+//-----------------------------------------------------------------------------
+{
+  //    os << "numDoF n="<<NumDOFS<<endl;
+  os << "Nodes list" << endl;
+  //  (nodes).print (os);
+  os << "Elements list\n";
+  //  (elements).print (os);
+}
+
+//-----------------------------------------------------------------------------
+ostream &operator<<(ostream &os, Domain &domain)
+//-----------------------------------------------------------------------------
+{
+  domain.print(os);
+  return os;
+}
+
+//-----------------------------------------------------------------------------
+double Domain::getReadTimeData(ifstream &pfile)
+//-----------------------------------------------------------------------------
+{
+  double tim;
+
+  if (dynelaData->checkBinaryVersion(pfile, 0) != Ok)
+    fatalError("Major changes done since this old version", "Sorry !! ...");
+
+  // load current time
+  pfile.read((char *)&tim, sizeof(double));
+
+  return tim;
+}
+
+//-----------------------------------------------------------------------------
+void Domain::readData(ifstream &pfile)
+//-----------------------------------------------------------------------------
+{
+  long i;
+
+  if (dynelaData->checkBinaryVersion(pfile, 0) != Ok)
+    fatalError("Major changes done since this old version", "Sorry !! ...");
+
+  // load current time
+  pfile.read((char *)&currentTime, sizeof(double));
+
+  for (i = 0; i < nodes.getSize(); i++)
+  {
+    pfile >> *(nodes(i));
+  }
+
+  if (dynelaData->checkBinaryVersion(pfile, 1) != Ok)
+    fatalError("nodal datas", "Read error");
+
+  for (i = 0; i < elements.getSize(); i++)
+  {
+    pfile >> *(elements(i));
+  }
+
+  if (dynelaData->checkBinaryVersion(pfile, 1) != Ok)
+    fatalError("element datas", "Read error");
+}
+
+//-----------------------------------------------------------------------------
+void Domain::writeData(ofstream &pfile)
+//-----------------------------------------------------------------------------
+{
+  long i;
+
+  dynelaData->checkBinaryVersionWrite(pfile, 0);
+
+  // save current time
+  pfile.write((char *)&currentTime , sizeof(double));
+
+  // save the nodal values
+  for (i = 0; i < nodes.getSize(); i++)
+  {
+    nodes(i)->write(pfile);
+  }
+
+  dynelaData->checkBinaryVersionWrite(pfile, 1);
+
+  // save the element values
+  for (i = 0; i < elements.getSize(); i++)
+  {
+    elements(i)->write(pfile);
+  }
+  dynelaData->checkBinaryVersionWrite(pfile, 1);
+}
+
+//-----------------------------------------------------------------------------
+void Domain::getGlobalBox(Vec3D &min, Vec3D &max)
+//-----------------------------------------------------------------------------
+{
+  Vec3D coordinates;
+  long i, j;
+  // affectation par defaut au commencement
+  max = min = nodes(0)->coordinates;
+
+  // boucle de recherche
+  for (i = 1; i < nodes.getSize(); i++)
+  {
+    coordinates = nodes(i)->coordinates;
+
+    for (j = 0; j < 3; j++)
+    {
+      if (coordinates(j) < min(j))
+        min(j) = coordinates(j);
+      if (coordinates(j) > max(j))
+        max(j) = coordinates(j);
+    }
+  }
+}
+
+//-----------------------------------------------------------------------------
+void Domain::createNode(long num, double x, double y, double z)
+//-----------------------------------------------------------------------------
+{
+  Node *pnd;
+
+  if ((pnd = (nodes).AppN(num)) == NULL)
+  {
+    // creer un nouveau noeud
+    pnd = new Node(num);
+
+    // l'ajouter au domaine
+    nodes << pnd;
+  }
+  else
+  {
+    //      cerr << "Warning: node " << num << " redefined line " << scanned_line <<
+    //	endl;
+  }
+
+  // chargement des coordonnees
+  pnd->coordinates(0) = x;
+  pnd->coordinates(1) = y;
+  pnd->coordinates(2) = z;
+
+  //  fprintf (out_file, "node %ld %f,%f,%f", num, x, y, z);
+
+  // ajout des references online
+  //   if (online_node_set == true)
+  //     {
+  //       selection.nodesSet (selection.nodesSet.getSize () - 1)->Add (pnd);
+  //       fprintf (out_file, " of set %s",
+  // 	       selection.nodesSet (selection.nodesSet.getSize () - 1)->nom.chars ());
+  //     }
+
+  // affichage du defilement
+  //   if (num % 1000 == 0)
+  //     {
+  //       printf (".");
+  //       fflush (stdout);
+  //     }
+
+  //   fprintf (out_file, "\n");
+}
+
+//-----------------------------------------------------------------------------
+Node *Domain::getNodeByNumber(long num)
+//-----------------------------------------------------------------------------
+{
+  for (long i = 0; i < nodes.getSize(); i++)
+  {
+    if (nodes(i)->number == num)
+      return nodes(i);
+  }
+
+  return NULL;
+}
+
+//-----------------------------------------------------------------------------
+double Domain::getCurrentTime()
+//-----------------------------------------------------------------------------
+{
+  return currentTime;
+}
+
+//-----------------------------------------------------------------------------
+void Domain::addInterface(Interface *inter)
+//-----------------------------------------------------------------------------
+{
+#ifdef VERIF_assert
+  assert(inter != NULL);
+#endif
+
+  interfaces << inter;
+}
+
+//-----------------------------------------------------------------------------
+void Domain::starterWrite(String name)
+//-----------------------------------------------------------------------------
+{
+  /*  String output_filename;
+  FILE *pfile;
+  long i;
+
+  output_filename = name;
+  pfile = fopen (output_filename.chars (), "w");
+
+  // nodes write
+  fprintf (pfile, "\n                 NODES DEFINITION\n");
+  fprintf (pfile, "------------------------------------------------\n");
+  fprintf (pfile, "  NODE               NODE COORDINATES\n");
+  fprintf (pfile, " NUMBER        X            Y            Z\n");
+  for (i = 0; i < nodes.getSize (); i++)
+    {
+      nodes (i)->toFile (pfile);
+    }
+
+  fprintf (pfile, "\n                 ELEMENTS DEFINITION\n");
+  fprintf (pfile, "------------------------------------------------\n");
+  fprintf (pfile, " ELEMENT   ELEMENT           LIST OF NODES\n");
+  fprintf (pfile, " NUMBER     NAME   \n");
+  for (i = 0; i < elements.getSize (); i++)
+    {
+      elements (i)->toFile (pfile);
+    }
+
+  fprintf (pfile, "\n                 MATERIALS DEFINITION\n");
+  fprintf (pfile, "------------------------------------------------\n");
+  for (i = 0; i < materials.getSize (); i++)
+    {
+      materials (i)->toFile (pfile);
+    }
+
+  fprintf (pfile, "\n                                 BOUNDARY CONDITIONS\n");
+  fprintf (pfile,
+	   "------------------------------------------------------------------------------------\n");
+  fprintf (pfile,
+	   "  NODE              MATERIAL SPEEDS                       GRID SPEEDS\n");
+  fprintf (pfile,
+	   " NUMBER        X         Y         Z          X         Y         Z\n");
+  for (i = 0; i < nodes.getSize (); i++)
+    {
+      nodes (i)->toFileBound (pfile);
+    }
+  fprintf (pfile, "\n                 CONTACT SURFACES\n");
+  fprintf (pfile, "------------------------------------------------\n");
+  for (i = 0; i < interfaces.getSize (); i++)
+    {
+      interfaces (i)->toFile (pfile);
+    }
+
+  fprintf (pfile, "\n                 TIMES\n");
+  fprintf (pfile, "------------------------------------------------\n");
+  times.toFile (pfile);
+
+  fclose (pfile);
+
+  cout << "End of write ...\n";*/
+//}
+
+//!Cree un element et l'ajoute e la grille courante
+/*!
+  Cette methode cree un element et l'ajoute e la grille courante.
+
+  Elle cree les noeuds de l'element en verifiant que ces noeuds sont bien presents sur la grille courante. Dans le cas contraire, une erreur est generee. Le numero de l'element doit avoir ete cree avec l'element. Cette methode ajoute alors les noeuds en fonction des noeuds presents sur la grille.
+
+  \param pel pointeur sur le nouvel element que l'on vient de generer.
+  \param nNodes liste des numeros de noeuds qui composent l'element
+  \author Olivier PANTALE
+  \since DynELA 1.0.0
+
+//-----------------------------------------------------------------------------
+void Domain::createElement(Element *pel, long *nNodes)
+//-----------------------------------------------------------------------------
+{
+  Node *pnd;
+
+  // ajout de l'element e la grille et verification de sa non presence
+  add(pel);
+
+  // add the reference to the grid of the element
+  //  pel->grid=this;
+  pel->domain = this;
+
+  // construction de l'element et de ses noeuds
+  long nbOk = 0;
+
+  for (long j = 0; j < pel->getNumberOfNodes(); j++)
+  {
+    if ((pnd = nodes.dichotomySearch(substractNodesNumber, nNodes[j])) != NULL)
+    {
+      pel->addNode(pnd);
+      nNodes[j] = -1;
+      nbOk++;
+    }
+  }
+
+  if (nbOk != pel->getNumberOfNodes())
+  {
+    for (long j = 0; j < pel->getNumberOfNodes(); j++)
+    {
+      if (nNodes[j] != -1)
+        cout << "Node " << nNodes[j] << " doesn't exist in this grid\n";
+    }
+    fatalError("Domain::createElement", "some nodes not exist in this grid");
+  }
+}
+*/

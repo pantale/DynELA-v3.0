@@ -1,0 +1,410 @@
+/***************************************************************************
+ *                                                                         *
+ *  DynELA Finite Element Code v 3.0                                       *
+ *  By Olivier PANTALE                                                     *
+ *                                                                         *
+ *  (c) Copyright 1997-2019                                                *
+ *                                                                         *
+ **************************************************************************/
+
+/*!
+  \file ElementPlane.C
+  \brief Definition file for the ElementPlane class
+
+  This file is the definition file for the ElementPlane class.
+
+  \ingroup dnlElements
+  \author &copy; Olivier PANTALE
+  \date 1997-2019
+*/
+
+#include <ElQua4NAx.h>
+#include <Node.h>
+
+/* #include <Domain.h>
+#include <io_Structure.h>
+#include <DynELA.h>
+#include <IntegrationPoint.h>
+//#include <Physic.h>
+*/
+
+const ElementData ElQua4NAx::_elementData = {
+    "ElQua4NAx",          // name of the Element
+    Element::ElQua4NAx,   // Type of the Element
+    Element::Axisymetric, // Family of the Element
+    2,                    // Number of dimensions of the Element
+    2,                    // Number of degrees of freedom of the Element
+    9,                    // VTK type of element
+
+    4, // Number of nodes of the Element
+    {
+        // Node 1
+        {
+            Vec3D(-1, -1, 0),                                               // Coordinates of the node
+            2,                                                              // Number of neightbour nodes
+            {1, 3},                                                         // List of the neighbour nodes
+            Vector(4, 1.0 + sqrt(3.0) / 2, -0.5, 1.0 - sqrt(3.0) / 2, -0.5) // Extrapolates integration points values to nodal values
+        },
+        // Node 2
+        {
+            Vec3D(+1, -1, 0),                                               // Coordinates of the node
+            2,                                                              // Number of neightbour nodes
+            {0, 2},                                                         // List of the neighbour nodes
+            Vector(4, -0.5, 1.0 + sqrt(3.0) / 2, -0.5, 1.0 - sqrt(3.0) / 2) // Extrapolates integration points values to nodal values
+        },
+        // Node 3
+        {
+            Vec3D(+1, +1, 0),                                               // Coordinates of the node
+            2,                                                              // Number of neightbour nodes
+            {1, 3},                                                         // List of the neighbour nodes
+            Vector(4, 1.0 - sqrt(3.0) / 2, -0.5, 1.0 + sqrt(3.0) / 2, -0.5) // Extrapolates integration points values to nodal values
+        },
+        // Node 4
+        {
+            Vec3D(-1, +1, 0),                                               // Coordinates of the node
+            2,                                                              // Number of neightbour nodes
+            {0, 2},                                                         // List of the neighbour nodes
+            Vector(4, -0.5, 1.0 - sqrt(3.0) / 2, -0.5, 1.0 + sqrt(3.0) / 2) // Extrapolates integration points values to nodal values
+        }
+        //
+    },
+
+    4, // Number of integration points of the Element
+    {
+        // Integration point 1
+        {
+            Vec3D(-1.0 / sqrt(3.0), -1.0 / sqrt(3.0), 0.0),                            // Coordinates of the integration point
+            1,                                                                         // Weight associated to the integration point
+            Vector(4, (2.0 + sqrt(3.0)) / 6, 1.0 / 6, (2.0 - sqrt(3.0)) / 6, 1.0 / 6), // Shape functions at the integration point
+            Matrix(4, 2,                                                               // Derivatives of the shape functions at the integration point
+                   (-3.0 - sqrt(3.0)) / 12, (-3.0 - sqrt(3.0)) / 12,                   //
+                   (+3.0 + sqrt(3.0)) / 12, (-3.0 + sqrt(3.0)) / 12,                   //
+                   (+3.0 - sqrt(3.0)) / 12, (+3.0 - sqrt(3.0)) / 12,                   //
+                   (-3.0 + sqrt(3.0)) / 12, (+3.0 + sqrt(3.0)) / 12)                   //
+        },
+        // Integration point 2
+        {
+            Vec3D(+1.0 / sqrt(3.0), -1.0 / sqrt(3.0), 0.0),                            // Coordinates of the integration point
+            1,                                                                         // Weight associated to the integration point
+            Vector(4, 1.0 / 6, (2.0 + sqrt(3.0)) / 6, 1.0 / 6, (2.0 - sqrt(3.0)) / 6), // Shape functions at the integration point
+            Matrix(4, 2,                                                               // Derivatives of the shape functions at the integration point
+                   (-3.0 - sqrt(3.0)) / 12, (-3.0 + sqrt(3.0)) / 12,                   //
+                   (+3.0 + sqrt(3.0)) / 12, (-3.0 - sqrt(3.0)) / 12,                   //
+                   (+3.0 - sqrt(3.0)) / 12, (+3.0 + sqrt(3.0)) / 12,                   //
+                   (-3.0 + sqrt(3.0)) / 12, (+3.0 - sqrt(3.0)) / 12)                   //
+        },
+        // Integration point 3
+        {
+            Vec3D(+1.0 / sqrt(3.0), +1.0 / sqrt(3.0), 0.0),                            // Coordinates of the integration point
+            1,                                                                         // Weight associated to the integration point
+            Vector(4, (2.0 - sqrt(3.0)) / 6, 1.0 / 6, (2.0 + sqrt(3.0)) / 6, 1.0 / 6), // Shape functions at the integration point
+            Matrix(4, 2,                                                               // Derivatives of the shape functions at the integration point
+                   (-3.0 + sqrt(3.0)) / 12, (-3.0 + sqrt(3.0)) / 12,                   //
+                   (+3.0 - sqrt(3.0)) / 12, (-3.0 - sqrt(3.0)) / 12,                   //
+                   (+3.0 + sqrt(3.0)) / 12, (+3.0 + sqrt(3.0)) / 12,                   //
+                   (-3.0 - sqrt(3.0)) / 12, (+3.0 - sqrt(3.0)) / 12)                   //
+        },
+        // Integration point 4
+        {
+            Vec3D(-1.0 / sqrt(3.0), +1.0 / sqrt(3.0), 0.0),                            // Coordinates of the integration point
+            1,                                                                         // Weight associated to the integration point
+            Vector(4, 1.0 / 6, (2.0 - sqrt(3.0)) / 6, 1.0 / 6, (2.0 + sqrt(3.0)) / 6), // Shape functions at the integration point
+            Matrix(4, 2,                                                               // Derivatives of the shape functions at the integration point
+                   (-3.0 + sqrt(3.0)) / 12, (-3.0 - sqrt(3.0)) / 12,                   //
+                   (+3.0 - sqrt(3.0)) / 12, (-3.0 + sqrt(3.0)) / 12,                   //
+                   (+3.0 + sqrt(3.0)) / 12, (+3.0 - sqrt(3.0)) / 12,                   //
+                   (-3.0 - sqrt(3.0)) / 12, (+3.0 + sqrt(3.0)) / 12)                   //
+        }
+        //
+    },
+
+/*    4, // Number of mass integration points of the Element
+    {
+        // Mass integration point 1
+        {
+            Vec3D(-1.0 / sqrt(3.0), -1.0 / sqrt(3.0), 0.0),                            // Coordinates of the mass integration point
+            1,                                                                         // Weight associated to the mass integration point
+            Vector(4, (2.0 + sqrt(3.0)) / 6, 1.0 / 6, (2.0 - sqrt(3.0)) / 6, 1.0 / 6), // Shape functions at the mass integration point
+            Matrix(4, 2,                                                               // Derivatives of the shape functions at the mass integration point
+                   (-3.0 - sqrt(3.0)) / 12, (-3.0 - sqrt(3.0)) / 12,                   //
+                   (+3.0 + sqrt(3.0)) / 12, (-3.0 + sqrt(3.0)) / 12,                   //
+                   (+3.0 - sqrt(3.0)) / 12, (+3.0 - sqrt(3.0)) / 12,                   //
+                   (-3.0 + sqrt(3.0)) / 12, (+3.0 + sqrt(3.0)) / 12)                   //
+        },
+        // Mass integration point 2
+        {
+            Vec3D(+1.0 / sqrt(3.0), -1.0 / sqrt(3.0), 0.0),                            // Coordinates of the mass integration point
+            1,                                                                         // Weight associated to the mass integration point
+            Vector(4, 1.0 / 6, (2.0 + sqrt(3.0)) / 6, 1.0 / 6, (2.0 - sqrt(3.0)) / 6), // Shape functions at the mass integration point
+            Matrix(4, 2,                                                               // Derivatives of the shape functions at the mass integration point
+                   (-3.0 - sqrt(3.0)) / 12, (-3.0 + sqrt(3.0)) / 12,                   //
+                   (+3.0 + sqrt(3.0)) / 12, (-3.0 - sqrt(3.0)) / 12,                   //
+                   (+3.0 - sqrt(3.0)) / 12, (+3.0 + sqrt(3.0)) / 12,                   //
+                   (-3.0 + sqrt(3.0)) / 12, (+3.0 - sqrt(3.0)) / 12)                   //
+        },
+        // Mass integration point 3
+        {
+            Vec3D(+1.0 / sqrt(3.0), +1.0 / sqrt(3.0), 0.0),                            // Coordinates of the mass integration point
+            1,                                                                         // Weight associated to the mass integration point
+            Vector(4, (2.0 - sqrt(3.0)) / 6, 1.0 / 6, (2.0 + sqrt(3.0)) / 6, 1.0 / 6), // Shape functions at the mass integration point
+            Matrix(4, 2,                                                               // Derivatives of the shape functions at the mass integration point
+                   (-3.0 + sqrt(3.0)) / 12, (-3.0 + sqrt(3.0)) / 12,                   //
+                   (+3.0 - sqrt(3.0)) / 12, (-3.0 - sqrt(3.0)) / 12,                   //
+                   (+3.0 + sqrt(3.0)) / 12, (+3.0 + sqrt(3.0)) / 12,                   //
+                   (-3.0 - sqrt(3.0)) / 12, (+3.0 - sqrt(3.0)) / 12)                   //
+        },
+        // Mass integration point 4
+        {
+            Vec3D(-1.0 / sqrt(3.0), +1.0 / sqrt(3.0), 0.0),                            // Coordinates of the mass integration point
+            1,                                                                         // Weight associated to the mass integration point
+            Vector(4, 1.0 / 6, (2.0 - sqrt(3.0)) / 6, 1.0 / 6, (2.0 + sqrt(3.0)) / 6), // Shape functions at the mass integration point
+            Matrix(4, 2,                                                               // Derivatives of the shape functions at the mass integration point
+                   (-3.0 + sqrt(3.0)) / 12, (-3.0 - sqrt(3.0)) / 12,                   //
+                   (+3.0 - sqrt(3.0)) / 12, (-3.0 + sqrt(3.0)) / 12,                   //
+                   (+3.0 + sqrt(3.0)) / 12, (+3.0 - sqrt(3.0)) / 12,                   //
+                   (-3.0 - sqrt(3.0)) / 12, (+3.0 + sqrt(3.0)) / 12)                   //
+        }
+        //
+    },
+
+    1, // Number of under integration points of the Element
+    {
+        // Under integration point 1
+        {
+            Vec3D(0.0, 0.0, 0.0),                              // Coordinates of the under integration point
+            4.0,                                               // Weight associated to the under integration point
+            Vector(4, +1.0 / 4, +1.0 / 4, +1.0 / 4, +1.0 / 4), // Shape functions at the under integration point
+            Matrix(4, 2,                                       // Derivatives of the shape functions at the under integration point
+                   -1.0 / 4, -1.0 / 4,                         //
+                   +1.0 / 4, -1.0 / 4,                         //
+                   +1.0 / 4, +1.0 / 4,                         //
+                   -1.0 / 4, +1.0 / 4)                         //
+        }
+        //
+    },
+
+    1, // Number of faces of the element
+    {
+        // Face number 1
+        {
+            4,           // Number of nodes on the face of the element
+            {0, 1, 2, 3} // List of the nodes composing the face of the element
+        }
+        //
+    },
+
+    4, // Number of side faces of the element
+    {
+        // Side face number 1
+        {
+            2,     // Number of nodes on the side face of the element
+            {0, 1} // List of the nodes composing the side face of the element
+        },
+        // Side face number 2
+        {
+            2,     // Number of nodes on the side face of the element
+            {1, 2} // List of the nodes composing the side face of the element
+        },
+        // Side face number 3
+        {
+            2,     // Number of nodes on the side face of the element
+            {2, 3} // List of the nodes composing the side face of the element
+        },
+        // Side face number 4
+        {
+            2,     // Number of nodes on the side face of the element
+            {3, 0} // List of the nodes composing the side face of the element
+        }
+        //
+    },
+
+    4, // Number of edges of the element
+    {
+        // Edge number 1
+        {
+            2,     // Number of nodes on the edge of the element
+            {0, 1} // List of the nodes composing the edge of the element
+        },
+        // Edge number 2
+        {
+            2,     // Number of nodes on the edge of the element
+            {1, 2} // List of the nodes composing the edge of the element
+        },
+        // Edge number 3
+        {
+            2,     // Number of nodes on the edge of the element
+            {2, 3} // List of the nodes composing the edge of the element
+        },
+        // Edge number 4
+        {
+            2,     // Number of nodes on the edge of the element
+            {3, 0} // List of the nodes composing the edge of the element
+        }
+        //
+    },*/
+    // Check element
+    10010110
+    // END
+};
+
+//-----------------------------------------------------------------------------
+ElQua4NAx::ElQua4NAx(long elementNumber) : ElementAxi(elementNumber)
+//-----------------------------------------------------------------------------
+{
+    _globalToLocal.redim(2, 4);
+    Element::_elementData = &_elementData;
+
+    // Check the data structure
+    if (_elementData.CheckElementData != 10010110)
+        fatalError("ElQua4NAx::ElQua4NAx", "Element Data currupted");
+}
+
+//-----------------------------------------------------------------------------
+ElQua4NAx::ElQua4NAx(const ElQua4NAx &element) : ElementAxi(element)
+//-----------------------------------------------------------------------------
+{
+    std::cout << "recopie d'un ElQua4NAx\n";
+}
+
+//-----------------------------------------------------------------------------
+ElQua4NAx::~ElQua4NAx()
+//-----------------------------------------------------------------------------
+{
+    nodes.flush();
+}
+
+//-----------------------------------------------------------------------------
+void ElQua4NAx::getShapeFunctionAtPoint(Vector &shapeFunctions, const Vec3D &point) const
+//-----------------------------------------------------------------------------
+{
+    double ksi = point(0);
+    double eta = point(1);
+
+    shapeFunctions(0) = (1.0 - ksi) * (1.0 - eta) / 4.0;
+    shapeFunctions(1) = (1.0 + ksi) * (1.0 - eta) / 4.0;
+    shapeFunctions(2) = (1.0 + ksi) * (1.0 + eta) / 4.0;
+    shapeFunctions(3) = (1.0 - ksi) * (1.0 + eta) / 4.0;
+}
+
+//-----------------------------------------------------------------------------
+void ElQua4NAx::getDerShapeFunctionAtPoint(Matrix &derShapeFunctions, const Vec3D &point) const
+//-----------------------------------------------------------------------------
+{
+    double ksi = point(0);
+    double eta = point(1);
+
+    derShapeFunctions(0, 0) = -(1.0 - eta) / 4.0;
+    derShapeFunctions(1, 0) = +(1.0 - eta) / 4.0;
+    derShapeFunctions(2, 0) = +(1.0 + eta) / 4.0;
+    derShapeFunctions(3, 0) = -(1.0 + eta) / 4.0;
+
+    derShapeFunctions(0, 1) = -(1.0 - ksi) / 4.0;
+    derShapeFunctions(1, 1) = -(1.0 + ksi) / 4.0;
+    derShapeFunctions(2, 1) = +(1.0 + ksi) / 4.0;
+    derShapeFunctions(3, 1) = +(1.0 - ksi) / 4.0;
+}
+
+//-----------------------------------------------------------------------------
+double ElQua4NAx::getCharacteristicLength()
+//-----------------------------------------------------------------------------
+{
+    double x31 = nodes(2)->coordinates(0) - nodes(0)->coordinates(0);
+    double x24 = nodes(1)->coordinates(0) - nodes(3)->coordinates(0);
+    double y42 = nodes(3)->coordinates(1) - nodes(1)->coordinates(1);
+    double y31 = nodes(2)->coordinates(1) - nodes(0)->coordinates(1);
+
+    return ((x31 * y42 + x24 * y31) / sqrt(2.0 * (dnlSquare(x24) + dnlSquare(y42) + dnlSquare(x31) + dnlSquare(y31))));
+}
+
+//-----------------------------------------------------------------------------
+double ElQua4NAx::getArea()
+//-----------------------------------------------------------------------------
+{
+    double x1 = nodes(0)->coordinates(0);
+    double x2 = nodes(1)->coordinates(0);
+    double x3 = nodes(2)->coordinates(0);
+    double x4 = nodes(3)->coordinates(0);
+    double y1 = nodes(0)->coordinates(1);
+    double y2 = nodes(1)->coordinates(1);
+    double y3 = nodes(2)->coordinates(1);
+    double y4 = nodes(3)->coordinates(1);
+
+    return sqrt(dnlSquare(x2 * (y1 - y3) + x4 * (-y1 + y3) - (x1 - x3) * (y2 - y4))) / 2;
+}
+
+/* 
+
+// //-----------------------------------------------------------------------------
+// void // ElQua4NAx::getIntgtoNodes (Vector & N, const Vec3D & point) const
+// //-----------------------------------------------------------------------------
+// {
+//   const double pos = 1.0 / sqrt (3.0);
+//   double ksi = point (0);
+//   double eta = point (1);
+
+//   N (0) = 3.0 * (pos - ksi) * (pos - eta) / 4;
+//   N (1) = 3.0 * (pos + ksi) * (pos - eta) / 4;
+//   N (2) = 3.0 * (pos + ksi) * (pos + eta) / 4;
+//   N (3) = 3.0 * (pos - ksi) * (pos + eta) / 4;
+// }
+
+//-----------------------------------------------------------------------------
+void ElQua4NAx::computeGlob2Loc ()
+//-----------------------------------------------------------------------------
+{
+  Matrix nds (getNumberOfNodes(), getNumberOfNodes());
+  Vector crds (getNumberOfNodes());
+  long i, j;
+  Node *pnd;
+
+  // calcul de la matrice
+  for (i = 0; i < getNumberOfNodes(); i++)
+    {
+      pnd = nodes (i);
+      nds (i, 0) = 1.;
+      nds (i, 1) = pnd->coordinates (0);
+      nds (i, 2) = pnd->coordinates (1);
+      nds (i, 3) = pnd->coordinates (0) * pnd->coordinates (1);
+    }
+
+  // inversion de la matrice
+  Matrix inv = nds.getInverse ();
+  // cout << inv;
+
+  // init
+  _globalToLocal = 0.;
+
+  // calcul des coefficients en x
+  crds (0) = -1.;
+  crds (1) = +1.;
+  crds (2) = +1.;
+  crds (3) = -1.;
+  for (i = 0; i < getNumberOfNodes(); i++)
+    for (j = 0; j < getNumberOfNodes(); j++)
+      _globalToLocal (0, i) += inv (i, j) * crds (j);
+
+  // calcul des coefficients en y
+  crds (0) = -1.;
+  crds (1) = -1.;
+  crds (2) = +1.;
+  crds (3) = +1.;
+  for (i = 0; i < getNumberOfNodes(); i++)
+    for (j = 0; j < getNumberOfNodes(); j++)
+      _globalToLocal (1, i) += inv (i, j) * crds (j);
+}
+
+//-----------------------------------------------------------------------------
+void ElQua4NAx::glob2Loc (const Vec3D & point, Vec3D & local)
+//-----------------------------------------------------------------------------
+{
+  local (0) =
+    _globalToLocal (0, 0) + point (0) * _globalToLocal (0, 1) + point (1) * _globalToLocal (0,
+									  2) +
+    point (0) * point (1) * _globalToLocal (0, 3);
+  local (1) =
+    _globalToLocal (1, 0) + point (0) * _globalToLocal (1, 1) + point (1) * _globalToLocal (1,
+									  2) +
+    point (0) * point (1) * _globalToLocal (1, 3);
+  local (2) = 0.;
+}
+*/

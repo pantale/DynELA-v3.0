@@ -16,7 +16,7 @@ Genaration of Makefiles for DynELA compilation is based on the use of the CMake 
 
 DynELA is written in C++ and Python 3.x therefore it needs a C++ compiler and some Python 3.x libraries. Under Ubuntu this can be installed with the following command:
 
-	sudo apt install build-essential swig zlib1g-dev liblapacke-dev python3-dev python3-pip
+	sudo apt install build-essential swig zlib1g-dev liblapacke-dev python3-dev
 	
 It also needs some Python 3.x modules to run properly and at least numpy, matplotlib:
 

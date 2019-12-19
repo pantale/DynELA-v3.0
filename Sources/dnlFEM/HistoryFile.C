@@ -299,22 +299,27 @@ void HistoryFile::save(double currentTime)
 //-----------------------------------------------------------------------------
 {
   // if end of save time
-  if ((_stopTime > 0.0) && (currentTime > _stopTime))
+/*   if ((_stopTime > 0.0) && (currentTime > _stopTime))
     return;
-
+ */
+  // If file has not been initialized
   if (_pfile == NULL)
   {
     open();
     headerWrite();
   }
 
-  if (currentTime < _nextTime)
+  // If it is not time to save a new history
+  if ((currentTime > _startTime)&&(currentTime < _nextTime))
     return;
 
+  // Compute next save time
   _nextTime += _saveTime;
 
+  // Writes current time to file
   fprintf(_pfile, "%10.7E ", currentTime);
 
+  // Writes data to file
   for (long itemToWrite = 0; itemToWrite < _items.getSize(); itemToWrite++)
   {
     fprintf(_pfile, "%10.7E ", _items(itemToWrite)->getValue());

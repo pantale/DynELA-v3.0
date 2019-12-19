@@ -25,7 +25,6 @@
 #include <io_Structure.h>
 #include <DynELA.h>
 #include <IntegrationPoint.h>
-#include <Node.h>
 //#include <Physic.h>
 */
 
@@ -118,7 +117,7 @@ const ElementData ElQua4N2D::_elementData = {
         }
         //
     },
-/*
+    /*
     4, // Number of mass integration points of the Element
     {
         // Mass integration point 1
@@ -329,76 +328,5 @@ double ElQua4N2D::getCharacteristicLength()
 double ElQua4N2D::getArea()
 //-----------------------------------------------------------------------------
 {
-    return sqrt(dnlSquare(nodes(1)->coordinates(0) * (nodes(0)->coordinates(1) - nodes(2)->coordinates(1)) + nodes(3)->coordinates(0) * (-nodes(0)->coordinates(1) + nodes(2)->coordinates(1)) - (nodes(0)->coordinates(0) - nodes(2)->coordinates(0)) * (nodes(1)->coordinates(1) - nodes(3)->coordinates(1)))) / 2;
+    return sqrt(dnlSquare(nodes(1)->coordinates(0) * (nodes(0)->coordinates(1) - nodes(2)->coordinates(1)) + nodes(3)->coordinates(0) * (nodes(2)->coordinates(1) - nodes(0)->coordinates(1)) - (nodes(0)->coordinates(0) - nodes(2)->coordinates(0)) * (nodes(1)->coordinates(1) - nodes(3)->coordinates(1)))) / 2.0;
 }
-
-/*
-
-// //-----------------------------------------------------------------------------
-// void ElQua4N2D::getIntgtoNodes (Vector & N, const Vec3D & point) const
-// //-----------------------------------------------------------------------------
-// {
-//   const double pos = 1.0 / sqrt (3.0);
-//   double ksi = point (0);
-//   double eta = point (1);
-
-//   N (0) = 3.0 * (pos - ksi) * (pos - eta) / 4;
-//   N (1) = 3.0 * (pos + ksi) * (pos - eta) / 4;
-//   N (2) = 3.0 * (pos + ksi) * (pos + eta) / 4;
-//   N (3) = 3.0 * (pos - ksi) * (pos + eta) / 4;
-// }
-
-//-----------------------------------------------------------------------------
-void ElQua4N2D::computeGlob2Loc ()
-//-----------------------------------------------------------------------------
-{
-  Matrix nds (getNumberOfNodes(), getNumberOfNodes());
-  Vector crds (getNumberOfNodes());
-  long i, j;
-  Node *pnd;
-
-  // calcul de la matrice
-  for (i = 0; i < getNumberOfNodes(); i++)
-    {
-      pnd = nodes (i);
-      nds (i, 0) = 1.0;
-      nds (i, 1) = pnd->coordinates (0);
-      nds (i, 2) = pnd->coordinates (1);
-      nds (i, 3) = pnd->coordinates (0) * pnd->coordinates (1);
-    }
-
-  // inversion de la matrice
-  Matrix inv = nds.getInverse ();
-  // cout << inv;
-
-  // init
-  _globalToLocal = 0.0;
-
-  // calcul des coefficients en x
-  crds (0) = -1.0;
-  crds (1) = +1.0;
-  crds (2) = +1.0;
-  crds (3) = -1.0;
-  for (i = 0; i < getNumberOfNodes(); i++)
-    for (j = 0; j < getNumberOfNodes(); j++)
-      _globalToLocal (0, i) += inv (i, j) * crds (j);
-
-  // calcul des coefficients en y
-  crds (0) = -1.0;
-  crds (1) = -1.0;
-  crds (2) = +1.0;
-  crds (3) = +1.0;
-  for (i = 0; i < getNumberOfNodes(); i++)
-    for (j = 0; j < getNumberOfNodes(); j++)
-      _globalToLocal (1, i) += inv (i, j) * crds (j);
-}
-
-//-----------------------------------------------------------------------------
-void ElQua4N2D::glob2Loc (const Vec3D & point, Vec3D & local)
-//-----------------------------------------------------------------------------
-{
-  local (0) = _globalToLocal (0, 0) + point (0) * _globalToLocal (0, 1) + point (1) * _globalToLocal (0, 2) + point (0) * point (1) * _globalToLocal (0, 3);
-  local (1) = _globalToLocal (1, 0) + point (0) * _globalToLocal (1, 1) + point (1) * _globalToLocal (1, 2) + point (0) * point (1) * _globalToLocal (1, 3);
-  local (2) = 0.0;
-}
- */

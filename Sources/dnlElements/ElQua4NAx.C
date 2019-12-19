@@ -117,8 +117,8 @@ const ElementData ElQua4NAx::_elementData = {
         }
         //
     },
-
-/*    4, // Number of mass integration points of the Element
+    /*
+    4, // Number of mass integration points of the Element
     {
         // Mass integration point 1
         {
@@ -304,6 +304,14 @@ void ElQua4NAx::getDerShapeFunctionAtPoint(Matrix &derShapeFunctions, const Vec3
     derShapeFunctions(3, 1) = +(1.0 - ksi) / 4.0;
 }
 
+/* 
+//!Calcul de la longueur caracteristique d'un element
+//
+//Cette methode calcule la longueur caracteristique d'un element e partir de la definition de la geometrie de cet element.
+//La relation utilisee pour ce calcul est donnee par:
+//\f[ l=\frac{x_{31}*y_{42}+x_{24}*y_{31}}{\sqrt{x_{24}^2+y_{42}^2+x_{31}^2+y_{31}^2}} \f] avec \f$ x_{ij} \f$ distance horizontale entre les points i et j et \f$ y_{ij} \f$ distance verticale entre les points i et j. 
+//\return longueur caracteristique de l'element
+*/
 //-----------------------------------------------------------------------------
 double ElQua4NAx::getCharacteristicLength()
 //-----------------------------------------------------------------------------
@@ -320,91 +328,5 @@ double ElQua4NAx::getCharacteristicLength()
 double ElQua4NAx::getArea()
 //-----------------------------------------------------------------------------
 {
-    double x1 = nodes(0)->coordinates(0);
-    double x2 = nodes(1)->coordinates(0);
-    double x3 = nodes(2)->coordinates(0);
-    double x4 = nodes(3)->coordinates(0);
-    double y1 = nodes(0)->coordinates(1);
-    double y2 = nodes(1)->coordinates(1);
-    double y3 = nodes(2)->coordinates(1);
-    double y4 = nodes(3)->coordinates(1);
-
-    return sqrt(dnlSquare(x2 * (y1 - y3) + x4 * (-y1 + y3) - (x1 - x3) * (y2 - y4))) / 2;
+    return sqrt(dnlSquare(nodes(1)->coordinates(0) * (nodes(0)->coordinates(1) - nodes(2)->coordinates(1)) + nodes(3)->coordinates(0) * (nodes(2)->coordinates(1) - nodes(0)->coordinates(1)) - (nodes(0)->coordinates(0) - nodes(2)->coordinates(0)) * (nodes(1)->coordinates(1) - nodes(3)->coordinates(1)))) / 2.0;
 }
-
-/* 
-
-// //-----------------------------------------------------------------------------
-// void // ElQua4NAx::getIntgtoNodes (Vector & N, const Vec3D & point) const
-// //-----------------------------------------------------------------------------
-// {
-//   const double pos = 1.0 / sqrt (3.0);
-//   double ksi = point (0);
-//   double eta = point (1);
-
-//   N (0) = 3.0 * (pos - ksi) * (pos - eta) / 4;
-//   N (1) = 3.0 * (pos + ksi) * (pos - eta) / 4;
-//   N (2) = 3.0 * (pos + ksi) * (pos + eta) / 4;
-//   N (3) = 3.0 * (pos - ksi) * (pos + eta) / 4;
-// }
-
-//-----------------------------------------------------------------------------
-void ElQua4NAx::computeGlob2Loc ()
-//-----------------------------------------------------------------------------
-{
-  Matrix nds (getNumberOfNodes(), getNumberOfNodes());
-  Vector crds (getNumberOfNodes());
-  long i, j;
-  Node *pnd;
-
-  // calcul de la matrice
-  for (i = 0; i < getNumberOfNodes(); i++)
-    {
-      pnd = nodes (i);
-      nds (i, 0) = 1.;
-      nds (i, 1) = pnd->coordinates (0);
-      nds (i, 2) = pnd->coordinates (1);
-      nds (i, 3) = pnd->coordinates (0) * pnd->coordinates (1);
-    }
-
-  // inversion de la matrice
-  Matrix inv = nds.getInverse ();
-  // cout << inv;
-
-  // init
-  _globalToLocal = 0.;
-
-  // calcul des coefficients en x
-  crds (0) = -1.;
-  crds (1) = +1.;
-  crds (2) = +1.;
-  crds (3) = -1.;
-  for (i = 0; i < getNumberOfNodes(); i++)
-    for (j = 0; j < getNumberOfNodes(); j++)
-      _globalToLocal (0, i) += inv (i, j) * crds (j);
-
-  // calcul des coefficients en y
-  crds (0) = -1.;
-  crds (1) = -1.;
-  crds (2) = +1.;
-  crds (3) = +1.;
-  for (i = 0; i < getNumberOfNodes(); i++)
-    for (j = 0; j < getNumberOfNodes(); j++)
-      _globalToLocal (1, i) += inv (i, j) * crds (j);
-}
-
-//-----------------------------------------------------------------------------
-void ElQua4NAx::glob2Loc (const Vec3D & point, Vec3D & local)
-//-----------------------------------------------------------------------------
-{
-  local (0) =
-    _globalToLocal (0, 0) + point (0) * _globalToLocal (0, 1) + point (1) * _globalToLocal (0,
-									  2) +
-    point (0) * point (1) * _globalToLocal (0, 3);
-  local (1) =
-    _globalToLocal (1, 0) + point (0) * _globalToLocal (1, 1) + point (1) * _globalToLocal (1,
-									  2) +
-    point (0) * point (1) * _globalToLocal (1, 3);
-  local (2) = 0.;
-}
-*/

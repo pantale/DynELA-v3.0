@@ -1333,11 +1333,18 @@ void String::addExtension(String ext)
 void String::fromFile(FILE *pfile)
 //-----------------------------------------------------------------------------
 {
-  long l;
-  fread((void *)(&l), sizeof(long), 1, pfile);
-  char stt[l + 5];
-  fread(stt, sizeof(char), l, pfile);
-  stt[l] = '\0';
+  // Read the length of the string as long
+  long stringLen;
+  long ret;
+  ret = fread((void *)(&stringLen), sizeof(long), 1, pfile);
+
+  // Read the string itself
+  char stt[stringLen + 5];
+  ret = fread(stt, sizeof(char), stringLen, pfile);
+
+  // Add the CR to the string
+  stt[stringLen] = '\0';
+
   (*this) = stt;
 }
 
@@ -1345,8 +1352,11 @@ void String::fromFile(FILE *pfile)
 void String::toFile(FILE *pfile)
 //-----------------------------------------------------------------------------
 {
-  long l = length();
-  fwrite((void *)(&l), sizeof(long), 1, pfile);
+  // Write the length of the string as long
+  long stringLen = length();
+  fwrite((void *)(&stringLen), sizeof(long), 1, pfile);
+
+  // Write the string itself
   const char *p = data();
-  fwrite((void *)(p), sizeof(char), l, pfile);
+  fwrite((void *)(p), sizeof(char), stringLen, pfile);
 }

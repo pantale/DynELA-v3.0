@@ -174,6 +174,9 @@ void Explicit::solve(double solveUpToTime)
   // Compute the Internal Forces
   // domain->computeInternalForces();
 
+  // Call of time History saves
+  domain->writeHistoryFiles();
+
   while (domain->currentTime < _solveUpToTime)
   {
     // Initialisation of the step

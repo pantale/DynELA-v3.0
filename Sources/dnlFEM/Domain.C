@@ -794,31 +794,6 @@ void Domain::computeJacobian()
   }
 }  */
 
-/* //-----------------------------------------------------------------------------
-void Domain::computeJacobian()
-//-----------------------------------------------------------------------------
-{
-#ifdef PRINT_Execution_Solve
-  cout << "Compute Jacobian\n";
-#endif
-
-#pragma omp parallel
-  {
-    ElementsChunk *chunk = dynelaData->parallel->getElementsOfCurrentCore();
-
-    for (long elementId = 0; elementId < chunk->elements.getSize(); elementId++)
-    {
-      if (chunk->elements(elementId)->computeJacobian() == false)
-      {
-        std::cerr << "Emergency save of the last result\n";
-        std::cerr << "Program aborted\n";
-        dynelaData->writeResultFile();
-        exit(-1);
-      }
-    }
-  }
-} */
-
 //-----------------------------------------------------------------------------
 void Domain::computeJacobian()
 //-----------------------------------------------------------------------------
@@ -856,20 +831,6 @@ void Domain::computeStrains()
     }
   }
 }
-
-/* //-----------------------------------------------------------------------------
-void Domain::computeStrains()
-//-----------------------------------------------------------------------------
-{
-#pragma omp parallel
-  {
-    ElementsChunk *chunk = dynelaData->parallel->getElementsOfCurrentCore();
-    for (long elementId = 0; elementId < chunk->elements.getSize(); elementId++)
-    {
-      chunk->elements(elementId)->computeStrains();
-    }
-  }
-} */
 
 /* //-----------------------------------------------------------------------------
 void Domain::computeStrains()

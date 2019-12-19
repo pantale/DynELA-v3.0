@@ -444,7 +444,7 @@ void Element::computeStress(double timeStep)
 
   double TwoG = material->getTwoShearModulus();
   double TwoG32 = dnlSqrt32 * TwoG;
-  
+
   // Don't know for the moment if the density has to be the initial one of the current one
   double heatFrac = material->taylorQuinney / (material->density * material->heatCapacity);
 
@@ -453,10 +453,6 @@ void Element::computeStress(double timeStep)
   {
     // Select integration point
     setCurrentIntegrationPoint(intPoint);
-
-    // Compute the heat fraction
-    // Don't know for the moment if the density has to be the initial one of the current one
-    //   double heatFrac = material->taylorQuinney / (_integrationPoint->density * material->heatCapacity);
 
     // Get back the Stress
     StressOld = _integrationPoint->Stress;

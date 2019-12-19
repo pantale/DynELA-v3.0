@@ -735,7 +735,6 @@ void DynELA::solve()
   for (short domainId = 0; domainId < domains.getSize(); domainId++)
   {
     domains(domainId)->initSolve();
-    //   domain->writeHistoryFiles();
   }
 
   // Get the end time of the structure

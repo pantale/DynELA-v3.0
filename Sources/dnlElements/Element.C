@@ -24,7 +24,7 @@
 #include <NodalField.h>
 #include <Material.h>
 #include <Field.h>
-//#include <Domain.h>
+//#include <Model.h>
 
 /* #include <Node.h>
 
@@ -2048,8 +2048,8 @@ bool compareLateralSurfaces(LateralSurface* p1, LateralSurface* p2)
 {
   short i;
 
-  // test if elements are from the same domain
-  if (p1->pel->domain != p2->pel->domain) return (p1->pel->domain > p2->pel->domain);
+  // test if elements are from the same model
+  if (p1->pel->model != p2->pel->model) return (p1->pel->model > p2->pel->model);
 
   for (i=0; i<maxNumberOfNodesBySideFace-1;i++)
     {

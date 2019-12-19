@@ -20,7 +20,7 @@
 
 #include <Errors.h>
 #include <Solver.h>
-#include <Domain.h>
+#include <Model.h>
 #include <Settings.h>
 
 /* 
@@ -101,10 +101,10 @@ void Solver::setTimes(double start_time, double end_time)
 }
 
 //-----------------------------------------------------------------------------
-void Solver::setDomain(Domain *newDomain)
+void Solver::setModel(Model *newModel)
 //-----------------------------------------------------------------------------
 {
-  domain = newDomain;
+  model = newModel;
 }
 
 //! teste que le temps actuel est inferieur e une valeur limite
@@ -118,8 +118,8 @@ Cette methode teste que le temps actuel est tel que:
 bool Solver::timeIsBetweenBounds()
 //-----------------------------------------------------------------------------
 {
-  //  if ((domain->currentTime >= startTime) && (domain->currentTime < dnlMin(endTime, upTime)))
-  if ((domain->currentTime >= startTime) && (domain->currentTime < endTime))
+  //  if ((model->currentTime >= startTime) && (model->currentTime < dnlMin(endTime, upTime)))
+  if ((model->currentTime >= startTime) && (model->currentTime < endTime))
     return true;
 
   return false;
@@ -140,7 +140,7 @@ bool Solver::timeAndIncrementsAreBetweenBounds()
 //-----------------------------------------------------------------------------
 {
   // test sur le temps
-  if ((domain->currentTime < startTime) && (domain->currentTime > endTime))
+  if ((model->currentTime < startTime) && (model->currentTime > endTime))
     return (false);
 
   // test sur les increments
@@ -217,9 +217,9 @@ void Solver::setIncrements(long start, long stop)
   endIncrement = stop;
 }
 
-//!Calcul du time step de minimal du domaine
+//!Calcul du time step de minimal du modele
 /*!
-  Cette methode calcule le time step minimal du domaine en fonction de la grille courante. Cette methode fait appel e la methode Domain::computePowerIterationTimeStep() pour l'evaluation numerique de la valeur du time step minimal. La relation utilisee pour ce calcul est donc donnee par l'une des equations ci-dessous selon la valeur definie par la methode setTimeStepMethod():
+  Cette methode calcule le time step minimal du modele en fonction de la grille courante. Cette methode fait appel e la methode Model::computePowerIterationTimeStep() pour l'evaluation numerique de la valeur du time step minimal. La relation utilisee pour ce calcul est donc donnee par l'une des equations ci-dessous selon la valeur definie par la methode setTimeStepMethod():
 Si methode pulsation maxi
   \f[ \Delta t = \gamma_s \frac{\Omega_s}{f_{max}} \f]
 Si critere de Courant:
@@ -244,12 +244,12 @@ void Solver::computeTimeStep(bool forceComputation)
     {
     case Courant:
     {
-      maximumFrequency = 2.0 / domain->computeCourantTimeStep();
+      maximumFrequency = 2.0 / model->computeCourantTimeStep();
     }
     break;
     case PowerIteration:
     {
-      //     maximumFrequency = domain->computePowerIterationTimeStep();
+      //     maximumFrequency = model->computePowerIterationTimeStep();
     }
     break;
     default:
@@ -264,7 +264,7 @@ void Solver::computeTimeStep(bool forceComputation)
     _previousTimeStep = _computedTimeStep;
 
     // set actual date
-    _computedTimeStepDate = domain->currentTime;
+    _computedTimeStepDate = model->currentTime;
     _computedTimeStep = timeStep;
   }
 
@@ -272,7 +272,7 @@ void Solver::computeTimeStep(bool forceComputation)
   else
   {
     if (_computedTimeStepDate != _previousTimeStepDate)
-      timeStep = dnlLinearInterp(_previousTimeStep, _computedTimeStep, (domain->currentTime - _previousTimeStepDate) / (_computedTimeStepDate - _previousTimeStepDate));
+      timeStep = dnlLinearInterp(_previousTimeStep, _computedTimeStep, (model->currentTime - _previousTimeStepDate) / (_computedTimeStepDate - _previousTimeStepDate));
   }
 }
 
@@ -306,7 +306,7 @@ void Solver::progressWrite()
   FILE *fprogress = fopen (st.chars (), "w");
   fprintf (fprogress, "%ld %10.7E %10.7E %10.7E %10.7E %ld\n",
 	   currentIncrement, 
-	   domain->currentTime, 
+	   model->currentTime, 
 	   timeStep, 
 	   endTime,
 	   interval,

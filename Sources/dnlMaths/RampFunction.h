@@ -42,16 +42,19 @@ public:
   };
 
 public:
-  RampFunction(char* newName = NULL);
+  RampFunction(char *newName = NULL);
   ~RampFunction();
 
   double getValue(double x);
   double getSlope(double x);
   void set(short newType, double newMin, double newMax);
   short getType(long i);
-  void print();
   void toGnuplot(String filename, long steps = 250);
   String convertToDynELASourceFile();
+
+#ifndef SWIG
+  void print();
+#endif
 };
 
 #endif

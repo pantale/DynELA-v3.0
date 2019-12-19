@@ -22,10 +22,10 @@
 #define __dnlFEM_Solver_h__
 
 #include <String.h>
-class Domain;
+class Model;
 
 /* #include <upFemSolver.h>
-class Domain;
+class Model;
 extern String parsedFileName;
  */
 /*!
@@ -45,7 +45,7 @@ extern String parsedFileName;
   \brief Classe de definition et de manipulation des solveurs elements finis.
   \ingroup femSolver
 
-  Cette classe sert e definir et e manipuler les solveurs disponibles au niveau d'un domaine. Elle contient toutes les definitions de base concernant la gestion des temps de simulation (increment de temps, temps de debut, de fin ...) ainsi que la gestion complete des increments.
+  Cette classe sert e definir et e manipuler les solveurs disponibles au niveau d'un modele. Elle contient toutes les definitions de base concernant la gestion des temps de simulation (increment de temps, temps de debut, de fin ...) ainsi que la gestion complete des increments.
 
   \author Olivier PANTALE
   \version 1.0.0
@@ -77,7 +77,7 @@ public:
   };
 
 public:
-  Domain *domain = NULL;     //!< Current domain for the solver
+  Model *model = NULL;     //!< Current model for the solver
   double timeStep = 0.0;     //!< Current time step for integration
   double endTime = 0.0;      //!< End time of the solver
   double startTime = 0.0;    //!< Start time of the solver
@@ -98,7 +98,7 @@ public:
   void computeTimeStep(bool forceComputation = false);
   void initialize();
   void setComputeTimeStepFrequency(int frequency);
-  void setDomain(Domain *newDomain);
+  void setModel(Model *newModel);
   void setIncrements(long start, long stop);
   void setTimes(double start_time, double end_time);
   void setTimeStepMethod(short method);

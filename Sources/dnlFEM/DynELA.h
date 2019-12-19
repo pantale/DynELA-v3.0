@@ -30,7 +30,9 @@
 #include <omp.h>
 
 class DynELA;
+#ifndef SWIG
 extern DynELA *dynelaData;
+#endif
 
 /* class ElementSet;
 
@@ -48,7 +50,7 @@ extern DynELA *dynelaData;
   \version 1.0.0
   \date 1997-2004
 */
-class Domain;
+class Model;
 class Node;
 class Element;
 class LogFile;
@@ -59,6 +61,7 @@ class VtkInterface;
 class Boundary;
 class Solver;
 class Parallel;
+class HistoryFile;
 
 /* class Element;
 class Node;
@@ -92,7 +95,7 @@ private:
 protected:
   ListIndex<Node *> nodes;       //!< Nodes list of the structure
   ListIndex<Element *> elements; //!< Elements list of the structure
-  List<Domain *> domains;        //!< Domains list of the structure
+  //List<Model *> models;          //!< Models list of the structure
   List<Material *> materials;    //!< Materials list of the structure
 
 public:
@@ -105,6 +108,7 @@ public:
   Settings *settings = NULL;      //!< Settings
   VtkInterface *dataFile = NULL;  //!< Interface for results
   Parallel *parallel = NULL;      //!< Parallel computation
+  Model *model = NULL;            //!< Pointer to the model
   Timers cpuTimes;                //!< Store the CPU Times
 
 #ifndef SWIG
@@ -118,7 +122,7 @@ public:
 
   bool createElement(long elementNumber, long nodesIndex, ...);
   bool createNode(long nodeNumber, double xCoord, double yCoord, double zCoord);
-  Domain *getCurrentDomain();
+ // Model *model;
   Element *getElementByNum(long elementNumber);
   long getElementsNumber();
   long getNodesNumber();
@@ -127,6 +131,8 @@ public:
   void add(Material *material, ElementSet *elementSet);
   void add(NodeSet *nodeSet, long startNumber = -1, long endNumber = -1, long increment = 1);
   void add(Parallel *parallel);
+  void add(HistoryFile *newHistoryFile);
+  void add(Solver *newSolver);
   void addMaterial(Material *pmat);
   void attachConstantBC(Boundary *boundary, NodeSet *nodeSet);
   void attachInitialBC(Boundary *boundary, NodeSet *nodeSet);
@@ -165,12 +171,12 @@ public:
   void compact();
   void getDataFileBounds(long &min, long& max);
   void getGlobalBox (Vec3D & min, Vec3D & max);
-  void mergeDomains();
+  void mergeModels();
   void readData (ifstream & pfile);
   void readResultFile(long);
   void saveResults();
   void setDefaultElement (Element * pel);
-  void setDomain(Domain* domain);
+  void setModel(Model* model);
   void setResultFile(String);
   void sortElementsAndNodes();
   void writeData (ofstream & pfile);

@@ -31,7 +31,7 @@ This file is the declaration file for the Element class.
 
 // necessary class definition before use
 /* class Node;
-class Domain;
+class Model;
 class IntegrationPointBase;
 class IntegrationPoint;
 class UnderIntegrationPoint;
@@ -39,7 +39,7 @@ class UnderIntegrationPoint;
 class IntegrationPoint;
 //class UnderIntegrationPoint;
 class Node;
-class Domain;
+class Model;
 class Material;
 
 class Element
@@ -55,7 +55,7 @@ class Element
     IntegrationPoint *_integrationPoint;
 
   public:
-    //   Domain *domain;
+    //   Model *model;
     List<IntegrationPoint *> integrationPoints;
     //    List<UnderIntegrationPoint *> underIntegrationPoints;
     ListIndex<Node *> nodes;

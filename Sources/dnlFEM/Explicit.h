@@ -27,7 +27,7 @@
 /* #include <upFemSolver.h>
 
 #include <Solver.h>
-class Domain;
+class Model;
  */
 /*!
   \file Explicit.h
@@ -48,7 +48,7 @@ class Domain;
   \brief Classe de definition et de manipulation des solveurs elements finis.
   \ingroup femExplicitSolverCH
 
-  Cette classe sert e definir et e manipuler les solveurs disponibles au niveau d'un domaine. Elle contient toutes les definitions de base concernant la gestion des temps de simulation (increment de temps, temps de debut, de fin ...) ainsi que la gestion complete des increments.
+  Cette classe sert e definir et e manipuler les solveurs disponibles au niveau d'un modele. Elle contient toutes les definitions de base concernant la gestion des temps de simulation (increment de temps, temps de debut, de fin ...) ainsi que la gestion complete des increments.
 
   \author Olivier PANTALE
   \version 1.0.0

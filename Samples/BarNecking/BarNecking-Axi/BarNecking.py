@@ -42,7 +42,6 @@ speed = displacement / stopTime
 
 # Creates the main Object
 dynELA = dnl.DynELA("BarNecking")
-domain = dynELA.getCurrentDomain()
 
 # Creates the Nodes
 nbNodes = 1
@@ -124,7 +123,7 @@ dynELA.attachConstantBC(speedBC, topNS)
 
 solver = dnl.Explicit("Solver")
 solver.setTimes(0, stopTime)
-domain.add(solver)
+dynELA.add(solver)
 #solver.setTimeStepSafetyFactor(0.6)
 dynELA.setSaveTimes(0, stopTime, stopTime / nbreSaves)
 
@@ -133,37 +132,37 @@ vonMisesHist = dnl.HistoryFile("vonMisesHistory")
 vonMisesHist.setFileName(dnl.String("vonMises.plot"))
 vonMisesHist.add(histNS, dnl.Field.vonMises)
 vonMisesHist.setSaveTime(stopTime / nbrePoints)
-domain.add(vonMisesHist)
+dynELA.add(vonMisesHist)
 
 plasticStrainHist = dnl.HistoryFile("plasticStrainHistory")
 plasticStrainHist.setFileName(dnl.String("plasticStrain.plot"))
 plasticStrainHist.add(histNS, dnl.Field.plasticStrain)
 plasticStrainHist.setSaveTime(stopTime / nbrePoints)
-domain.add(plasticStrainHist)
+dynELA.add(plasticStrainHist)
 
 temperatureHist = dnl.HistoryFile("temperatureHistory")
 temperatureHist.setFileName(dnl.String("temperature.plot"))
 temperatureHist.add(histNS, dnl.Field.temperature)
 temperatureHist.setSaveTime(stopTime / nbrePoints)
-domain.add(temperatureHist)
+dynELA.add(temperatureHist)
 
 internalEnergyHist = dnl.HistoryFile("internalEnergyHistory")
 internalEnergyHist.setFileName(dnl.String("internalEnergy.plot"))
 internalEnergyHist.add(histNS, dnl.Field.internalEnergy)
 internalEnergyHist.setSaveTime(stopTime / nbrePoints)
-domain.add(internalEnergyHist)
+dynELA.add(internalEnergyHist)
 
 dtHist = dnl.HistoryFile("dtHistory")
 dtHist.setFileName(dnl.String("dt.plot"))
 dtHist.add(dnl.Field.timeStep)
 dtHist.setSaveTime(stopTime / nbrePoints)
-domain.add(dtHist)
+dynELA.add(dtHist)
 
 keHist = dnl.HistoryFile("keHistory")
 keHist.setFileName(dnl.String("ke.plot"))
 keHist.add(dnl.Field.kineticEnergy)
 keHist.setSaveTime(stopTime / nbrePoints)
-domain.add(keHist)
+dynELA.add(keHist)
 
 gammaHist = dnl.HistoryFile("gammaHistory")
 gammaHist.setFileName(dnl.String("gamma.plot"))
@@ -172,7 +171,7 @@ gammaHist.add(histES, 2, dnl.Field.gamma)
 gammaHist.add(histES, 3, dnl.Field.gamma)
 gammaHist.add(histES, 4, dnl.Field.gamma)
 gammaHist.setSaveTime(stopTime / nbrePoints)
-domain.add(gammaHist)
+dynELA.add(gammaHist)
 
 gammaCumulateHist = dnl.HistoryFile("gammaCumulateHistory")
 gammaCumulateHist.setFileName(dnl.String("gammaCumulate.plot"))
@@ -181,7 +180,7 @@ gammaCumulateHist.add(histES, 2, dnl.Field.gammaCumulate)
 gammaCumulateHist.add(histES, 3, dnl.Field.gammaCumulate)
 gammaCumulateHist.add(histES, 4, dnl.Field.gammaCumulate)
 gammaCumulateHist.setSaveTime(stopTime / nbrePoints)
-domain.add(gammaCumulateHist)
+dynELA.add(gammaCumulateHist)
 
 # Declaration of the history files
 vonMisesHist2 = dnl.HistoryFile("vonMisesHistory2")
@@ -191,7 +190,7 @@ vonMisesHist2.add(histES, 2, dnl.Field.vonMises)
 vonMisesHist2.add(histES, 3, dnl.Field.vonMises)
 vonMisesHist2.add(histES, 4, dnl.Field.vonMises)
 vonMisesHist2.setSaveTime(stopTime / nbrePoints)
-domain.add(vonMisesHist2)
+dynELA.add(vonMisesHist2)
 
 parallel = dnl.Parallel()
 dynELA.add(parallel)

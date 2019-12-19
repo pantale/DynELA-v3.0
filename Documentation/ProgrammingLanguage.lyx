@@ -548,7 +548,7 @@ library doesn't include any meshing procedure yet, therefore, it is mandatory
 \end_layout
 
 \begin_layout Subsection
-Definition of the domain
+Definition of the Model
 \end_layout
 
 \begin_layout Subsection
@@ -2100,7 +2100,7 @@ dtHist.setSaveTime(stopTime/nbrePoints)
 
 \begin_layout Plain Layout
 
-domain.add(dtHist)
+dynELA.add(dtHist)
 \end_layout
 
 \begin_layout Plain Layout
@@ -2161,7 +2161,7 @@ vonMisesHist.setSaveTime(stopTime/nbrePoints)
 
 \begin_layout Plain Layout
 
-domain.add(vonMisesHist)
+dynELA.add(vonMisesHist)
 \end_layout
 
 \begin_layout Plain Layout
@@ -2256,7 +2256,7 @@ solver.setTimes(0, stopTime)
 
 \begin_layout Plain Layout
 
-domain.add(solver)
+dynELA.add(solver)
 \end_layout
 
 \begin_layout Plain Layout

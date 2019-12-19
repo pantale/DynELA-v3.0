@@ -27,7 +27,7 @@ class NodeSet;
 class Node;
 class Element;
 class ElementSet;
-class Domain;
+class Model;
 
 class HistoryFileItem
 {

@@ -16,7 +16,6 @@
   #include "Timer.h"
   #include "Field.h"
 %}
-
 %include "String.h"
 %extend String
 {

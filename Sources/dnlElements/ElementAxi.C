@@ -27,7 +27,7 @@
 #include <DynELA.h>
 #include <io_Structure.h>
 // #include <Physic.h>
-#include <Domain.h>
+#include <Model.h>
  */
 //-----------------------------------------------------------------------------
 ElementAxi::ElementAxi(long elementNumber) : ElementPlane(elementNumber)

@@ -46,9 +46,9 @@ public:
   };
 
 public:
-  SinusFunction(char* newName = NULL);
+  SinusFunction(char *newName = NULL);
   ~SinusFunction();
-  
+
   double getValue(double x);
   long getNumberOfFragments();
   void setSin(double coef, double pulse, double constant = 0);
@@ -60,10 +60,12 @@ public:
   double getConstant(long i);
   double getConstant();
   double getSlope(double x);
-  void print();
   void toGnuplot(String filename, double xmin, double xmax, double steps);
-//  void flush();
   String convertToDynELASourceFile();
+
+#ifndef SWIG
+  void print();
+#endif
 };
 
 #endif

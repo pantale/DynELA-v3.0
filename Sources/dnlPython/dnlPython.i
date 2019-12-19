@@ -9,13 +9,14 @@
 
 %feature("autodoc","1");
 %include "std_string.i"
-%warnfilter(402);
 %include "cpointer.i"
 %pointer_functions(double ,doubleP)
 %pointer_functions(int ,intP)
 %pointer_functions(long ,longP)
 
 %module dnlPython
+%warnfilter(321) RampFunction::set;
+%warnfilter(402);
 
 %include "dnlKernel.inc"
 %include "dnlMaths.inc"

@@ -30,7 +30,6 @@ T0 = 20.0
 
 # Creates the main Object
 dynELA = dnl.DynELA("Torus")
-domain = dynELA.getCurrentDomain()
 
 # Creates the Nodes
 dynELA.createNode(1, 10.00, 0.00, 0.00)
@@ -101,7 +100,7 @@ dynELA.attachConstantBC(speed, leftNS)
 # Declaration of the explicit solver
 solver = dnl.Explicit("Solver")
 solver.setTimes(0,stopTime)
-domain.add(solver)
+dynELA.add(solver)
 dynELA.setSaveTimes(0,stopTime,stopTime/nbreSaves)
 
 # Declaration of the history files
@@ -109,19 +108,19 @@ vonMisesHist = dnl.HistoryFile("vonMisesHistory")
 vonMisesHist.setFileName(dnl.String("vonMises.plot"))
 vonMisesHist.add(allES, 0, dnl.Field.vonMises)
 vonMisesHist.setSaveTime(stopTime/nbrePoints)
-domain.add(vonMisesHist)
+dynELA.add(vonMisesHist)
 
 temperatureHist = dnl.HistoryFile("temperatureHistory")
 temperatureHist.setFileName(dnl.String("temperature.plot"))
 temperatureHist.add(allES, 0, dnl.Field.temperature)
 temperatureHist.setSaveTime(stopTime/nbrePoints)
-domain.add(temperatureHist)
+dynELA.add(temperatureHist)
 
 plasticStrainHist = dnl.HistoryFile("plasticStrainHistory")
 plasticStrainHist.setFileName(dnl.String("plasticStrain.plot"))
 plasticStrainHist.add(allES, 0, dnl.Field.plasticStrain)
 plasticStrainHist.setSaveTime(stopTime/nbrePoints)
-domain.add(plasticStrainHist)
+dynELA.add(plasticStrainHist)
 
 plasticStrainsHist = dnl.HistoryFile("plasticStrainHistory")
 plasticStrainsHist.setFileName(dnl.String("plasticStrains.plot"))
@@ -130,25 +129,25 @@ plasticStrainsHist.add(allES, 2, dnl.Field.plasticStrain)
 plasticStrainsHist.add(allES, 3, dnl.Field.plasticStrain)
 plasticStrainsHist.add(allES, 4, dnl.Field.plasticStrain)
 plasticStrainsHist.setSaveTime(stopTime/nbrePoints)
-domain.add(plasticStrainsHist)
+dynELA.add(plasticStrainsHist)
 
 densityHist = dnl.HistoryFile("densityHistory")
 densityHist.setFileName(dnl.String("density.plot"))
 densityHist.add(allES, 0, dnl.Field.density)
 densityHist.setSaveTime(stopTime/nbrePoints)
-domain.add(densityHist)
+dynELA.add(densityHist)
 
 dtHist = dnl.HistoryFile("dtHistory")
 dtHist.setFileName(dnl.String("dt.plot"))
 dtHist.add(dnl.Field.timeStep)
 dtHist.setSaveTime(stopTime/nbrePoints)
-domain.add(dtHist)
+dynELA.add(dtHist)
 
 keHist = dnl.HistoryFile("keHistory")
 keHist.setFileName(dnl.String("ke.plot"))
 keHist.add(dnl.Field.kineticEnergy)
 keHist.setSaveTime(stopTime/nbrePoints)
-domain.add(keHist)
+dynELA.add(keHist)
 
 StressHist = dnl.HistoryFile("StressHistory")
 StressHist.setFileName(dnl.String("Stress.plot"))
@@ -157,13 +156,13 @@ StressHist.add(allES, 0, dnl.Field.StressYY)
 StressHist.add(allES, 0, dnl.Field.StressZZ)
 StressHist.add(allES, 0, dnl.Field.StressXY)
 StressHist.setSaveTime(stopTime/nbrePoints)
-domain.add(StressHist)
+dynELA.add(StressHist)
 
 uxHist = dnl.HistoryFile("dispX")
 uxHist.setFileName(dnl.String("dispX.plot"))
 uxHist.add(histNS, dnl.Field.displacementX)
 uxHist.setSaveTime(stopTime/nbrePoints)
-domain.add(uxHist)
+dynELA.add(uxHist)
 
 
 # Parallel solver

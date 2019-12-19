@@ -42,7 +42,6 @@ speed = displacement / stopTime
 
 # Creates the main Object
 dynELA = dnl.DynELA("PlateNecking")
-domain = dynELA.getCurrentDomain()
 
 # Creates the Nodes
 nbNodes = 1
@@ -124,7 +123,7 @@ dynELA.attachConstantBC(speedBC, topNS)
 
 solver = dnl.Explicit("Solver")
 solver.setTimes(0, stopTime)
-domain.add(solver)
+dynELA.add(solver)
 dynELA.setSaveTimes(0, stopTime, stopTime / nbreSaves)
 
 # Declaration of the history files
@@ -132,37 +131,37 @@ vonMisesHist = dnl.HistoryFile("vonMisesHistory")
 vonMisesHist.setFileName(dnl.String("vonMises.plot"))
 vonMisesHist.add(histES, 0, dnl.Field.vonMises)
 vonMisesHist.setSaveTime(stopTime / nbrePoints)
-domain.add(vonMisesHist)
+dynELA.add(vonMisesHist)
 
 plasticStrainHist = dnl.HistoryFile("plasticStrainHistory")
 plasticStrainHist.setFileName(dnl.String("plasticStrain.plot"))
 plasticStrainHist.add(histES, 0, dnl.Field.plasticStrain)
 plasticStrainHist.setSaveTime(stopTime / nbrePoints)
-domain.add(plasticStrainHist)
+dynELA.add(plasticStrainHist)
 
 temperatureHist = dnl.HistoryFile("temperatureHistory")
 temperatureHist.setFileName(dnl.String("temperature.plot"))
 temperatureHist.add(histES, 0, dnl.Field.temperature)
 temperatureHist.setSaveTime(stopTime / nbrePoints)
-domain.add(temperatureHist)
+dynELA.add(temperatureHist)
 
 densityHist = dnl.HistoryFile("densityHistory")
 densityHist.setFileName(dnl.String("density.plot"))
 densityHist.add(histES, 0, dnl.Field.density)
 densityHist.setSaveTime(stopTime / nbrePoints)
-domain.add(densityHist)
+dynELA.add(densityHist)
 
 dtHist = dnl.HistoryFile("dtHistory")
 dtHist.setFileName(dnl.String("dt.plot"))
 dtHist.add(dnl.Field.timeStep)
 dtHist.setSaveTime(stopTime / nbrePoints)
-domain.add(dtHist)
+dynELA.add(dtHist)
 
 keHist = dnl.HistoryFile("keHistory")
 keHist.setFileName(dnl.String("ke.plot"))
 keHist.add(dnl.Field.kineticEnergy)
 keHist.setSaveTime(stopTime / nbrePoints)
-domain.add(keHist)
+dynELA.add(keHist)
 
 parallel = dnl.Parallel()
 dynELA.add(parallel)

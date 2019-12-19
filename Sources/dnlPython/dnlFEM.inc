@@ -10,7 +10,7 @@
 %varargs(30, long val = 0) DynELA::createElement;
 
 %{
-  #include "Domain.h"
+  #include "Model.h"
   #include "DynELA.h"
   #include "VtkInterface.h"
   #include "HistoryFile.h"
@@ -20,7 +20,7 @@
   #include "Parallel.h"
 %}
 
-%include "Domain.h"
+%include "Model.h"
 %include "DynELA.h"
 %include "VtkInterface.h"
 %include "HistoryFile.h"

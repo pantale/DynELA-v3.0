@@ -55,7 +55,7 @@ public:
     temperature,                        //!< Current temperature
     timeStep,                           //!< Current timeStep
     realTimeStep,                       //!< Real timeStep taking into account the reducing due to saves
-    kineticEnergy,                      //!< Kinetic energy of the current domain
+    kineticEnergy,                      //!< Kinetic energy of the current model
     yieldStress,                        //!< Maximum yield Stress of the point
     FIELD_TENSOR2(Strain),              //!< tenseur des deformations
     FIELD_TENSOR2(StrainInc),           //!< increment du tenseur des deformations

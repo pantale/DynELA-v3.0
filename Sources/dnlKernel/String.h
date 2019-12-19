@@ -39,6 +39,7 @@
   \since DynELA 1.0.0
   \date 1997-2004
 */
+
 class String : public std::string
 {
 

@@ -21,7 +21,7 @@
 #include <Explicit.h>
 #include <Node.h>
 #include <DynELA.h>
-#include <Domain.h>
+#include <Model.h>
 #include <NodalField.h>
 #include <BoundaryCondition.h>
 
@@ -144,7 +144,7 @@ void Explicit::setDissipation(double dissipation)
 void Explicit::solve(double solveUpToTime)
 //-----------------------------------------------------------------------------
 {
-  assert(domain != NULL);
+  assert(model != NULL);
 
   // Verify if we need to run the solver
   if (!timeIsBetweenBounds())
@@ -160,11 +160,11 @@ void Explicit::solve(double solveUpToTime)
 
   // Compute the Jacobian
   dynelaData->cpuTimes.timer("Jacobian")->start();
-  domain->computeJacobian();
+  model->computeJacobian();
   dynelaData->cpuTimes.timer("Jacobian")->stop();
 
   // Compute the Mass Matrix if not already computed
-  domain->computeMassMatrix();
+  model->computeMassMatrix();
 
   // Compute the Time Step enforcing computation
   dynelaData->cpuTimes.timer("TimeStep")->start();
@@ -172,12 +172,12 @@ void Explicit::solve(double solveUpToTime)
   dynelaData->cpuTimes.timer("TimeStep")->stop();
 
   // Compute the Internal Forces
-  // domain->computeInternalForces();
+  // model->computeInternalForces();
 
   // Call of time History saves
-  domain->writeHistoryFiles();
+  model->writeHistoryFiles();
 
-  while (domain->currentTime < _solveUpToTime)
+  while (model->currentTime < _solveUpToTime)
   {
     // Initialisation of the step
     initStep();
@@ -185,7 +185,7 @@ void Explicit::solve(double solveUpToTime)
     // Display advancing of solution
     if ((currentIncrement % _reportFrequency == 0) || (currentIncrement == 1))
     {
-      printf("%s inc=%ld time=%8.4E timeStep=%8.4E\n", domain->name.chars(), currentIncrement, domain->currentTime, timeStep);
+      printf("%s inc=%ld time=%8.4E timeStep=%8.4E\n", model->name.chars(), currentIncrement, model->currentTime, timeStep);
 
       // write the progress file
       //progressWrite();
@@ -198,27 +198,27 @@ void Explicit::solve(double solveUpToTime)
 
     // Compute the Strains
     dynelaData->cpuTimes.timer("Strains")->start();
-    domain->computeStrains();
+    model->computeStrains();
     dynelaData->cpuTimes.timer("Strains")->stop();
 
     // Compute pressure increment
     dynelaData->cpuTimes.timer("Pressure")->start();
-    domain->computePressure();
+    model->computePressure();
     dynelaData->cpuTimes.timer("Pressure")->stop();
 
     // calcul des contraintes au sein de l'element
     dynelaData->cpuTimes.timer("Stress")->start();
-    domain->computeStress(timeStep);
+    model->computeStress(timeStep);
     dynelaData->cpuTimes.timer("Stress")->stop();
 
     // Use objectivity
     dynelaData->cpuTimes.timer("FinalRotation")->start();
-    domain->computeFinalRotation();
+    model->computeFinalRotation();
     dynelaData->cpuTimes.timer("FinalRotation")->stop();
 
     // Compute the Internal Forces
     dynelaData->cpuTimes.timer("InternalForces")->start();
-    domain->computeInternalForces();
+    model->computeInternalForces();
     dynelaData->cpuTimes.timer("InternalForces")->stop();
 
     // Solve the step
@@ -233,11 +233,11 @@ void Explicit::solve(double solveUpToTime)
     // End step
     endStep();
 
-    if (domain->currentTime < _solveUpToTime)
+    if (model->currentTime < _solveUpToTime)
     {
       // Compute the Jacobian
       dynelaData->cpuTimes.timer("Jacobian")->start();
-      domain->computeJacobian();
+      model->computeJacobian();
       dynelaData->cpuTimes.timer("Jacobian")->stop();
 
       // calcul du pas de temps critique de la structure
@@ -247,10 +247,10 @@ void Explicit::solve(double solveUpToTime)
     }
 
     // Write the history files
-    //domain->writeHistoryFiles();
+    //model->writeHistoryFiles();
   }
 
-  printf("%s inc=%ld time=%8.4E timeStep=%8.4E\n", domain->name.chars(), currentIncrement, domain->currentTime, timeStep);
+  printf("%s inc=%ld time=%8.4E timeStep=%8.4E\n", model->name.chars(), currentIncrement, model->currentTime, timeStep);
 
   /*  bool runStep;
 
@@ -266,7 +266,7 @@ void Explicit::solve(double solveUpToTime)
 #ifdef computeCpuTimes
   recordTimes.start("Internal_Matrices");
 #endif
-  domain->computeJacobian ();
+  model->computeJacobian ();
   // initialisation du step de calcul
 #ifdef computeCpuTimes
   recordTimes.stop("Internal_Matrices");
@@ -276,7 +276,7 @@ void Explicit::solve(double solveUpToTime)
 #ifdef computeCpuTimes
   recordTimes.start("Mass_Matrices");
 #endif
-  domain->computeMassMatrix ();
+  model->computeMassMatrix ();
 #ifdef computeCpuTimes
   recordTimes.stop("Mass_Matrices");
 #endif
@@ -287,7 +287,7 @@ void Explicit::solve(double solveUpToTime)
 #ifdef computeCpuTimes
   recordTimes.start("Internal_Forces");
 #endif
-  domain->computeInternalForces();
+  model->computeInternalForces();
 #ifdef computeCpuTimes
   recordTimes.stop("Internal_Forces");
 #endif
@@ -322,8 +322,8 @@ void Explicit::solve(double solveUpToTime)
       if ((increment % frequencyReports == 0) || (increment == 1))
 	{
 #endif
-	  printf ("%s inc=%ld time=%8.4E timeStep=%8.4E\n", domain->name.chars(), increment,
-		  domain->getCurrentTime(), timeStep);
+	  printf ("%s inc=%ld time=%8.4E timeStep=%8.4E\n", model->name.chars(), increment,
+		  model->getCurrentTime(), timeStep);
 
 	  // write the progress file
 	  progressWrite();
@@ -384,7 +384,7 @@ void Explicit::solve(double solveUpToTime)
 #ifdef computeCpuTimes
 	  recordTimes.start("Internal_Matrices");
 #endif
-	  domain->computeJacobian ();
+	  model->computeJacobian ();
 	  // initialisation du step de calcul
 #ifdef computeCpuTimes
 	  recordTimes.stop("Internal_Matrices");
@@ -411,11 +411,11 @@ void Explicit::initStep()
 {
   // verification de la projection du temps par rapport au temps final
   // pour ne pas depasser la bonne date
-  if (domain->currentTime + timeStep > _solveUpToTime)
-    timeStep = _solveUpToTime - domain->currentTime;
+  if (model->currentTime + timeStep > _solveUpToTime)
+    timeStep = _solveUpToTime - model->currentTime;
 
   // mise a jour du temps
-  // domain->nextTime = domain->currentTime + timeStep;
+  // model->nextTime = model->currentTime + timeStep;
 
   // incrementation du nombre d'increments
   currentIncrement++;
@@ -441,11 +441,11 @@ void Explicit::computePredictions()
   cout << "Predictions de displacement, speed et acceleration\n";
 #endif
 
-  // boucle sur les noeuds du domaine
-  for (long nodeId = 0; nodeId < domain->nodes.getSize(); nodeId++)
+  // boucle sur les noeuds du modele
+  for (long nodeId = 0; nodeId < model->nodes.getSize(); nodeId++)
   {
     // recuperation du noeud courant
-    node = domain->nodes(nodeId);
+    node = model->nodes(nodeId);
 
     // verification d'assertion
 #ifdef VERIF_assert
@@ -472,7 +472,7 @@ void Explicit::computePredictions()
 
     // application des conditions aux limites imposees
     if (node->boundary != NULL)
-      node->boundary->applyConstantOnNewFields(node, domain->currentTime, timeStep);
+      node->boundary->applyConstantOnNewFields(node, model->currentTime, timeStep);
 
     //  node->newField->displacement = node->currentField->displacement + node->newField->displacementInc;
   }
@@ -496,19 +496,19 @@ void Explicit::explicitSolve()
 
   // phase de calcul du terme d'acceleration global
   //  $GLOBAL$ nd->newField->acceleration = $M^-1$ * (Fext - internalForces)
-  // Vector accVector = domain->massMatrix.getSolve(domain->internalForces);
-  domain->massMatrix.solve(domain->internalForces);
+  // Vector accVector = model->massMatrix.getSolve(model->internalForces);
+  model->massMatrix.solve(model->internalForces);
 
-  int numberOfDimensions = domain->getNumberOfDimensions();
+  int numberOfDimensions = model->getNumberOfDimensions();
 
   // update du champ des accelerations
-  for (long nodeId = 0; nodeId < domain->nodes.getSize(); nodeId++)
+  for (long nodeId = 0; nodeId < model->nodes.getSize(); nodeId++)
   {
-    node = domain->nodes(nodeId);
+    node = model->nodes(nodeId);
 
     // mise a jour des accelerations
     for (int dim = 0; dim < numberOfDimensions; dim++)
-      node->newField->acceleration(dim) = domain->internalForces(nodeId * numberOfDimensions + dim);
+      node->newField->acceleration(dim) = model->internalForces(nodeId * numberOfDimensions + dim);
 
     // mise e jour de l'acceleration materielle
     node->newField->acceleration -= _alphaM * node->currentField->acceleration;
@@ -522,7 +522,7 @@ void Explicit::explicitSolve()
 
     // application des conditions aux limites imposees
     if (node->boundary != NULL)
-      node->boundary->applyConstantOnNewFields(node, domain->currentTime, timeStep);
+      node->boundary->applyConstantOnNewFields(node, model->currentTime, timeStep);
 
     // prise en compte du contact
 
@@ -544,32 +544,32 @@ void Explicit::endStep()
   updateTime();
 
   // history file
-  /*  fprintf (domain->history_file, "%8.4E %8.4E %8.4E %8.4E\n", domain->getCurrentTime(), 
-	   timeStep , _computedTimeStep, domain->getTotalKineticEnergy ());
-  fflush (domain->history_file);
+  /*  fprintf (model->history_file, "%8.4E %8.4E %8.4E %8.4E\n", model->getCurrentTime(), 
+	   timeStep , _computedTimeStep, model->getTotalKineticEnergy ());
+  fflush (model->history_file);
  */
 
   // sauvegarde des history file
-  domain->writeHistoryFiles();
+  model->writeHistoryFiles();
 
   // swap des valeurs nodales
-  domain->transfertQuantities();
+  model->transfertQuantities();
 }
 
 //-----------------------------------------------------------------------------
 void Explicit::updateTime()
 //-----------------------------------------------------------------------------
 {
-  domain->currentTime += timeStep;
+  model->currentTime += timeStep;
 }
 
 //-----------------------------------------------------------------------------
 void Explicit::computeDensity()
 //-----------------------------------------------------------------------------
 {
-  for (long elementId = 0; elementId < domain->elements.getSize(); elementId++)
+  for (long elementId = 0; elementId < model->elements.getSize(); elementId++)
   {
-    domain->elements(elementId)->computeDensity();
+    model->elements(elementId)->computeDensity();
   }
 }
 
@@ -623,7 +623,7 @@ void Explicit::initIteration ()
 //-----------------------------------------------------------------------------
 {
   // calcul des forces internes
-  domain->computeInternalForces();
+  model->computeInternalForces();
   
   // calcul des forces externes
 }

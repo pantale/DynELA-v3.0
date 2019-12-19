@@ -19,7 +19,7 @@
 */
 
 #include <DynELA.h>
-#include <Domain.h>
+#include <Model.h>
 #include <Material.h>
 #include <Node.h>
 #include <Element.h>
@@ -37,6 +37,7 @@
 #include <Boundary.h>
 #include <Solver.h>
 #include <VtkInterface.h>
+#include <Parallel.h>
 
 /* #define nodeDisplayOnlineFrequency 100
 #define elementDisplayOnlineFrequency 100
@@ -70,8 +71,8 @@ DynELA::DynELA(char *newName)
 
   //  name = "defaultModel";
 
-  // creates a domain and add it to the list of domains of DynELA
-  domains << new Domain;
+  // creates a model
+  model = new Model;
 
   // Creates a settings and add it
   settings = new Settings;
@@ -108,7 +109,7 @@ DynELA::DynELA(char *newName)
   cpuTimes.add(new Timer("Solver:Stress"));
   cpuTimes.add(new Timer("Solver:FinalRotation"));
 
- /*  printf("Max Threads %d\n", omp_get_max_threads());
+  /*  printf("Max Threads %d\n", omp_get_max_threads());
   omp_set_num_threads(1);
   printf("Num Threads %d\n", omp_get_max_threads());
  */
@@ -161,7 +162,7 @@ DynELA::~DynELA()
 
 //!recherche d'un noeud dans la structure en fonction de son numero
 /*!
-  Cette methode recherche un noeud dans la structure en fonction de son numero et renvoie un pointeur sur celui-ci, ou NULL si celui-ci n'existe pas dans la structure. Le noeud est recherche sur la grille courante du domaine courant.
+  Cette methode recherche un noeud dans la structure en fonction de son numero et renvoie un pointeur sur celui-ci, ou NULL si celui-ci n'existe pas dans la structure. Le noeud est recherche sur la grille courante du modele courant.
   \param nodeNumber numero du noeud e rechercher
   \return pointeur sur le noeud trouve ou NULL en cas d'echec de recherche
   \version 1.0.0
@@ -173,19 +174,19 @@ Node *DynELA::getNodeByNum(long nodeNumber)
 //-----------------------------------------------------------------------------
 {
   // pehaps it's just the last one (often assumed)
-  if (getCurrentDomain()->nodes.getSize() > 0)
+  if (model->nodes.getSize() > 0)
   {
-    if (getCurrentDomain()->nodes.last()->number == nodeNumber)
-      return getCurrentDomain()->nodes.last();
+    if (model->nodes.last()->number == nodeNumber)
+      return model->nodes.last();
   }
 
   // no so search for it
-  return getCurrentDomain()->nodes.dichotomySearch(substractNodesNumber, nodeNumber);
+  return model->nodes.dichotomySearch(substractNodesNumber, nodeNumber);
 }
 
 //!recherche d'un element dans la structure en fonction de son numero
 /*!
-  Cette methode recherche un element dans la structure en fonction de son numero et renvoie un pointeur sur celui-ci, ou NULL si celui-ci n'existe pas dans la structure. L'element est recherche sur la grille courante du domaine courant.
+  Cette methode recherche un element dans la structure en fonction de son numero et renvoie un pointeur sur celui-ci, ou NULL si celui-ci n'existe pas dans la structure. L'element est recherche sur la grille courante du modele courant.
   \param elementNumber numero de l'element e rechercher
   \return pointeur sur l'element trouve ou NULL en cas d'echec de recherche
   \version 1.0.0
@@ -197,19 +198,19 @@ Element *DynELA::getElementByNum(long elementNumber)
 //-----------------------------------------------------------------------------
 {
   // pehaps it's just the last one (often assumed)
-  if (getCurrentDomain()->elements.getSize() > 0)
+  if (model->elements.getSize() > 0)
   {
-    if (getCurrentDomain()->elements.last()->number == elementNumber)
-      return getCurrentDomain()->elements.last();
+    if (model->elements.last()->number == elementNumber)
+      return model->elements.last();
   }
 
   // no so search for it
-  return getCurrentDomain()->elements.dichotomySearch(substractElementsNumber, elementNumber);
+  return model->elements.dichotomySearch(substractElementsNumber, elementNumber);
 }
 
 //!creation d'un noeud et ajout e la structure
 /*!
-  Cette methode cree un nouveau noeud et l'ajoute e la fois e la liste des noeuds de la structure et e la liste des noeuds de la grille courante du domaine courant.
+  Cette methode cree un nouveau noeud et l'ajoute e la fois e la liste des noeuds de la structure et e la liste des noeuds de la grille courante du modele courant.
   \param nodeNumber numero du nouveau noeud e creer
   \param x coordonnee x du noeud e creer
   \param y coordonnee y du noeud e creer
@@ -225,8 +226,8 @@ bool DynELA::createNode(long nodeNumber, double xCoord, double yCoord, double zC
   // pointeur sur le nouveau noeud
   Node *newNode = new Node(nodeNumber, xCoord, yCoord, zCoord);
 
-  // l'ajouter e la grille courante du domaine courant
-  domains.current()->add(newNode);
+  // l'ajouter e la grille courante du modele courant
+  model->add(newNode);
 
   // add the newNode and compact list
   nodes << newNode;
@@ -320,7 +321,7 @@ bool DynELA::createElement(long elementNumber, long nodesIndex, ...)
     nNodes[i] = va_arg(arguments, long);
   }
 
-  domains.current()->create(pel, nNodes);
+  model->create(pel, nNodes);
 
   // add the element and compact list
   elements << pel;
@@ -352,18 +353,32 @@ void DynELA::setDefaultElement(short type)
   _defaultElement = type;
 }
 
-//-----------------------------------------------------------------------------
-Domain *DynELA::getCurrentDomain()
+/* //-----------------------------------------------------------------------------
+Model *DynELA::model
 //-----------------------------------------------------------------------------
 {
-  return domains.current();
+  return models.current();
 }
-
+ */
 //-----------------------------------------------------------------------------
 void DynELA::add(Parallel *_parallel)
 //-----------------------------------------------------------------------------
 {
   parallel = _parallel;
+}
+
+//-----------------------------------------------------------------------------
+void DynELA::add(HistoryFile *newHistoryFile)
+//-----------------------------------------------------------------------------
+{
+  model->add(newHistoryFile);
+}
+
+//-----------------------------------------------------------------------------
+void DynELA::add(Solver *newSolver)
+//-----------------------------------------------------------------------------
+{
+  model->add(newSolver);
 }
 
 //!affecte un materiau e un ensemble d'elements
@@ -443,14 +458,14 @@ void DynELA::addMaterial(Material *pmat)
 void DynELA::add(NodeSet *nodeSet, long startNumber, long endNumber, long increment)
 //-----------------------------------------------------------------------------
 {
-  domains.current()->add(nodeSet, startNumber, endNumber, increment);
+  model->add(nodeSet, startNumber, endNumber, increment);
 }
 
 //-----------------------------------------------------------------------------
 void DynELA::add(ElementSet *elementSet, long startNumber, long endNumber, long increment)
 //-----------------------------------------------------------------------------
 {
-  domains.current()->add(elementSet, startNumber, endNumber, increment);
+  model->add(elementSet, startNumber, endNumber, increment);
 }
 
 //!affecte des conditions aux limites initiales e un ensemble de noeuds
@@ -701,8 +716,10 @@ void DynELA::writeResultFile()
 
   // Initialize the vtk data file
   dataFile->init(fileName);
+
   // Write the vtk data file
   dataFile->write();
+
   // Close the vtk data file
   dataFile->close();
 
@@ -714,7 +731,7 @@ void DynELA::writeResultFile()
 
 //!lancement du solveur general
 /*!
-  Cette methode lance la procedure de solveur general de la structure. Elle prend en compte tous les types de solveurs possible et gere aussi bien la resolution mono-domaine que la resolution multi-domaine. C'est le point d'entree de tout solveur.
+  Cette methode lance la procedure de solveur general de la structure. Elle prend en compte tous les types de solveurs possible et gere aussi bien la resolution mono-modele que la resolution multi-modele. C'est le point d'entree de tout solveur.
 
   \author Olivier PANTALE
   \since DynELA 1.0.0
@@ -731,19 +748,20 @@ void DynELA::solve()
   std::cout << "\nProcessing DynELA ...\n";
   logFile.separatorWrite("DynELA Solver Initialization phase");
 
-  // Run the init solve of this domain
-  for (short domainId = 0; domainId < domains.getSize(); domainId++)
+  // Run the init solve of this model
+/*   for (short modelId = 0; modelId < models.getSize(); modelId++)
   {
-    domains(domainId)->initSolve();
-  }
+ */    
+model->initSolve();
+  /* } */
 
   // Get the end time of the structure
-  double endOfComputationTime = domains(0)->getEndSolveTime();
-  for (short domainId = 1; domainId < domains.getSize(); domainId++)
+  double endOfComputationTime = model->getEndSolveTime();
+ /*  for (short modelId = 1; modelId < models.getSize(); modelId++)
   {
-    endOfComputationTime = dnlMin(domains(domainId)->getEndSolveTime(), endOfComputationTime);
+    endOfComputationTime = dnlMin(models(modelId)->getEndSolveTime(), endOfComputationTime);
   }
-  logFile << "Set final computation time to: " << endOfComputationTime << " s\n";
+ */  logFile << "Set final computation time to: " << endOfComputationTime << " s\n";
 
   // Save initial configuration
   writeResultFile();
@@ -753,14 +771,14 @@ void DynELA::solve()
 
   logFile.separatorWrite("DynELA Solver phase");
 
-  // Only one domain, so that's simple, only a direct solve
-  if (domains.getSize() == 1)
+  // Only one model, so that's simple, only a direct solve
+/*   if (models.getSize() == 1)
   {
-    // do the loops until the end of the computation for this domain
+ */    // do the loops until the end of the computation for this model
     while (nextSaveTime <= endOfComputationTime)
     {
-      // Run the solver for the current domain
-      solved = domains(0)->solve(nextSaveTime);
+      // Run the solver for the current model
+      solved = model->solve(nextSaveTime);
 
       // Test if solved
       if (solved == false)
@@ -770,7 +788,7 @@ void DynELA::solve()
       }
 
       // Update the current time of the whole structure
-      currentTime = domains(0)->currentTime;
+      currentTime = model->currentTime;
 
       // Write a new result file
       writeResultFile();
@@ -781,12 +799,12 @@ void DynELA::solve()
       else
         nextSaveTime += saveTimeIncrement;
     }
-  }
+ /*  }
   else
   {
-    fatalError("DynELA::solve", "Multi-domains solve not implemented yet\n");
+    fatalError("DynELA::solve", "Multi-models solve not implemented yet\n");
   }
-
+ */
   cpuTimes.timer("Solver")->stop();
 
   // On affiche les logs de CPU
@@ -810,14 +828,14 @@ void DynELA::solve()
       // what is the next time
       nextTime = currentTime + saveTimeIncrement / 500;
 
-      for (i = 0; i < domains.getSize(); i++)
+      for (i = 0; i < models.getSize(); i++)
       {
-        if (domains(i)->solve(nextTime) == true)
+        if (models(i)->solve(nextTime) == true)
           cont = true;
       }
 
       // Synchronize times
-      currentTime = dnlMin(domains(0)->currentTime, domains(0)->currentTime);
+      currentTime = dnlMin(models(0)->currentTime, models(0)->currentTime);
 
       saveResults();
     }
@@ -858,25 +876,25 @@ bool DynELA::initSolve ()
 
   // initialisation du temps
   currentTime=0;
-	// initialisation des domaines
-  for (i=0; i<domains.getSize();i++) 
+	// initialisation des modeles
+  for (i=0; i<models.getSize();i++) 
     {
-      logFile << "\nVerification of domain "<<i<<" ...\n";
-      if (domains(i)->initSolve()==false)
+      logFile << "\nVerification of model "<<i<<" ...\n";
+      if (models(i)->initSolve()==false)
 	{
-	  // domain has to be deleted
-	  logFile << "Void Domain "<<i<< " has been deleted ...\n";
-	  delete domains(i);
-	  domains.del(i);
+	  // model has to be deleted
+	  logFile << "Void Model "<<i<< " has been deleted ...\n";
+	  delete models(i);
+	  models.del(i);
 	  i--;
 	}
     }
-  logFile << "\nPhysic contains "<<i<< " domain"<<(i>1 ? "s":"")<<" ...\n\n";
+  logFile << "\nPhysic contains "<<i<< " model"<<(i>1 ? "s":"")<<" ...\n\n";
 
-  // si pas de domaines, alors pas de physique
+  // si pas de modeles, alors pas de physique
 
   // si pas de dommaines, alors pas de structure
-  if (domains.getSize()==0) return (false);
+  if (models.getSize()==0) return (false);
 
   // verification de la coherence des materiaux
   for (i = 0; i < materials.getSize (); i++)
@@ -952,7 +970,7 @@ void DynELA::attachBCToNodes(BoundaryCondition* BC, NodeSet* nds)
 
 //!ajoute un solveur e la structure
 /*!
-  Cette methode ajoute un solveur e la structure. Le solveur est ajoute e la liste des solveurs du domaine courant de la structure.
+  Cette methode ajoute un solveur e la structure. Le solveur est ajoute e la liste des solveurs du modele courant de la structure.
 
   \param solver solveur e utiliser
   \author Olivier PANTALE
@@ -1035,34 +1053,34 @@ Element* DynELA::getElementById(long i)
   return elements.AppN(i);
 }
 
-//!selectionne un domaine dans la structure
+//!selectionne un modele dans la structure
 /*!
-  Cette methode permet de creer un nouveau domaine dans la structure ou de selectionner un autre domaine pour le domaine courant de la structure.
+  Cette methode permet de creer un nouveau modele dans la structure ou de selectionner un autre modele pour le modele courant de la structure.
 
-  \param domain pointeur sur le domaine e selectionner
+  \param model pointeur sur le modele e selectionner
   \author Olivier PANTALE
   \since DynELA 1.0.0
 
 //-----------------------------------------------------------------------------
-void DynELA::setDomain(Domain* domain)
+void DynELA::setModel(Model* model)
 //-----------------------------------------------------------------------------
 {
 //  long ind;
-  // si le domaine existe deja, on n'a pas e le creer
-  if (!domains.contains(domain)) 
+  // si le modele existe deja, on n'a pas e le creer
+  if (!models.contains(model)) 
     {
-      domains << domain;
+      models << model;
     }
 
   // change the current index
-  domains(domains.getIndex(domain));
-  logFile << "DynELA: "<<name << " domain: "<<domains.current()->name<<" selected\n";
+  models(models.getIndex(model));
+  logFile << "DynELA: "<<name << " model: "<<models.current()->name<<" selected\n";
 }
 
 
 //!affiche pendant la lecture des donnees un etat d'avancement sur la console
 /*!
-  Cette methode affiche pendant la lecture des donnees un etat d'avancement sur la console du remplissage memoire concernant les nombres de noeuds, elements et domaines de la structure complete.
+  Cette methode affiche pendant la lecture des donnees un etat d'avancement sur la console du remplissage memoire concernant les nombres de noeuds, elements et modeles de la structure complete.
 
   \author Olivier PANTALE
   \since DynELA 1.0.0
@@ -1073,18 +1091,18 @@ void DynELA::displayOnline()
 {
 //  long doms=0;
 
-  // memoire du domaine
-//  long indDom=domains.getIndex(domains.current());
+  // memoire du modele
+//  long indDom=models.getIndex(models.current());
   
-//  for (long i=0;i<domains.getSize();i++) doms+=physics(i)->domains.getSize();
+//  for (long i=0;i<models.getSize();i++) doms+=physics(i)->models.getSize();
 
-  printf("\rRead %ld domain%s %ld node%s %ld element%s %ld material%s",
-	 domains.getSize(),(domains.getSize() > 1 ? "s" : ""),
+  printf("\rRead %ld model%s %ld node%s %ld element%s %ld material%s",
+	 models.getSize(),(models.getSize() > 1 ? "s" : ""),
 	 nodes.getSize(),(nodes.getSize()>1 ? "s" : ""),
 	 elements.getSize(),(elements.getSize()>1 ? "s" : ""),
 	 materials.getSize(),(materials.getSize()>1 ? "s" : ""));
 
-  // reset currentDomain
+  // reset currentModel
  // physics(indPhy);
 
   fflush(stdout);
@@ -1126,7 +1144,7 @@ void DynELA::readData (ifstream & pfile)
 //-----------------------------------------------------------------------------
 {
   long i;
-  //  long currentDomain;
+  //  long currentModel;
 
   if (checkBinaryVersion (pfile, 0) != Ok)
     fatalError ("Major changes done since this old version", "Sorry !! ...");
@@ -1134,16 +1152,16 @@ void DynELA::readData (ifstream & pfile)
   // load current time
   pfile.read ((char *) &currentTime, sizeof (double));
 
-  // load current domain number
-  //  pfile.read ((char *) &currentDomain, sizeof (long));
-  //  domains(currentDomain);
+  // load current model number
+  //  pfile.read ((char *) &currentModel, sizeof (long));
+  //  models(currentModel);
 
-  // load the domains
-  for (i = 0; i < domains.getSize (); i++)
+  // load the models
+  for (i = 0; i < models.getSize (); i++)
     {
-      domains(i)->readData(pfile);
+      models(i)->readData(pfile);
       if (checkBinaryVersion (pfile, 1) != Ok)
-	fatalError ("domain datas", "Read error");
+	fatalError ("model datas", "Read error");
     }
 }
 
@@ -1159,10 +1177,10 @@ void DynELA::writeData (ofstream & pfile)
   // save current time
   pfile.write ((char *) &currentTime, sizeof (double));
 
-  // load the domains
-  for (i = 0; i < domains.getSize (); i++)
+  // load the models
+  for (i = 0; i < models.getSize (); i++)
     {
-      domains(i)->writeData(pfile);
+      models(i)->writeData(pfile);
       checkBinaryVersionWrite (pfile, 1);
     }
 }
@@ -1252,7 +1270,7 @@ void DynELA::addInterface (Interface* pinter)
   assert (pinter!=NULL);
 #endif
 
-  domains.current()->addInterface(pinter);
+  models.current()->addInterface(pinter);
   logFile << "Interface : " << pinter->name << " added to "<<name<<"\n";
 }
 
@@ -1262,7 +1280,7 @@ void DynELA::compact()
 //-----------------------------------------------------------------------------
 {
   long i,j,k,l;
-  Domain *pdomain;
+  Model *pmodel;
 //  Physic* pphysic;
 //  Grid* pgrid;
   long elementNum,nodeNum;
@@ -1270,21 +1288,21 @@ void DynELA::compact()
 //  for (i=0;i<physics.getSize();i++)
 //    {
 //      pphysic=physics(i);
-      for (j=0;j<domains.getSize();j++)
+      for (j=0;j<models.getSize();j++)
 	{
-	  pdomain=domains(j);
-//	  for(k=0;k<pdomain->grids.getSize();k++)
+	  pmodel=models(j);
+//	  for(k=0;k<pmodel->grids.getSize();k++)
 //	    {
 	      elementNum=1;
 	      nodeNum=1;
-//	      pgrid=pdomain->grids(k);
-	      for (l=0;l<pdomain->nodes.getSize();l++)
+//	      pgrid=pmodel->grids(k);
+	      for (l=0;l<pmodel->nodes.getSize();l++)
 		{
-		  pdomain->nodes(l)->number=nodeNum++;
+		  pmodel->nodes(l)->number=nodeNum++;
 		}
-	      for (l=0;l<pdomain->elements.getSize();l++)
+	      for (l=0;l<pmodel->elements.getSize();l++)
 		{
-		  pdomain->elements(l)->number=elementNum++;
+		  pmodel->elements(l)->number=elementNum++;
 		}
 	    }
 	//}
@@ -1406,46 +1424,46 @@ void DynELA::setResultFile(String file)
 }
 
 //-----------------------------------------------------------------------------
-void DynELA::mergeDomains()
+void DynELA::mergeModels()
 //-----------------------------------------------------------------------------
 {
   // if only one grid;
-  if (domains.getSize()==1) return;
+  if (models.getSize()==1) return;
 
   long nnum=1,elnum=1;
   long i,j;
-  Domain* pdomaind, *pdomaino;
+  Model* pmodeld, *pmodelo;
 
-  pdomaind=domains(0);
+  pmodeld=models(0);
 
-  for (j=0;j<pdomaind->elements.getSize();j++)
+  for (j=0;j<pmodeld->elements.getSize();j++)
     {	  
-      pdomaind->elements(j)->number=elnum++;
+      pmodeld->elements(j)->number=elnum++;
     }
-  for (j=0;j<pdomaind->nodes.getSize();j++)
+  for (j=0;j<pmodeld->nodes.getSize();j++)
     {	  
-      pdomaind->nodes(j)->number=nnum++;
+      pmodeld->nodes(j)->number=nnum++;
     }
 
-  for (i=1; i<domains.getSize();i++)
+  for (i=1; i<models.getSize();i++)
     {
-      pdomaino=domains(i);
+      pmodelo=models(i);
 
       // copy elements
-      for (j=0;j<pdomaino->elements.getSize();j++)
+      for (j=0;j<pmodelo->elements.getSize();j++)
 	{	  
-	  pdomaind->elements << pdomaino->elements(j);
-	  pdomaino->elements(j)->number=elnum++;
+	  pmodeld->elements << pmodelo->elements(j);
+	  pmodelo->elements(j)->number=elnum++;
 	}
 
       // copy nodes
-      for (j=0;j<pdomaino->nodes.getSize();j++)
+      for (j=0;j<pmodelo->nodes.getSize();j++)
 	{	  
-	  pdomaind->nodes << pdomaino->nodes(j);
-	  pdomaino->nodes(j)->number=nnum++;
+	  pmodeld->nodes << pmodelo->nodes(j);
+	  pmodelo->nodes(j)->number=nnum++;
 	}
     }
 
-  domains.del(1,domains.getSize()-1);
+  models.del(1,models.getSize()-1);
 }
 */

@@ -73,7 +73,7 @@ void BoundaryForce::applyConstantOnCurrentFields(Node *node, double currentTime,
 {
  /*  // l'idee est la, mais reste e le faire
   double facteur =
-      1.2 * dynelaData->domains.current()->currentTime / dynelaData->domains.current()->solver->getEndTime();
+      1.2 * dynelaData->models.current()->currentTime / dynelaData->models.current()->solver->getEndTime();
   if (facteur > 1.0)
     facteur = 1.0;
   node->newField->_force = facteur * _force; */

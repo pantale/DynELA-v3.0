@@ -18,7 +18,7 @@
   \date 1997-2019
 */
 
-#include <Domain.h>
+#include <Model.h>
 #include <Node.h>
 #include <Element.h>
 #include <NodeSet.h>
@@ -30,18 +30,18 @@
 #include <Parallel.h>
 
 //-----------------------------------------------------------------------------
-Domain::Domain(char *newName)
+Model::Model(char *newName)
 //-----------------------------------------------------------------------------
 {
   if (newName != NULL)
     name = newName;
 
-  /*   name = "defaultDomain";
+  /*   name = "defaultModel";
 
   // initialisation par defaut
   _numberOfDimensions = 0;
 
-  // attacher a global domain
+  // attacher a global model
   history_file = NULL;
 
   fmax0 = 0.0;
@@ -56,17 +56,17 @@ Domain::Domain(char *newName)
 }
 
 //-----------------------------------------------------------------------------
-Domain::Domain(const Domain &domain)
+Model::Model(const Model &model)
 //-----------------------------------------------------------------------------
 {
   /* 
-  _numberOfDimensions = domain._numberOfDimensions;
-  cerr << "erreur copie de Domain\n";
+  _numberOfDimensions = model._numberOfDimensions;
+  cerr << "erreur copie de Model\n";
   exit(-1); */
 }
 
 //-----------------------------------------------------------------------------
-Domain::~Domain()
+Model::~Model()
 //-----------------------------------------------------------------------------
 {
 }
@@ -80,13 +80,13 @@ Domain::~Domain()
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
-bool Domain::add(Node *newNode)
+bool Model::add(Node *newNode)
 //-----------------------------------------------------------------------------
 {
   // search if not already in the list
   if (nodes.dichotomySearch(substractNodesNumber, newNode->number) != NULL)
   {
-    fatalError("Domain::add", "Node %ld already exists in the node list of this domain\n", newNode->number);
+    fatalError("Model::add", "Node %ld already exists in the node list of this model\n", newNode->number);
   }
 
   if ((nodes.getSize() >= 1) && (newNode->number < nodes.last()->number))
@@ -108,13 +108,13 @@ bool Domain::add(Node *newNode)
 }
 
 //-----------------------------------------------------------------------------
-bool Domain::add(Element *newElement)
+bool Model::add(Element *newElement)
 //-----------------------------------------------------------------------------
 {
   // search if not already in the list
   if (elements.dichotomySearch(substractElementsNumber, newElement->number) != NULL)
   {
-    fatalError("Domain::add", "Element %ld already exists in the element list of this Domain\n", newElement->number);
+    fatalError("Model::add", "Element %ld already exists in the element list of this Model\n", newElement->number);
   }
 
   if ((elements.getSize() >= 1) && (newElement->number < elements.last()->number))
@@ -136,7 +136,7 @@ bool Domain::add(Element *newElement)
 }
 
 //-----------------------------------------------------------------------------
-void Domain::create(Element *newElement, long *listOfNodes)
+void Model::create(Element *newElement, long *listOfNodes)
 //-----------------------------------------------------------------------------
 {
   Node *pNode;
@@ -145,7 +145,7 @@ void Domain::create(Element *newElement, long *listOfNodes)
   add(newElement);
 
   // add the reference to the grid of the element
-  // newElement->domain = this;
+  // newElement->model = this;
 
   // construction de l'element et de ses noeuds
   long nbOk = 0;
@@ -175,20 +175,20 @@ void Domain::create(Element *newElement, long *listOfNodes)
       if (listOfNodes[j] != -1)
         std::cout << "Node " << listOfNodes[j] << " doesn't exist in this grid\n";
     }
-    fatalError("Domain::createElement", "some nodes not exist in this grid");
+    fatalError("Model::createElement", "some nodes not exist in this grid");
   }
 }
 
 //!Add new nodes to the current NodeSet
 /*!
-  This method adds a set of existing nodes and a NodeSet. The nodes are specified by their identification numbers given in a variation range (start number, end number and increment). The nodes are then searched in the current grid of the current domain of the structure.
-  \warning Les noeuds ajoutes doivent etre presents dans la grille courante du domaine courant.
+  This method adds a set of existing nodes and a NodeSet. The nodes are specified by their identification numbers given in a variation range (start number, end number and increment). The nodes are then searched in the current grid of the current model of the structure.
+  \warning Les noeuds ajoutes doivent etre presents dans la grille courante du modele courant.
   \param sNumber of start number in the list
   \param eNumber of end number in the list
   \param inc increment on the numbers (default = 1)
 */
 //-----------------------------------------------------------------------------
-void Domain::add(NodeSet *nodeSet, long startNumber, long endNumber, long increment)
+void Model::add(NodeSet *nodeSet, long startNumber, long endNumber, long increment)
 //-----------------------------------------------------------------------------
 {
   Node *node;
@@ -198,7 +198,7 @@ void Domain::add(NodeSet *nodeSet, long startNumber, long endNumber, long increm
     if (endNumber == -1)
     {
       if ((node = getNodeByNum(startNumber)) == NULL)
-        fatalError("Domain::add", "Node %d not exist in current grid and domain", startNumber);
+        fatalError("Model::add", "Node %d not exist in current grid and model", startNumber);
 
       // add the node to the nodeSet
       nodeSet->add(node);
@@ -212,7 +212,7 @@ void Domain::add(NodeSet *nodeSet, long startNumber, long endNumber, long increm
       {
         if ((node = getNodeByNum(i)) == NULL)
         {
-          fatalError("Domain::add", "Node %d not exist in current grid and domain", i);
+          fatalError("Model::add", "Node %d not exist in current grid and model", i);
         }
 
         // add the node
@@ -234,8 +234,8 @@ void Domain::add(NodeSet *nodeSet, long startNumber, long endNumber, long increm
 
 //!ajoute un ensemble d'elements e un ElementSet
 /*!
-  Cette methode ajoute un ensemble d'elements existant e un ElementSet. Les elements sont specifies par leurs numeros d'identification donne dans un intervalle de variation (numero de debut, numero de fin et increment). Les elements sont alors recherches dans la grille courante du domaine courant de la structure.
-  \warning Les elements ajoutes doivent etre presents dans la grille courante du domaine courant.
+  Cette methode ajoute un ensemble d'elements existant e un ElementSet. Les elements sont specifies par leurs numeros d'identification donne dans un intervalle de variation (numero de debut, numero de fin et increment). Les elements sont alors recherches dans la grille courante du modele courant de la structure.
+  \warning Les elements ajoutes doivent etre presents dans la grille courante du modele courant.
   \param startNumber numero de depart dans la liste
   \param endNumber numero de fin dans la liste
   \param increment increment sur les numeros (par defaut = 1)
@@ -243,7 +243,7 @@ void Domain::add(NodeSet *nodeSet, long startNumber, long endNumber, long increm
   \version 0.9.5
 */
 //-----------------------------------------------------------------------------
-void Domain::add(ElementSet *elementSet, long startNumber, long endNumber, long increment)
+void Model::add(ElementSet *elementSet, long startNumber, long endNumber, long increment)
 //-----------------------------------------------------------------------------
 {
   Element *element;
@@ -253,7 +253,7 @@ void Domain::add(ElementSet *elementSet, long startNumber, long endNumber, long 
     if (endNumber == -1)
     {
       if ((element = getElementByNum(startNumber)) == NULL)
-        fatalError("Domain::add", "Node %d not exist in current grid and domain", startNumber);
+        fatalError("Model::add", "Node %d not exist in current grid and model", startNumber);
 
       // add the node to the elementSet
       elementSet->add(element);
@@ -267,7 +267,7 @@ void Domain::add(ElementSet *elementSet, long startNumber, long endNumber, long 
       {
         if ((element = getElementByNum(i)) == NULL)
         {
-          fatalError("Domain::add", "Node %d not exist in current grid and domain", i);
+          fatalError("Model::add", "Node %d not exist in current grid and model", i);
         }
 
         // add the node
@@ -291,7 +291,7 @@ void Domain::add(ElementSet *elementSet, long startNumber, long endNumber, long 
 
 //!recherche d'un noeud dans la structure en fonction de son numero
 /*!
-  Cette methode recherche un noeud dans la structure en fonction de son numero et renvoie un pointeur sur celui-ci, ou NULL si celui-ci n'existe pas dans la structure. Le noeud est recherche sur la grille courante du domaine courant.
+  Cette methode recherche un noeud dans la structure en fonction de son numero et renvoie un pointeur sur celui-ci, ou NULL si celui-ci n'existe pas dans la structure. Le noeud est recherche sur la grille courante du modele courant.
   \param nodeNumber numero du noeud e rechercher
   \return pointeur sur le noeud trouve ou NULL en cas d'echec de recherche
   \version 1.0.0
@@ -299,7 +299,7 @@ void Domain::add(ElementSet *elementSet, long startNumber, long endNumber, long 
   \author Olivier PANTALE 
 */
 //-----------------------------------------------------------------------------
-Node *Domain::getNodeByNum(long nodeNumber)
+Node *Model::getNodeByNum(long nodeNumber)
 //-----------------------------------------------------------------------------
 {
   // pehaps it's just the last one (often assumed)
@@ -315,7 +315,7 @@ Node *Domain::getNodeByNum(long nodeNumber)
 
 //!recherche d'un element dans la structure en fonction de son numero
 /*!
-  Cette methode recherche un element dans la structure en fonction de son numero et renvoie un pointeur sur celui-ci, ou NULL si celui-ci n'existe pas dans la structure. L'element est recherche sur la grille courante du domaine courant.
+  Cette methode recherche un element dans la structure en fonction de son numero et renvoie un pointeur sur celui-ci, ou NULL si celui-ci n'existe pas dans la structure. L'element est recherche sur la grille courante du modele courant.
   \param elementNumber numero de l'element e rechercher
   \return pointeur sur l'element trouve ou NULL en cas d'echec de recherche
   \version 1.0.0
@@ -323,7 +323,7 @@ Node *Domain::getNodeByNum(long nodeNumber)
   \author Olivier PANTALE 
 */
 //-----------------------------------------------------------------------------
-Element *Domain::getElementByNum(long elementNumber)
+Element *Model::getElementByNum(long elementNumber)
 //-----------------------------------------------------------------------------
 {
   // pehaps it's just the last one (often assumed)
@@ -338,7 +338,7 @@ Element *Domain::getElementByNum(long elementNumber)
 }
 
 //-----------------------------------------------------------------------------
-bool Domain::checkTopology()
+bool Model::checkTopology()
 //-----------------------------------------------------------------------------
 {
   // Verify coherence of the elements
@@ -370,23 +370,23 @@ bool Domain::checkTopology()
 }
 
 //-----------------------------------------------------------------------------
-bool Domain::initSolve()
+bool Model::initSolve()
 //-----------------------------------------------------------------------------
 {
   //Solver *solver;
 
-  dynelaData->logFile << "\nInitializing domain : " << name << "\n";
+  dynelaData->logFile << "\nInitializing model : " << name << "\n";
   // If list of element is void, nothing to do
   if (elements.getSize() == 0)
     return false;
 
-  // Set the dimension of the domain
+  // Set the dimension of the model
   _numberOfDimensions = elements(0)->getNumberOfDimensions();
   dynelaData->logFile << "Grid topology set to " << (elements(0)->getFamily() == Element::Bidimensional ? "2D" : elements(0)->getFamily() == Element::Axisymetric ? "2D Axi" : "3D") << "\n";
 
-  // Check the topology of the domain
+  // Check the topology of the model
   if (checkTopology())
-    dynelaData->logFile << "Topology of the Domain is OK\n";
+    dynelaData->logFile << "Topology of the Model is OK\n";
 
   // verification des elements par methode interne
   dynelaData->logFile << "Verification of elements ... ";
@@ -397,7 +397,7 @@ bool Domain::initSolve()
   dynelaData->logFile << "Ok\n";
 
   // Write informations in the log file
-  dynelaData->logFile << "Domain contains " << elements.getSize() << " elements and " << nodes.getSize() << " nodes\n";
+  dynelaData->logFile << "Model contains " << elements.getSize() << " elements and " << nodes.getSize() << " nodes\n";
 
   // Initialize data
   for (long elementId = 0; elementId < elements.getSize(); elementId++)
@@ -461,21 +461,21 @@ bool Domain::initSolve()
   }
  */
 
-  // Reverse link of the solver to this domain
-  solver->setDomain(this);
+  // Reverse link of the solver to this model
+  solver->setModel(this);
 
   // init the solver
   dynelaData->logFile << "Solver initialization ...\n";
   solver->initialize();
 
-  // Loop over all the solvers of the Domain
+  // Loop over all the solvers of the Model
   /*   for (int solverId = 0; solverId < solvers.getSize(); solverId++)
   {
     // get the solver
     solver = solvers(solverId);
 
-    // Reverse link of the solver to this domain
-    solver->setDomain(this);
+    // Reverse link of the solver to this model
+    solver->setModel(this);
 
     // init the solver
     dynelaData->logFile << "Solver " << solverId << " initialization ...\n";
@@ -527,7 +527,7 @@ bool Domain::initSolve()
 }
 
 //-----------------------------------------------------------------------------
-void Domain::computeMassMatrix(bool forceComputation)
+void Model::computeMassMatrix(bool forceComputation)
 //-----------------------------------------------------------------------------
 {
   // If already computed, then return
@@ -582,7 +582,7 @@ void Domain::computeMassMatrix(bool forceComputation)
 }
 
 //-----------------------------------------------------------------------------
-double Domain::getTotalMass()
+double Model::getTotalMass()
 //-----------------------------------------------------------------------------
 {
   double mass = 0.0;
@@ -595,7 +595,7 @@ double Domain::getTotalMass()
 }
 
 //-----------------------------------------------------------------------------
-double Domain::getTotalKineticEnergy()
+double Model::getTotalKineticEnergy()
 //-----------------------------------------------------------------------------
 {
   double kineticEnergy = 0.0;
@@ -617,7 +617,7 @@ double Domain::getTotalKineticEnergy()
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
-double Domain::computeCourantTimeStep()
+double Model::computeCourantTimeStep()
 //-----------------------------------------------------------------------------
 {
   double characteristicLength;
@@ -653,23 +653,23 @@ double Domain::computeCourantTimeStep()
 }
 
 //-----------------------------------------------------------------------------
-void Domain::add(Solver *newSolver)
+void Model::add(Solver *newSolver)
 //-----------------------------------------------------------------------------
 {
 #ifdef VERIF_assert
   assert(newSolver != NULL);
 #endif
 
-  // Add solver to the domain
+  // Add solver to the model
   // solvers << newSolver;
   solver = newSolver;
 
   // logFile
-  dynelaData->logFile << "Solver " << newSolver->name << " added to domain " << name << "\n";
+  dynelaData->logFile << "Solver " << newSolver->name << " added to model " << name << "\n";
 }
 
 //-----------------------------------------------------------------------------
-double Domain::getEndSolveTime()
+double Model::getEndSolveTime()
 //-----------------------------------------------------------------------------
 {
   // return solvers.last()->endTime;
@@ -677,7 +677,7 @@ double Domain::getEndSolveTime()
 }
 
 //-----------------------------------------------------------------------------
-bool Domain::solve(double solveUpToTime)
+bool Model::solve(double solveUpToTime)
 //-----------------------------------------------------------------------------
 {
   // If solveUpToTime is not defined, solve to the end in one step
@@ -775,7 +775,7 @@ bool Domain::solve(double solveUpToTime)
   \since DynELA 1.0.0
 */
 /*  //-----------------------------------------------------------------------------
-void Domain::computeJacobian()
+void Model::computeJacobian()
 //-----------------------------------------------------------------------------
 {
 #ifdef PRINT_Execution_Solve
@@ -795,7 +795,7 @@ void Domain::computeJacobian()
 }  */
 
 //-----------------------------------------------------------------------------
-void Domain::computeJacobian()
+void Model::computeJacobian()
 //-----------------------------------------------------------------------------
 {
 #pragma omp parallel
@@ -817,7 +817,7 @@ void Domain::computeJacobian()
 }
 
 //-----------------------------------------------------------------------------
-void Domain::computeStrains()
+void Model::computeStrains()
 //-----------------------------------------------------------------------------
 {
 #pragma omp parallel
@@ -833,7 +833,7 @@ void Domain::computeStrains()
 }
 
 /* //-----------------------------------------------------------------------------
-void Domain::computeStrains()
+void Model::computeStrains()
 //-----------------------------------------------------------------------------
 {
   for (long elementId = 0; elementId < elements.getSize(); elementId++)
@@ -843,7 +843,7 @@ void Domain::computeStrains()
 }
  */
 //-----------------------------------------------------------------------------
-void Domain::computePressure()
+void Model::computePressure()
 //-----------------------------------------------------------------------------
 {
   for (long elementId = 0; elementId < elements.getSize(); elementId++)
@@ -853,7 +853,7 @@ void Domain::computePressure()
 }
 
 //-----------------------------------------------------------------------------
-void Domain::computeStress(double timeStep)
+void Model::computeStress(double timeStep)
 //-----------------------------------------------------------------------------
 {
   for (long elementId = 0; elementId < elements.getSize(); elementId++)
@@ -863,7 +863,7 @@ void Domain::computeStress(double timeStep)
 }
 
 //-----------------------------------------------------------------------------
-void Domain::computeFinalRotation()
+void Model::computeFinalRotation()
 //-----------------------------------------------------------------------------
 {
   for (long elementId = 0; elementId < elements.getSize(); elementId++)
@@ -873,7 +873,7 @@ void Domain::computeFinalRotation()
 }
 
 //-----------------------------------------------------------------------------
-void Domain::computeInternalForces()
+void Model::computeInternalForces()
 //-----------------------------------------------------------------------------
 {
   Vector elementInternalForces;
@@ -911,7 +911,7 @@ void Domain::computeInternalForces()
 }
 
 //-----------------------------------------------------------------------------
-void Domain::transfertQuantities()
+void Model::transfertQuantities()
 //-----------------------------------------------------------------------------
 {
 
@@ -926,7 +926,7 @@ void Domain::transfertQuantities()
 }
 
 //-----------------------------------------------------------------------------
-void Domain::writeHistoryFiles()
+void Model::writeHistoryFiles()
 //-----------------------------------------------------------------------------
 {
   for (short historyId = 0; historyId < historyFiles.getSize(); historyId++)
@@ -936,22 +936,22 @@ void Domain::writeHistoryFiles()
 }
 
 //-----------------------------------------------------------------------------
-void Domain::add(HistoryFile *newHistoryFile)
+void Model::add(HistoryFile *newHistoryFile)
 //-----------------------------------------------------------------------------
 {
 #ifdef VERIF_assert
   assert(newHistoryFile != NULL);
 #endif
 
-  // ajouter l'history file au domaine courant
+  // ajouter l'history file au modele courant
   historyFiles << newHistoryFile;
 
   // logFile
-  dynelaData->logFile << "HistoryFile " << newHistoryFile->name << " linked to current domain\n";
+  dynelaData->logFile << "HistoryFile " << newHistoryFile->name << " linked to current model\n";
 }
 /*
 //-----------------------------------------------------------------------------
-double Domain::computePowerIterationTimeStep()
+double Model::computePowerIterationTimeStep()
 //-----------------------------------------------------------------------------
 {
   double fmax = 0.0;
@@ -1027,7 +1027,7 @@ double Domain::computePowerIterationTimeStep()
 
     if (iteration > maximumFrequencyMaxIterations)
     {
-      fatalError("Domain::computePowerIterationTimeStep", "power iteration method not converged %10.4E\n", convergence);
+      fatalError("Model::computePowerIterationTimeStep", "power iteration method not converged %10.4E\n", convergence);
     }
   }
 
@@ -1035,7 +1035,7 @@ double Domain::computePowerIterationTimeStep()
 }
 
 //-----------------------------------------------------------------------------
-void Domain::print(ostream &os) const
+void Model::print(ostream &os) const
 //-----------------------------------------------------------------------------
 {
   //    os << "numDoF n="<<NumDOFS<<endl;
@@ -1046,15 +1046,15 @@ void Domain::print(ostream &os) const
 }
 
 //-----------------------------------------------------------------------------
-ostream &operator<<(ostream &os, Domain &domain)
+ostream &operator<<(ostream &os, Model &model)
 //-----------------------------------------------------------------------------
 {
-  domain.print(os);
+  model.print(os);
   return os;
 }
 
 //-----------------------------------------------------------------------------
-double Domain::getReadTimeData(ifstream &pfile)
+double Model::getReadTimeData(ifstream &pfile)
 //-----------------------------------------------------------------------------
 {
   double tim;
@@ -1069,7 +1069,7 @@ double Domain::getReadTimeData(ifstream &pfile)
 }
 
 //-----------------------------------------------------------------------------
-void Domain::readData(ifstream &pfile)
+void Model::readData(ifstream &pfile)
 //-----------------------------------------------------------------------------
 {
   long i;
@@ -1098,7 +1098,7 @@ void Domain::readData(ifstream &pfile)
 }
 
 //-----------------------------------------------------------------------------
-void Domain::writeData(ofstream &pfile)
+void Model::writeData(ofstream &pfile)
 //-----------------------------------------------------------------------------
 {
   long i;
@@ -1125,7 +1125,7 @@ void Domain::writeData(ofstream &pfile)
 }
 
 //-----------------------------------------------------------------------------
-void Domain::getGlobalBox(Vec3D &min, Vec3D &max)
+void Model::getGlobalBox(Vec3D &min, Vec3D &max)
 //-----------------------------------------------------------------------------
 {
   Vec3D coordinates;
@@ -1149,7 +1149,7 @@ void Domain::getGlobalBox(Vec3D &min, Vec3D &max)
 }
 
 //-----------------------------------------------------------------------------
-void Domain::createNode(long num, double x, double y, double z)
+void Model::createNode(long num, double x, double y, double z)
 //-----------------------------------------------------------------------------
 {
   Node *pnd;
@@ -1159,7 +1159,7 @@ void Domain::createNode(long num, double x, double y, double z)
     // creer un nouveau noeud
     pnd = new Node(num);
 
-    // l'ajouter au domaine
+    // l'ajouter au modele
     nodes << pnd;
   }
   else
@@ -1194,7 +1194,7 @@ void Domain::createNode(long num, double x, double y, double z)
 }
 
 //-----------------------------------------------------------------------------
-Node *Domain::getNodeByNumber(long num)
+Node *Model::getNodeByNumber(long num)
 //-----------------------------------------------------------------------------
 {
   for (long i = 0; i < nodes.getSize(); i++)
@@ -1207,14 +1207,14 @@ Node *Domain::getNodeByNumber(long num)
 }
 
 //-----------------------------------------------------------------------------
-double Domain::getCurrentTime()
+double Model::getCurrentTime()
 //-----------------------------------------------------------------------------
 {
   return currentTime;
 }
 
 //-----------------------------------------------------------------------------
-void Domain::addInterface(Interface *inter)
+void Model::addInterface(Interface *inter)
 //-----------------------------------------------------------------------------
 {
 #ifdef VERIF_assert
@@ -1225,7 +1225,7 @@ void Domain::addInterface(Interface *inter)
 }
 
 //-----------------------------------------------------------------------------
-void Domain::starterWrite(String name)
+void Model::starterWrite(String name)
 //-----------------------------------------------------------------------------
 {
   /*  String output_filename;
@@ -1300,7 +1300,7 @@ void Domain::starterWrite(String name)
   \since DynELA 1.0.0
 
 //-----------------------------------------------------------------------------
-void Domain::createElement(Element *pel, long *nNodes)
+void Model::createElement(Element *pel, long *nNodes)
 //-----------------------------------------------------------------------------
 {
   Node *pnd;
@@ -1310,7 +1310,7 @@ void Domain::createElement(Element *pel, long *nNodes)
 
   // add the reference to the grid of the element
   //  pel->grid=this;
-  pel->domain = this;
+  pel->model = this;
 
   // construction de l'element et de ses noeuds
   long nbOk = 0;
@@ -1332,7 +1332,7 @@ void Domain::createElement(Element *pel, long *nNodes)
       if (nNodes[j] != -1)
         cout << "Node " << nNodes[j] << " doesn't exist in this grid\n";
     }
-    fatalError("Domain::createElement", "some nodes not exist in this grid");
+    fatalError("Model::createElement", "some nodes not exist in this grid");
   }
 }
 */

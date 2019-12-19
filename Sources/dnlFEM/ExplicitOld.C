@@ -21,7 +21,7 @@
 #include <ExplicitOld.h>
 #include <Node.h>
 #include <DynELA.h>
-#include <Domain.h>
+#include <Model.h>
 #include <NodalField.h>
 #include <Boundary.h>
 #include <BoundaryCondition.h>
@@ -59,10 +59,10 @@ void ExplicitOld::computePredictions()
   double beta = 0.;
 
   // phase de prediction
-  for (nodeId = 0; nodeId < domain->nodes.getSize(); nodeId++)
+  for (nodeId = 0; nodeId < model->nodes.getSize(); nodeId++)
   {
     // recuperation du noeud courant
-    node = domain->nodes(nodeId);
+    node = model->nodes(nodeId);
 #ifdef VERIF_assert
     assert(node != NULL);
 #endif
@@ -75,7 +75,7 @@ void ExplicitOld::computePredictions()
 
     // application des conditions aux limites imposees
     if (node->boundary != NULL)
-      node->boundary->applyConstantOnCurrentFields(node, domain->currentTime, timeStep);
+      node->boundary->applyConstantOnCurrentFields(node, model->currentTime, timeStep);
 
     // prediction de la vitesse materielle
     node->newField->speed = node->currentField->speed + ((1.0 - gamma) * timeStep) * node->currentField->acceleration;
@@ -94,7 +94,7 @@ void ExplicitOld::computePredictions()
 void ExplicitOld::solve(double solveUpToTime)
 //-----------------------------------------------------------------------------
 {
-  assert(domain != NULL);
+  assert(model != NULL);
 
   dynelaData->logFile << "Solve up to " << solveUpToTime << "\n";
 
@@ -102,22 +102,22 @@ void ExplicitOld::solve(double solveUpToTime)
   _solveUpToTime = solveUpToTime;
 
  // Compute Jacobian of the elements
-  domain->computeJacobian();
+  model->computeJacobian();
 
   // Compute the Mass Matrix if not already computed
-  domain->computeMassMatrix();
+  model->computeMassMatrix();
 
   // Compute the Time Step enforcing computation
   computeTimeStep(true);
 
-  while (domain->currentTime < _solveUpToTime)
+  while (model->currentTime < _solveUpToTime)
   {
     // calcul du time step minimal de la structure
     computeTimeStep();
 
     if ((currentIncrement % _reportFrequency == 0) || (currentIncrement == 1))
     {
-      printf("%s inc=%ld time=%8.4E timeStep=%8.4E\n", domain->name.chars(), currentIncrement, domain->currentTime, timeStep);
+      printf("%s inc=%ld time=%8.4E timeStep=%8.4E\n", model->name.chars(), currentIncrement, model->currentTime, timeStep);
     }
 
     // Compute predictions
@@ -130,7 +130,7 @@ void ExplicitOld::solve(double solveUpToTime)
 
     computeStrains();
 
-    domain->computeJacobian();
+    model->computeJacobian();
 
     computeConstitutive();
 
@@ -154,9 +154,9 @@ void ExplicitOld::solve(double solveUpToTime)
 
     updateTime();
 
-    domain->writeHistoryFiles();
+    model->writeHistoryFiles();
 
-    domain->transfertQuantities();
+    model->transfertQuantities();
   }
 
   /*   // cpu times record
@@ -166,7 +166,7 @@ void ExplicitOld::solve(double solveUpToTime)
   upTime=_upTime;
 
   // premier calcul de determinant
-  domain->computeJacobian (); OK
+  model->computeJacobian (); OK
 
   while(timeIsBetweenBounds ())
     {
@@ -187,8 +187,8 @@ void ExplicitOld::solve(double solveUpToTime)
       if ((increment % frequencyReports == 0) || (increment == 1))
 	{
 #endif
-	  printf ("%s inc=%ld time=%8.4E timeStep=%8.4E\n", domain->name.chars(), increment,
-		  domain->getCurrentTime(), timeStep);
+	  printf ("%s inc=%ld time=%8.4E timeStep=%8.4E\n", model->name.chars(), increment,
+		  model->getCurrentTime(), timeStep);
 
 	  // write the progress file
 	  progressWrite();
@@ -224,11 +224,11 @@ void ExplicitOld::solve(double solveUpToTime)
 #endif
 
 
-      // calcul du domaine parent et de getDeterminant J
+      // calcul du modele parent et de getDeterminant J
 #ifdef computeTimes
       recordTimes.start("DetJ computation");
 #endif
-      domain->computeJacobian ();
+      model->computeJacobian ();
 #ifdef computeTimes
       recordTimes.stop("DetJ computation");
 #endif
@@ -329,14 +329,14 @@ void ExplicitOld::solve(double solveUpToTime)
       updateTime ();
 
       // history file
-      fprintf (domain->history_file, "%8.4E %8.4E %8.4E %8.4E\n", domain->getCurrentTime(), 
-	       timeStep , domain->getTotalMass (), domain->getTotalKineticEnergy ());
-      fflush (domain->history_file);
+      fprintf (model->history_file, "%8.4E %8.4E %8.4E %8.4E\n", model->getCurrentTime(), 
+	       timeStep , model->getTotalMass (), model->getTotalKineticEnergy ());
+      fflush (model->history_file);
 
 #ifdef computeTimes
       recordTimes.start("History files");
 #endif
-      domain->writeHistoryFiles();
+      model->writeHistoryFiles();
 #ifdef computeTimes
       recordTimes.stop("History files");
 #endif
@@ -345,7 +345,7 @@ void ExplicitOld::solve(double solveUpToTime)
 #ifdef computeTimes
       recordTimes.start("Transfert increment");
 #endif
-      domain->transfertQuantities ();
+      model->transfertQuantities ();
 #ifdef computeTimes
       recordTimes.stop("Transfert increment");
 #endif
@@ -365,8 +365,8 @@ void ExplicitOld::updateGrid()
 #endif
 
   // mise e jour de la position des noeuds
-  for (long nodeId = 0; nodeId < domain->nodes.getSize(); nodeId++)
-    domain->nodes(nodeId)->coordinates += domain->nodes(nodeId)->newField->displacementInc;
+  for (long nodeId = 0; nodeId < model->nodes.getSize(); nodeId++)
+    model->nodes(nodeId)->coordinates += model->nodes(nodeId)->newField->displacementInc;
 }
 
 //-----------------------------------------------------------------------------
@@ -377,9 +377,9 @@ void ExplicitOld::computeStrains()
   cout << "Strains computation\n";
 #endif
 
-  for (long elementId = 0; elementId < domain->elements.getSize(); elementId++)
+  for (long elementId = 0; elementId < model->elements.getSize(); elementId++)
   {
-   // domain->elements(elementId)->computeStrainsOld(timeStep);
+   // model->elements(elementId)->computeStrainsOld(timeStep);
   }
 }
 
@@ -393,10 +393,10 @@ void ExplicitOld::computeConstitutive()
   cout << "Constitutive equation\n";
 #endif
 
-  for (long elementId = 0; elementId < domain->elements.getSize(); elementId++)
+  for (long elementId = 0; elementId < model->elements.getSize(); elementId++)
   {
     // chargement de l'element en cours
-    element = domain->elements(elementId);
+    element = model->elements(elementId);
 
     // integration de la loi constitutive sur l'element courant
     //element->computeConstitutiveEquation();
@@ -411,11 +411,11 @@ void ExplicitOld::computeState()
   cout << "State equation\n";
 #endif
 
-  for (long elementId = 0; elementId < domain->elements.getSize(); elementId++)
+  for (long elementId = 0; elementId < model->elements.getSize(); elementId++)
   {
 
     // integration de la loi d'etat sur l'element courant
-    //domain->elements(elementId)->computeStateEquationOld();
+    //model->elements(elementId)->computeStateEquationOld();
   }
 }
 
@@ -443,11 +443,11 @@ void ExplicitOld::computeStress()
 #endif
 
   // boucle sur les elements de la structure
-  for (long elementId = 0; elementId < domain->elements.getSize(); elementId++)
+  for (long elementId = 0; elementId < model->elements.getSize(); elementId++)
   {
 
     // pointeur sur l'element courant
-    //domain->elements(elementId)->computeStressOld(timeStep);
+    //model->elements(elementId)->computeStressOld(timeStep);
   }
   /*#ifdef VERIF_assert
     assert(element != NULL);
@@ -574,15 +574,15 @@ void ExplicitOld::computeMass()
 #endif
 
   // matrice M, et vecteur F
-  MatrixDiag M(domain->nodes.getSize(), domain->nodes.getSize());
-  Vector F(domain->nodes.getSize());
-  Vector roInc(domain->nodes.getSize());
+  MatrixDiag M(model->nodes.getSize(), model->nodes.getSize());
+  Vector F(model->nodes.getSize());
+  Vector roInc(model->nodes.getSize());
 
-  for (elementId = 0; elementId < domain->elements.getSize(); elementId++)
+  for (elementId = 0; elementId < model->elements.getSize(); elementId++)
   {
 
     // chargement de l'element en cours
-    element = domain->elements(elementId);
+    element = model->elements(elementId);
 
     // nombre de noeuds de l'element
     nonodes = element->getNumberOfNodes();
@@ -614,9 +614,9 @@ void ExplicitOld::computeMass()
   roInc = M.getSolve(F);
 
   // update du champ de densites
-  for (nodeId = 0; nodeId < domain->nodes.getSize(); nodeId++)
+  for (nodeId = 0; nodeId < model->nodes.getSize(); nodeId++)
   {
-    node = domain->nodes(nodeId);
+    node = model->nodes(nodeId);
     //node->newField->densityInc = roInc(nodeId);
   }
 }
@@ -635,23 +635,23 @@ void ExplicitOld::computeMomentum()
 #endif
 
   // matrice M, et vecteur F
-  MatrixDiag M(domain->getNumberOfDimensions() * domain->nodes.getSize(), domain->getNumberOfDimensions() * domain->nodes.getSize());
-  Vector F(domain->getNumberOfDimensions() * domain->nodes.getSize());
-  Vector vInc(domain->getNumberOfDimensions() * domain->nodes.getSize());
+  MatrixDiag M(model->getNumberOfDimensions() * model->nodes.getSize(), model->getNumberOfDimensions() * model->nodes.getSize());
+  Vector F(model->getNumberOfDimensions() * model->nodes.getSize());
+  Vector vInc(model->getNumberOfDimensions() * model->nodes.getSize());
 
   // phase de calcul
-  for (el = 0; el < domain->elements.getSize(); el++)
+  for (el = 0; el < model->elements.getSize(); el++)
   {
 
     // chargement de l'element en cours
-    element = domain->elements(el);
+    element = model->elements(el);
 
     // nombre de noeuds de l'element
     nonodes = element->getNumberOfNodes();
 
     // matrice Me, et vecteur Fe
-    MatrixDiag Me(domain->getNumberOfDimensions() * nonodes, domain->getNumberOfDimensions() * nonodes);
-    Vector Fe(domain->getNumberOfDimensions() * nonodes);
+    MatrixDiag Me(model->getNumberOfDimensions() * nonodes, model->getNumberOfDimensions() * nonodes);
+    Vector Fe(model->getNumberOfDimensions() * nonodes);
 
     // integration de la conservation de la quantite de mouvement
     // sur l'element courant
@@ -662,16 +662,16 @@ void ExplicitOld::computeMomentum()
     for (i = 0; i < nonodes; i++)
     {
       // recuperation du numero global
-      glob = (element->nodes(i)->internalNumber()) * domain->getNumberOfDimensions();
+      glob = (element->nodes(i)->internalNumber()) * model->getNumberOfDimensions();
 
-      for (j = 0; j < domain->getNumberOfDimensions(); j++)
+      for (j = 0; j < model->getNumberOfDimensions(); j++)
       {
 
         // assemblage de M
-        M(glob + j) += Me(i * domain->getNumberOfDimensions() + j);
+        M(glob + j) += Me(i * model->getNumberOfDimensions() + j);
 
         // assemblage de F
-        F(glob + j) += Fe(i * domain->getNumberOfDimensions() + j);
+        F(glob + j) += Fe(i * model->getNumberOfDimensions() + j);
       }
     }
   }
@@ -680,13 +680,13 @@ void ExplicitOld::computeMomentum()
   vInc = M.getSolve(F);
 
   // update du champ des accelerations
-  for (i = 0; i < domain->nodes.getSize(); i++)
+  for (i = 0; i < model->nodes.getSize(); i++)
   {
-    node = domain->nodes(i);
+    node = model->nodes(i);
 
     // mise a jour des accelerations
-    for (j = 0; j < domain->getNumberOfDimensions(); j++)
-      node->newField->acceleration(j) = vInc(i * domain->getNumberOfDimensions() + j);
+    for (j = 0; j < model->getNumberOfDimensions(); j++)
+      node->newField->acceleration(j) = vInc(i * model->getNumberOfDimensions() + j);
   }
 }
 
@@ -707,11 +707,11 @@ void ExplicitOld::computeCorrections()
   double beta = 0.;
 
   // phase de correction
-  for (i = 0; i < domain->nodes.getSize(); i++)
+  for (i = 0; i < model->nodes.getSize(); i++)
   {
 
     // recuperation du noeud courant
-    pnd = domain->nodes(i);
+    pnd = model->nodes(i);
 
     // correction de la densite
     //pnd->newField->density += (alpha * timeStep) * pnd->newField->densityInc;
@@ -728,7 +728,7 @@ void ExplicitOld::computeCorrections()
 void ExplicitOld::updateTime()
 //-----------------------------------------------------------------------------
 {
-  domain->currentTime += timeStep;
+  model->currentTime += timeStep;
 }
 
 /*
@@ -749,11 +749,11 @@ void ExplicitOld::computeState ()
   cout << "State equation\n";
 #endif
 
-  for (el = 0; el < domain->elements.getSize (); el++)
+  for (el = 0; el < model->elements.getSize (); el++)
     {
 
  // integration de la loi d'etat sur l'element courant
- domain->elements (el)->computeStateEquationOld ();
+ model->elements (el)->computeStateEquationOld ();
     }
 }
 
@@ -779,15 +779,15 @@ void ExplicitOld::computeEnergy ()
 #endif
 
   // matrice M, et vecteur F
-  MatrixDiag M (domain->nodes.getSize (), domain->nodes.getSize ());
-  Vector F (domain->nodes.getSize ());
-  Vector eInc (domain->nodes.getSize ());
+  MatrixDiag M (model->nodes.getSize (), model->nodes.getSize ());
+  Vector F (model->nodes.getSize ());
+  Vector eInc (model->nodes.getSize ());
 
-  for (el = 0; el < domain->elements.getSize (); el++)
+  for (el = 0; el < model->elements.getSize (); el++)
     {
 
  // chargement de l'element en cours
- pel = domain->elements (el);
+ pel = model->elements (el);
 
  // nombre de noeuds de l'element
  nonodes = pel->getNumberOfNodes();
@@ -821,9 +821,9 @@ void ExplicitOld::computeEnergy ()
   //    cout << eInc <<endl;
 
   // update du champ des energies
-  for (i = 0; i < domain->nodes.getSize (); i++)
+  for (i = 0; i < model->nodes.getSize (); i++)
     {
- pnd = domain->nodes (i);
+ pnd = model->nodes (i);
  pnd->newField->energyInc = eInc (i);
 
  // mise a jour de la masse nodale
@@ -847,11 +847,11 @@ void ExplicitOld::computeTemperatures ()
 
   coeff = 1.0;
 
-  for (no = 0; no < domain->nodes.getSize (); no++)
+  for (no = 0; no < model->nodes.getSize (); no++)
     {
 
  // recuperation du noeud
- pnd = domain->nodes (no);
+ pnd = model->nodes (no);
 
  // chargement du materiau
  pmat = pnd->elements (0)->material;
@@ -869,10 +869,10 @@ void ExplicitOld::scanInterfaces ()
 #endif
 
   // recherche des penetrations d'elements
-  // sur la liste des interfaces du domaine
-  for (long it = 0; it < domain->interfaces.getSize (); it++)
+  // sur la liste des interfaces du modele
+  for (long it = 0; it < model->interfaces.getSize (); it++)
     {
- domain->interfaces (it)->ScanIncludeNodes ();
+ model->interfaces (it)->ScanIncludeNodes ();
     }
 
   // calculs
@@ -888,9 +888,9 @@ void ExplicitOld::computeContactForces ()
   cout << "contact forces computation\n";
 #endif
 
-  for (no = 0; no < domain->nodes.getSize (); no++)
+  for (no = 0; no < model->nodes.getSize (); no++)
     {
- domain->nodes (no)->motion->computeForces (timeStep);
+ model->nodes (no)->motion->computeForces (timeStep);
     }
 }
 */

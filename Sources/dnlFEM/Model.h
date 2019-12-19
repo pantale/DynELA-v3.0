@@ -18,8 +18,8 @@
   \date 1997-2019
 */
 
-#ifndef __dnlFEM_Domain_h__
-#define __dnlFEM_Domain_h__
+#ifndef __dnlFEM_Model_h__
+#define __dnlFEM_Model_h__
 
 #include <String.h>
 #include <List.h>
@@ -32,8 +32,8 @@ class ElementSet;
 class HistoryFile;
 
 /*!
-  \class Domain Domain.h
-  \brief Classe de gestion et manipulation des domaines elements finis.
+  \class Model Model.h
+  \brief Classe de gestion et manipulation des modeles elements finis.
   \ingroup femLibrary
 
 
@@ -41,12 +41,13 @@ class HistoryFile;
   \version 0.9.4
   \date 1997-2004
 */
-class Domain
+class Model
 {
+  friend class DynELA;
 
 private:
   bool _massMatrixComputed = false; //!< Flag indiquant que la matrice de masse est deja calculee
-  short _numberOfDimensions = 0;    //!< Number of dimensions of the domain
+  short _numberOfDimensions = 0;    //!< Number of dimensions of the model
   double _lastElapsedTime = 0;      //!< Last elapsed time for computing endtime
   double _lastElapsedComputeTime = 0;
 
@@ -55,33 +56,39 @@ private:
   double fmax0;
  */
 public:
-  double currentTime = 0.0;         //!< Temps actuel du domaine
-                                    // double nextTime = 0.0;           //!< Temps actuel du domaine + increment de temps
+  double currentTime = 0.0;         //!< Temps actuel du modele
+                                    // double nextTime = 0.0;           //!< Temps actuel du modele + increment de temps
   List<Element *> elements;         //!< List of the Elements
-//  List<Element *> elementsCore[10]; //!< List of the Elements
   List<ElementSet *> elementsSets;  //!< List of the Elements Sets
   List<Node *> nodes;               //!< List of the Nodes
   List<NodeSet *> nodesSets;        //!< List of the Nodes Sets
   List<HistoryFile *> historyFiles; //!< List of the History Files
-                                    //  List<Solver *> solvers;          //!<liste des solveurs associes au domaine
-  Solver *solver = NULL;            //!< solveurs associes au domaine
+                                    //  List<Solver *> solvers;          //!<liste des solveurs associes au modele
+  Solver *solver = NULL;            //!< solveurs associes au modele
   MatrixDiag massMatrix;            //!< Mass matrix
                                     //  Solver *currentSolver = NULL;    //!< Current solver
-  String name = "_noname_";         //!< Name of the domain
+  String name = "_noname_";         //!< Name of the model
   Vector internalForces;            //!< Vecteur des forces internes
   /*   
-  List < Interface * > interfaces;          //!< Liste des interfaces de contact du domaine
-  FILE* history_file;                       //!< Fichier historique associe au domaine
+  List < Interface * > interfaces;          //!< Liste des interfaces de contact du modele
+  FILE* history_file;                       //!< Fichier historique associe au modele
   long dimension; //!< Nombre de dimensions de la grille 
   */
 
-  // constructeurs
-  Domain(char *newName = NULL);
-  Domain(const Domain &domain);
-  ~Domain();
-
+private:
   bool add(Element *pel);
   bool add(Node *pnd);
+  void add(ElementSet *elementSet, long startNumber = -1, long endNumber = -1, long increment = 1);
+  void add(HistoryFile *newHistoryFile);
+  void add(NodeSet *nodeSet, long startNumber = -1, long endNumber = -1, long increment = 1);
+  void add(Solver *newSolver);
+
+public:
+  // constructeurs
+  Model(char *newName = NULL);
+  Model(const Model &model);
+  ~Model();
+
   bool checkTopology();
   bool initSolve();
   bool solve(double solveUpToTime = -1.0);
@@ -91,22 +98,17 @@ public:
   double getTotalMass();
   Element *getElementByNum(long elementNumber);
   Node *getNodeByNum(long nodeNumber);
-  void add(ElementSet *elementSet, long startNumber = -1, long endNumber = -1, long increment = 1);
-  void add(NodeSet *nodeSet, long startNumber = -1, long endNumber = -1, long increment = 1);
-  void add(Solver *newSolver);
+  short getNumberOfDimensions();
+  void computeFinalRotation();
   void computeInternalForces();
   void computeJacobian();
   void computeMassMatrix(bool forceComputation = false);
+  void computePressure();
+  void computeStrains();
+  void computeStress(double timeStep);
   void create(Element *pel, long *listOfNodesNumber);
-  short getNumberOfDimensions();
   void transfertQuantities();
   void writeHistoryFiles();
-  void add(HistoryFile *newHistoryFile);
-  void computeStrains();
-  void computePressure();
-  void computeStress(double timeStep);
-  void computeFinalRotation();
-
   /* 
   
   double computePowerIterationTimeStep();
@@ -127,7 +129,7 @@ public:
 
   // fonctions entree sortie
   void print (ostream & os) const;
-  friend ostream & operator << (ostream & os, Domain & dom);
+  friend ostream & operator << (ostream & os, Model & dom);
   void readData (ifstream & pfile);
   double getReadTimeData (ifstream & pfile);
   void writeData (ofstream & pfile);
@@ -143,7 +145,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-inline short Domain::getNumberOfDimensions()
+inline short Model::getNumberOfDimensions()
 //-----------------------------------------------------------------------------
 {
   return _numberOfDimensions;

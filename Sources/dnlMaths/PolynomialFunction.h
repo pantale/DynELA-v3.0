@@ -36,7 +36,7 @@ private:
 
 public:
 public:
-  PolynomialFunction(char* newName = NULL);
+  PolynomialFunction(char *newName = NULL);
   ~PolynomialFunction();
 
   double getValue(double x);
@@ -46,10 +46,13 @@ public:
   long getNumberOfFragments();
   double getFactor(long i);
   double getCoefficient(long i);
-  void print();
   void toGnuplot(String filename, double xmin, double xmax, double steps);
   void flush();
   String convertToDynELASourceFile();
+
+#ifndef SWIG
+  void print();
+#endif
 };
 
 #endif

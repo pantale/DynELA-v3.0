@@ -21,7 +21,7 @@
 #include <ElQua4NAx.h>
 #include <Node.h>
 
-/* #include <Domain.h>
+/* #include <Model.h>
 #include <io_Structure.h>
 #include <DynELA.h>
 #include <IntegrationPoint.h>

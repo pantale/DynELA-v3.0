@@ -49,12 +49,12 @@ class Element
     long _listIndex;                   //!< Local index used for the ListIndex management.
     Vec3D _nodeMin, _nodeMax;          //!< Bounding box of an element.
 
-  protected:
+protected:
     Matrix _globalToLocal;
     const ElementData *_elementData;
     IntegrationPoint *_integrationPoint;
 
-  public:
+public:
     //   Model *model;
     List<IntegrationPoint *> integrationPoints;
     //    List<UnderIntegrationPoint *> underIntegrationPoints;
@@ -82,7 +82,7 @@ class Element
     };
 #endif
 
-  public:
+public:
     Element(long elementNumber = 1);
     Element(const Element &element);
     virtual ~Element();
@@ -141,12 +141,12 @@ class Element
     void computeMassMatrix(MatrixDiag &massMatrix);
     //void computeMomentumEquation(MatrixDiag &M, Vector &F);
     void computePressure();
-  //  void computeStateEquationOld();
+    //  void computeStateEquationOld();
     void computeStrains();
-  //  void computeStrainsOld(double);
+    //  void computeStrainsOld(double);
     void computeStress(double timeStep);
     void computeStressDirect(double timeStep);
-  //  void computeStressOld(double timeStep);
+    //  void computeStressOld(double timeStep);
     void createIntegrationPoints();
     void initializeData();
     void setCurrentIntegrationPoint(short point);

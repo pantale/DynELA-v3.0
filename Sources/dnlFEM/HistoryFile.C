@@ -96,7 +96,7 @@ double HistoryFileGlobalItem::getValue()
   switch (_field)
   {
   case Field::realTimeStep:
-//    return dynelaData->model->solver->timeStep;
+    //    return dynelaData->model->solver->timeStep;
     return dynelaData->model->solver->timeStep;
     break;
   case Field::timeStep:
@@ -300,7 +300,7 @@ void HistoryFile::save(double currentTime)
 //-----------------------------------------------------------------------------
 {
   // if end of save time
-/*   if ((_stopTime > 0.0) && (currentTime > _stopTime))
+  /*   if ((_stopTime > 0.0) && (currentTime > _stopTime))
     return;
  */
   // If file has not been initialized
@@ -311,7 +311,7 @@ void HistoryFile::save(double currentTime)
   }
 
   // If it is not time to save a new history
-  if ((currentTime > _startTime)&&(currentTime < _nextTime))
+  if ((currentTime > _startTime) && (currentTime < _nextTime))
     return;
 
   // Compute next save time

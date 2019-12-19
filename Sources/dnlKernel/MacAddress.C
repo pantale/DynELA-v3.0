@@ -62,6 +62,8 @@ String MacAddresses::getAddress(int num)
 //-----------------------------------------------------------------------------
 {
     String address;
+    if ((num < 0) || (num >= macs.getSize()))
+        return "none";
     char tmp[8];
     for (int i = 0; i < 6; i++)
     {
@@ -78,5 +80,7 @@ String MacAddresses::getAddress(int num)
 String MacAddresses::getInterface(int num)
 //-----------------------------------------------------------------------------
 {
+    if ((num < 0) || (num >= macs.getSize()))
+        return "none";
     return macs(num)->interface;
 }

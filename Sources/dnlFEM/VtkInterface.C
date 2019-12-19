@@ -24,6 +24,7 @@
 #include <Node.h>
 #include <Element.h>
 #include <Field.h>
+#include <Model.h>
 
 //-----------------------------------------------------------------------------
 VtkInterface::VtkInterface(char *newName)
@@ -87,7 +88,7 @@ void VtkInterface::headerWrite()
   // Write the current time
   _stream << "FIELD FieldData 1\n";
   _stream << "TIME 1 1 double\n";
-  _stream << dynelaData->currentTime << "\n";
+  _stream << dynelaData->model->currentTime << "\n";
 }
 
 //-----------------------------------------------------------------------------

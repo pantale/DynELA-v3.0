@@ -552,6 +552,8 @@ void Explicit::endStep()
   // sauvegarde des history file
   model->writeHistoryFiles();
 
+  dynelaData->writeResultFile();
+
   // swap des valeurs nodales
   model->transfertQuantities();
 }

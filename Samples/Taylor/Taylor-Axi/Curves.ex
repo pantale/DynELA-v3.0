@@ -1,5 +1,5 @@
 # Global parameters
-Parameters, xname=$Time\ (s)$, marksnumber=15, title=$Taylor Axi Benchmark Test$, crop=True
+Parameters, xname=$Time\ (s)$, marksnumber=15, title=$Taylor\ Axi\ Benchmark\ Test$, crop=True
 
 # Temperature curve
 Temperature, yname=$Temperature\ (^{\circ}C)$, legendlocate=bottomright, name=$DynELA\ T$, temperature.plot, name=$Abaqus\ T$, Abaqus/Taylor_Temperature.plot

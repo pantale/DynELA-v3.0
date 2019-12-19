@@ -312,7 +312,7 @@ import dnlPython as dnl # Imports the dnlPython library as dnl
 
 \begin_layout Plain Layout
 
-dn = dnl.DynELA()       # Creates the main Object
+model = dnl.DynELA()    # Creates the main Object
 \end_layout
 
 \begin_layout Plain Layout
@@ -329,7 +329,7 @@ dn = dnl.DynELA()       # Creates the main Object
 
 \begin_layout Plain Layout
 
-dn.solve()              # Runs the solver
+model.solve()           # Runs the solver
 \end_layout
 
 \begin_layout Plain Layout
@@ -450,7 +450,7 @@ Dynela
 
 library) and instantiate it as the 
 \family sans
-dn
+model
 \family default
  object
 \begin_inset Foot
@@ -464,7 +464,7 @@ DynELA
 \family default
  object is 
 \family sans
-dn.
+model.
 \end_layout
 
 \end_inset
@@ -609,12 +609,12 @@ begin{PythonListing}
 
 \begin_layout Plain Layout
 
-dn.createNode(1, 0.0, 0.0, 0.0)  # Node 1 [0.0, 0.0, 0.0]
+model.createNode(1, 0.0, 0.0, 0.0)  # Node 1 [0.0, 0.0, 0.0]
 \end_layout
 
 \begin_layout Plain Layout
 
-dn.createNode(2, 1.0, 2.0, -1.0) # Node 2 [1.0, 2.0, -1.0]
+model.createNode(2, 1.0, 2.0, -1.0) # Node 2 [1.0, 2.0, -1.0]
 \end_layout
 
 \begin_layout Plain Layout
@@ -697,12 +697,12 @@ begin{PythonListing}
 
 \begin_layout Plain Layout
 
-dn.setDefaultElement(dnl.Element.ElQua4N2D) # Defines the default element
+model.setDefaultElement(dnl.Element.ElQua4N2D) # Defines the default element
 \end_layout
 
 \begin_layout Plain Layout
 
-dn.createElement(1, 1, 2, 3, 4)             # Creates element 1 with nodes
+model.createElement(1, 1, 2, 3, 4)             # Creates element 1 with nodes
  1,2,3,4
 \end_layout
 
@@ -914,17 +914,17 @@ nset = dnl.NodeSet("NS_All")
 
 \begin_layout Plain Layout
 
-dn.add(nset, 2)       # Add node number 2 to node set
+model.add(nset, 2)       # Add node number 2 to node set
 \end_layout
 
 \begin_layout Plain Layout
 
-dn.add(nset, 1, 4)    # Add nodes number 1 to 4 to node set
+model.add(nset, 1, 4)    # Add nodes number 1 to 4 to node set
 \end_layout
 
 \begin_layout Plain Layout
 
-dn.add(nset, 1, 4, 2) # Add nodes number 1 and 3 to node set
+model.add(nset, 1, 4, 2) # Add nodes number 1 and 3 to node set
 \end_layout
 
 \begin_layout Plain Layout
@@ -1061,17 +1061,17 @@ eset = dnl.ElementSet("ES_All")
 
 \begin_layout Plain Layout
 
-dn.add(eset, 2)       # Add elemeny number 2 to element set
+model.add(eset, 2)       # Add elemeny number 2 to element set
 \end_layout
 
 \begin_layout Plain Layout
 
-dn.add(eset, 1, 4)    # Add elements number 1 to 4 to element set
+model.add(eset, 1, 4)    # Add elements number 1 to 4 to element set
 \end_layout
 
 \begin_layout Plain Layout
 
-dn.add(eset, 1, 4, 2) # Add elements number 1 and 3 to element set
+model.add(eset, 1, 4, 2) # Add elements number 1 and 3 to element set
 \end_layout
 
 \begin_layout Plain Layout
@@ -1170,13 +1170,13 @@ vector = dnl.Vec3D(1.0, 0.0, 0.0) # Defines the translation vector
 
 \begin_layout Plain Layout
 
-dn.translate(vector)              # Translates the whole model along [1.0,
+model.translate(vector)           # Translates the whole model along [1.0,
  0.0, 0.0]
 \end_layout
 
 \begin_layout Plain Layout
 
-dn.translate(vector, nset)        # Translates the NodeSet ns along [1.0,
+model.translate(vector, nset)     # Translates the NodeSet ns along [1.0,
  0.0, 0.0]
 \end_layout
 
@@ -1277,24 +1277,24 @@ axis = dnl.Vec3D(1.0, 1.0, 1.0) # Defines the axis of rotation
 
 \begin_layout Plain Layout
 
-dn.rotate('X', angle)           # Rotation of the whole structure around
+model.rotate('X', angle)        # Rotation of the whole structure around
  X
 \end_layout
 
 \begin_layout Plain Layout
 
-dn.rotate('X', angle, ns)       # Rotation of NodeSet ns around X
+model.rotate('X', angle, ns)    # Rotation of NodeSet ns around X
 \end_layout
 
 \begin_layout Plain Layout
 
-dn.rotate(axis, angle)          # Rotation of the whole structure around
+model.rotate(axis, angle)       # Rotation of the whole structure around
  axis
 \end_layout
 
 \begin_layout Plain Layout
 
-dn.rotate(axis, angle, ns)      # Rotation of NodeSet ns around axis
+model.rotate(axis, angle, ns)   # Rotation of NodeSet ns around axis
 \end_layout
 
 \begin_layout Plain Layout
@@ -1378,22 +1378,23 @@ vector = dnl.Vec3D(2.0, 1.0, 1.0) # Defines the scale vector
 
 \begin_layout Plain Layout
 
-dn.scale(value)      # Scales the whole structure by factor value
+model.scale(value)      # Scales the whole structure by factor value
 \end_layout
 
 \begin_layout Plain Layout
 
-dn.scale(value, ns)  # Scales the NodeSet ns by factor value
+model.scale(value, ns)  # Scales the NodeSet ns by factor value
 \end_layout
 
 \begin_layout Plain Layout
 
-dn.scale(vector)     # Scales the whole structure by a factor of 2.0 on x
+model.scale(vector)     # Scales the whole structure by a factor of 2.0 on
+ x
 \end_layout
 
 \begin_layout Plain Layout
 
-dn.scale(vector, ns) # Scales the NodeSet ns by a factor of 2.0 on x
+model.scale(vector, ns) # Scales the NodeSet ns by a factor of 2.0 on x
 \end_layout
 
 \begin_layout Plain Layout
@@ -1650,7 +1651,7 @@ steel = dnl.Material("Steel")
 
 \begin_layout Plain Layout
 
-dn.add(steel, eset)
+model.add(steel, eset)
 \end_layout
 
 \begin_layout Plain Layout
@@ -1876,7 +1877,7 @@ topBC.setValue(0, 1, 1)
 
 \begin_layout Plain Layout
 
-dynELA.attachConstantBC(topBC, topNS)
+model.attachConstantBC(topBC, topNS)
 \end_layout
 
 \begin_layout Plain Layout
@@ -1986,7 +1987,7 @@ topSpeed.setFunction(ramp)
 
 \begin_layout Plain Layout
 
-dynELA.attachConstantBC(topSpeed, topNS)
+model.attachConstantBC(topSpeed, topNS)
 \end_layout
 
 \begin_layout Plain Layout
@@ -2100,7 +2101,7 @@ dtHist.setSaveTime(stopTime/nbrePoints)
 
 \begin_layout Plain Layout
 
-dynELA.add(dtHist)
+model.add(dtHist)
 \end_layout
 
 \begin_layout Plain Layout
@@ -2161,7 +2162,7 @@ vonMisesHist.setSaveTime(stopTime/nbrePoints)
 
 \begin_layout Plain Layout
 
-dynELA.add(vonMisesHist)
+model.add(vonMisesHist)
 \end_layout
 
 \begin_layout Plain Layout
@@ -2201,7 +2202,7 @@ begin{PythonListing}
 
 \begin_layout Plain Layout
 
-dynELA.setSaveTimes(0, stopTime, stopTime/nbreSaves)
+model.setSaveTimes(0, stopTime, stopTime/nbreSaves)
 \end_layout
 
 \begin_layout Plain Layout
@@ -2256,7 +2257,12 @@ solver.setTimes(0, stopTime)
 
 \begin_layout Plain Layout
 
-dynELA.add(solver)
+solver.setTimeStepSafetyFactor(1.0)
+\end_layout
+
+\begin_layout Plain Layout
+
+model.add(solver)
 \end_layout
 
 \begin_layout Plain Layout
@@ -2306,7 +2312,7 @@ parallel = dnl.Parallel()
 
 \begin_layout Plain Layout
 
-dynELA.add(parallel)
+model.add(parallel)
 \end_layout
 
 \begin_layout Plain Layout
@@ -2356,7 +2362,7 @@ begin{PythonListing}
 
 \begin_layout Plain Layout
 
-dynELA.solve()
+model.solve()
 \end_layout
 
 \begin_layout Plain Layout

@@ -91,11 +91,14 @@ private:
   short _defaultElement = Element::Unknown; //!< Current default Element
   short _resultFileIndex = 0;               //!< Current result file index
   String _resultFileName;                   //!< Current result file name
+  double _lastElapsedTime = 0;              //!< Last elapsed time for computing endtime
+  double _lastElapsedComputeTime = 0;
+  double _nextDisplayTime = 10;
+  double _displayTimeIncrement = 10;
 
 protected:
   ListIndex<Node *> nodes;       //!< Nodes list of the structure
   ListIndex<Element *> elements; //!< Elements list of the structure
-  //List<Model *> models;          //!< Models list of the structure
   List<Material *> materials;    //!< Materials list of the structure
 
 public:
@@ -103,13 +106,13 @@ public:
   double saveTimeIncrement = 0.0; //!< Increment of save time
   double nextSaveTime = 0.0;      //!< Next save time
   double startSaveTime = 0.0;     //!< Start save time
-  double currentTime = 0.0;       //!< Current time
-  String name = "_noname_";       //!< name of the object
-  Settings *settings = NULL;      //!< Settings
-  VtkInterface *dataFile = NULL;  //!< Interface for results
-  Parallel *parallel = NULL;      //!< Parallel computation
-  Model *model = NULL;            //!< Pointer to the model
-  Timers cpuTimes;                //!< Store the CPU Times
+  //double currentTime = 0.0;       //!< Current time
+  String name = "_noname_";      //!< name of the object
+  Settings *settings = NULL;     //!< Settings
+  VtkInterface *dataFile = NULL; //!< Interface for results
+  Parallel *parallel = NULL;     //!< Parallel computation
+  Model *model = NULL;           //!< Pointer to the model
+  Timers cpuTimes;               //!< Store the CPU Times
 
 #ifndef SWIG
   LogFile logFile; //!< Log file
@@ -122,7 +125,7 @@ public:
 
   bool createElement(long elementNumber, long nodesIndex, ...);
   bool createNode(long nodeNumber, double xCoord, double yCoord, double zCoord);
- // Model *model;
+  // Model *model;
   Element *getElementByNum(long elementNumber);
   long getElementsNumber();
   long getNodesNumber();
@@ -142,10 +145,12 @@ public:
   void scale(double scaleValue, NodeSet *nodeSet = NULL);
   void scale(Vec3D scaleVector, NodeSet *nodeSet = NULL);
   void setDefaultElement(short type);
-  void setSaveTimes(double startsavetime, double stopsavetime, double savetime);
+  void setSaveTimes(double startSaveTime, double endSaveTime, double saveTimeIncrement);
+  void writeResultFile();
   void solve();
   void translate(Vec3D translateVector, NodeSet *nodeSet = NULL);
-  void writeResultFile();
+  void writeVTKFile();
+  void displayEstimatedEnd();
 
   //  void displayOnline();
 

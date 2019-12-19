@@ -32,7 +32,7 @@ class VtkInterface
 private:
   std::ofstream _stream;
   String _fileName;
-  List <short> _outputFields;
+  List<short> _outputFields;
 
 public:
   String name = "_noname_"; //!< Name of the VTK interface

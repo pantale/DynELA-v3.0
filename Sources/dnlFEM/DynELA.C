@@ -549,12 +549,66 @@ void DynELA::attachConstantBC(Boundary *boundary, NodeSet *nodeSet)
 }
 
 //-----------------------------------------------------------------------------
-void DynELA::setSaveTimes(double startsavetime, double stopsavetime, double savetime)
+void DynELA::setSaveTimes(double _startSaveTime, double _endSaveTime, double _saveTimeIncrement)
 //-----------------------------------------------------------------------------
 {
-  startSaveTime = startsavetime;
-  endSaveTime = stopsavetime;
-  saveTimeIncrement = savetime;
+  startSaveTime = _startSaveTime;
+  endSaveTime = _endSaveTime;
+  saveTimeIncrement = _saveTimeIncrement;
+  nextSaveTime = startSaveTime;
+}
+
+//-----------------------------------------------------------------------------
+void DynELA::writeResultFile()
+//-----------------------------------------------------------------------------
+{
+  // Display estimated end of computation
+  displayEstimatedEnd();
+
+  if ((model->currentTime >= nextSaveTime) && (model->currentTime <= endSaveTime))
+  {
+    // Save file
+    writeVTKFile();
+
+    // increase save time
+    nextSaveTime += saveTimeIncrement;
+  }
+}
+
+//-----------------------------------------------------------------------------
+void DynELA::displayEstimatedEnd()
+//-----------------------------------------------------------------------------
+{
+  if (dynelaData->cpuTimes.timer("Solver")->getCurrent() >= _nextDisplayTime)
+  {
+    // Estimate end of computation
+    if (model->currentTime > 0)
+    {
+      double elapsedTime = dynelaData->cpuTimes.timer("Solver")->getCurrent();
+      int remainingTime = (elapsedTime - _lastElapsedTime) / (model->currentTime - _lastElapsedComputeTime) * (model->solver->endTime - model->currentTime);
+      int remainingHours, remainingMinutes, remainingSeconds;
+      int restOfTime;
+      int elapsedHours, elapsedMinutes, elapsedSeconds;
+
+      elapsedHours = elapsedTime / 3600;
+      restOfTime = int(elapsedTime) % 3600;
+      elapsedMinutes = restOfTime / 60;
+      elapsedSeconds = restOfTime % 60;
+      printf("Elapsed time %02d:%02d:%02d\n", elapsedHours, elapsedMinutes, elapsedSeconds);
+
+      remainingHours = remainingTime / 3600;
+      restOfTime = int(remainingTime) % 3600;
+      remainingMinutes = restOfTime / 60;
+      remainingSeconds = restOfTime % 60;
+      printf("Estimated end of computation in %02d:%02d:%02d\n", remainingHours, remainingMinutes, remainingSeconds);
+
+      _lastElapsedTime = elapsedTime;
+      _lastElapsedComputeTime = model->currentTime;
+
+      // Increase the Next Display Time
+      _nextDisplayTime += _displayTimeIncrement;
+    }
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -706,7 +760,7 @@ void DynELA::getGlobalBox(Vec3D &minPoint, Vec3D &maxPoint)
 }
 
 //-----------------------------------------------------------------------------
-void DynELA::writeResultFile()
+void DynELA::writeVTKFile()
 //-----------------------------------------------------------------------------
 {
   String fileName;
@@ -723,7 +777,7 @@ void DynELA::writeResultFile()
   // Close the vtk data file
   dataFile->close();
 
-  logFile << "Result file: " << fileName << " written at time " << currentTime << " s\n";
+  logFile << "Result file: " << fileName << " written at time " << model->currentTime << " s\n";
 
   // increment the index
   _resultFileIndex++;
@@ -740,113 +794,52 @@ void DynELA::writeResultFile()
 void DynELA::solve()
 //-----------------------------------------------------------------------------
 {
+  // Get default value for displaying progress time
+  dynelaData->settings->getValue("DisplayProgress", _displayTimeIncrement);
+  dynelaData->settings->getValue("DisplayProgress", _nextDisplayTime);
+
+  // Start Solver timer
   cpuTimes.timer("Solver")->start();
 
+  // Set the value of solved
   bool solved = false;
 
-  // affichage
+  // Display start of solve phase
   std::cout << "\nProcessing DynELA ...\n";
   logFile.separatorWrite("DynELA Solver Initialization phase");
 
   // Run the init solve of this model
-/*   for (short modelId = 0; modelId < models.getSize(); modelId++)
-  {
- */    
-model->initSolve();
-  /* } */
+  model->initSolve();
 
-  // Get the end time of the structure
+  // Get the end time of the structure and display it
   double endOfComputationTime = model->getEndSolveTime();
- /*  for (short modelId = 1; modelId < models.getSize(); modelId++)
-  {
-    endOfComputationTime = dnlMin(models(modelId)->getEndSolveTime(), endOfComputationTime);
-  }
- */  logFile << "Set final computation time to: " << endOfComputationTime << " s\n";
+  logFile << "Set final computation time to: " << endOfComputationTime << " s\n";
 
   // Save initial configuration
   writeResultFile();
 
-  // Next save time
-  nextSaveTime = startSaveTime + saveTimeIncrement;
-
+  // Write start on computation into log file
   logFile.separatorWrite("DynELA Solver phase");
 
-  // Only one model, so that's simple, only a direct solve
-/*   if (models.getSize() == 1)
+  // Run the Explicit Solver
+  solved = model->solve(endOfComputationTime);
+
+  // Test if solve was Ok or not
+  if (solved == false)
   {
- */    // do the loops until the end of the computation for this model
-    while (nextSaveTime <= endOfComputationTime)
-    {
-      // Run the solver for the current model
-      solved = model->solve(nextSaveTime);
-
-      // Test if solved
-      if (solved == false)
-      {
-        writeResultFile();
-        fatalError("Solver Error", "Unable to solve problem upto time = %10.3E\n", nextSaveTime);
-      }
-
-      // Update the current time of the whole structure
-      currentTime = model->currentTime;
-
-      // Write a new result file
-      writeResultFile();
-
-      // Computes the next saveTime value
-      if ((nextSaveTime + saveTimeIncrement > endOfComputationTime) && (nextSaveTime < endOfComputationTime))
-        nextSaveTime = endOfComputationTime;
-      else
-        nextSaveTime += saveTimeIncrement;
-    }
- /*  }
-  else
-  {
-    fatalError("DynELA::solve", "Multi-models solve not implemented yet\n");
+    // Emergency write of a result file
+    writeVTKFile();
+    fatalError("Solver Error", "Unable to solve problem upto time = %10.3E\n", nextSaveTime);
   }
- */
+
+  // Write the final result file
+  writeVTKFile();
+
+  // Stop the timer for the solver
   cpuTimes.timer("Solver")->stop();
 
-  // On affiche les logs de CPU
+  // Stop all time logs
   cpuTimes.stop();
-
-  /*  
-   long i;
-   nextTime;
-  bool cont;
-  double endOfComputationTime;
-
-  nextTime = 0;
-
-  else
-  {
-    cont = true;
-    while (cont)
-    {
-      cont = false;
-
-      // what is the next time
-      nextTime = currentTime + saveTimeIncrement / 500;
-
-      for (i = 0; i < models.getSize(); i++)
-      {
-        if (models(i)->solve(nextTime) == true)
-          cont = true;
-      }
-
-      // Synchronize times
-      currentTime = dnlMin(models(0)->currentTime, models(0)->currentTime);
-
-      saveResults();
-    }
-  }
-
-  // final result if available
-  saveResults();
-
-  cout << "end of solve\n";
-  // print the CPU times
-  recordTimes.report("CPU-TIMES"); */
 }
 
 /*

@@ -8,6 +8,7 @@ ComputeTimeStepFrequency = 10
 TimeStepSafetyFactor = 0.9
 TimeStepMethod = 0
 ReportFrequency = 100
+DisplayProgress = 60
 
 # Defaults vtk fields
 VtkFields = Stress, Strain, PlasticStrain, vonMises, yield, pressure, plasticStrain, plasticStrainRate, gamma, gammaCumulate, temperature, speed, displacement

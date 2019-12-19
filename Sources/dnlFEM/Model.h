@@ -48,8 +48,6 @@ class Model
 private:
   bool _massMatrixComputed = false; //!< Flag indiquant que la matrice de masse est deja calculee
   short _numberOfDimensions = 0;    //!< Number of dimensions of the model
-  double _lastElapsedTime = 0;      //!< Last elapsed time for computing endtime
-  double _lastElapsedComputeTime = 0;
 
   /*   
   Vector EV_TimeStep;

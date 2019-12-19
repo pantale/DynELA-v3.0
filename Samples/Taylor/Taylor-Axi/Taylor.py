@@ -37,21 +37,21 @@ dxWidth = width/(nbElementsWidth);
 dxHeigh = heigh/(nbElementsHeigh);
 
 # Creates the main Object
-dynELA = dnl.DynELA("Taylor")
+model = dnl.DynELA("Taylor")
 
 # Creates the Nodes
 nbNodes = 1
 allNS = dnl.NodeSet("NS_All")
 for j in range (nbElementsHeigh+1): 
     for i  in range (nbElementsWidth+1):
-        dynELA.createNode(nbNodes, i*dxWidth, j*dxHeigh, 0.00)
-        dynELA.add(allNS, nbNodes)
-        nbNodes += 1
-nbNodes -= 1
-print("Number of nodes created:", dynELA.getNodesNumber())    
+        model.createNode(nbNodes, i*dxWidth, j*dxHeigh, 0.00)
+        model.add(allNS, nbNodes)
+        nbNodes + =  1
+nbNodes - =  1
+print("Number of nodes created:", model.getNodesNumber())    
 
 # Creates the Elements
-dynELA.setDefaultElement(dnl.Element.ElQua4NAx)
+model.setDefaultElement(dnl.Element.ElQua4NAx)
 nbElements = 1
 allES = dnl.ElementSet("ES_All")
 for j in range (nbElementsHeigh):
@@ -60,23 +60,23 @@ for j in range (nbElementsHeigh):
         n2 = (i+(j*(nbElementsWidth+1))+2)
         n3 = (i+((j+1)*(nbElementsWidth+1))+2)
         n4 = (i+((j+1)*(nbElementsWidth+1))+1)
-        dynELA.createElement(nbElements, n1, n2, n3, n4)
-        dynELA.add(allES, nbElements)
-        nbElements += 1
-nbElements -= 1
-print("Number of elements created:",dynELA. getElementsNumber())    
+        model.createElement(nbElements, n1, n2, n3, n4)
+        model.add(allES, nbElements)
+        nbElements + =  1
+nbElements - =  1
+print("Number of elements created:", model. getElementsNumber())    
 
-bottomNS=dnl.NodeSet("NS_Bottom")
-dynELA.add(bottomNS,1,nbElementsWidth+1)
+bottomNS = dnl.NodeSet("NS_Bottom")
+model.add(bottomNS, 1, nbElementsWidth+1)
 
-axisNS=dnl.NodeSet("NS_Axis")
-dynELA.add(axisNS,1,nbNodes,nbElementsWidth+1)
+axisNS = dnl.NodeSet("NS_Axis")
+model.add(axisNS, 1, nbNodes, nbElementsWidth+1)
 
 histNS = dnl.NodeSet("NS_Hist")
-dynELA.add(histNS, 1)
+model.add(histNS, 1)
 
 histES = dnl.ElementSet("ES_Hist")
-dynELA.add(histES, 1)
+model.add(histES, 1)
 
 # Creates the hardening law
 hardLaw = dnl.JohnsonCookLaw()
@@ -92,66 +92,66 @@ steel.heatCapacity = heatCapacity
 steel.taylorQuinney = taylorQuinney
 steel.initialTemperature = T0
 
-dynELA.add(steel,allES)
+model.add(steel, allES)
 
 # Declaration of a boundary condition for bottom line
 bottomBC = dnl.BoundaryRestrain('BC_bottom')
-bottomBC.setValue(0,1,1)
-dynELA.attachConstantBC(bottomBC,bottomNS)
+bottomBC.setValue(0, 1, 1)
+model.attachConstantBC(bottomBC, bottomNS)
 
 # Declaration of a boundary condition for axis line
 axisBC = dnl.BoundaryRestrain('BC_axis')
-axisBC.setValue(1,0,1)
-dynELA.attachConstantBC(axisBC,axisNS)
+axisBC.setValue(1, 0, 1)
+model.attachConstantBC(axisBC, axisNS)
 
 # Declaration of the initial speed
 speedBC = dnl.BoundarySpeed('BC_speed')
 speedBC.setValue(0, -speed, 0)
-dynELA.attachInitialBC(speedBC,allNS)
+model.attachInitialBC(speedBC, allNS)
 
 solver = dnl.Explicit("Solver")
-solver.setTimes(0,stopTime)
-dynELA.add(solver)
+solver.setTimes(0, stopTime)
+model.add(solver)
 solver.setComputeTimeStepFrequency(1)
 #solver.setTimeStepSafetyFactor(1.09)
-dynELA.setSaveTimes(0,stopTime,stopTime/nbreSaves)
+model.setSaveTimes(0, stopTime, stopTime/nbreSaves)
 
 # Declaration of the history files
 vonMisesHist = dnl.HistoryFile("vonMisesHistory")
 vonMisesHist.setFileName(dnl.String("vonMises.plot"))
 vonMisesHist.add(histES, 0, dnl.Field.vonMises)
 vonMisesHist.setSaveTime(stopTime / nbrePoints)
-dynELA.add(vonMisesHist)
+model.add(vonMisesHist)
 
 plasticStrainHist = dnl.HistoryFile("plasticStrainHistory")
 plasticStrainHist.setFileName(dnl.String("plasticStrain.plot"))
 plasticStrainHist.add(histES, 0, dnl.Field.plasticStrain)
 plasticStrainHist.setSaveTime(stopTime / nbrePoints)
-dynELA.add(plasticStrainHist)
+model.add(plasticStrainHist)
 
 temperatureHist = dnl.HistoryFile("temperatureHistory")
 temperatureHist.setFileName(dnl.String("temperature.plot"))
 temperatureHist.add(histES, 0, dnl.Field.temperature)
 temperatureHist.setSaveTime(stopTime / nbrePoints)
-dynELA.add(temperatureHist)
+model.add(temperatureHist)
 
 dtHist = dnl.HistoryFile("dtHistory")
 dtHist.setFileName(dnl.String("dt.plot"))
 dtHist.add(dnl.Field.timeStep)
 dtHist.setSaveTime(stopTime / nbrePoints)
-dynELA.add(dtHist)
+model.add(dtHist)
 
 keHist = dnl.HistoryFile("keHistory")
 keHist.setFileName(dnl.String("ke.plot"))
 keHist.add(dnl.Field.kineticEnergy)
 keHist.setSaveTime(stopTime / nbrePoints)
-dynELA.add(keHist)
+model.add(keHist)
 
 parallel = dnl.Parallel()
-dynELA.add(parallel)
+model.add(parallel)
 parallel.setCores(4)
 
-dynELA.solve()
+model.solve()
 
 # Plot the results as curves
 import dnlCurves as cu

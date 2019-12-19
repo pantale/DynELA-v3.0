@@ -691,28 +691,6 @@ bool Model::solve(double solveUpToTime)
   // Print message
   printf("Run solver to %lf s - %4.1f %%\n", solveUpToTime, 100 * (currentTime / solver->endTime));
 
-  // Estimate end of computation
-  if (currentTime > 0)
-  {
-    double elapsedTime = dynelaData->cpuTimes.timer("Solver")->getCurrent();
-    int remainingTime = (elapsedTime - _lastElapsedTime) / (currentTime - _lastElapsedComputeTime) * (solver->endTime - currentTime);
-    int remainingHours, remainingMinutes, remainingSeconds;
-    int restOfTime;
-    int elapsedHours, elapsedMinutes, elapsedSeconds;
-    elapsedHours = elapsedTime / 3600;
-    restOfTime = int(elapsedTime) % 3600;
-    elapsedMinutes = restOfTime / 60;
-    elapsedSeconds = restOfTime % 60;
-    printf("Elapsed time %02d:%02d:%02d\n", elapsedHours, elapsedMinutes, elapsedSeconds);
-    remainingHours = remainingTime / 3600;
-    restOfTime = int(remainingTime) % 3600;
-    remainingMinutes = restOfTime / 60;
-    remainingSeconds = restOfTime % 60;
-    printf("Estimated end of computation in %02d:%02d:%02d\n", remainingHours, remainingMinutes, remainingSeconds);
-    _lastElapsedTime = elapsedTime;
-    _lastElapsedComputeTime = currentTime;
-  }
-
   // check to see if time is in bounds
   if (currentTime >= solveUpToTime)
   {
@@ -722,50 +700,13 @@ bool Model::solve(double solveUpToTime)
     return false;
   }
 
-  // Search the right solver
-  /*   bool solverFound = false;
-  for (short solverId = 0; solverId < solvers.getSize(); solverId++)
-  {
-    // get the solver
-    solver = solvers(solverId);
-    if (solver->timeIsBetweenBounds(currentTime))
-    {
-      solverFound = true;
-      break;
-    }
-  }
-  if (!solverFound)
-  {
-    fatalError("No solver available", "to compute at time=%10.3E\nup to time %10.3E", currentTime, solveUpToTime);
-  }
- */
+  // Log the Solver into log file
   dynelaData->logFile << "Run solver: \n";
 
   // Yeah, run the solver !!
   solver->solve(solveUpToTime);
 
   return true;
-  /*   long solverId;
-  // test si le fichier historique est ouvert
-  if (history_file == NULL)
-  {
-    String nm;
-    if (name == "")
-      nm = parsedFileName.before(sourceFileExtension) + ".plot";
-    else
-      nm = parsedFileName.before(sourceFileExtension) + "_" + name + ".plot";
-    history_file = fopen(nm.chars(), "w");
-
-    fprintf(history_file,
-            "#DynELA_plot : Time history of computation\n#plotted : Used_timeStep timeStep kinetic_energy\n");
-  }
-
-  //   if (solveUpToTime>solvers.last()->endTime)
-  //     {
-  //       fclose(history_file);
-  //       return false;
-  //     }
- */
 }
 
 //!Calcule le determinant du Jacobien de tous les elements de la grille
@@ -788,7 +729,7 @@ void Model::computeJacobian()
     {
       std::cerr << "Emergency save of the last result\n";
       std::cerr << "Program aborted\n";
-      dynelaData->writeResultFile();
+      dynelaData->writeVTKFile();
       exit(-1);
     }
   }
@@ -809,7 +750,7 @@ void Model::computeJacobian()
       {
         std::cerr << "Emergency save of the last result\n";
         std::cerr << "Program aborted\n";
-        dynelaData->writeResultFile();
+        dynelaData->writeVTKFile();
         exit(-1);
       }
     }

@@ -1,4 +1,5 @@
 19/12/2019 - Modification of Time History Saves to include initial state
            - Replaced list of Domain by Model class (update of the samples)
-
+           - Replaced the result files write procedure to remove spurious oscillations
+           
 12/12/2019 - First commit of sources, documentation and samples files

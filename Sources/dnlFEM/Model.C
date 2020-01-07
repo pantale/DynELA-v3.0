@@ -517,12 +517,12 @@ bool Model::initSolve()
  */
 
   // If parallel computation is requested
-  if (dynelaData->parallel != NULL)
+/*   if (dynelaData->parallel != NULL)
   {
-    // Dispatch base elements
-    dynelaData->parallel->dispatchElements(elements);
-  }
-
+ */    // Dispatch base elements
+    dynelaData->parallel.dispatchElements(elements);
+/*   }
+ */
   return (true);
 }
 
@@ -741,7 +741,7 @@ void Model::computeJacobian()
 {
 #pragma omp parallel
   {
-    ElementsChunk *chunk = dynelaData->parallel->getElementsOfCurrentCore();
+    ElementsChunk *chunk = dynelaData->parallel.getElementsOfCurrentCore();
 
     Element *pel = chunk->elements.first();
     while ((pel = chunk->elements.currentUp()) != NULL)
@@ -763,7 +763,7 @@ void Model::computeStrains()
 {
 #pragma omp parallel
   {
-    ElementsChunk *chunk = dynelaData->parallel->getElementsOfCurrentCore();
+    ElementsChunk *chunk = dynelaData->parallel.getElementsOfCurrentCore();
 
     Element *pel = chunk->elements.first();
     while ((pel = chunk->elements.currentUp()) != NULL)

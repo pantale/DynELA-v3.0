@@ -49,8 +49,8 @@ private:
   ElementsChunk **_elementsChunks; //!< Elements chunks
 
 private:
-ElementsChunk ** _initChunkList();
-void _deleteChunkList(ElementsChunk** chunkList);
+  ElementsChunk **_initChunkList();
+  void _deleteChunkList(ElementsChunk **chunkList);
 
 public:
   String name = "_noname_";

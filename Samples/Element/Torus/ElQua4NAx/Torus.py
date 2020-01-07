@@ -164,11 +164,6 @@ uxHist.add(histNS, dnl.Field.displacementX)
 uxHist.setSaveTime(stopTime/nbrePoints)
 model.add(uxHist)
 
-# Parallel solver
-parallel = dnl.Parallel()
-model.add(parallel)
-parallel.setCores(1)
-
 # Run the main solver
 model.solve()
 

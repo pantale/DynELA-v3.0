@@ -19,6 +19,8 @@
 */
 
 #include <Parallel.h>
+#include <DynELA.h>
+
 #pragma omp default none
 
 /* #include <List.h>
@@ -86,7 +88,10 @@ void Parallel::setCores(int cores)
 void Parallel::dispatchElements(List<Element *> elementList)
 //-----------------------------------------------------------------------------
 {
+  // Set initial core
   int core = 0;
+
+  // loop over cores
   for (long elementId = 0; elementId < elementList.getSize(); elementId++)
   {
     Element *pel = elementList(elementId);
@@ -96,6 +101,11 @@ void Parallel::dispatchElements(List<Element *> elementList)
       core = 0;
   }
 
+  dynelaData->logFile << "Parallel computation elements dispatch\n";
+  // display cores
   for (core = 0; core < _cores; core++)
+  {
     printf("core %d - %ld elements\n", core, _elementsChunks[core]->elements.getSize());
+    dynelaData->logFile << "core " << core << " - " << _elementsChunks[core]->elements.getSize() << " element(s)\n";
+  }
 }

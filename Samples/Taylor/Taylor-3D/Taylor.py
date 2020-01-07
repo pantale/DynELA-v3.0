@@ -11788,9 +11788,8 @@ keHist.add(dnl.Field.kineticEnergy)
 keHist.setSaveTime(stopTime / nbrePoints)
 model.add(keHist)
 
-parallel = dnl.Parallel()
-model.add(parallel)
-parallel.setCores(4)
+# Parallel computation
+model.parallel.setCores(4)
 
 model.solve()
 

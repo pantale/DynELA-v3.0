@@ -46,16 +46,16 @@ model = dnl.DynELA("BarNecking")
 # Creates the Nodes
 nbNodes = 1
 nsAll = dnl.NodeSet("NS_All")
-dxHeigh / =   (1 / factor + 1) / 2
+dxHeigh /= (1 / factor + 1) / 2
 y = 0
 for j in range (nbElementsHeigh + 1): 
     for i  in range (nbElementsWidth + 1):
         model.createNode(nbNodes, i * dxWidth * (1 + ddx * y), y, 0)
         model.add(nsAll, nbNodes)
-        nbNodes + =  1
-    if (j = =  nbElementsHeigh/2): dxHeigh / =  factor
-    y + =   dxHeigh
-nbNodes - =  1
+        nbNodes += 1
+    if (j == nbElementsHeigh/2): dxHeigh /= factor
+    y += dxHeigh
+nbNodes -= 1
 print("Number of nodes created:", model.getNodesNumber())    
 
 # Creates the Elements
@@ -70,8 +70,8 @@ for j in range (nbElementsHeigh):
         n4 = (i + ((j + 1) * (nbElementsWidth + 1)) + 1)
         model.createElement(nbElements, n1, n2, n3, n4)
         model.add(esAll, nbElements)
-        nbElements + =  1
-nbElements - =  1
+        nbElements += 1
+nbElements -= 1
 print("Number of elements created:", model.getElementsNumber())    
 
 topNS = dnl.NodeSet("NS_Top")
@@ -192,9 +192,8 @@ vonMisesHist2.add(histES, 4, dnl.Field.vonMises)
 vonMisesHist2.setSaveTime(stopTime / nbrePoints)
 model.add(vonMisesHist2)
 
-parallel = dnl.Parallel()
-model.add(parallel)
-parallel.setCores(4)
+# Parallel computation
+model.parallel.setCores(4)
 
 model.solve()
 

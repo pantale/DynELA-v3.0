@@ -2302,22 +2302,12 @@ begin{PythonListing}
 
 \begin_layout Plain Layout
 
-# Parallel solver
+# Parallel solver with two cores
 \end_layout
 
 \begin_layout Plain Layout
 
-parallel = dnl.Parallel()
-\end_layout
-
-\begin_layout Plain Layout
-
-model.add(parallel)
-\end_layout
-
-\begin_layout Plain Layout
-
-parallel.setCores(1)
+model.parallel.setCores(2)
 \end_layout
 
 \begin_layout Plain Layout

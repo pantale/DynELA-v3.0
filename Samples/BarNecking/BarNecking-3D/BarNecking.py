@@ -10145,9 +10145,8 @@ vonMisesHist2.add(histES, 4, dnl.Field.vonMises)
 vonMisesHist2.setSaveTime(stopTime / nbrePoints)
 model.add(vonMisesHist2)
 
-parallel = dnl.Parallel()
-model.add(parallel)
-parallel.setCores(4)
+# Parallel computation
+model.parallel.setCores(4)
 
 model.solve()
 

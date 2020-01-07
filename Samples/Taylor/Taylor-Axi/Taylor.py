@@ -46,8 +46,8 @@ for j in range (nbElementsHeigh+1):
     for i  in range (nbElementsWidth+1):
         model.createNode(nbNodes, i*dxWidth, j*dxHeigh, 0.00)
         model.add(allNS, nbNodes)
-        nbNodes + =  1
-nbNodes - =  1
+        nbNodes += 1
+nbNodes -= 1
 print("Number of nodes created:", model.getNodesNumber())    
 
 # Creates the Elements
@@ -62,8 +62,8 @@ for j in range (nbElementsHeigh):
         n4 = (i+((j+1)*(nbElementsWidth+1))+1)
         model.createElement(nbElements, n1, n2, n3, n4)
         model.add(allES, nbElements)
-        nbElements + =  1
-nbElements - =  1
+        nbElements += 1
+nbElements -= 1
 print("Number of elements created:", model. getElementsNumber())    
 
 bottomNS = dnl.NodeSet("NS_Bottom")
@@ -147,9 +147,8 @@ keHist.add(dnl.Field.kineticEnergy)
 keHist.setSaveTime(stopTime / nbrePoints)
 model.add(keHist)
 
-parallel = dnl.Parallel()
-model.add(parallel)
-parallel.setCores(4)
+# Parallel computation
+model.parallel.setCores(4)
 
 model.solve()
 

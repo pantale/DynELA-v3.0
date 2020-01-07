@@ -26,6 +26,7 @@
 #include <LogFile.h>
 #include <Settings.h>
 #include <Timer.h>
+#include <Parallel.h>
 
 #include <omp.h>
 
@@ -106,13 +107,12 @@ public:
   double saveTimeIncrement = 0.0; //!< Increment of save time
   double nextSaveTime = 0.0;      //!< Next save time
   double startSaveTime = 0.0;     //!< Start save time
-  //double currentTime = 0.0;       //!< Current time
-  String name = "_noname_";      //!< name of the object
-  Settings *settings = NULL;     //!< Settings
-  VtkInterface *dataFile = NULL; //!< Interface for results
-  Parallel *parallel = NULL;     //!< Parallel computation
-  Model *model = NULL;           //!< Pointer to the model
-  Timers cpuTimes;               //!< Store the CPU Times
+  String name = "_noname_";       //!< name of the object
+  Settings *settings = NULL;      //!< Settings
+  VtkInterface *dataFile = NULL;  //!< Interface for results
+  Parallel parallel;              //!< Parallel computation
+  Model *model = NULL;            //!< Pointer to the model
+  Timers cpuTimes;                //!< Store the CPU Times
 
 #ifndef SWIG
   LogFile logFile; //!< Log file
@@ -133,7 +133,7 @@ public:
   void add(ElementSet *elementSet, long startNumber = -1, long endNumber = -1, long increment = 1);
   void add(Material *material, ElementSet *elementSet);
   void add(NodeSet *nodeSet, long startNumber = -1, long endNumber = -1, long increment = 1);
-  void add(Parallel *parallel);
+  //void add(Parallel *parallel);
   void add(HistoryFile *newHistoryFile);
   void add(Solver *newSolver);
   void addMaterial(Material *pmat);

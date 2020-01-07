@@ -1,3 +1,5 @@
+07/01/2019 - Parallelization procedure with One core by default
+
 19/12/2019 - Modification of Time History Saves to include initial state
            - Replaced list of Domain by Model class (update of the samples)
            - Replaced the result files write procedure to remove spurious oscillations

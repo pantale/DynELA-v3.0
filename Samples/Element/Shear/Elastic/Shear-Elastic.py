@@ -145,11 +145,6 @@ StressHist.add(allES, 0, dnl.Field.StressXY)
 StressHist.setSaveTime(stopTime/nbrePoints)
 model.add(StressHist)
 
-# Parallel solver
-parallel = dnl.Parallel()
-model.add(parallel)
-parallel.setCores(1)
-
 # Run the main solver
 model.solve()
 

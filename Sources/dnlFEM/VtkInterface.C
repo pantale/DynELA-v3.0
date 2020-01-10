@@ -124,8 +124,8 @@ void VtkInterface::elementsWrite()
     pElement = dynelaData->elements(i);
     nbNodes = pElement->nodes.getSize();
     _stream << nbNodes << " ";
-    for (int i = 0; i < nbNodes; i++)
-      _stream << pElement->nodes(i)->internalNumber() << " ";
+    for (int j = 0; j < nbNodes; j++)
+      _stream << pElement->nodes(j)->internalNumber() << " ";
     _stream << "\n";
   }
 

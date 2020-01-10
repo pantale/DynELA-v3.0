@@ -1,5 +1,5 @@
 # Global parameters
-Parameters, xname=$Time\ (s)$, marksnumber=15, title=$Taylor 3D Benchmark Test$, crop=True
+Parameters, xname=$Time\ (s)$, marksnumber=15, title=$Taylor\ 3D\ Benchmark\ Test$, crop=True
 
 # Temperature curve
 Temperature, yname=$Temperature\ (^{\circ}C)$, legendlocate=bottomright, name=$DynELA\ T$, temperature.plot, name=$Abaqus\ T$, Abaqus/Taylor_Temperature.plot
@@ -15,3 +15,9 @@ TimeStep, yname=$Time\ increment\ \Delta t\ (s)$, legendlocate=topright, name=$D
 
 # Kinetic energy curve
 KineticEnergy, yname=$Kinetic\ energy$, legendlocate=topright, name=$DynELA\ Kinetic\ Energy$, ke.plot, name=$Abaqus\ Kinetic\ Energy$, Abaqus/Taylor_kineticEnergy.plot
+
+# Height history
+Height, yname=$Height\ H_f\ (mm)$, name=$DynELA\ H_f$, height.plot, name=$Abaqus\ H_f$, Abaqus/Taylor_height.plot
+
+# Radius history
+Radius, yname=$Radius\ R_f\ (mm)$, name=$DynELA\ R_f$, legendlocate=bottomright, radius.plot, name=$Abaqus\ R_f$, Abaqus/Taylor_radius.plot

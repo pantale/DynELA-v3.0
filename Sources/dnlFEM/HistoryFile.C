@@ -96,7 +96,6 @@ double HistoryFileGlobalItem::getValue()
   switch (_field)
   {
   case Field::realTimeStep:
-    //    return dynelaData->model->solver->timeStep;
     return dynelaData->model->solver->timeStep;
     break;
   case Field::timeStep:

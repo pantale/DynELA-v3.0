@@ -117,6 +117,16 @@ const ElementData ElQua4NAx::_elementData = {
         }
         //
     },
+
+    1, // Number of faces of the element
+    {
+        // Face number 1
+        {
+            4,           // Number of nodes on the face of the element
+            {0, 1, 2, 3} // List of the nodes composing the face of the element
+        }
+        //
+    },
     /*
     4, // Number of mass integration points of the Element
     {
@@ -179,16 +189,6 @@ const ElementData ElQua4NAx::_elementData = {
                    +1.0 / 4, -1.0 / 4,                         //
                    +1.0 / 4, +1.0 / 4,                         //
                    -1.0 / 4, +1.0 / 4)                         //
-        }
-        //
-    },
-
-    1, // Number of faces of the element
-    {
-        // Face number 1
-        {
-            4,           // Number of nodes on the face of the element
-            {0, 1, 2, 3} // List of the nodes composing the face of the element
         }
         //
     },

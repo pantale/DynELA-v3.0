@@ -26,7 +26,7 @@ const ElementData ElTri3N2D::_elementData = {
     Element::Bidimensional, // Family of the Element
     2,                      // Number of dimensions of the Element
     2,                      // Number of degrees of freedom of the Element
-    5,                        // VTK type of element
+    5,                      // VTK type of element
 
     3, // Number of nodes of the Element
     {
@@ -65,7 +65,17 @@ const ElementData ElTri3N2D::_elementData = {
         }
         //
     },
-/*
+
+    1, // Number of faces of the element
+    {
+        // Face number 1
+        {
+            3,        // Number of nodes on the face of the element
+            {0, 1, 2} // List of the nodes composing the face of the element
+        }
+        //
+    },
+    /*
     1, // Number of mass integration points of the Element
     // THIS SHOULD BE 3
     {
@@ -87,16 +97,6 @@ const ElementData ElTri3N2D::_elementData = {
             1,                                              // Weight associated to the under integration point
             Vector(),                                       // Shape functions at the under integration point
             Matrix()                                        // Derivatives of the shape functions at the under integration point
-        }
-        //
-    },
-
-    1, // Number of faces of the element
-    {
-        // Face number 1
-        {
-            3,        // Number of nodes on the face of the element
-            {0, 1, 2} // List of the nodes composing the face of the element
         }
         //
     },
@@ -156,11 +156,11 @@ const ElementData ElTri3N2D::_elementData = {
 };
 
 //-----------------------------------------------------------------------------
-ElTri3N2D::ElTri3N2D(long elementNumber) : Element2D(elementNumber )
+ElTri3N2D::ElTri3N2D(long elementNumber) : Element2D(elementNumber)
 //-----------------------------------------------------------------------------
 {
     _globalToLocal.redim(2, 4);
-      Element::_elementData = &_elementData;
+    Element::_elementData = &_elementData;
 
     // Check the data structure
     if (_elementData.CheckElementData != 10010110)

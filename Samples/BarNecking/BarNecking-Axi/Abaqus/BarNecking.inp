@@ -960,6 +960,8 @@ ALLAE, ALLCD, ALLDMD, ALLFD, ALLIE, ALLKE, ALLPD, ALLSE, ALLVD, ALLWK, ETOTAL
 *Output, history, time interval=1e-5
 *Element Output, elset=Cylinder-1.Set-1
 MISES, PEEQ, TEMP, DENSITY
+*Node Output, nset=Cylinder-1.Set-1
+U, COORD
 *Energy output
 ALLKE
 *Incrementation Output

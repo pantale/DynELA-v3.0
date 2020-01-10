@@ -43,11 +43,11 @@ class Node
 
 public:
   //  double initialTemperature;     //!< Initial Temperature. This field is used to store the reference value of the temperature of the node at the begining of the calculus
-  double mass;                   //!< Mass. This field is used to store the value of the getJ2 nodal mass.
-  long number;                   //!< Identification number. This field represents the external identification number of the current node (ie. user representation).
+  double mass;              //!< Mass. This field is used to store the value of the getJ2 nodal mass.
+  long number;              //!< Identification number. This field represents the external identification number of the current node (ie. user representation).
   NodalField *newField;     //!< New Nodal field of the node, ie. nodal field at the end of the current increment
-  NodalField *currentField;        //!< Nodal field of the node, ie. nodal field at the begining of the current increment
-  Vec3D coordinates;             //!< Coordinates of the corresponding node.
+  NodalField *currentField; //!< Nodal field of the node, ie. nodal field at the begining of the current increment
+  Vec3D coordinates;        //!< Coordinates of the corresponding node.
   //Vec3D initialCoordinates;      //!< Coordinates. Initial coordinates of the corresponding point.
   Vec3D normal;                  //!< Normal vector. This vector represents the normal vector of the current point in 3D space. Such normal vector is compted from the values of the normals of the faces connected to this point.
   BoundaryCondition *boundary;   //!< Boundary conditions. This pointer reference the list of the boundary conditions on the current node.

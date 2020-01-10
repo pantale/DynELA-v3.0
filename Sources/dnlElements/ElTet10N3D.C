@@ -32,72 +32,72 @@ const ElementData ElTet10N3D::_elementData = {
     {
         // Node 1
         {
-            Vec3D(0.0, 0.0, 0.0),                                                                                               // Coordinates of the node
-            3,                                                                                                                  // Number of neightbour nodes
-            {4, 6, 7},                                                                                                          // List of the neighbour nodes
+            Vec3D(0.0, 0.0, 0.0),                                                                                       // Coordinates of the node
+            3,                                                                                                          // Number of neightbour nodes
+            {4, 6, 7},                                                                                                  // List of the neighbour nodes
             Vector(4, (1.0 + 3.0 * sqrt(5.0)) / 4, (1.0 - sqrt(5.0)) / 4, (1.0 - sqrt(5.0)) / 4, (1.0 - sqrt(5.0)) / 4) // Extrapolates integration points values to nodal values
         },
         // Node 2
         {
-            Vec3D(1.0, 0.0, 0.0),                                                                                               // Coordinates of the node
-            3,                                                                                                                  // Number of neightbour nodes
-            {4, 5, 8},                                                                                                          // List of the neighbour nodes
+            Vec3D(1.0, 0.0, 0.0),                                                                                       // Coordinates of the node
+            3,                                                                                                          // Number of neightbour nodes
+            {4, 5, 8},                                                                                                  // List of the neighbour nodes
             Vector(4, (1.0 - sqrt(5.0)) / 4, (1.0 + 3.0 * sqrt(5.0)) / 4, (1.0 - sqrt(5.0)) / 4, (1.0 - sqrt(5.0)) / 4) // Extrapolates integration points values to nodal values
         },
         // Node 3
         {
-            Vec3D(0.0, 1.0, 0.0),                                                                                               // Coordinates of the node
-            3,                                                                                                                  // Number of neightbour nodes
-            {6, 5, 9},                                                                                                          // List of the neighbour nodes
+            Vec3D(0.0, 1.0, 0.0),                                                                                       // Coordinates of the node
+            3,                                                                                                          // Number of neightbour nodes
+            {6, 5, 9},                                                                                                  // List of the neighbour nodes
             Vector(4, (1.0 - sqrt(5.0)) / 4, (1.0 - sqrt(5.0)) / 4, (1.0 + 3.0 * sqrt(5.0)) / 4, (1.0 - sqrt(5.0)) / 4) // Extrapolates integration points values to nodal values
         },
         // Node 4
         {
-            Vec3D(0.0, 0.0, 1.0),                                                                                               // Coordinates of the node
-            3,                                                                                                                  // Number of neightbour nodes
-            {7, 8, 9},                                                                                                          // List of the neighbour nodes
+            Vec3D(0.0, 0.0, 1.0),                                                                                       // Coordinates of the node
+            3,                                                                                                          // Number of neightbour nodes
+            {7, 8, 9},                                                                                                  // List of the neighbour nodes
             Vector(4, (1.0 - sqrt(5.0)) / 4, (1.0 - sqrt(5.0)) / 4, (1.0 - sqrt(5.0)) / 4, (1.0 + 3.0 * sqrt(5.0)) / 4) // Extrapolates integration points values to nodal values
         },
         // Node 5
         {
-            Vec3D(0.5, 0.0, 0.0),                                                                                         // Coordinates of the node
-            2,                                                                                                            // Number of neightbour nodes
-            {0, 1},                                                                                                       // List of the neighbour nodes
+            Vec3D(0.5, 0.0, 0.0),                                                                                 // Coordinates of the node
+            2,                                                                                                    // Number of neightbour nodes
+            {0, 1},                                                                                               // List of the neighbour nodes
             Vector(4, (1.0 + sqrt(5.0)) / 4, (1.0 + sqrt(5.0)) / 4, (1.0 - sqrt(5.0)) / 4, (1.0 - sqrt(5.0)) / 4) // Extrapolates integration points values to nodal values
         },
         // Node 6
         {
-            Vec3D(0.5, 0.5, 0.0),                                                                                         // Coordinates of the node
-            2,                                                                                                            // Number of neightbour nodes
-            {1, 2},                                                                                                       // List of the neighbour nodes
+            Vec3D(0.5, 0.5, 0.0),                                                                                 // Coordinates of the node
+            2,                                                                                                    // Number of neightbour nodes
+            {1, 2},                                                                                               // List of the neighbour nodes
             Vector(4, (1.0 - sqrt(5.0)) / 4, (1.0 + sqrt(5.0)) / 4, (1.0 + sqrt(5.0)) / 4, (1.0 - sqrt(5.0)) / 4) // Extrapolates integration points values to nodal values
         },
         // Node 7
         {
-            Vec3D(0.0, 0.5, 0.0),                                                                                         // Coordinates of the node
-            2,                                                                                                            // Number of neightbour nodes
-            {0, 2},                                                                                                       // List of the neighbour nodes
+            Vec3D(0.0, 0.5, 0.0),                                                                                 // Coordinates of the node
+            2,                                                                                                    // Number of neightbour nodes
+            {0, 2},                                                                                               // List of the neighbour nodes
             Vector(4, (1.0 + sqrt(5.0)) / 4, (1.0 - sqrt(5.0)) / 4, (1.0 + sqrt(5.0)) / 4, (1.0 - sqrt(5.0)) / 4) // Extrapolates integration points values to nodal values
         },
         // Node 8
         {
-            Vec3D(0.0, 0.0, 0.5),                                                                                         // Coordinates of the node
-            2,                                                                                                            // Number of neightbour nodes
-            {0, 3},                                                                                                       // List of the neighbour nodes
+            Vec3D(0.0, 0.0, 0.5),                                                                                 // Coordinates of the node
+            2,                                                                                                    // Number of neightbour nodes
+            {0, 3},                                                                                               // List of the neighbour nodes
             Vector(4, (1.0 + sqrt(5.0)) / 4, (1.0 - sqrt(5.0)) / 4, (1.0 - sqrt(5.0)) / 4, (1.0 + sqrt(5.0)) / 4) // Extrapolates integration points values to nodal values
         },
         // Node 9
         {
-            Vec3D(0.5, 0.0, 0.5),                                                                                         // Coordinates of the node
-            2,                                                                                                            // Number of neightbour nodes
-            {1, 3},                                                                                                       // List of the neighbour nodes
+            Vec3D(0.5, 0.0, 0.5),                                                                                 // Coordinates of the node
+            2,                                                                                                    // Number of neightbour nodes
+            {1, 3},                                                                                               // List of the neighbour nodes
             Vector(4, (1.0 - sqrt(5.0)) / 4, (1.0 + sqrt(5.0)) / 4, (1.0 - sqrt(5.0)) / 4, (1.0 + sqrt(5.0)) / 4) // Extrapolates integration points values to nodal values
         },
         // Node 10
         {
-            Vec3D(0.0, 0.5, 0.5),                                                                                         // Coordinates of the node
-            2,                                                                                                            // Number of neightbour nodes
-            {2, 3},                                                                                                       // List of the neighbour nodes
+            Vec3D(0.0, 0.5, 0.5),                                                                                 // Coordinates of the node
+            2,                                                                                                    // Number of neightbour nodes
+            {2, 3},                                                                                               // List of the neighbour nodes
             Vector(4, (1.0 - sqrt(5.0)) / 4, (1.0 - sqrt(5.0)) / 4, (1.0 + sqrt(5.0)) / 4, (1.0 + sqrt(5.0)) / 4) // Extrapolates integration points values to nodal values
         }
         //
@@ -186,7 +186,32 @@ const ElementData ElTet10N3D::_elementData = {
         }
         //
     },
-/*
+
+    4, // Number of faces of the element
+    {
+        // Face number 1
+        {
+            6,                 // Number of nodes on the face of the element
+            {0, 4, 1, 8, 3, 7} // List of the nodes composing the face of the element
+        },
+        // Face number 2
+        {
+            6,                 // Number of nodes on the face of the element
+            {0, 6, 2, 5, 1, 4} // List of the nodes composing the face of the element
+        },
+        // Face number 3
+        {
+            6,                 // Number of nodes on the face of the element
+            {0, 7, 3, 9, 2, 6} // List of the nodes composing the face of the element
+        },
+        // Face number 4
+        {
+            6,                 // Number of nodes on the face of the element
+            {2, 9, 3, 8, 1, 5} // List of the nodes composing the face of the element
+        }
+        //
+    },
+    /*
     4, // Number of mass integration points of the Element
     {
         // Mass integration point 1
@@ -294,31 +319,6 @@ const ElementData ElTet10N3D::_elementData = {
         //
     },
 
-    4, // Number of faces of the element
-    {
-        // Face number 1
-        {
-            6,                 // Number of nodes on the face of the element
-            {0, 4, 1, 8, 3, 7} // List of the nodes composing the face of the element
-        },
-        // Face number 2
-        {
-            6,                 // Number of nodes on the face of the element
-            {0, 6, 2, 5, 1, 4} // List of the nodes composing the face of the element
-        },
-        // Face number 3
-        {
-            6,                 // Number of nodes on the face of the element
-            {0, 7, 3, 9, 2, 6} // List of the nodes composing the face of the element
-        },
-        // Face number 4
-        {
-            6,                 // Number of nodes on the face of the element
-            {2, 9, 3, 8, 1, 5} // List of the nodes composing the face of the element
-        }
-        //
-    },
-
     4, // Number of side faces of the element
     {
         // Side face number 1
@@ -386,9 +386,9 @@ const ElementData ElTet10N3D::_elementData = {
         }
         //
     },*/
-     // Check element
+    // Check element
     10010110
-   // END
+    // END
 };
 
 //-----------------------------------------------------------------------------

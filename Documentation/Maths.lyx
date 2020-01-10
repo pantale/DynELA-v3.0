@@ -109,7 +109,7 @@ startcontents[chapters]
 
 
 \backslash
-printmyminitoc
+printmyminitoc[1]
 \end_layout
 
 \end_inset

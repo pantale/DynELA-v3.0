@@ -190,14 +190,14 @@ void Node::swapNodalFields()
 void Node::copyNodalFieldToNew()
 //-----------------------------------------------------------------------------
 {
- // newField->density = currentField->density;
- // newField->densityInc = currentField->densityInc;
+  // newField->density = currentField->density;
+  // newField->densityInc = currentField->densityInc;
   newField->energy = currentField->energy;
   newField->energyInc = currentField->energyInc;
   newField->displacement = currentField->displacement;
   newField->displacementInc = currentField->displacementInc;
-//  newField->flux = currentField->flux;
- // newField->force = currentField->force;
+  //  newField->flux = currentField->flux;
+  // newField->force = currentField->force;
   newField->speed = currentField->speed;
   newField->acceleration = currentField->acceleration;
 }
@@ -330,14 +330,14 @@ double Node::getNodalValue(short field)
   _getFromNodal(energyIncrement, currentField->energyInc);
   _getScalarFromNodalVec3D(displacement, currentField->displacement);
   _getScalarFromNodalVec3D(displacementIncrement, currentField->displacementInc);
- // _getScalarFromNodalVec3D(flux, currentField->flux);
- // _getScalarFromNodalVec3D(force, currentField->force);
+  // _getScalarFromNodalVec3D(flux, currentField->flux);
+  // _getScalarFromNodalVec3D(force, currentField->force);
   _getScalarFromNodalVec3D(speed, currentField->speed);
   _getScalarFromNodalVec3D(speedIncrement, currentField->acceleration);
 
   // Integration point field
- _getFromIntegrationPoint(density, density, double);
-   _getFromIntegrationPoint(plasticStrain, plasticStrain, double);
+  _getFromIntegrationPoint(density, density, double);
+  _getFromIntegrationPoint(plasticStrain, plasticStrain, double);
   _getFromIntegrationPoint(plasticStrainRate, plasticStrainRate, double);
   _getFromIntegrationPoint(gamma, gamma, double);
   _getFromIntegrationPoint(gammaCumulate, gammaCumulate, double);
@@ -358,20 +358,20 @@ double Node::getNodalValue(short field)
     Element *pel;
     long j, pt;
     double value = 0.0;
-//    SymTensor2 tensor;
-//    tensor = 0.0;
+    //    SymTensor2 tensor;
+    //    tensor = 0.0;
     for (j = 0; j < elements.getSize(); j++)
     {
       pel = elements(j);
       long loc = pel->nodes.IAppN(_listIndex);
       for (pt = 0; pt < pel->getNumberOfIntegrationPoints(); pt++)
       {
-        value +=pel->_elementData->nodes[loc].integrationPointsToNode(pt) * pel->integrationPoints(pt)->Stress.getMisesEquivalent();
-       // tensor += pel->_elementData->nodes[loc].integrationPointsToNode(pt) * pel->integrationPoints(pt)->Stress;
+        value += pel->_elementData->nodes[loc].integrationPointsToNode(pt) * pel->integrationPoints(pt)->Stress.getMisesEquivalent();
+        // tensor += pel->_elementData->nodes[loc].integrationPointsToNode(pt) * pel->integrationPoints(pt)->Stress;
       }
- //     nb++;
+      //     nb++;
     }
- //   tensor = tensor / nb;
+    //   tensor = tensor / nb;
     return value / elements.getSize();
   }
 
@@ -392,8 +392,8 @@ Vec3D Node::getNodalVec3D(short field)
   // NodalField values
   _getFromNodal(displacement, currentField->displacement);
   _getFromNodal(displacementIncrement, currentField->displacementInc);
- // _getFromNodal(flux, currentField->flux);
- // _getFromNodal(force, currentField->force);
+  // _getFromNodal(flux, currentField->flux);
+  // _getFromNodal(force, currentField->force);
   _getFromNodal(speed, currentField->speed);
   _getFromNodal(speedIncrement, currentField->acceleration);
 

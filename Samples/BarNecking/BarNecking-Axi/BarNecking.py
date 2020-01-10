@@ -83,8 +83,8 @@ model.add(bottomNS, 1, nbElementsWidth + 1)
 axisNS = dnl.NodeSet("NS_Axis")
 model.add(axisNS, 1, nbNodes, nbElementsWidth + 1)
 
-histNS = dnl.NodeSet("NS_Hist")
-model.add(histNS, 1)
+histRad = dnl.NodeSet("NS_HistRadius")
+model.add(histRad, 1 + nbElementsWidth)
 
 histES = dnl.ElementSet("ES_Hist")
 model.add(histES, 1)
@@ -130,27 +130,33 @@ model.setSaveTimes(0, stopTime, stopTime / nbreSaves)
 # Declaration of the history files
 vonMisesHist = dnl.HistoryFile("vonMisesHistory")
 vonMisesHist.setFileName(dnl.String("vonMises.plot"))
-vonMisesHist.add(histNS, dnl.Field.vonMises)
+vonMisesHist.add(histES, 0, dnl.Field.vonMises)
 vonMisesHist.setSaveTime(stopTime / nbrePoints)
 model.add(vonMisesHist)
 
 plasticStrainHist = dnl.HistoryFile("plasticStrainHistory")
 plasticStrainHist.setFileName(dnl.String("plasticStrain.plot"))
-plasticStrainHist.add(histNS, dnl.Field.plasticStrain)
+plasticStrainHist.add(histES, 0, dnl.Field.plasticStrain)
 plasticStrainHist.setSaveTime(stopTime / nbrePoints)
 model.add(plasticStrainHist)
 
 temperatureHist = dnl.HistoryFile("temperatureHistory")
 temperatureHist.setFileName(dnl.String("temperature.plot"))
-temperatureHist.add(histNS, dnl.Field.temperature)
+temperatureHist.add(histES, 0, dnl.Field.temperature)
 temperatureHist.setSaveTime(stopTime / nbrePoints)
 model.add(temperatureHist)
 
 internalEnergyHist = dnl.HistoryFile("internalEnergyHistory")
 internalEnergyHist.setFileName(dnl.String("internalEnergy.plot"))
-internalEnergyHist.add(histNS, dnl.Field.internalEnergy)
+internalEnergyHist.add(histES, 0, dnl.Field.internalEnergy)
 internalEnergyHist.setSaveTime(stopTime / nbrePoints)
 model.add(internalEnergyHist)
+
+radiusHist = dnl.HistoryFile("radiusHistory")
+radiusHist.setFileName(dnl.String("radius.plot"))
+radiusHist.add(histRad, dnl.Field.nodeCoordinateX)
+radiusHist.setSaveTime(stopTime / nbrePoints)
+model.add(radiusHist)
 
 dtHist = dnl.HistoryFile("dtHistory")
 dtHist.setFileName(dnl.String("dt.plot"))
@@ -164,38 +170,16 @@ keHist.add(dnl.Field.kineticEnergy)
 keHist.setSaveTime(stopTime / nbrePoints)
 model.add(keHist)
 
-gammaHist = dnl.HistoryFile("gammaHistory")
-gammaHist.setFileName(dnl.String("gamma.plot"))
-gammaHist.add(histES, 1, dnl.Field.gamma)
-gammaHist.add(histES, 2, dnl.Field.gamma)
-gammaHist.add(histES, 3, dnl.Field.gamma)
-gammaHist.add(histES, 4, dnl.Field.gamma)
-gammaHist.setSaveTime(stopTime / nbrePoints)
-model.add(gammaHist)
-
-gammaCumulateHist = dnl.HistoryFile("gammaCumulateHistory")
-gammaCumulateHist.setFileName(dnl.String("gammaCumulate.plot"))
-gammaCumulateHist.add(histES, 1, dnl.Field.gammaCumulate)
-gammaCumulateHist.add(histES, 2, dnl.Field.gammaCumulate)
-gammaCumulateHist.add(histES, 3, dnl.Field.gammaCumulate)
-gammaCumulateHist.add(histES, 4, dnl.Field.gammaCumulate)
-gammaCumulateHist.setSaveTime(stopTime / nbrePoints)
-model.add(gammaCumulateHist)
-
-# Declaration of the history files
-vonMisesHist2 = dnl.HistoryFile("vonMisesHistory2")
-vonMisesHist2.setFileName(dnl.String("vonMises2.plot"))
-vonMisesHist2.add(histES, 1, dnl.Field.vonMises)
-vonMisesHist2.add(histES, 2, dnl.Field.vonMises)
-vonMisesHist2.add(histES, 3, dnl.Field.vonMises)
-vonMisesHist2.add(histES, 4, dnl.Field.vonMises)
-vonMisesHist2.setSaveTime(stopTime / nbrePoints)
-model.add(vonMisesHist2)
-
 # Parallel computation
 model.parallel.setCores(4)
 
 model.solve()
+
+svg = dnl.SvgInterface("SVG")
+svg.initDrawing()
+svg.init(dnl.String("finalMesh.svg"))
+svg.write()
+svg.close()
 
 # Plot the results as curves
 import dnlCurves as cu

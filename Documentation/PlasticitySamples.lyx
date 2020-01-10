@@ -1,0 +1,1064 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass book
+\begin_preamble
+\input{../../Cours/Templates/macrosHyperlinkEnglish.tex}
+\newcommand{\Dynela}{DynELA Finite Element Code}
+\end_preamble
+\options twoside
+\use_default_options false
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding default
+\fontencoding global
+\font_roman "bookman" "default"
+\font_sans "helvet" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 90 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures false
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement h
+\paperfontsize 11
+\spacing single
+\use_hyperref false
+\papersize a4paper
+\use_geometry true
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 1
+\use_package esint 0
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 3cm
+\rightmargin 1.5cm
+\bottommargin 2cm
+\headheight 1cm
+\headsep 1cm
+\footskip 1cm
+\secnumdepth 4
+\tocdepth 4
+\paragraph_separation skip
+\defskip medskip
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 2
+\paperpagestyle headings
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+DynELA plasticity sample cases
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+startcontents[chapters]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+printmyminitoc[1]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+LETTRINE{T}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+his chapter deals with some numerical applications of the 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+Dynela
+\end_layout
+
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+for plasticity applications in 2D, axi-symmetric and 3D cases.
+ In the subsequent tests, if not specified, a Johnson-Cook constitutive
+ law is used to model the behavior of the material.
+ The Johnson-Cook hardening flow law is probably the most widely used flow
+ law for the simulation of high strain rate deformation processes taking
+ into account plastic strain, plastic strain rate and temperature effects.
+ Since a lot of efforts have been made in the past to identify the constitutive
+ flow law parameters for many materials, it is implemented in numerous Finite
+ Element codes such as Abaqus 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "abaqus20146"
+literal "true"
+
+\end_inset
+
+.
+ The general formulation of the Johnson-Cook law 
+\begin_inset Formula $\sigma^{y}(\overline{\varepsilon}^{p},\stackrel{\bullet}{\overline{\varepsilon}^{p}},T)$
+\end_inset
+
+ is given by the following equation:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\sigma^{y}=\left(A+B\overline{\varepsilon}^{p^{n}}\right)\left[1+C\ln\left(\frac{\stackrel{\bullet}{\overline{\varepsilon}^{p}}}{\stackrel{\bullet}{\overline{\varepsilon}_{0}}}\right)\right]\left[1-\left(\frac{T-T_{0}}{T_{m}-T_{0}}\right)^{m}\right]\label{eq:Samples!Johnson-Cook}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $\stackrel{\bullet}{\overline{\varepsilon}_{0}}$
+\end_inset
+
+ is the reference strain rate, 
+\begin_inset Formula $T_{0}$
+\end_inset
+
+ and 
+\begin_inset Formula $T_{m}$
+\end_inset
+
+ are the reference temperature and the melting temperature of the material
+ respectively and 
+\begin_inset Formula $A$
+\end_inset
+
+, 
+\begin_inset Formula $B$
+\end_inset
+
+, 
+\begin_inset Formula $C$
+\end_inset
+
+, 
+\begin_inset Formula $n$
+\end_inset
+
+ and 
+\begin_inset Formula $m$
+\end_inset
+
+ are the five constitutive flow law parameters.
+ A 42CrMo4 steel following the Johnson-Cook behavior law has been selected
+ for all those tests, and material properties are reported in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Samples!JohnsonCookParameters"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\backslash
+begin{tcolorbox}[width=.75
+\backslash
+textwidth,myTab,tabularx={C|C|C|C|C|C|C}]
+\end_layout
+
+\begin_layout Plain Layout
+
+$E$ & $
+\backslash
+nu$ & $A$ & $B$ & $C$ & $n$ & $m$ 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+small{($Gpa$)} &  & 
+\backslash
+small{($MPa$)} & 
+\backslash
+small{($MPa$)} &  &  & 
+\backslash
+
+\backslash
+ 
+\backslash
+hline
+\end_layout
+
+\begin_layout Plain Layout
+
+$206.9$ & $0.3$ & $806$ & $614$ & $0.0089$ & $0.168$ & $1.1$ 
+\backslash
+
+\backslash
+ 
+\backslash
+hline
+\backslash
+hline
+\end_layout
+
+\begin_layout Plain Layout
+
+$
+\backslash
+rho$ & $
+\backslash
+lambda$ & $C_{p}$ & $
+\backslash
+eta$ & $
+\backslash
+stackrel{
+\backslash
+bullet}{
+\backslash
+overline{
+\backslash
+varepsilon}_{0}}$ & $T_{0}$ & $T_{m}$ 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+small{$(kg/m^{3})$} & 
+\backslash
+small{$(W/m^{
+\backslash
+circ}C)$} & 
+\backslash
+small{$(J/Kg^{
+\backslash
+circ}C)$} & & 
+\backslash
+small{$(s^{-1})$} & 
+\backslash
+small{$(^{
+\backslash
+circ}C)$} & 
+\backslash
+small{$(^{
+\backslash
+circ}C)$} 
+\backslash
+
+\backslash
+ 
+\backslash
+hline
+\end_layout
+
+\begin_layout Plain Layout
+
+$7830$ & $34.0$ & $460$ & $0.9$ & $1.0$ & $20$ & $1540$
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tcolorbox}
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Material parameters of the Johnson-Cook behavior for the numerical tests
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Samples!JohnsonCookParameters"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Necking of a circular bar
+\end_layout
+
+\begin_layout Subsection
+Axisymmetric Bar Necking
+\end_layout
+
+\begin_layout Standard
+The necking of a circular bar test is useful to evaluate the performance
+ of VUMAT subroutine for materials in presence of plasticity and large deformati
+on 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Ponthot2002,SIMO_1998"
+literal "true"
+
+\end_inset
+
+.
+ Because of the symmetric structure, an axisymmetric quarter model of the
+ specimen is established.
+ Dimensions of the specimen are reported in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Samples!Plasticity!NeckingAxi"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ The loading is realized through an imposed total displacement of 
+\begin_inset Formula $7\,mm$
+\end_inset
+
+ along the 
+\begin_inset Formula $\overrightarrow{z}$
+\end_inset
+
+ axis on the left side of the specimen while the radial displacement of
+ the same edge is supposed to remain zero.
+ On the opposite side the axial displacement is restrained while the radial
+ displacement is free.
+ The mesh consists of 
+\begin_inset Formula $400$
+\end_inset
+
+ CAX4RT elements with a refined zone of 
+\begin_inset Formula $200$
+\end_inset
+
+ elements on the right side on 
+\begin_inset Formula $1/3$
+\end_inset
+
+ of the total height.
+ Again, the total simulation time is set to 
+\begin_inset Formula $t=0.01\,s$
+\end_inset
+
+ because of the explicit integration scheme adopted.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename Figures/BarNecking.svg
+	lyxscale 50
+	width 75col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Numerical model for the necking of a circular bar
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Samples!Plasticity!NeckingAxi"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Figures 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Samples!Plasticity!BarAxi-temp-contour"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Samples!Plasticity!BarAxi-mises-contour"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ shows the temperature 
+\begin_inset Formula $T$
+\end_inset
+
+ and the von Mises stress 
+\begin_inset Formula $\overline{\sigma}$
+\end_inset
+
+ contourplots of the deformed rod for both the 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+Dynela
+\end_layout
+
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+and Abaqus.
+ The distributions of the temperatures and stresses are almost the same
+ for both models.
+ The maximum temperature 
+\begin_inset Formula $T$
+\end_inset
+
+ is located into the center element of the model (the red element in Figure
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Samples!Plasticity!NeckingAxi"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+) and the models give quite the same results as reported in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Samples!Impact!TaylorAxi-comparison"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ for 
+\begin_inset Formula $\overline{\varepsilon}^{p}$
+\end_inset
+
+, 
+\begin_inset Formula $T$
+\end_inset
+
+ and the final dimensions of the specimen 
+\begin_inset Formula $D_{f}$
+\end_inset
+
+ (final diameter of the necking zone).
+ 
+\end_layout
+
+\begin_layout Standard
+Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Samples!Impact!TaylorAxi-comparison"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ shows the evolution of the the final dimensions of the specimen 
+\begin_inset Formula $L_{f}$
+\end_inset
+
+ (final length) and 
+\begin_inset Formula $R_{f}$
+\end_inset
+
+ (final radius of the impacting face), the equivalent plastic strain 
+\begin_inset Formula $\overline{\varepsilon}^{p}$
+\end_inset
+
+, the temperature 
+\begin_inset Formula $T$
+\end_inset
+
+, the von Mises stress 
+\begin_inset Formula $\overline{\sigma}$
+\end_inset
+
+ and the timeStep 
+\begin_inset Formula $\Delta t$
+\end_inset
+
+ for the different models for the element at the center of the impacting
+ face (the red element in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Samples!Plasticity!NeckingAxi"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+ 
+\end_layout
+
+\begin_layout Standard
+As reported in this figure and according to the results presented in Table
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Samples!Impact!TaylorAxi-comparison"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, a quite good agreement between the results is obtained.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename /home/pantale/SynologyDrive/DynELA/Samples/BarNecking/BarNecking-Axi/temperature.png
+	lyxscale 25
+	height 50col%
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace*{3cm}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename /home/pantale/SynologyDrive/DynELA/Samples/BarNecking/BarNecking-Axi/Abaqus/temperature.svg
+	lyxscale 25
+	height 50col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Temperature 
+\begin_inset Formula $T$
+\end_inset
+
+ contourplot for the necking of a circular bar (DynELA left and Abaqus right)
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Samples!Plasticity!BarAxi-temp-contour"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename /home/pantale/SynologyDrive/DynELA/Samples/BarNecking/BarNecking-Axi/mises.png
+	lyxscale 25
+	height 50col%
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace*{3cm}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename /home/pantale/SynologyDrive/DynELA/Samples/BarNecking/BarNecking-Axi/Abaqus/mises.svg
+	lyxscale 25
+	height 50col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+von Mises stress 
+\begin_inset Formula $\overline{\sigma}$
+\end_inset
+
+ contourplot for the necking of a circular bar (DynELA left and Abaqus right)
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Samples!Plasticity!BarAxi-mises-contour"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\backslash
+begin{tcolorbox}[width=.75
+\backslash
+textwidth,myTab,tabularx={C|C|C|C}]
+\end_layout
+
+\begin_layout Plain Layout
+
+code & $D_f$ & $T$ & $
+\backslash
+overline{
+\backslash
+varepsilon}^{p}$ 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+ & 
+\backslash
+small{($mm$)} & 
+\backslash
+small{($^{
+\backslash
+circ}C$)} & 
+\backslash
+
+\backslash
+ 
+\backslash
+hline
+\backslash
+hline
+\end_layout
+
+\begin_layout Plain Layout
+
+DynELA & $2.71$ & $642.78$ & $2.07$ 
+\backslash
+
+\backslash
+ 
+\backslash
+hline
+\end_layout
+
+\begin_layout Plain Layout
+
+Abaqus & $2.35$ & $658.91$ & $2.12$
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tcolorbox}
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Comparison of numerical results for the Axisymmetric Taylor impact test
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Samples!Impact!TaylorAxi-comparison"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="3" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/pantale/SynologyDrive/DynELA/Samples/BarNecking/BarNecking-Axi/Radius.svg
+	lyxscale 50
+	width 45col%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/pantale/SynologyDrive/DynELA/Samples/BarNecking/BarNecking-Axi/KineticEnergy.svg
+	lyxscale 50
+	width 45col%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/pantale/SynologyDrive/DynELA/Samples/BarNecking/BarNecking-Axi/Temperature.svg
+	lyxscale 50
+	width 45col%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/pantale/SynologyDrive/DynELA/Samples/BarNecking/BarNecking-Axi/Peeq.svg
+	lyxscale 50
+	width 45col%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/pantale/SynologyDrive/DynELA/Samples/BarNecking/BarNecking-Axi/Mises.svg
+	lyxscale 50
+	width 45col%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/pantale/SynologyDrive/DynELA/Samples/BarNecking/BarNecking-Axi/TimeStep.svg
+	lyxscale 50
+	width 45col%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Comparison of numerical and analytical resultsfor the Axisymmetric Taylor
+ impact test
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Samples!Impact!TaylorAxi-comparison"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\end_body
+\end_document

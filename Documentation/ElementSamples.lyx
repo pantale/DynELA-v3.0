@@ -109,7 +109,7 @@ startcontents[chapters]
 
 
 \backslash
-printmyminitoc
+printmyminitoc[1]
 \end_layout
 
 \end_inset
@@ -373,6 +373,9 @@ end{center}
 \end_inset
 
 
+\end_layout
+
+\begin_layout Plain Layout
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
@@ -1837,8 +1840,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Comparison of numerical and analytical results for the one element torus
- tensile test
+Comparison of numerical results for the one element torus tensile test
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:Samples!Single!Torus-Comparison"

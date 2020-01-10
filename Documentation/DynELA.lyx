@@ -160,6 +160,14 @@ LatexCommand tableofcontents
 \end_layout
 
 \begin_layout Standard
+\begin_inset FloatList table
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 \begin_inset ERT
 status open
 
@@ -285,6 +293,26 @@ DynELA Samples
 \begin_inset CommandInset include
 LatexCommand input
 filename "ElementSamples.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "PlasticitySamples.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "ImpactSamples.lyx"
 
 \end_inset
 

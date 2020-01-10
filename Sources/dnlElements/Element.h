@@ -109,12 +109,12 @@ public:
     short getNumberOfDDL() const;
     short getNumberOfDimensions() const;
     //    short getNumberOfEdges() const;
-    //    short getNumberOfFaces() const;
+    short getNumberOfFaces() const;
     short getNumberOfIntegrationPoints() const;
     //    short getNumberOfNeighbourNodes(short i) const;
     short getNumberOfNodes() const;
     //    short getNumberOfNodesOnEdge(short i) const;
-    //    short getNumberOfNodesOnFace(short i) const;
+    short getNumberOfNodesOnFace(short i) const;
     //    short getNumberOfNodesOnSideFace(short i) const;
     //    short getNumberOfSideFaces() const;
     short getType() const;
@@ -152,6 +152,8 @@ public:
     void setCurrentIntegrationPoint(short point);
     double getIntPointValueExtract(short field, short intPoint);
     void computeDensity();
+    Node *getNodeOnFace(short face, short node);
+
     /*   
     void clearIntegrationPoint();
     void detachMaterial();
@@ -167,7 +169,6 @@ public:
 
 
     Node *getNodeOnSideFace(short sideFace, short node);
-    Node *getNodeOnFace(short face, short node);
     Node *getNodeOnEdge(short edge, short node);
     Node *getNeighbourNode(short node, short neighbour);
 
@@ -239,7 +240,7 @@ inline short Element::getFamily() const
     return _elementData->family;
 }
 
-/* //-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 inline short Element::getNumberOfFaces() const
 //-----------------------------------------------------------------------------
 {
@@ -248,7 +249,7 @@ inline short Element::getNumberOfFaces() const
 #endif
     return _elementData->numberOfFaces;
 }
- */
+
 /* //-----------------------------------------------------------------------------
 inline short Element::getNumberOfEdges() const
 //-----------------------------------------------------------------------------
@@ -314,7 +315,7 @@ inline short Element::getNumberOfNodesOnSideFace(short i) const
     return _elementData->sideFaces[i].numberOfNodes;
 }
  */
-/* //-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 inline short Element::getNumberOfNodesOnFace(short i) const
 //-----------------------------------------------------------------------------
 {
@@ -328,7 +329,7 @@ inline short Element::getNumberOfNodesOnFace(short i) const
 #endif
     return _elementData->faces[i].numberOfNodes;
 }
- */
+
 /* //-----------------------------------------------------------------------------
 inline short Element::getNumberOfNodesOnEdge(short i) const
 //-----------------------------------------------------------------------------

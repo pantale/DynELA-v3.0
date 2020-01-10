@@ -228,7 +228,42 @@ const ElementData ElHex8N3D::_elementData = {
         }
         //
     },
-/*
+
+    6, // Number of faces of the element
+    {
+        // Face number 1
+        {
+            4,           // Number of nodes on the face of the element
+            {0, 1, 5, 4} // List of the nodes composing the face of the element
+        },
+        // Face number 2
+        {
+            4,           // Number of nodes on the face of the element
+            {1, 2, 6, 5} // List of the nodes composing the face of the element
+        },
+        // Face number 3
+        {
+            4,           // Number of nodes on the face of the element
+            {2, 3, 7, 6} // List of the nodes composing the face of the element
+        },
+        // Face number 4
+        {
+            4,           // Number of nodes on the face of the element
+            {3, 0, 4, 7} // List of the nodes composing the face of the element
+        },
+        // Face number 5
+        {
+            4,           // Number of nodes on the face of the element
+            {7, 4, 5, 6} // List of the nodes composing the face of the element
+        },
+        // Face number 6
+        {
+            4,           // Number of nodes on the face of the element
+            {2, 1, 0, 3} // List of the nodes composing the face of the element
+        }
+        //
+    },
+    /*
     8, // Number of mass integration points of the Element
     {
         // Mass integration point 1
@@ -387,41 +422,6 @@ const ElementData ElHex8N3D::_elementData = {
                    1.0 / 8, 1.0 / 8, 1.0 / 8,                 //
                    -1.0 / 8, 1.0 / 8, 1.0 / 8)                //
         },
-        //
-    },
-
-    6, // Number of faces of the element
-    {
-        // Face number 1
-        {
-            4,           // Number of nodes on the face of the element
-            {0, 1, 5, 4} // List of the nodes composing the face of the element
-        },
-        // Face number 2
-        {
-            4,           // Number of nodes on the face of the element
-            {1, 2, 6, 5} // List of the nodes composing the face of the element
-        },
-        // Face number 3
-        {
-            4,           // Number of nodes on the face of the element
-            {2, 3, 7, 6} // List of the nodes composing the face of the element
-        },
-        // Face number 4
-        {
-            4,           // Number of nodes on the face of the element
-            {3, 0, 4, 7} // List of the nodes composing the face of the element
-        },
-        // Face number 5
-        {
-            4,           // Number of nodes on the face of the element
-            {7, 4, 5, 6} // List of the nodes composing the face of the element
-        },
-        // Face number 6
-        {
-            4,           // Number of nodes on the face of the element
-            {2, 1, 0, 3} // List of the nodes composing the face of the element
-        }
         //
     },
 

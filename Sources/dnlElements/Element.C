@@ -1044,6 +1044,16 @@ void Element::computeDensity()
   }
 }
 
+//-----------------------------------------------------------------------------
+Node *Element::getNodeOnFace(short face, short node)
+//-----------------------------------------------------------------------------
+{
+#ifdef VERIF_assert
+  assert(_elementData != NULL);
+#endif
+  return nodes(_elementData->faces[face].number[node]);
+}
+
 // --------------------------- ADDED AFTER IS TO BE DELETED
 
 /*
@@ -2003,15 +2013,7 @@ Node* Element::getNodeOnSideFace (short sideface, short node)
   return nodes(_elementData->sideFaces[sideface].number[node]);
 }
 
-//-----------------------------------------------------------------------------
-Node* Element::getNodeOnFace (short face, short node)
-//-----------------------------------------------------------------------------
-{
-#ifdef VERIF_assert
-  assert(_elementData!=NULL);
-#endif
-  return nodes(_elementData->faces[face].number[node]);
-}
+
 
 //-----------------------------------------------------------------------------
 Node* Element::getNeighbourNode (short node, short neighbour)

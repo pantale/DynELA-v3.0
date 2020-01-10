@@ -1,4 +1,8 @@
-07/01/2019 - Parallelization procedure with One core by default
+10/01/2020 - New classes to export 2D Vector graphic mesh to SVG file (first version)
+
+09/01/2020 - Update of Taylor-Axi, Taylor-3D and BarNecking-Axi samples (add to documentation) 
+
+07/01/2020 - Parallelization procedure with One core by default
 
 19/12/2019 - Modification of Time History Saves to include initial state
            - Replaced list of Domain by Model class (update of the samples)

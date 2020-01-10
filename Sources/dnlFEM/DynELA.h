@@ -27,6 +27,7 @@
 #include <Settings.h>
 #include <Timer.h>
 #include <Parallel.h>
+#include <Drawing.h>
 
 #include <omp.h>
 
@@ -87,6 +88,8 @@ class NodeSet;
 class DynELA
 {
   friend class VtkInterface;
+  friend class Drawing;
+  friend class SvgInterface;
 
 private:
   short _defaultElement = Element::Unknown; //!< Current default Element
@@ -113,6 +116,7 @@ public:
   Parallel parallel;              //!< Parallel computation
   Model *model = NULL;            //!< Pointer to the model
   Timers cpuTimes;                //!< Store the CPU Times
+  Drawing drawing;
 
 #ifndef SWIG
   LogFile logFile; //!< Log file
@@ -125,7 +129,6 @@ public:
 
   bool createElement(long elementNumber, long nodesIndex, ...);
   bool createNode(long nodeNumber, double xCoord, double yCoord, double zCoord);
-  // Model *model;
   Element *getElementByNum(long elementNumber);
   long getElementsNumber();
   long getNodesNumber();
@@ -133,7 +136,6 @@ public:
   void add(ElementSet *elementSet, long startNumber = -1, long endNumber = -1, long increment = 1);
   void add(Material *material, ElementSet *elementSet);
   void add(NodeSet *nodeSet, long startNumber = -1, long endNumber = -1, long increment = 1);
-  //void add(Parallel *parallel);
   void add(HistoryFile *newHistoryFile);
   void add(Solver *newSolver);
   void addMaterial(Material *pmat);

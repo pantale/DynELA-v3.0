@@ -44,10 +44,10 @@ public:
     plasticStrainRate,                  //!< Equivalent plastic strain rate
     energy,                             //!< Internal energy
     energyIncrement,                    //!< Internal energy increment
-    internalEnergy,                  //!< Internal energy
+    internalEnergy,                     //!< Internal energy
     plasticStrain,                      //!< Equivalent plastic deformation
     gamma,                              //!< gamma radial return value
-    gammaCumulate,                      //! Cumul of gamma values
+    gammaCumulate,                      //!< Cumul of gamma values
     initialTemperature,                 //!< Initial temperature
     mass,                               //!< Nodal Mass
     vonMises,                           //!< von Mises equivalent stress

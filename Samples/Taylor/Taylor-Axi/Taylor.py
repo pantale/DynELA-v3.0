@@ -72,8 +72,11 @@ model.add(bottomNS, 1, nbElementsWidth+1)
 axisNS = dnl.NodeSet("NS_Axis")
 model.add(axisNS, 1, nbNodes, nbElementsWidth+1)
 
-histNS = dnl.NodeSet("NS_Hist")
-model.add(histNS, 1)
+histRad = dnl.NodeSet("NS_HistRadius")
+model.add(histRad, 1 + nbElementsWidth)
+
+histHei = dnl.NodeSet("NS_HistHeight")
+model.add(histHei, nbNodes - nbElementsWidth)
 
 histES = dnl.ElementSet("ES_Hist")
 model.add(histES, 1)
@@ -91,7 +94,6 @@ steel.density = density
 steel.heatCapacity = heatCapacity
 steel.taylorQuinney = taylorQuinney
 steel.initialTemperature = T0
-
 model.add(steel, allES)
 
 # Declaration of a boundary condition for bottom line
@@ -135,6 +137,18 @@ temperatureHist.add(histES, 0, dnl.Field.temperature)
 temperatureHist.setSaveTime(stopTime / nbrePoints)
 model.add(temperatureHist)
 
+radiusHist = dnl.HistoryFile("radiusHistory")
+radiusHist.setFileName(dnl.String("radius.plot"))
+radiusHist.add(histRad, dnl.Field.nodeCoordinateX)
+radiusHist.setSaveTime(stopTime / nbrePoints)
+model.add(radiusHist)
+
+heightHist = dnl.HistoryFile("heightHistory")
+heightHist.setFileName(dnl.String("height.plot"))
+heightHist.add(histHei, dnl.Field.nodeCoordinateY)
+heightHist.setSaveTime(stopTime / nbrePoints)
+model.add(heightHist)
+
 dtHist = dnl.HistoryFile("dtHistory")
 dtHist.setFileName(dnl.String("dt.plot"))
 dtHist.add(dnl.Field.timeStep)
@@ -151,6 +165,19 @@ model.add(keHist)
 model.parallel.setCores(4)
 
 model.solve()
+
+finalRadius = model.getNodeByNum(1+nbElementsWidth).coordinates(0)
+finalHeight = model.getNodeByNum(nbNodes-nbElementsWidth).coordinates(1)
+f=open('results.txt','w')
+f.write('final radius : ' + str(finalRadius) + '\n')
+f.write('final height : ' + str(finalHeight) + '\n')
+f.close()
+
+svg = dnl.SvgInterface("SVG")
+svg.initDrawing()
+svg.init(dnl.String("finalMesh.svg"))
+svg.write()
+svg.close()
 
 # Plot the results as curves
 import dnlCurves as cu

@@ -32,30 +32,30 @@ const ElementData ElTet4N3D::_elementData = {
     {
         // Node 1
         {
-            Vec3D(0, 0, 0),                                                                                                     // Coordinates of the node
-            3,                                                                                                                  // Number of neightbour nodes
-            {1, 2, 3},                                                                                                          // List of the neighbour nodes
+            Vec3D(0, 0, 0),                                                                                             // Coordinates of the node
+            3,                                                                                                          // Number of neightbour nodes
+            {1, 2, 3},                                                                                                  // List of the neighbour nodes
             Vector(4, (1.0 + 3.0 * sqrt(5.0)) / 4, (1.0 - sqrt(5.0)) / 4, (1.0 - sqrt(5.0)) / 4, (1.0 - sqrt(5.0)) / 4) // Extrapolates integration points values to nodal values
         },
         // Node 2
         {
-            Vec3D(1, 0, 0),                                                                                                     // Coordinates of the node
-            3,                                                                                                                  // Number of neightbour nodes
-            {0, 2, 3},                                                                                                          // List of the neighbour nodes
+            Vec3D(1, 0, 0),                                                                                             // Coordinates of the node
+            3,                                                                                                          // Number of neightbour nodes
+            {0, 2, 3},                                                                                                  // List of the neighbour nodes
             Vector(4, (1.0 - sqrt(5.0)) / 4, (1.0 + 3.0 * sqrt(5.0)) / 4, (1.0 - sqrt(5.0)) / 4, (1.0 - sqrt(5.0)) / 4) // Extrapolates integration points values to nodal values
         },
         // Node 3
         {
-            Vec3D(0, 1, 0),                                                                                                     // Coordinates of the node
-            3,                                                                                                                  // Number of neightbour nodes
-            {0, 1, 3},                                                                                                          // List of the neighbour nodes
+            Vec3D(0, 1, 0),                                                                                             // Coordinates of the node
+            3,                                                                                                          // Number of neightbour nodes
+            {0, 1, 3},                                                                                                  // List of the neighbour nodes
             Vector(4, (1.0 - sqrt(5.0)) / 4, (1.0 - sqrt(5.0)) / 4, (1.0 + 3.0 * sqrt(5.0)) / 4, (1.0 - sqrt(5.0)) / 4) // Extrapolates integration points values to nodal values
         },
         // Node 4
         {
-            Vec3D(0, 0, 1),                                                                                                     // Coordinates of the node
-            3,                                                                                                                  // Number of neightbour nodes
-            {0, 1, 2},                                                                                                          // List of the neighbour nodes
+            Vec3D(0, 0, 1),                                                                                             // Coordinates of the node
+            3,                                                                                                          // Number of neightbour nodes
+            {0, 1, 2},                                                                                                  // List of the neighbour nodes
             Vector(4, (1.0 - sqrt(5.0)) / 4, (1.0 - sqrt(5.0)) / 4, (1.0 - sqrt(5.0)) / 4, (1.0 + 3.0 * sqrt(5.0)) / 4) // Extrapolates integration points values to nodal values
         }
         //
@@ -64,14 +64,39 @@ const ElementData ElTet4N3D::_elementData = {
     1, // Number of integration points of the Element
     {
         {
-            Vec3D(1.0 / 4, 1.0 / 4, 1.0 / 4),                                     // Coordinates of the integration point
-            1.0 / 6,                                                                  // Weight associated to the integration point
-            Vector(4, 1.0 / 4, 1.0 / 4, 1.0 / 4, 1.0 / 4),                      // Shape functions at the integration point
+            Vec3D(1.0 / 4, 1.0 / 4, 1.0 / 4),                                           // Coordinates of the integration point
+            1.0 / 6,                                                                    // Weight associated to the integration point
+            Vector(4, 1.0 / 4, 1.0 / 4, 1.0 / 4, 1.0 / 4),                              // Shape functions at the integration point
             Matrix(4, 3, -1.0, -1.0, -1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0) // Derivatives of the shape functions at the integration point
         },
         //
     },
-/*
+
+    4, // Number of faces of the element
+    {
+        // Face number 1
+        {
+            3,        // Number of nodes on the face of the element
+            {0, 1, 3} // List of the nodes composing the face of the element
+        },
+        // Face number 2
+        {
+            3,        // Number of nodes on the face of the element
+            {0, 2, 1} // List of the nodes composing the face of the element
+        },
+        // Face number 3
+        {
+            3,        // Number of nodes on the face of the element
+            {0, 3, 2} // List of the nodes composing the face of the element
+        },
+        // Face number 4
+        {
+            3,        // Number of nodes on the face of the element
+            {2, 3, 1} // List of the nodes composing the face of the element
+        }
+        //
+    },
+    /*
     4, // Number of mass integration points of the Element
     {
         // Mass integration point 1
@@ -116,31 +141,6 @@ const ElementData ElTet4N3D::_elementData = {
             Vector(4, 1.0 / 4, 1.0 / 4, 1.0 / 4, 1.0 / 4),                      // Shape functions at the under integration point
             Matrix(4, 3, -1.0, -1.0, -1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0) // Derivatives of the shape functions at the under integration point
         },
-        //
-    },
-
-    4, // Number of faces of the element
-    {
-        // Face number 1
-        {
-            3,        // Number of nodes on the face of the element
-            {0, 1, 3} // List of the nodes composing the face of the element
-        },
-        // Face number 2
-        {
-            3,        // Number of nodes on the face of the element
-            {0, 2, 1} // List of the nodes composing the face of the element
-        },
-        // Face number 3
-        {
-            3,        // Number of nodes on the face of the element
-            {0, 3, 2} // List of the nodes composing the face of the element
-        },
-        // Face number 4
-        {
-            3,        // Number of nodes on the face of the element
-            {2, 3, 1} // List of the nodes composing the face of the element
-        }
         //
     },
 

@@ -109,7 +109,7 @@ startcontents[chapters]
 
 
 \backslash
-printmyminitoc
+printmyminitoc[1]
 \end_layout
 
 \end_inset
@@ -740,52 +740,28 @@ Dynela
 .
 \end_layout
 
-\begin_layout Itemize
-
-\family sans
-ElQua4n2D
-\family default
-: 4 nodes bi-linear 2D quadrilateral element.
+\begin_layout Description
+ElQua4n2D : 4 nodes bi-linear 2D quadrilateral element.
 \end_layout
 
-\begin_layout Itemize
-
-\family sans
-ElQua4NAx
-\family default
-: 4 nodes bi-linear axisymmetric quadrilateral element.
+\begin_layout Description
+ElQua4NAx : 4 nodes bi-linear axisymmetric quadrilateral element.
 \end_layout
 
-\begin_layout Itemize
-
-\family sans
-ElTri3N2D
-\family default
-: 3 nodes 2D triangular element.
+\begin_layout Description
+ElTri3N2D : 3 nodes 2D triangular element.
 \end_layout
 
-\begin_layout Itemize
-
-\family sans
-ElHex8N3D
-\family default
-: 8 nodes 3D hexahedral element.
+\begin_layout Description
+ElHex8N3D : 8 nodes 3D hexahedral element.
 \end_layout
 
-\begin_layout Itemize
-
-\family sans
-ElTet4N3D
-\family default
-: 4 nodes 3D tetrahedral element.
+\begin_layout Description
+ElTet4N3D : 4 nodes 3D tetrahedral element.
 \end_layout
 
-\begin_layout Itemize
-
-\family sans
-ElTet10N3D
-\family default
-: 10 nodes 3D tetrahedral element.
+\begin_layout Description
+ElTet10N3D : 10 nodes 3D tetrahedral element.
 \end_layout
 
 \begin_layout Standard
@@ -1443,60 +1419,40 @@ concerns the general constants such as Young's modulus, Poisson's ratio,
  The complete list of parameters is given hereafter.
 \end_layout
 
-\begin_layout Itemize
-
-\family sans
-youngModulus
-\family default
- = The young modulus 
+\begin_layout Description
+youngModulus : The young modulus 
 \begin_inset Formula $E$
 \end_inset
 
  of the material to define the elastic behaviour of the material.
 \end_layout
 
-\begin_layout Itemize
-
-\family sans
-poissonRatio
-\family default
- = The Poisson ratio 
+\begin_layout Description
+poissonRatio : The Poisson ratio 
 \begin_inset Formula $\nu$
 \end_inset
 
  of the material to define the elastic behaviour of the material.
 \end_layout
 
-\begin_layout Itemize
-
-\family sans
-density
-\family default
- = The density 
+\begin_layout Description
+density : The density 
 \begin_inset Formula $\rho$
 \end_inset
 
  of the material.
 \end_layout
 
-\begin_layout Itemize
-
-\family sans
-heatCapacity
-\family default
- = The heat capacity 
+\begin_layout Description
+heatCapacity : The heat capacity 
 \begin_inset Formula $C_{p}$
 \end_inset
 
  of the material.
 \end_layout
 
-\begin_layout Itemize
-
-\family sans
-taylorQuinney
-\family default
- = The Taylor-Quinney coefficient 
+\begin_layout Description
+taylorQuinney : The Taylor-Quinney coefficient 
 \begin_inset Formula $\eta$
 \end_inset
 
@@ -1504,12 +1460,8 @@ taylorQuinney
  transformation of the material.
 \end_layout
 
-\begin_layout Itemize
-
-\family sans
-initialTemperature
-\family default
- = The initial temperature 
+\begin_layout Description
+initialTemperature : The initial temperature 
 \begin_inset Formula $T_{0}$
 \end_inset
 
@@ -2045,6 +1997,877 @@ ramp.set(dnl.RampFunction.Constant, 0, stopTime)
 
 \backslash
 end{PythonListing}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Fields
+\end_layout
+
+\begin_layout Subsection
+Nodal fields
+\end_layout
+
+\begin_layout Standard
+Nodal fields are defined at nodes and cover types defined in table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Programming!NodalFields"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ Concerning those fields, some of them are directely defined at nodes, some
+ other are extrapolated from integration points and transfered to nodes
+ as reported in column 
+\family sans
+loc
+\family default
+ of table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Programming!NodalFields"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ Concerning types, 
+\family sans
+scalars
+\family default
+, 
+\family sans
+vec3D
+\family default
+ and 
+\family sans
+tensors
+\family default
+ are available.
+ Depending in the type of data, different methods can be used to acces those
+ data:
+\end_layout
+
+\begin_layout Description
+scalar : Direct access to the value as it is unique.
+\end_layout
+
+\begin_layout Description
+vec3D : Access to all 
+\begin_inset Formula $3$
+\end_inset
+
+ components of a vec3D using 
+\family sans
+nameX
+\family default
+, 
+\family sans
+nameY
+\family default
+, 
+\family sans
+nameZ
+\family default
+ or the norm of the vec3D using 
+\family sans
+name
+\family default
+.
+\end_layout
+
+\begin_layout Description
+tensor : Access to all 
+\begin_inset Formula $9$
+\end_inset
+
+ components of a tensor using 
+\family sans
+nameXX
+\family default
+, 
+\family sans
+nameXY
+\family default
+,..., 
+\family sans
+nameZZ
+\family default
+ or the norm of the tensor using 
+\family sans
+name
+\family default
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\backslash
+begin{tcolorbox}[width=.75
+\backslash
+textwidth,myTab,tabularx={c|c|c|c|C}]
+\end_layout
+
+\begin_layout Plain Layout
+
+name & type & label & loc & description 
+\backslash
+
+\backslash
+ 
+\backslash
+hline
+\backslash
+hline
+\end_layout
+
+\begin_layout Plain Layout
+
+density & scalar & & IntPt &
+\backslash
+
+\backslash
+ 
+\backslash
+hline
+\end_layout
+
+\begin_layout Plain Layout
+
+displacementIncrement & vec3D & & node & 
+\backslash
+
+\backslash
+ 
+\backslash
+hline
+\end_layout
+
+\begin_layout Plain Layout
+
+displacement & vec3D & & node & 
+\backslash
+
+\backslash
+ 
+\backslash
+hline
+\end_layout
+
+\begin_layout Plain Layout
+
+energyIncrement & scalar & & IntPt & 
+\backslash
+
+\backslash
+ 
+\backslash
+hline
+\end_layout
+
+\begin_layout Plain Layout
+
+energy & scalar & & IntPt & 
+\backslash
+
+\backslash
+ 
+\backslash
+hline
+\end_layout
+
+\begin_layout Plain Layout
+
+gammaCumulate & scalar & & IntPt & 
+\backslash
+
+\backslash
+ 
+\backslash
+hline
+\end_layout
+
+\begin_layout Plain Layout
+
+gamma & scalar & & IntPt & 
+\backslash
+
+\backslash
+ 
+\backslash
+hline
+\end_layout
+
+\begin_layout Plain Layout
+
+internalEnergy & scalar & & IntPt & 
+\backslash
+
+\backslash
+ 
+\backslash
+hline
+\end_layout
+
+\begin_layout Plain Layout
+
+mass & scalar & & node & 
+\backslash
+
+\backslash
+ 
+\backslash
+hline
+\end_layout
+
+\begin_layout Plain Layout
+
+nodeCoordinate & vec3D & & node & 
+\backslash
+
+\backslash
+ 
+\backslash
+hline
+\end_layout
+
+\begin_layout Plain Layout
+
+normal & vec3D & & node & 
+\backslash
+
+\backslash
+ 
+\backslash
+hline
+\end_layout
+
+\begin_layout Plain Layout
+
+PlasticStrainInc & tensor & & IntPt & 
+\backslash
+
+\backslash
+ 
+\backslash
+hline
+\end_layout
+
+\begin_layout Plain Layout
+
+plasticStrainRate & scalar & & IntPt & 
+\backslash
+
+\backslash
+ 
+\backslash
+hline
+\end_layout
+
+\begin_layout Plain Layout
+
+plasticStrain & scalar & & IntPt & 
+\backslash
+
+\backslash
+ 
+\backslash
+hline
+\end_layout
+
+\begin_layout Plain Layout
+
+PlasticStrain & tensor & & IntPt & 
+\backslash
+
+\backslash
+ 
+\backslash
+hline
+\end_layout
+
+\begin_layout Plain Layout
+
+pressure & scalar & & IntPt & 
+\backslash
+
+\backslash
+ 
+\backslash
+hline
+\end_layout
+
+\begin_layout Plain Layout
+
+speedIncrement & vec3D & & node & 
+\backslash
+
+\backslash
+ 
+\backslash
+hline
+\end_layout
+
+\begin_layout Plain Layout
+
+speed & vec3D & & node & 
+\backslash
+
+\backslash
+ 
+\backslash
+hline
+\end_layout
+
+\begin_layout Plain Layout
+
+StrainInc & tensor & & IntPt & 
+\backslash
+
+\backslash
+ 
+\backslash
+hline
+\end_layout
+
+\begin_layout Plain Layout
+
+Strain & tensor & & IntPt & 
+\backslash
+
+\backslash
+ 
+\backslash
+hline
+\end_layout
+
+\begin_layout Plain Layout
+
+Stress & tensor & & IntPt & 
+\backslash
+
+\backslash
+ 
+\backslash
+hline
+\end_layout
+
+\begin_layout Plain Layout
+
+temperature & scalar & & IntPt & 
+\backslash
+
+\backslash
+ 
+\backslash
+hline
+\end_layout
+
+\begin_layout Plain Layout
+
+vonMises & scalar & & IntPt & 
+\backslash
+
+\backslash
+ 
+\backslash
+hline
+\end_layout
+
+\begin_layout Plain Layout
+
+yieldStress & scalar & & IntPt & 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tcolorbox}
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Nodal fields
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Programming!NodalFields"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Element fields
+\end_layout
+
+\begin_layout Standard
+Element fields are defined at integration points and cover types defined
+ in table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Programming!ElementlFields"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ Concerning types, 
+\family sans
+scalars
+\family default
+, 
+\family sans
+vec3D
+\family default
+ and 
+\family sans
+tensors
+\family default
+ are available.
+ Depending in the type of data, different methods can be used to acces those
+ data:
+\end_layout
+
+\begin_layout Description
+scalar : Direct access to the value as it is unique.
+\end_layout
+
+\begin_layout Description
+vec3D : Access to all 
+\begin_inset Formula $3$
+\end_inset
+
+ components of a vec3D using 
+\family sans
+nameX
+\family default
+, 
+\family sans
+nameY
+\family default
+, 
+\family sans
+nameZ
+\family default
+ or the norm of the vec3D using 
+\family sans
+name
+\family default
+.
+\end_layout
+
+\begin_layout Description
+tensor : Access to all 
+\begin_inset Formula $9$
+\end_inset
+
+ components of a tensor using 
+\family sans
+nameXX
+\family default
+, 
+\family sans
+nameXY
+\family default
+,..., 
+\family sans
+nameZZ
+\family default
+ or the norm of the tensor using 
+\family sans
+name
+\family default
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\backslash
+begin{tcolorbox}[width=.75
+\backslash
+textwidth,myTab,tabularx={c|c|c|C}]
+\end_layout
+
+\begin_layout Plain Layout
+
+name & type & label & description 
+\backslash
+
+\backslash
+ 
+\backslash
+hline
+\backslash
+hline
+\end_layout
+
+\begin_layout Plain Layout
+
+density & scalar & & 
+\backslash
+
+\backslash
+ 
+\backslash
+hline
+\end_layout
+
+\begin_layout Plain Layout
+
+gammaCumulate & scalar  & & 
+\backslash
+
+\backslash
+ 
+\backslash
+hline
+\end_layout
+
+\begin_layout Plain Layout
+
+gamma & scalar & & 
+\backslash
+
+\backslash
+ 
+\backslash
+hline
+\end_layout
+
+\begin_layout Plain Layout
+
+internalEnergy & scalar & & 
+\backslash
+
+\backslash
+ 
+\backslash
+hline
+\end_layout
+
+\begin_layout Plain Layout
+
+plasticStrainRate & scalar & & 
+\backslash
+
+\backslash
+ 
+\backslash
+hline
+\end_layout
+
+\begin_layout Plain Layout
+
+plasticStrain & scalar & & 
+\backslash
+
+\backslash
+ 
+\backslash
+hline
+\end_layout
+
+\begin_layout Plain Layout
+
+PlasticStrain & tensor & & 
+\backslash
+
+\backslash
+ 
+\backslash
+hline
+\end_layout
+
+\begin_layout Plain Layout
+
+PlaticStrainInc & tensor & & 
+\backslash
+
+\backslash
+ 
+\backslash
+hline
+\end_layout
+
+\begin_layout Plain Layout
+
+pressure & scalar & & 
+\backslash
+
+\backslash
+ 
+\backslash
+hline
+\end_layout
+
+\begin_layout Plain Layout
+
+StrainInc & tensor & & 
+\backslash
+
+\backslash
+ 
+\backslash
+hline
+\end_layout
+
+\begin_layout Plain Layout
+
+Strain & tensor & & 
+\backslash
+
+\backslash
+ 
+\backslash
+hline
+\end_layout
+
+\begin_layout Plain Layout
+
+Stress & tensor & & 
+\backslash
+
+\backslash
+ 
+\backslash
+hline
+\end_layout
+
+\begin_layout Plain Layout
+
+temperature & scalar & & 
+\backslash
+
+\backslash
+ 
+\backslash
+hline
+\end_layout
+
+\begin_layout Plain Layout
+
+vonMises & scalar & & 
+\backslash
+
+\backslash
+ 
+\backslash
+hline
+\end_layout
+
+\begin_layout Plain Layout
+
+yieldStress & scalar & &
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tcolorbox}
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Element fields
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Programming!ElementlFields"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Global fields
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\backslash
+begin{tcolorbox}[width=.75
+\backslash
+textwidth,myTab,tabularx={c|c|c|C}]
+\end_layout
+
+\begin_layout Plain Layout
+
+name & type & label & description 
+\backslash
+
+\backslash
+ 
+\backslash
+hline
+\backslash
+hline
+\end_layout
+
+\begin_layout Plain Layout
+
+kineticEnergy & scalar & & 
+\backslash
+
+\backslash
+ 
+\backslash
+hline
+\end_layout
+
+\begin_layout Plain Layout
+
+realTimeStep & scalar & & 
+\backslash
+
+\backslash
+ 
+\backslash
+hline
+\end_layout
+
+\begin_layout Plain Layout
+
+timeStep & scalar & & 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tcolorbox}
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Global fields
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Programming!GlobalFields"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset

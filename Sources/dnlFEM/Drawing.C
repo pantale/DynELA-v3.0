@@ -141,8 +141,4 @@ void Drawing::mapToWorld()
   {
     polygon->remapVertices(center, worldCenter, worldScale);
   }
-  /*  Vec3D svgPoint = scale * (point - dynelaData->drawing.center) + svgCenter;
-  // Mirror horizontally
-  svgPoint(1) = svgTopRight(1) - svgPoint(1);
-  return svgPoint; */
 }

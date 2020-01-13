@@ -36,6 +36,7 @@
 #include <BoundaryCondition.h>
 #include <Boundary.h>
 #include <Solver.h>
+#include <Field.h>
 #include <VtkInterface.h>
 #include <Parallel.h>
 
@@ -842,6 +843,29 @@ void DynELA::solve()
   cpuTimes.stop();
 }
 
+//-----------------------------------------------------------------------------
+void DynELA::getNodalValuesRange(short field, double &min, double &max)
+//-----------------------------------------------------------------------------
+{
+  Field fields;
+
+  if (fields.getType(field) != 0)
+  {
+    fatalError("DynELA::getNodalValuesRange", "field must be scalar");
+  }
+
+  Node *pnd = nodes.first();
+  double val;
+  min = max = pnd->getNodalValue(field);
+  while ((pnd = nodes.currentUp()) != NULL)
+  {
+    val = pnd->getNodalValue(field);
+    if (val < min)
+      min = val;
+    if (val > max)
+      max = val;
+  }
+}
 /*
 
 //!Initialise les structures memoire pour la resolution

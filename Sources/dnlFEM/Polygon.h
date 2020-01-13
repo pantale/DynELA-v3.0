@@ -28,6 +28,7 @@
 #include <Vec3D.h>
 #include <Tensor2.h>
 #include <Node.h>
+#include <ColorMap.h>
 
 class Polygon
 {
@@ -36,7 +37,6 @@ class Polygon
 private:
   Node *nodes[8];
   Vec3D vertices[8];
-  double values[8];
   Vec3D center;
   int points = 0;
 
@@ -51,6 +51,7 @@ public:
   void add(Vec3D point);
   Vec3D getVertex(int);
   String getWhitePolygonSvgCode();
+  String getInterpolatedPolygonSvgCode(ColorMap &map, short field, bool stroke = true, int width = 1);
   void computeCenter();
   void remapVertices(Vec3D center, Vec3D worldCenter, Vec3D worldScale);
   void rotate(Tensor2 Mat);

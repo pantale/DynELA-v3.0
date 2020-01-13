@@ -176,10 +176,8 @@ model.parallel.setCores(4)
 model.solve()
 
 svg = dnl.SvgInterface("SVG")
-svg.initDrawing()
-svg.init(dnl.String("finalMesh.svg"))
-svg.write()
-svg.close()
+svg.write(dnl.String("temperatures.svg"),dnl.Field.temperature)
+svg.write(dnl.String("vonMises.svg"),dnl.Field.vonMises)
 
 # Plot the results as curves
 import dnlCurves as cu

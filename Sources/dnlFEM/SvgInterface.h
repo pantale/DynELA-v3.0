@@ -27,41 +27,49 @@
 #include <fstream>
 #include <Vec3D.h>
 #include <Polygon.h>
+#include <ColorMap.h>
 
 class SvgInterface
 {
 private:
   std::ofstream _stream;
   String _fileName;
-  double width = 16;
-  double height = 16;
-  double scale = 1;
-  double scaleRatio = 0.95;
-  const Vec3D svgBottomLeft = Vec3D(0, 0, 0);
-  const Vec3D svgTopRight = Vec3D(1600, 1600, 0);
-  Vec3D svgCenter;
-  Polygon polygon;
+  double _width = 16;
+  double _height = 16;
+  double _scale = 1;
+  double _scaleRatio = 0.95;
+  const Vec3D _svgBottomLeft = Vec3D(0, 0, 0);
+  const Vec3D _svgTopRight = Vec3D(1600, 1600, 0);
+  Vec3D _svgCenter;
+  bool _initialized = false;
+#ifndef SWIG
+  void initSvgFile(String fileName);
+  void closeSvgFile();
+  void headerWrite();
+  void tailWrite();
+  void meshWrite();
+  void interpolatedPolygonsWrite();
+  void textWrite(Vec3D location, String text, int size = 30, String color = "black");
+  void rectangleWrite(int x1, int y1, int x2, int y2, String col = "black", int width = 1);
+  void filledRectangleWrite(int x1, int y1, int x2, int y2, String col);
+  void legendWrite();
+  void lineWrite(int x1, int y1, int x2, int y2, int width = 1);
+
+#endif
 
 public:
   String name = "_noname_"; //!< Name of the VTK interface
+  ColorMap colorMap;
+  short field;
 
   // constructeurs
   SvgInterface(char *newName = NULL);
   SvgInterface(const SvgInterface &SvgInterface);
   ~SvgInterface();
 
-  void init(String fileName);
-  void close();
-  void write();
   void rotate(Vec3D axis, double angle);
+  void write(String fileName, short field = -1);
   void initDrawing();
-
-#ifndef SWIG
-  void headerWrite();
-  void tailWrite();
-  void polygonsWrite();
-  void textWrite(Vec3D location, String text, int size = 30, String color = "black");
-#endif
 };
 
 #endif

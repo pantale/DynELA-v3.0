@@ -62,7 +62,7 @@ Field::Field()
 //-----------------------------------------------------------------------------
 {
   if (vtkNames[ENDFIELDS] != "ENDFIELDS")
-    fatalError("Field::Field","Lists of fields doesn't contain the same number of elements");
+    fatalError("Field::Field", "Lists of fields doesn't contain the same number of elements");
 }
 
 //-----------------------------------------------------------------------------

@@ -153,6 +153,7 @@ public:
   void translate(Vec3D translateVector, NodeSet *nodeSet = NULL);
   void writeVTKFile();
   void displayEstimatedEnd();
+  void getNodalValuesRange(short field, double &min, double &max);
 
   //  void displayOnline();
 

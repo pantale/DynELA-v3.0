@@ -19,13 +19,9 @@
 */
 
 #include <Polygon.h>
-/* #include <List.h>
-#include <DynELA.h>
-#include <Node.h>
-#include <Element.h>
 #include <Field.h>
-#include <Model.h>
- */
+#include <DynELA.h>
+
 //-----------------------------------------------------------------------------
 Polygon::Polygon()
 //-----------------------------------------------------------------------------
@@ -119,8 +115,10 @@ String Polygon::getWhitePolygonSvgCode()
 //-----------------------------------------------------------------------------
 {
   String svgcode = "";
-  String crd1, crd2;
+  String tmp1, tmp2;
   Vec3D point;
+
+  // Begin polygon
   svgcode += "<polygon\n";
   svgcode += " stroke=\"black\"\n";
   svgcode += " fill=\"white\"\n";
@@ -128,14 +126,71 @@ String Polygon::getWhitePolygonSvgCode()
   svgcode += " stroke-linejoin=\"round\"\n";
   svgcode += " points=\"";
 
+  // polygon points
   for (int i = 0; i < points; i++)
   {
     point = getVertex(i);
-    crd1.convert(point(0));
-    crd2.convert(point(1));
-    svgcode += crd1 + "," + crd2 + " ";
+    tmp1.convert(point(0));
+    tmp2.convert(point(1));
+    svgcode += tmp1 + "," + tmp2 + " ";
   }
+
+  // End polygon
   svgcode += "\" />\n";
+
+  // Returns the string
+  return svgcode;
+}
+
+//-----------------------------------------------------------------------------
+String Polygon::getInterpolatedPolygonSvgCode(ColorMap &map, short field, bool stroke, int width)
+//-----------------------------------------------------------------------------
+{
+  String svgcode = "";
+  String tmp1, tmp2;
+  Vec3D point;
+  String tmpWidth;
+  tmpWidth.convert(width);
+
+  double val = 0;
+  for (int i = 0; i < points; i++)
+  {
+    val += nodes[i]->getNodalValue(field);
+  }
+  val /= points;
+
+  String col = map.getStringColor(val, true);
+
+  // Begin polygon
+  svgcode += "<polygon\n";
+  svgcode += " fill=\"" + col + "\"\n";
+  if (stroke)
+  {
+    svgcode += " stroke=\"black\"\n";
+    svgcode += " stroke-width=\"" + tmpWidth + "\"\n";
+  }
+  else
+  {
+    svgcode += " stroke=\"" + col + "\"\n";
+    svgcode += " stroke-width=\"0.25\"\n";
+  }
+  svgcode += " stroke-linejoin=\"round\"\n";
+
+  svgcode += " points=\"";
+
+  // polygon points
+  for (int i = 0; i < points; i++)
+  {
+    point = getVertex(i);
+    tmp1.convert(point(0));
+    tmp2.convert(point(1));
+    svgcode += tmp1 + "," + tmp2 + " ";
+  }
+
+  // End polygon
+  svgcode += "\" />\n";
+
+  // Returns the string
   return svgcode;
 }
 

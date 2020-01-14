@@ -109,6 +109,9 @@ void SvgInterface::initDrawing()
     dynelaData->drawing.resetPolygons();
   }
 
+  if (_rotate)
+    dynelaData->drawing.rotate(_axis, _angle);
+
   // Compute Bound Box of the model
   dynelaData->drawing.computeBoundBox();
 
@@ -133,29 +136,9 @@ void SvgInterface::initDrawing()
 void SvgInterface::rotate(Vec3D axis, double angle)
 //-----------------------------------------------------------------------------
 {
-  // Initialize polygons
-  dynelaData->drawing.resetPolygons();
-
-  dynelaData->drawing.rotate(axis, angle);
-
-  // Compute Bound Box of the model
-  dynelaData->drawing.computeBoundBox();
-
-  // Compute _scale factor
-  Vec3D delta = dynelaData->drawing.topRight - dynelaData->drawing.bottomLeft;
-  Vec3D svgDelta = _svgTopRight - _svgBottomLeft;
-  _scale = _scaleRatio * dnlMin(svgDelta(0), svgDelta(1)) / dnlMax(delta(0), delta(1));
-
-  // Compute center
-  _svgCenter = (_svgTopRight + _svgBottomLeft) / 2;
-  dynelaData->drawing.worldCenter = _svgCenter;
-
-  dynelaData->drawing.worldScale(0) = _scale;
-  dynelaData->drawing.worldScale(1) = -_scale;
-  dynelaData->drawing.worldScale(2) = 0;
-
-  // Remap polygons to fit page
-  dynelaData->drawing.mapToWorld();
+  _rotate = true;
+  _axis = axis;
+  _angle = angle;
 }
 
 //-----------------------------------------------------------------------------
@@ -173,6 +156,20 @@ void SvgInterface::meshWrite()
 }
 
 //-----------------------------------------------------------------------------
+void SvgInterface::flatPolygonsWrite()
+//-----------------------------------------------------------------------------
+{
+  _stream << "<g id =\"field\">\n";
+
+  Polygon *polygon = dynelaData->drawing.polygons.first();
+  while ((polygon = dynelaData->drawing.polygons.currentUp()) != NULL)
+  {
+    _stream << polygon->getFlatPolygonSvgCode(colorMap, field);
+  }
+  _stream << "</g>\n";
+}
+
+//-----------------------------------------------------------------------------
 void SvgInterface::interpolatedPolygonsWrite()
 //-----------------------------------------------------------------------------
 {
@@ -181,7 +178,9 @@ void SvgInterface::interpolatedPolygonsWrite()
   Polygon *polygon = dynelaData->drawing.polygons.first();
   while ((polygon = dynelaData->drawing.polygons.currentUp()) != NULL)
   {
+    _stream << "<g>\n";
     _stream << polygon->getInterpolatedPolygonSvgCode(colorMap, field);
+    _stream << "</g>\n";
   }
   _stream << "</g>\n";
 }
@@ -192,7 +191,7 @@ void SvgInterface::textWrite(Vec3D location, String text, int size, String color
 {
   _stream << "<text \n";
   _stream << " x=\"" << location(0) << "\" y=\"" << location(1) << "\"\n";
-  _stream << " font-family=\"Verdana\"\n";
+  _stream << " font-family=\"Ubuntu\"\n";
   _stream << " font-size=\"" << size << "\"\n";
   _stream << " fill=\"" << color << "\" >\n";
   _stream << text;
@@ -241,7 +240,7 @@ void SvgInterface::lineWrite(int x1, int y1, int x2, int y2, int width)
 void SvgInterface::legendWrite()
 //-----------------------------------------------------------------------------
 {
-  int _height = 400;
+  int _height = 25 * colorMap.getLevels();
   int _width = 50;
   int offx = 50;
   int offy = 120;
@@ -322,6 +321,7 @@ void SvgInterface::write(String fileName, short _field)
     field = field;
 
     interpolatedPolygonsWrite();
+    //flatPolygonsWrite();
 
     legendWrite();
   }
@@ -334,173 +334,3 @@ void SvgInterface::write(String fileName, short _field)
 
   closeSvgFile();
 }
-
-/* //-----------------------------------------------------------------------------
-void SvgInterface::nodesWrite()
-//-----------------------------------------------------------------------------
-{
-  long nbNodes = dynelaData->nodes.getSize();
-  _stream << "POINTS " << nbNodes << " float\n";
-
-  for (long i = 0; i < nbNodes; i++)
-    _stream << dynelaData->nodes(i)->coordinates(0) << " " << dynelaData->nodes(i)->coordinates(1) << " " << dynelaData->nodes(i)->coordinates(2) << "\n";
-
-  _stream << "\n";
-}
- */
-/* //-----------------------------------------------------------------------------
-void SvgInterface::elementsWrite()
-//-----------------------------------------------------------------------------
-{
-  long nbElements = dynelaData->elements.getSize();
-  long totNodes = 0;
-  long nbNodes;
-  Element *pElement;
-
-  for (long i = 0; i < nbElements; i++)
-    totNodes += dynelaData->elements(i)->nodes.getSize();
-  totNodes += nbElements;
-
-  _stream << "CELLS " << nbElements << " " << totNodes << "\n";
-
-  for (long i = 0; i < nbElements; i++)
-  {
-    pElement = dynelaData->elements(i);
-    nbNodes = pElement->nodes.getSize();
-    _stream << nbNodes << " ";
-    for (int i = 0; i < nbNodes; i++)
-      _stream << pElement->nodes(i)->internalNumber() << " ";
-    _stream << "\n";
-  }
-
-  _stream << "\n";
-
-  _stream << "CELL_TYPES " << nbElements << "\n";
-  for (long i = 0; i < nbElements; i++)
-    _stream << dynelaData->elements(i)->getVtkType() << "\n";
-
-  _stream << "\n";
-}
- */
-/* //-----------------------------------------------------------------------------
-void SvgInterface::nodesNumbersWrite()
-//-----------------------------------------------------------------------------
-{
-  long nbNodes = dynelaData->nodes.getSize();
-  _stream << "SCALARS nodesNumbers" << nbNodes << " float\n";
-
-  _stream << "\n";
-}
- */
-/* //-----------------------------------------------------------------------------
-void SvgInterface::dataWrite()
-//-----------------------------------------------------------------------------
-{
-  long nbNodes = dynelaData->nodes.getSize();
-  short field;
-  Field fields;
-  bool lookupWriten = false;
-
-  _stream << "POINT_DATA " << nbNodes << "\n";
-
-  for (int i = 0; i < _outputFields.getSize(); i++)
-  {
-    field = _outputFields(i);
-
-    // Scalar field
-    if (fields.getType(field) == 0)
-    {
-      String _name = fields.getVtklabel(field);
-      _stream << "SCALARS " << _name << " float\n";
-      if (!lookupWriten)
-      {
-        _stream << "LOOKUP_TABLE default\n";
-        //  lookupWriten = true;
-      }
-      for (long j = 0; j < nbNodes; j++)
-        _stream << dynelaData->nodes(j)->getNodalValue(field) << "\n";
-    }
-
-    // Vector field
-    if (fields.getType(field) == 1)
-    {
-      String _name = fields.getVtklabel(field);
-      _stream << "VECTORS " << _name << " float\n";
-      for (long j = 0; j < nbNodes; j++)
-      {
-        Vec3D v = dynelaData->nodes(j)->getNodalVec3D(field);
-        _stream << v(0) << " " << v(1) << " " << v(2) << "\n";
-      }
-    }
-
-    // Tensor field
-    if (fields.getType(field) == 2)
-    {
-      String _name = fields.getVtklabel(field);
-      _stream << "TENSORS " << _name << " float\n";
-      for (long j = 0; j < nbNodes; j++)
-      {
-        SymTensor2 t = dynelaData->nodes(j)->getNodalSymTensor(field);
-        _stream << t(0, 0) << " " << t(0, 1) << " " << t(0, 2) << " " << t(1, 0) << " " << t(1, 1) << " " << t(1, 2) << " " << t(2, 0) << " " << t(2, 1) << " " << t(2, 2) << "\n";
-      }
-    }
-  }
-  _stream << "\n";
-} */
-
-/*//-----------------------------------------------------------------------------
-void SvgInterface::initFields()
-//-----------------------------------------------------------------------------
-{
-   Field field;
-  std::vector<std::string> fieldList;
-
-  // Read the VtkFields line of config file
-  dynelaData->settings->getValue("VtkFields", fieldList);
-
-  // Get all data
-  for (short i = 0; i < fieldList.size(); i++)
-  {
-    String st = fieldList.at(i);
-    st.strip();
-    short nf = field.getField(st);
-    if (nf != -1)
-      _outputFields << nf;
-  }
- }
- */
-/* //-----------------------------------------------------------------------------
-short SvgInterface::existField(short field)
-//-----------------------------------------------------------------------------
-{
-  for (int i = 0; i < _outputFields.getSize(); i++)
-    if (_outputFields(i) == field)
-      return i;
-  return -1;
-}
- */
-/* //-----------------------------------------------------------------------------
-void SvgInterface::addField(short field)
-//-----------------------------------------------------------------------------
-{
-  if (existField(field) == -1)
-    _outputFields << field;
-}
- */
-/* //-----------------------------------------------------------------------------
-void SvgInterface::removeField(short field)
-//-----------------------------------------------------------------------------
-{
-  short ind = existField(field);
-  if (ind != -1)
-  {
-    _outputFields.del(ind);
-  }
-} */
-
-/* //-----------------------------------------------------------------------------
-int SvgInterface::getNumberOfFields()
-//-----------------------------------------------------------------------------
-{
-  return _outputFields.getSize();
-} */

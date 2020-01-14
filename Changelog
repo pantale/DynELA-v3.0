@@ -1,3 +1,5 @@
+14/01/2020 - Add SVG export with interpolated colors
+
 13/01/2020 - Add ColorMap class to compute color maps
            - Add export to Averaged SVG color plot
 

@@ -167,6 +167,10 @@ model.add(uxHist)
 # Run the main solver
 model.solve()
 
+svg = dnl.SvgInterface("SVG")
+svg.write(dnl.String("temperaturesContour.svg"),dnl.Field.temperature)
+svg.write(dnl.String("vonMisesContour.svg"),dnl.Field.vonMises)
+
 # Plot the results as curves
 import dnlCurves as cu
 curves = cu.Curves()

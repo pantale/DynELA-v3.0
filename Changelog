@@ -1,4 +1,5 @@
 16/01/2020 - Add 3D SVG export
+           - Correction of the colormap to enhance the higher value
 
 14/01/2020 - Add SVG export with interpolated colors
 

@@ -169,8 +169,11 @@ model.parallel.setCores(4)
 model.solve()
 
 svg = dnl.SvgInterface("SVG")
-svg.write(dnl.String("temperaturesContour.svg"),dnl.Field.temperature)
-svg.write(dnl.String("vonMisesContour.svg"),dnl.Field.vonMises)
+svg.title = False
+svg.legendPos(350, 150)
+svg.write(dnl.String("temperatureCP.svg"),dnl.Field.temperature)
+svg.write(dnl.String("vonMisesCP.svg"),dnl.Field.vonMises)
+svg.write(dnl.String("plasticStrainCP.svg"),dnl.Field.plasticStrain)
 
 # Plot the results as curves
 import dnlCurves as cu

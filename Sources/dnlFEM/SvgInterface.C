@@ -346,8 +346,12 @@ void SvgInterface::write(String fileName, short _field)
     colorMap.setBounds(min, max);
     field = field;
 
-    interpolatedPolygonsWrite();
-    //flatPolygonsWrite();
+    if (max - min > 1e-6)
+      interpolatedPolygonsWrite();
+    else
+    {
+      flatPolygonsWrite();
+    }
 
     legendWrite();
   }
@@ -362,18 +366,18 @@ void SvgInterface::write(String fileName, short _field)
   closeSvgFile();
 }
 
-  //-----------------------------------------------------------------------------
-  void SvgInterface::legendPos(int x, int y)
-  //-----------------------------------------------------------------------------
-  {
-    _legendX = x;
-    _legendY = y;
-  }
+//-----------------------------------------------------------------------------
+void SvgInterface::legendPos(int x, int y)
+//-----------------------------------------------------------------------------
+{
+  _legendX = x;
+  _legendY = y;
+}
 
-  //-----------------------------------------------------------------------------
-  void SvgInterface::titlePos(int x, int y)
-  //-----------------------------------------------------------------------------
-  {
-    _titleX = x;
-    _titleY = y;
-  }
+//-----------------------------------------------------------------------------
+void SvgInterface::titlePos(int x, int y)
+//-----------------------------------------------------------------------------
+{
+  _titleX = x;
+  _titleY = y;
+}

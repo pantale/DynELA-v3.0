@@ -512,6 +512,106 @@ is based on Python 3 language, all kind of instructions valid in Python
 \end_layout
 
 \begin_layout Section
+The Kernel library
+\end_layout
+
+\begin_layout Standard
+#include "LogFile.h"
+\end_layout
+
+\begin_layout Standard
+#include "MacAddress.h"
+\end_layout
+
+\begin_layout Standard
+#include "Settings.h"
+\end_layout
+
+\begin_layout Standard
+#include "String.h"
+\end_layout
+
+\begin_layout Standard
+#include "System.h"
+\end_layout
+
+\begin_layout Standard
+#include "Timer.h"
+\end_layout
+
+\begin_layout Standard
+#include "Field.h"
+\end_layout
+
+\begin_layout Section
+The Maths library
+\end_layout
+
+\begin_layout Standard
+#include "DiscreteFunction.h"
+\end_layout
+
+\begin_layout Standard
+#include "DiscreteFunctionSet.h"
+\end_layout
+
+\begin_layout Standard
+#include "Function.h"
+\end_layout
+
+\begin_layout Standard
+#include "Matrices.h"
+\end_layout
+
+\begin_layout Standard
+#include "Matrix.h"
+\end_layout
+
+\begin_layout Standard
+#include "MatrixDiag.h"
+\end_layout
+
+\begin_layout Standard
+#include "PolynomialFunction.h"
+\end_layout
+
+\begin_layout Standard
+#include "RampFunction.h"
+\end_layout
+
+\begin_layout Standard
+#include "SinusFunction.h"
+\end_layout
+
+\begin_layout Standard
+#include "SymTensor2.h"
+\end_layout
+
+\begin_layout Standard
+#include "Tensor2.h"
+\end_layout
+
+\begin_layout Standard
+#include "Tensor3.h"
+\end_layout
+
+\begin_layout Standard
+#include "Tensor4.h"
+\end_layout
+
+\begin_layout Standard
+#include "Vec3D.h"
+\end_layout
+
+\begin_layout Standard
+#include "Vector.h"
+\end_layout
+
+\begin_layout Standard
+#include "ColorMap.h"
+\end_layout
+
+\begin_layout Section
 Nodes and elements
 \end_layout
 
@@ -2881,7 +2981,51 @@ name "tab:Programming!GlobalFields"
 \end_layout
 
 \begin_layout Section
-Data output
+Data Output during computation
+\end_layout
+
+\begin_layout Subsection
+Database files
+\end_layout
+
+\begin_layout Subsection
+VTK Data files
+\end_layout
+
+\begin_layout Standard
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{PythonListing}
+\end_layout
+
+\begin_layout Plain Layout
+
+model.setSaveTimes(0, stopTime, stopTime/nbreSaves)
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{PythonListing}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -2925,107 +3069,6 @@ dtHist.setSaveTime(stopTime/nbrePoints)
 \begin_layout Plain Layout
 
 model.add(dtHist)
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{PythonListing}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{PythonListing}
-\end_layout
-
-\begin_layout Plain Layout
-
-# Declaration of the history files
-\end_layout
-
-\begin_layout Plain Layout
-
-vonMisesHist = dnl.HistoryFile("vonMisesHistory")
-\end_layout
-
-\begin_layout Plain Layout
-
-vonMisesHist.setFileName(dnl.String("vonMises.plot"))
-\end_layout
-
-\begin_layout Plain Layout
-
-vonMisesHist.add(histNS, dnl.Field.vonMises)
-\end_layout
-
-\begin_layout Plain Layout
-
-vonMisesHist.setSaveTime(stopTime/nbrePoints)
-\end_layout
-
-\begin_layout Plain Layout
-
-model.add(vonMisesHist)
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{PythonListing}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-Data files
-\end_layout
-
-\begin_layout Standard
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{PythonListing}
-\end_layout
-
-\begin_layout Plain Layout
-
-model.setSaveTimes(0, stopTime, stopTime/nbreSaves)
 \end_layout
 
 \begin_layout Plain Layout
@@ -3193,6 +3236,14 @@ end{PythonListing}
 \end_inset
 
 
+\end_layout
+
+\begin_layout Section
+Vectorial contourplots
+\end_layout
+
+\begin_layout Subsection
+SVG datafile
 \end_layout
 
 \begin_layout Section

@@ -27,6 +27,15 @@ class ColorMap
 {
 private:
 #ifndef SWIG
+  enum
+  {
+    DeepCM,
+    RDeepCM,
+    NormalCM,
+    RNormalCM,
+    GrayCM,
+    RGrayCM
+  };
   Vec3D BLACK = Vec3D(0, 0, 0);
   Vec3D BLUE = Vec3D(0, 0, 1);
   Vec3D CYAN = Vec3D(0, 1, 1);
@@ -38,17 +47,19 @@ private:
   Vec3D WHITE = Vec3D(1, 1, 1);
   Vec3D YELLOW = Vec3D(1, 1, 0);
 #endif
-  DiscreteFunction blue_func;
-  DiscreteFunction green_func;
-  DiscreteFunction red_func;
+  DiscreteFunction _blueComponent;
+  DiscreteFunction _greenComponent;
+  DiscreteFunction _redComponent;
   double _min, _max;
   int _levels = 16;
   void clearMap();
+  void resetMap();
+  short CM = DeepCM;
 
 public:
   ColorMap();
   ~ColorMap() {}
-  
+
   double getMax() { return _max; }
   double getMin() { return _min; }
   int getIntColor(double value);

@@ -90,6 +90,19 @@ void Polygon::computeCenter()
 }
 
 //-----------------------------------------------------------------------------
+void Polygon::computeNormal()
+//-----------------------------------------------------------------------------
+{
+  Vec3D v1, v2;
+
+  v1 = vertices[2] - vertices[1];
+  v2 = vertices[0] - vertices[1];
+
+  normal = v1.vectorialProduct(v2);
+  normal.normalize();
+}
+
+//-----------------------------------------------------------------------------
 void Polygon::resetCoordinates()
 //-----------------------------------------------------------------------------
 {
@@ -221,9 +234,6 @@ String Polygon::getInterpolatedPolygonSvgCode(ColorMap &map, short field, bool s
 
     svgcode += " fill=\"" + col + "\"\n";
 
-   // svgcode += " stroke=\"" + col + "\"\n";
-    //svgcode += " stroke-width=\"0.5\"\n";
-
     svgcode += " points=\"";
     // polygon points
     for (int i = 0; i < patch->number; i++)
@@ -270,6 +280,7 @@ void Polygon::rotate(Tensor2 Mat)
 {
   for (int i = 0; i < points; i++)
     vertices[i] = Mat * vertices[i];
+   computeCenter();
 }
 
 //-----------------------------------------------------------------------------
@@ -283,9 +294,9 @@ PolygonPatches::PolygonPatches()
 void PolygonPatches::createPatch(Polygon *polygon, ColorMap &map, short field)
 //-----------------------------------------------------------------------------
 {
-  Vec3D crds[10];
-  double valR[10];
-  int valI[10];
+  Vec3D crds[9];
+  double valR[9];
+  int valI[9];
   int nb = polygon->points;
 
   // Flush list of patches
@@ -323,7 +334,7 @@ PolygonPatch *PolygonPatches::createPolygonPatch()
 void PolygonPatches::createSubPatch2(int points, Vec3D *coords, double *valuesR, int *valuesI, ColorMap &map)
 //-----------------------------------------------------------------------------
 {
-  Vec3D crds[10];
+  Vec3D crds[9];
   int c_min, c_max;
   PolygonPatch *patch;
   double mmin, mmax;
@@ -428,7 +439,11 @@ void PolygonPatches::createSubPatch2(int points, Vec3D *coords, double *valuesR,
         }
         break;
       case 4:
-#define DLL(a, b, c, d) (crds[b] - crds[a]).getNorm() + (crds[c] - crds[b]).getNorm() + (crds[d] - crds[c]).getNorm() + (crds[a] - crds[d]).getNorm();
+#define DLL(a, b, c, d)               \
+  (crds[b] - crds[a]).getNorm() +     \
+      (crds[c] - crds[b]).getNorm() + \
+      (crds[d] - crds[c]).getNorm() + \
+      (crds[a] - crds[d]).getNorm();
 
         dd1 = DLL(0, 1, 2, 3);
         dd2 = DLL(0, 1, 3, 2);
@@ -472,9 +487,9 @@ void PolygonPatches::createSubPatch2(int points, Vec3D *coords, double *valuesR,
 void PolygonPatches::createSubPatch(int points, Vec3D *coords, double *valuesR, int *valuesI, ColorMap &map)
 //-----------------------------------------------------------------------------
 {
-  Vec3D crds[10];
-  double valR[10];
-  int valI[10];
+  Vec3D crds[9];
+  double valR[9];
+  int valI[9];
   int c_min, c_max;
   PolygonPatch *patch;
 
@@ -489,6 +504,7 @@ void PolygonPatches::createSubPatch(int points, Vec3D *coords, double *valuesR, 
       c_max = valuesI[j];
   }
 
+  /*
   if (c_max < 0)
   {
     // creation du polygone
@@ -524,7 +540,7 @@ void PolygonPatches::createSubPatch(int points, Vec3D *coords, double *valuesR, 
     patch->number = points;
 
     return;
-  }
+  }*/
 
   // polygone 1 couleur homogene
   if (c_min == c_max)
@@ -614,9 +630,9 @@ void PolygonPatches::reorderPoints(Vec3D *coords, int cur)
 //-----------------------------------------------------------------------------
 {
   int i;
-  int lp[10];
-  Vec3D temp[10];
-  int ord[10];
+  int lp[9];
+  Vec3D temp[9];
+  int ord[9];
   double dd, ddmin;
   int sm, pr;
 

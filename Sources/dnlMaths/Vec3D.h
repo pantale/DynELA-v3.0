@@ -48,73 +48,74 @@ class SymTensor2;
 */
 class Vec3D
 {
-    friend class Tensor2;    // allows a direct access to private data for class Tensor2
-    friend class SymTensor2; // allows a direct access to private data for class Tensor2
+  friend class Tensor2;    // allows a direct access to private data for class Tensor2
+  friend class SymTensor2; // allows a direct access to private data for class Tensor2
 
-  private:
-    double _data[3]; // staticaly allocated vector storage
-    bool indexOK(int) const;
+private:
+  double _data[3]; // staticaly allocated vector storage
+  bool indexOK(int) const;
 
-  public:
-    Vec3D(double x = 0, double y = 0, double z = 0);
-    Vec3D(const Vec3D &);
-    ~Vec3D();
+public:
+  Vec3D(double x = 0, double y = 0, double z = 0);
+  Vec3D(const Vec3D &);
+  ~Vec3D();
 
-    bool operator!=(const Vec3D &) const;
-    bool operator==(const Vec3D &) const;
-    double operator()(int) const;
-    Vec3D operator-() const;
-    Vec3D operator-(const Vec3D &) const;
-    Vec3D operator*(const double)const;
-    Vec3D operator/(const double) const;
-    Vec3D operator+(const Vec3D &) const;
+  bool operator!=(const Vec3D &) const;
+  bool operator==(const Vec3D &) const;
+  double operator()(int) const;
+  Vec3D operator-() const;
+  Vec3D operator-(const Vec3D &) const;
+  Vec3D operator*(const double)const;
+  Vec3D operator/(const double) const;
+  Vec3D operator+(const Vec3D &) const;
 
 #ifndef SWIG
-    double &operator()(int);
-    friend Vec3D operator*(const double, const Vec3D &);
-    Vec3D &operator=(const double *);
-    Vec3D &operator=(const Vec3D &);
-    Vec3D &operator=(double);
-    void operator-=(const Vec3D &);
-    void operator*=(const double);
-    void operator/=(const double);
-    void operator+=(const Vec3D &);
+  double &operator()(int);
+  friend Vec3D operator*(const double, const Vec3D &);
+  Vec3D &operator=(const double *);
+  Vec3D &operator=(const Vec3D &);
+  Vec3D &operator=(double);
+  void operator-=(const Vec3D &);
+  void operator*=(const double);
+  void operator/=(const double);
+  void operator+=(const Vec3D &);
 #endif
 
-    bool isInsideBox(const Vec3D &mini, const Vec3D &maxi) const;
-    double distance(const Vec3D &) const;
-    double dotProduct(const Vec3D &) const;
-    double getNorm();
-    double innerProduct();
-    double maxAbsoluteValue();
-    double maxValue();
-    double minAbsoluteValue();
-    double minValue();
-    double squareDistance(const Vec3D &) const;
-    int getSize() const;
-    Tensor2 componentsProduct(const Tensor2 &) const;
-    Tensor2 dyadicProduct(const Vec3D &) const;
-    SymTensor2 dyadicProduct() const;
-    Vec3D componentsProduct(const Vec3D &) const;
-    Vec3D getNormalized();
-    Vec3D vectorialProduct(const Vec3D &) const;
-    void normalize();
-    void numpyRead(std::string);
-    void numpyReadZ(std::string, std::string);
-    void numpyWrite(std::string, bool initialize = false) const;
-    void numpyWriteZ(std::string, std::string, bool initialize = false) const;
-    void setNegativeValuesToZero();
-    void setValue(double val = 0.0);
-    void setValue(double x, double y, double z);
+  bool isInsideBox(const Vec3D &mini, const Vec3D &maxi) const;
+  double distance(const Vec3D &) const;
+  double dotProduct(const Vec3D &) const;
+  double getNorm();
+  double getSquareNorm();
+  double innerProduct();
+  double maxAbsoluteValue();
+  double maxValue();
+  double minAbsoluteValue();
+  double minValue();
+  double squareDistance(const Vec3D &) const;
+  int getSize() const;
+  Tensor2 componentsProduct(const Tensor2 &) const;
+  Tensor2 dyadicProduct(const Vec3D &) const;
+  SymTensor2 dyadicProduct() const;
+  Vec3D componentsProduct(const Vec3D &) const;
+  Vec3D getNormalized();
+  Vec3D vectorialProduct(const Vec3D &) const;
+  void normalize();
+  void numpyRead(std::string);
+  void numpyReadZ(std::string, std::string);
+  void numpyWrite(std::string, bool initialize = false) const;
+  void numpyWriteZ(std::string, std::string, bool initialize = false) const;
+  void setNegativeValuesToZero();
+  void setValue(double val = 0.0);
+  void setValue(double x, double y, double z);
 
-    // management of input and output flows
+  // management of input and output flows
 #ifndef SWIG
-    friend std::ifstream &operator>>(std::ifstream &, Vec3D &);
-    friend std::ofstream &operator<<(std::ofstream &, const Vec3D &);
-    friend std::ostream &operator<<(std::ostream &, const Vec3D &);
-    Vec3D &read(std::ifstream &);
-    void print(std::ostream &) const;
-    void write(std::ofstream &) const;
+  friend std::ifstream &operator>>(std::ifstream &, Vec3D &);
+  friend std::ofstream &operator<<(std::ofstream &, const Vec3D &);
+  friend std::ostream &operator<<(std::ostream &, const Vec3D &);
+  Vec3D &read(std::ifstream &);
+  void print(std::ostream &) const;
+  void write(std::ofstream &) const;
 #endif
 };
 
@@ -124,15 +125,15 @@ class Vec3D
 inline bool Vec3D::indexOK(int i) const
 //-----------------------------------------------------------------------------
 {
-    // test
-    if ((i >= 0) && (i < 3))
-        return (true);
+  // test
+  if ((i >= 0) && (i < 3))
+    return (true);
 
-    // here, we detected an error in the index
-    fatalError("Vec3D::indexOK", "indice %d out of allowed range [0:3]", i);
+  // here, we detected an error in the index
+  fatalError("Vec3D::indexOK", "indice %d out of allowed range [0:3]", i);
 
-    // stupid, because we'll never pass here because of the fatalError but it's to avoid a remark from the compiler
-    return (false);
+  // stupid, because we'll never pass here because of the fatalError but it's to avoid a remark from the compiler
+  return (false);
 }
 
 //!Access to the values _data[i] of a 3D vector
@@ -145,9 +146,9 @@ inline double &Vec3D::operator()(int i)
 //-----------------------------------------------------------------------------
 {
 #ifdef VERIF_math
-    indexOK(i);
+  indexOK(i);
 #endif
-    return _data[i];
+  return _data[i];
 }
 
 //!Access to the values _data[i] of 3D vector (Read only method)
@@ -160,9 +161,9 @@ inline double Vec3D::operator()(int i) const
 //-----------------------------------------------------------------------------
 {
 #ifdef VERIF_math
-    indexOK(i);
+  indexOK(i);
 #endif
-    return _data[i];
+  return _data[i];
 }
 
 //!Fill a 3D vector with a scalar value
@@ -180,7 +181,7 @@ inline double Vec3D::operator()(int i) const
 inline void Vec3D::setValue(double val)
 //-----------------------------------------------------------------------------
 {
-    _data[0] = _data[1] = _data[2] = val;
+  _data[0] = _data[1] = _data[2] = val;
 }
 
 //!Fill a 3D vector with a scalar value
@@ -200,9 +201,9 @@ inline void Vec3D::setValue(double val)
 inline void Vec3D::setValue(double xVal, double yVal, double zVal)
 //-----------------------------------------------------------------------------
 {
-    _data[0] = xVal;
-    _data[1] = yVal;
-    _data[2] = zVal;
+  _data[0] = xVal;
+  _data[1] = yVal;
+  _data[2] = zVal;
 }
 
 //!Size of the 3D vector
@@ -214,7 +215,7 @@ inline void Vec3D::setValue(double xVal, double yVal, double zVal)
 inline int Vec3D::getSize() const
 //-----------------------------------------------------------------------------
 {
-    return 3;
+  return 3;
 }
 
 //!Copy the content of a 3D vector into a new one
@@ -232,8 +233,8 @@ inline int Vec3D::getSize() const
 inline Vec3D &Vec3D::operator=(const Vec3D &vec)
 //-----------------------------------------------------------------------------
 {
-    memcpy(_data, vec._data, 3 * sizeof(double));
-    return *this;
+  memcpy(_data, vec._data, 3 * sizeof(double));
+  return *this;
 }
 
 //!Fill a 3D vector with a scalar value
@@ -251,11 +252,11 @@ inline Vec3D &Vec3D::operator=(const Vec3D &vec)
 inline Vec3D &Vec3D::operator=(double val)
 //-----------------------------------------------------------------------------
 {
-    // recopie des valeurs
-    _data[0] = _data[1] = _data[2] = val;
+  // recopie des valeurs
+  _data[0] = _data[1] = _data[2] = val;
 
-    // retour du vecteur
-    return *this;
+  // retour du vecteur
+  return *this;
 }
 
 //!Fill a 3D vector with a table of values
@@ -273,8 +274,8 @@ inline Vec3D &Vec3D::operator=(double val)
 inline Vec3D &Vec3D::operator=(const double *vals)
 //-----------------------------------------------------------------------------
 {
-    memcpy(_data, vals, 3 * sizeof(double));
-    return *this;
+  memcpy(_data, vals, 3 * sizeof(double));
+  return *this;
 }
 
 //!Addition of 2 vectors
@@ -294,7 +295,7 @@ inline Vec3D &Vec3D::operator=(const double *vals)
 inline Vec3D Vec3D::operator+(const Vec3D &vect) const
 //-----------------------------------------------------------------------------
 {
-    return Vec3D(_data[0] + vect._data[0], _data[1] + vect._data[1], _data[2] + vect._data[2]);
+  return Vec3D(_data[0] + vect._data[0], _data[1] + vect._data[1], _data[2] + vect._data[2]);
 }
 
 //!Difference of 2 vectors
@@ -314,7 +315,7 @@ inline Vec3D Vec3D::operator+(const Vec3D &vect) const
 inline Vec3D Vec3D::operator-(const Vec3D &vect) const
 //-----------------------------------------------------------------------------
 {
-    return Vec3D(_data[0] - vect._data[0], _data[1] - vect._data[1], _data[2] - vect._data[2]);
+  return Vec3D(_data[0] - vect._data[0], _data[1] - vect._data[1], _data[2] - vect._data[2]);
 }
 
 //!Opposite value of a vector
@@ -333,7 +334,7 @@ inline Vec3D Vec3D::operator-(const Vec3D &vect) const
 inline Vec3D Vec3D::operator-() const
 //-----------------------------------------------------------------------------
 {
-    return Vec3D(-_data[0], -_data[1], -_data[2]);
+  return Vec3D(-_data[0], -_data[1], -_data[2]);
 }
 
 //!Addition of 2 3D vectors
@@ -351,9 +352,9 @@ inline Vec3D Vec3D::operator-() const
 inline void Vec3D::operator+=(const Vec3D &vect)
 //-----------------------------------------------------------------------------
 {
-    _data[0] += vect._data[0];
-    _data[1] += vect._data[1];
-    _data[2] += vect._data[2];
+  _data[0] += vect._data[0];
+  _data[1] += vect._data[1];
+  _data[2] += vect._data[2];
 }
 
 //!Difference of 2 3D vectors
@@ -371,9 +372,9 @@ inline void Vec3D::operator+=(const Vec3D &vect)
 inline void Vec3D::operator-=(const Vec3D &vect)
 //-----------------------------------------------------------------------------
 {
-    _data[0] -= vect._data[0];
-    _data[1] -= vect._data[1];
-    _data[2] -= vect._data[2];
+  _data[0] -= vect._data[0];
+  _data[1] -= vect._data[1];
+  _data[2] -= vect._data[2];
 }
 
 //!Multiplication of a 3D vector by a scalar value
@@ -392,9 +393,9 @@ inline void Vec3D::operator-=(const Vec3D &vect)
 inline void Vec3D::operator*=(const double lambda)
 //-----------------------------------------------------------------------------
 {
-    _data[0] *= lambda;
-    _data[1] *= lambda;
-    _data[2] *= lambda;
+  _data[0] *= lambda;
+  _data[1] *= lambda;
+  _data[2] *= lambda;
 }
 
 //!Division of a 3D vector by a scalar value
@@ -413,13 +414,13 @@ inline void Vec3D::operator*=(const double lambda)
 inline void Vec3D::operator/=(const double lambda)
 //-----------------------------------------------------------------------------
 {
-    if (lambda == 0.0)
-    {
-        fatalError("Vec3D:: operator /=", "divide by zero");
-    }
-    _data[0] /= lambda;
-    _data[1] /= lambda;
-    _data[2] /= lambda;
+  if (lambda == 0.0)
+  {
+    fatalError("Vec3D:: operator /=", "divide by zero");
+  }
+  _data[0] /= lambda;
+  _data[1] /= lambda;
+  _data[2] /= lambda;
 }
 
 //!Returns the getJ2 norm of a 3D vector
@@ -432,7 +433,14 @@ inline void Vec3D::operator/=(const double lambda)
 inline double Vec3D::getNorm()
 //-----------------------------------------------------------------------------
 {
-    return sqrt(dnlSquare(_data[0]) + dnlSquare(_data[1]) + dnlSquare(_data[2]));
+  return sqrt(dnlSquare(_data[0]) + dnlSquare(_data[1]) + dnlSquare(_data[2]));
+}
+
+//-----------------------------------------------------------------------------
+inline double Vec3D::getSquareNorm()
+//-----------------------------------------------------------------------------
+{
+  return dnlSquare(_data[0]) + dnlSquare(_data[1]) + dnlSquare(_data[2]);
 }
 
 //!Returns the inner product of a 3D vector by itself
@@ -445,7 +453,7 @@ inline double Vec3D::getNorm()
 inline double Vec3D::innerProduct()
 //-----------------------------------------------------------------------------
 {
-    return (dnlSquare(_data[0]) + dnlSquare(_data[1]) + dnlSquare(_data[2]));
+  return (dnlSquare(_data[0]) + dnlSquare(_data[1]) + dnlSquare(_data[2]));
 }
 
 //!Normalization of a 3D vector
@@ -456,13 +464,13 @@ inline double Vec3D::innerProduct()
 inline void Vec3D::normalize()
 //-----------------------------------------------------------------------------
 {
-    // calcul de la norme
-    double norm = getNorm();
+  // calcul de la norme
+  double norm = getNorm();
 
-    // recalcul des composantes
-    _data[0] /= norm;
-    _data[1] /= norm;
-    _data[2] /= norm;
+  // recalcul des composantes
+  _data[0] /= norm;
+  _data[1] /= norm;
+  _data[2] /= norm;
 }
 
 //!Nomalized 3D vector
@@ -474,10 +482,10 @@ inline void Vec3D::normalize()
 inline Vec3D Vec3D::getNormalized()
 //-----------------------------------------------------------------------------
 {
-    // calcul de la norme
-    double norm = getNorm();
+  // calcul de la norme
+  double norm = getNorm();
 
-    return Vec3D(_data[0] / norm, _data[1] / norm, _data[2] / norm);
+  return Vec3D(_data[0] / norm, _data[1] / norm, _data[2] / norm);
 }
 
 //!Sets all negative components to zero
@@ -488,12 +496,12 @@ inline Vec3D Vec3D::getNormalized()
 inline void Vec3D::setNegativeValuesToZero()
 //-----------------------------------------------------------------------------
 {
-    if (_data[0] < 0.)
-        _data[0] = 0.;
-    if (_data[1] < 0.)
-        _data[1] = 0.;
-    if (_data[2] < 0.)
-        _data[2] = 0.;
+  if (_data[0] < 0.)
+    _data[0] = 0.;
+  if (_data[1] < 0.)
+    _data[1] = 0.;
+  if (_data[2] < 0.)
+    _data[2] = 0.;
 }
 
 //!Distance between two points
@@ -507,8 +515,8 @@ inline void Vec3D::setNegativeValuesToZero()
 inline double Vec3D::distance(const Vec3D &vect) const
 //-----------------------------------------------------------------------------
 {
-    Vec3D x = vect - *this;
-    return x.getNorm();
+  Vec3D x = vect - *this;
+  return x.getNorm();
 }
 
 //!Square value of the distance between two points
@@ -522,8 +530,8 @@ inline double Vec3D::distance(const Vec3D &vect) const
 inline double Vec3D::squareDistance(const Vec3D &vect) const
 //-----------------------------------------------------------------------------
 {
-    Vec3D x = vect - *this;
-    return x.innerProduct();
+  Vec3D x = vect - *this;
+  return x.innerProduct();
 }
 
 #endif

@@ -670,7 +670,7 @@ status open
 \noindent
 \align center
 \begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/BarNecking/BarNecking-Axi/temperature.png
+	filename /home/pantale/SynologyDrive/DynELA/Samples/BarNecking/BarNecking-Axi/temperatureCP.svg
 	lyxscale 25
 	height 50col%
 
@@ -738,7 +738,7 @@ status open
 \noindent
 \align center
 \begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/BarNecking/BarNecking-Axi/mises.png
+	filename /home/pantale/SynologyDrive/DynELA/Samples/BarNecking/BarNecking-Axi/vonMisesCP.svg
 	lyxscale 25
 	height 50col%
 
@@ -1053,10 +1053,6 @@ name "fig:Samples!Impact!TaylorAxi-comparison"
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
 
 \end_layout
 

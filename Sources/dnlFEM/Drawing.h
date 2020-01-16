@@ -46,8 +46,9 @@ public:
   void computeBoundBox();
   void initPolygons();
   void mapToWorld();
-  void rotate(Vec3D axis, double angle);
   void resetPolygons();
+  void rotate(Vec3D axis, double angle);
+  void zBufferSort();
 };
 
 #endif

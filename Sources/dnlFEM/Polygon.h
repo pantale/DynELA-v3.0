@@ -36,39 +36,47 @@ class Polygon
 {
   friend class Drawing;
   friend class PolygonPatches;
+  friend bool compareCentersXYZ(Polygon *p1, Polygon *p2);
+  friend bool compareCentersYZX(Polygon *p1, Polygon *p2);
+  friend bool compareCentersZXY(Polygon *p1, Polygon *p2);
+  friend bool zBufferCenters(Polygon *p1, Polygon *p2);
 
 private:
-  Node *nodes[PolygonMaxNodes];
-  Vec3D vertices[PolygonMaxNodes];
-  Vec3D center;
+  bool visible = true;
   int points = 0;
+  Node *nodes[PolygonMaxNodes];
+  Vec3D center;
+  Vec3D normal;
+  Vec3D vertices[PolygonMaxNodes];
 
 public:
   // constructeurs
   Polygon();
   ~Polygon();
 
-  void init();
+  bool isVisible() { return visible; }
   int numberOfPoints();
-  void add(Node *node);
-  void add(Vec3D point);
-  Vec3D getVertex(int);
-  String getWhitePolygonSvgCode();
   String getFlatPolygonSvgCode(ColorMap &map, short field, bool stroke = true, int width = 1);
   String getInterpolatedPolygonSvgCode(ColorMap &map, short field, bool stroke = true, int width = 1);
+  String getWhitePolygonSvgCode();
+  Vec3D getVertex(int);
+  void add(Node *node);
+  void add(Vec3D point);
   void computeCenter();
+  void computeNormal();
+  void init();
   void remapVertices(Vec3D center, Vec3D worldCenter, Vec3D worldScale);
-  void rotate(Tensor2 Mat);
   void resetCoordinates();
+  void rotate(Tensor2 Mat);
 };
 
 class PolygonPatch
 {
 public:
-  Vec3D coords[8];
-  int colorIndex;
   double value;
+  int colorIndex;
   int number;
+  Vec3D coords[8];
 
 public:
   // constructeurs
@@ -79,14 +87,14 @@ public:
 class PolygonPatches
 {
 private:
+  PolygonPatch *createPolygonPatch();
   void createSubPatch(int points, Vec3D *coords, double *valuesR, int *valuesI, ColorMap &map);
   void createSubPatch2(int points, Vec3D *coords, double *valuesR, int *valuesI, ColorMap &map);
-  PolygonPatch *createPolygonPatch();
   void reorderPoints(Vec3D *coords, int cur);
 
 public:
-  List<PolygonPatch *> patches;
   int decompLevel;
+  List<PolygonPatch *> patches;
 
 public:
   // constructeurs

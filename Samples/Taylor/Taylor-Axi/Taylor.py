@@ -174,10 +174,11 @@ f.write('final height : ' + str(finalHeight) + '\n')
 f.close()
 
 svg = dnl.SvgInterface("SVG")
-svg.colorMap.setDeepColorMap()
-svg.write(dnl.String("temperatures.svg"),dnl.Field.temperature)
-svg.write(dnl.String("vonMises.svg"),dnl.Field.vonMises)
-svg.write(dnl.String("plasticStrain.svg"),dnl.Field.plasticStrain)
+svg.title = False
+svg.legendPos(350, 150)
+svg.write(dnl.String("temperatureCP.svg"),dnl.Field.temperature)
+svg.write(dnl.String("vonMisesCP.svg"),dnl.Field.vonMises)
+svg.write(dnl.String("plasticStrainCP.svg"),dnl.Field.plasticStrain)
 
 
 # Plot the results as curves

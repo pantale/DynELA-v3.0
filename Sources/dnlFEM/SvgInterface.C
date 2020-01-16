@@ -81,8 +81,8 @@ void SvgInterface::headerWrite()
 {
   _stream << "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n";
   _stream << "<svg\n";
-  _stream << " _width=\"" << _width << "cm\"\n";
-  _stream << " _height=\"" << _height << "cm\"\n";
+  _stream << " width=\"" << _width << "cm\"\n";
+  _stream << " height=\"" << _height << "cm\"\n";
   _stream << " viewBox=\"" << _svgBottomLeft(0) << " " << _svgBottomLeft(1) << " " << _svgTopRight(0) << " " << _svgTopRight(1) << "\"\n";
   _stream << " version=\"1.1\">\n";
 }
@@ -110,7 +110,13 @@ void SvgInterface::initDrawing()
   }
 
   if (_rotate)
-    dynelaData->drawing.rotate(_axis, _angle);
+  {
+    SvgRotate *rot = _rotateList.first();
+    while ((rot = _rotateList.currentUp()) != NULL)
+    {
+      dynelaData->drawing.rotate(rot->axis, rot->angle);
+    }
+  }
 
   // Compute Bound Box of the model
   dynelaData->drawing.computeBoundBox();
@@ -123,6 +129,7 @@ void SvgInterface::initDrawing()
   // Compute center
   _svgCenter = (_svgTopRight + _svgBottomLeft) / 2;
   dynelaData->drawing.worldCenter = _svgCenter;
+  dynelaData->drawing.worldCenter(2) = 0;
 
   dynelaData->drawing.worldScale(0) = _scale;
   dynelaData->drawing.worldScale(1) = -_scale;
@@ -137,8 +144,18 @@ void SvgInterface::rotate(Vec3D axis, double angle)
 //-----------------------------------------------------------------------------
 {
   _rotate = true;
-  _axis = axis;
-  _angle = angle;
+  SvgRotate *rot = new SvgRotate;
+  rot->axis = axis;
+  rot->angle = angle;
+  _rotateList << rot;
+}
+
+//-----------------------------------------------------------------------------
+void SvgInterface::resetView()
+//-----------------------------------------------------------------------------
+{
+  _rotate = false;
+  _rotateList.flush();
 }
 
 //-----------------------------------------------------------------------------
@@ -150,7 +167,10 @@ void SvgInterface::meshWrite()
   Polygon *polygon = dynelaData->drawing.polygons.first();
   while ((polygon = dynelaData->drawing.polygons.currentUp()) != NULL)
   {
-    _stream << polygon->getWhitePolygonSvgCode();
+    if (polygon->isVisible())
+    {
+      _stream << polygon->getWhitePolygonSvgCode();
+    }
   }
   _stream << "</g>\n";
 }
@@ -164,7 +184,10 @@ void SvgInterface::flatPolygonsWrite()
   Polygon *polygon = dynelaData->drawing.polygons.first();
   while ((polygon = dynelaData->drawing.polygons.currentUp()) != NULL)
   {
-    _stream << polygon->getFlatPolygonSvgCode(colorMap, field);
+    if (polygon->isVisible())
+    {
+      _stream << polygon->getFlatPolygonSvgCode(colorMap, field);
+    }
   }
   _stream << "</g>\n";
 }
@@ -178,9 +201,12 @@ void SvgInterface::interpolatedPolygonsWrite()
   Polygon *polygon = dynelaData->drawing.polygons.first();
   while ((polygon = dynelaData->drawing.polygons.currentUp()) != NULL)
   {
-    _stream << "<g>\n";
-    _stream << polygon->getInterpolatedPolygonSvgCode(colorMap, field);
-    _stream << "</g>\n";
+    if (polygon->isVisible())
+    {
+      _stream << "<g>\n";
+      _stream << polygon->getInterpolatedPolygonSvgCode(colorMap, field);
+      _stream << "</g>\n";
+    }
   }
   _stream << "</g>\n";
 }
@@ -242,8 +268,8 @@ void SvgInterface::legendWrite()
 {
   int _height = 25 * colorMap.getLevels();
   int _width = 50;
-  int offx = 50;
-  int offy = 120;
+  int offx = 20 + _legendX;
+  int offy = 90 + _legendY;
   int offbars = 20;
   int levels;
   double percent;
@@ -327,10 +353,27 @@ void SvgInterface::write(String fileName, short _field)
   }
 
   // Wites the title of application
-  textWrite(Vec3D(50, 1550, 0), "DynELA FEM code v.3.0", 40);
+  if (title)
+    textWrite(Vec3D(_titleX, _titleY, 0), "DynELA FEM code v.3.0", 40);
 
   // Tail write
   tailWrite();
 
   closeSvgFile();
 }
+
+  //-----------------------------------------------------------------------------
+  void SvgInterface::legendPos(int x, int y)
+  //-----------------------------------------------------------------------------
+  {
+    _legendX = x;
+    _legendY = y;
+  }
+
+  //-----------------------------------------------------------------------------
+  void SvgInterface::titlePos(int x, int y)
+  //-----------------------------------------------------------------------------
+  {
+    _titleX = x;
+    _titleY = y;
+  }

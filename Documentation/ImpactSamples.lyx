@@ -654,7 +654,7 @@ status open
 \noindent
 \align center
 \begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Taylor/Taylor-Axi/temperature.png
+	filename /home/pantale/SynologyDrive/DynELA/Samples/Taylor/Taylor-Axi/temperatureCP.svg
 	lyxscale 25
 	height 50col%
 
@@ -1229,9 +1229,9 @@ status open
 \noindent
 \align center
 \begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Taylor/Taylor-3D/temperature.png
-	lyxscale 25
-	width 50col%
+	filename /home/pantale/SynologyDrive/DynELA/Samples/Taylor/Taylor-3D/temperatureCP.svg
+	lyxscale 50
+	width 80col%
 
 \end_inset
 

@@ -67,6 +67,84 @@ void Drawing::computeBoundBox()
 }
 
 //-----------------------------------------------------------------------------
+bool compareCentersXYZ(Polygon *p1, Polygon *p2)
+//-----------------------------------------------------------------------------
+{
+  int x1, x2;
+  int prec = 1000;
+
+  x1 = (int)(prec * p1->center(0));
+  x2 = (int)(prec * p2->center(0));
+
+  if (x1 < x2)
+    return 0;
+  if (x1 > x2)
+    return 1;
+
+  x1 = (int)(prec * p1->center(1));
+  x2 = (int)(prec * p2->center(1));
+
+  if (x1 < x2)
+    return 0;
+  if (x1 > x2)
+    return 1;
+
+  return (int)(prec * (p1->center(2)) >= (int)(prec * p2->center(2)));
+}
+
+//-----------------------------------------------------------------------------
+bool compareCentersYZX(Polygon *p1, Polygon *p2)
+//-----------------------------------------------------------------------------
+{
+  int x1, x2;
+  int prec = 1000;
+
+  x1 = (int)(prec * p1->center(1));
+  x2 = (int)(prec * p2->center(1));
+
+  if (x1 < x2)
+    return 0;
+  if (x1 > x2)
+    return 1;
+
+  x1 = (int)(prec * p1->center(2));
+  x2 = (int)(prec * p2->center(2));
+
+  if (x1 < x2)
+    return 0;
+  if (x1 > x2)
+    return 1;
+
+  return (int)(prec * (p1->center(0)) >= (int)(prec * p2->center(0)));
+}
+
+//-----------------------------------------------------------------------------
+bool compareCentersZXY(Polygon *p1, Polygon *p2)
+//-----------------------------------------------------------------------------
+{
+  int x1, x2;
+  int prec = 1000;
+
+  x1 = (int)(prec * p1->center(2));
+  x2 = (int)(prec * p2->center(2));
+
+  if (x1 < x2)
+    return 0;
+  if (x1 > x2)
+    return 1;
+
+  x1 = (int)(prec * p1->center(0));
+  x2 = (int)(prec * p2->center(0));
+
+  if (x1 < x2)
+    return 0;
+  if (x1 > x2)
+    return 1;
+
+  return (int)(prec * (p1->center(1)) >= (int)(prec * p2->center(1)));
+}
+
+//-----------------------------------------------------------------------------
 void Drawing::initPolygons()
 //-----------------------------------------------------------------------------
 {
@@ -89,6 +167,48 @@ void Drawing::initPolygons()
 
       // Add polygon to list
       polygons << polygon;
+    }
+  }
+
+  pel = dynelaData->elements.first();
+  if (pel->getFamily() == Element::Threedimensional)
+  {
+    for (int pass = 0; pass < 3; pass++)
+    {
+      // tri préliminaire en fonction des centres
+      if (pass == 0)
+        polygons.sort(compareCentersXYZ);
+      if (pass == 1)
+        polygons.sort(compareCentersYZX);
+      if (pass == 2)
+        polygons.sort(compareCentersZXY);
+      Polygon *p1, *p2;
+      for (int i = 1; i < polygons.getSize(); i++)
+      {
+        p1 = polygons(i - 1);
+        p2 = polygons(i);
+        if (((p1->center - p2->center).getSquareNorm() < 1e-2) && (p1->points == p2->points))
+        {
+          int tot = 0;
+          for (int j = 0; j < p1->points; j++)
+          {
+            for (int k = 0; k < p2->points; k++)
+            {
+              if (p1->nodes[j] == p2->nodes[k])
+              {
+                tot++;
+                k = p2->points;
+              }
+            }
+          }
+          // destruction du polygone
+          if (tot == p1->points)
+          {
+            polygons.del(i - 1, i);
+            i--;
+          }
+        }
+      }
     }
   }
 }
@@ -136,9 +256,35 @@ void Drawing::rotate(Vec3D axis, double angle)
 void Drawing::mapToWorld()
 //-----------------------------------------------------------------------------
 {
+  if (dynelaData->elements.first()->getFamily() == Element::Threedimensional)
+  {
+    zBufferSort();
+  }
   Polygon *polygon = polygons.first();
   while ((polygon = polygons.currentUp()) != NULL)
   {
     polygon->remapVertices(center, worldCenter, worldScale);
+  }
+}
+
+//-----------------------------------------------------------------------------
+bool zBufferCenters(Polygon *p1, Polygon *p2)
+//-----------------------------------------------------------------------------
+{
+  return p1->center(2) > p2->center(2);
+}
+
+//-----------------------------------------------------------------------------
+void Drawing::zBufferSort()
+//-----------------------------------------------------------------------------
+{
+  polygons.sort(zBufferCenters);
+
+  Vec3D zAxis = Vec3D(0, 0, 1);
+  Polygon *polygon = polygons.first();
+  while ((polygon = polygons.currentUp()) != NULL)
+  {
+    polygon->computeNormal();
+    polygon->visible = (polygon->normal.dotProduct(zAxis) >= 0 ? true : false);
   }
 }

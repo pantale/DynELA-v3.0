@@ -29,51 +29,64 @@
 #include <Polygon.h>
 #include <ColorMap.h>
 
+struct SvgRotate
+{
+  Vec3D axis;
+  double angle;
+};
+
 class SvgInterface
 {
 private:
-  std::ofstream _stream;
-  String _fileName;
-  double _width = 16;
+  bool _initialized = false;
+  bool _rotate = false;
+  const Vec3D _svgBottomLeft = Vec3D(0, 0, 0);
+  const Vec3D _svgTopRight = Vec3D(1600, 1600, 0);
   double _height = 16;
   double _scale = 1;
   double _scaleRatio = 0.95;
-  const Vec3D _svgBottomLeft = Vec3D(0, 0, 0);
-  const Vec3D _svgTopRight = Vec3D(1600, 1600, 0);
+  double _width = 16;
+  int _legendX = 30;
+  int _legendY = 30;
+  int _titleX = 50;
+  int _titleY = 1550;
+  List<SvgRotate *> _rotateList;
+  std::ofstream _stream;
+  String _fileName;
   Vec3D _svgCenter;
-  bool _initialized = false;
-  bool _rotate = false;
-  Vec3D _axis;
-  double _angle;
+
 #ifndef SWIG
-  void initSvgFile(String fileName);
   void closeSvgFile();
-  void headerWrite();
-  void tailWrite();
-  void meshWrite();
-  void interpolatedPolygonsWrite();
-  void flatPolygonsWrite();
-  void textWrite(Vec3D location, String text, int size = 30, String color = "black");
-  void rectangleWrite(int x1, int y1, int x2, int y2, String col = "black", int width = 1);
   void filledRectangleWrite(int x1, int y1, int x2, int y2, String col);
+  void flatPolygonsWrite();
+  void headerWrite();
+  void initSvgFile(String fileName);
+  void interpolatedPolygonsWrite();
   void legendWrite();
   void lineWrite(int x1, int y1, int x2, int y2, int width = 1);
-
+  void meshWrite();
+  void rectangleWrite(int x1, int y1, int x2, int y2, String col = "black", int width = 1);
+  void tailWrite();
+  void textWrite(Vec3D location, String text, int size = 30, String color = "black");
 #endif
 
 public:
-  String name = "_noname_"; //!< Name of the VTK interface
+  bool title = true;
   ColorMap colorMap;
   short field;
+  String name = "_noname_"; //!< Name of the SVG interface
 
   // constructeurs
   SvgInterface(char *newName = NULL);
   SvgInterface(const SvgInterface &SvgInterface);
   ~SvgInterface();
 
-  void rotate(Vec3D axis, double angle);
-  void write(String fileName, short field = -1);
   void initDrawing();
+  void legendPos(int x, int y);
+  void resetView();
+  void rotate(Vec3D axis, double angle);
+  void titlePos(int x, int y);
+  void write(String fileName, short field = -1);
 };
 
 #endif

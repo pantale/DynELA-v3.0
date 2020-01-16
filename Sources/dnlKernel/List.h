@@ -88,19 +88,19 @@ class List
 {
     friend class ListIndex<Type>;
 
-  private:
+private:
     long sz;
     long s_size;
     long s_inc;
     long pcurrent;
     Type *ptr;
 
-  public:
+public:
     List(const long stack = DEFAULT_stack_size);
     virtual ~List();
 
     // member methods
-  public:
+public:
     void redim(const long taille);
     void close();
     Type &operator()(const long i);
@@ -179,7 +179,7 @@ class ListIndex : public List<Type>
     bool sorted;
     bool comp;
 
-  public:
+public:
     ListIndex(const long stack = DEFAULT_stack_size);
     ~ListIndex();
 

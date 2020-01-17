@@ -169,7 +169,7 @@ void SvgInterface::meshWrite()
   {
     if (polygon->isVisible())
     {
-      _stream << polygon->getWhitePolygonSvgCode();
+      _stream << polygon->getWhitePolygonSvgCode(_meshWidth);
     }
   }
   _stream << "</g>\n";
@@ -186,7 +186,7 @@ void SvgInterface::flatPolygonsWrite()
   {
     if (polygon->isVisible())
     {
-      _stream << polygon->getFlatPolygonSvgCode(colorMap, field);
+      _stream << polygon->getFlatPolygonSvgCode(colorMap, field, _meshDisplay, _meshWidth);
     }
   }
   _stream << "</g>\n";
@@ -204,7 +204,7 @@ void SvgInterface::interpolatedPolygonsWrite()
     if (polygon->isVisible())
     {
       _stream << "<g>\n";
-      _stream << polygon->getInterpolatedPolygonSvgCode(colorMap, field);
+      _stream << polygon->getInterpolatedPolygonSvgCode(colorMap, _patchDecompLevel, field, _meshDisplay, _meshWidth);
       _stream << "</g>\n";
     }
   }
@@ -217,7 +217,7 @@ void SvgInterface::textWrite(Vec3D location, String text, int size, String color
 {
   _stream << "<text \n";
   _stream << " x=\"" << location(0) << "\" y=\"" << location(1) << "\"\n";
-  _stream << " font-family=\"Ubuntu\"\n";
+  _stream << " font-family=\"Noto Mono\"\n";
   _stream << " font-size=\"" << size << "\"\n";
   _stream << " fill=\"" << color << "\" >\n";
   _stream << text;
@@ -304,16 +304,18 @@ void SvgInterface::legendWrite()
 
     lineWrite(bx, by, bx + _width + offbars, by);
     textVal.convert(min + (max - min) * percent, "%10.3E");
+    if (min + (max - min) * percent >= 0)
+      textVal[0] = '+';
     textWrite(Vec3D(bx + _width + offbars + 5, by + 7, 0), textVal, 20);
   }
-  filledRectangleWrite(offx - 20, offy - 90, offx + _width + 140, offy - 20, "#C0C0C0");
-  textWrite(Vec3D(offx, offy - 60, 0), ffield.getVtklabel(field), 26);
-  rectangleWrite(offx - 20, offy - 90, offx + _width + 140, offy + _height + 20, "black", 4);
-  lineWrite(offx - 20, offy - 20, offx + _width + 140, offy - 20, 4);
+  filledRectangleWrite(offx - 20, offy - 90, offx + _width + 155, offy - 20, "#C0C0C0");
+  textWrite(Vec3D(offx, offy - 60, 0), ffield.getVtklabel(field), 24);
+  rectangleWrite(offx - 20, offy - 90, offx + _width + 155, offy + _height + 20, "black", 4);
+  lineWrite(offx - 20, offy - 20, offx + _width + 155, offy - 20, 4);
 
   textVal.convert(dynelaData->model->currentTime, "%10.3E");
   textVal = "time:" + textVal;
-  textWrite(Vec3D(offx, offy - 30, 0), textVal, 24);
+  textWrite(Vec3D(offx, offy - 30, 0), textVal, 20);
 
   _stream << "</g>\n";
 }
@@ -353,11 +355,12 @@ void SvgInterface::write(String fileName, short _field)
       flatPolygonsWrite();
     }
 
-    legendWrite();
+    if (_legendDisplay)
+      legendWrite();
   }
 
   // Wites the title of application
-  if (title)
+  if (_titleDisplay)
     textWrite(Vec3D(_titleX, _titleY, 0), "DynELA FEM code v.3.0", 40);
 
   // Tail write
@@ -367,7 +370,7 @@ void SvgInterface::write(String fileName, short _field)
 }
 
 //-----------------------------------------------------------------------------
-void SvgInterface::legendPos(int x, int y)
+void SvgInterface::setLegendPosition(int x, int y)
 //-----------------------------------------------------------------------------
 {
   _legendX = x;
@@ -375,9 +378,55 @@ void SvgInterface::legendPos(int x, int y)
 }
 
 //-----------------------------------------------------------------------------
-void SvgInterface::titlePos(int x, int y)
+void SvgInterface::setTitlePosition(int x, int y)
 //-----------------------------------------------------------------------------
 {
   _titleX = x;
   _titleY = y;
+}
+
+//-----------------------------------------------------------------------------
+void SvgInterface::setPatchLevel(int level)
+//-----------------------------------------------------------------------------
+{
+  if (level > maxPolygonPatchLevel)
+  {
+    std::cout << "setPatchLevel -> reduced to level " << maxPolygonPatchLevel << "\n";
+    level = maxPolygonPatchLevel;
+  }
+  if (level < 1)
+  {
+    std::cout << "setPatchLevel -> increased to level 1\n";
+
+    level = 1;
+  }
+  _patchDecompLevel = level;
+}
+
+//-----------------------------------------------------------------------------
+void SvgInterface::setLegendDisplay(bool display)
+//-----------------------------------------------------------------------------
+{
+  _legendDisplay = display;
+}
+
+//-----------------------------------------------------------------------------
+void SvgInterface::setTitleDisplay(bool display)
+//-----------------------------------------------------------------------------
+{
+  _titleDisplay = display;
+}
+
+//-----------------------------------------------------------------------------
+void SvgInterface::setMeshDisplay(bool display)
+//-----------------------------------------------------------------------------
+{
+  _meshDisplay = display;
+}
+
+//-----------------------------------------------------------------------------
+void SvgInterface::setMeshWidth(int width)
+//-----------------------------------------------------------------------------
+{
+  _meshWidth = width;
 }

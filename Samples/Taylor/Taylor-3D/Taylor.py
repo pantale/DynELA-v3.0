@@ -11812,8 +11812,8 @@ model.parallel.setCores(4)
 model.solve()
 
 svg = dnl.SvgInterface("SVG")
-svg.title = False
-svg.legendPos(100, 280)
+svg.setTitleDisplay(False)
+svg.setLegendPosition(100, 280)
 svg.rotate(dnl.Vec3D(0, 1, 0), 190)
 svg.rotate(dnl.Vec3D(1, 0, 0), -70)
 svg.rotate(dnl.Vec3D(0, 1, 0), -60)

@@ -29,6 +29,8 @@
 #include <Polygon.h>
 #include <ColorMap.h>
 
+#define maxPolygonPatchLevel 4
+
 struct SvgRotate
 {
   Vec3D axis;
@@ -39,7 +41,10 @@ class SvgInterface
 {
 private:
   bool _initialized = false;
+  bool _legendDisplay = true;
+  bool _meshDisplay = true;
   bool _rotate = false;
+  bool _titleDisplay = true;
   const Vec3D _svgBottomLeft = Vec3D(0, 0, 0);
   const Vec3D _svgTopRight = Vec3D(1600, 1600, 0);
   double _height = 16;
@@ -48,6 +53,8 @@ private:
   double _width = 16;
   int _legendX = 30;
   int _legendY = 30;
+  int _meshWidth = 1;
+  int _patchDecompLevel = 1;
   int _titleX = 50;
   int _titleY = 1550;
   List<SvgRotate *> _rotateList;
@@ -71,7 +78,6 @@ private:
 #endif
 
 public:
-  bool title = true;
   ColorMap colorMap;
   short field;
   String name = "_noname_"; //!< Name of the SVG interface
@@ -82,10 +88,15 @@ public:
   ~SvgInterface();
 
   void initDrawing();
-  void legendPos(int x, int y);
   void resetView();
   void rotate(Vec3D axis, double angle);
-  void titlePos(int x, int y);
+  void setLegendDisplay(bool display);
+  void setLegendPosition(int x, int y);
+  void setMeshDisplay(bool display);
+  void setTitleDisplay(bool display);
+  void setMeshWidth(int width);
+  void setPatchLevel(int level);
+  void setTitlePosition(int x, int y);
   void write(String fileName, short field = -1);
 };
 

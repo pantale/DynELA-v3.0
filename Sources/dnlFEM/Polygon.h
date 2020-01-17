@@ -56,9 +56,9 @@ public:
 
   bool isVisible() { return visible; }
   int numberOfPoints();
-  String getFlatPolygonSvgCode(ColorMap &map, short field, bool stroke = true, int width = 1);
-  String getInterpolatedPolygonSvgCode(ColorMap &map, short field, bool stroke = true, int width = 1);
-  String getWhitePolygonSvgCode();
+  String getFlatPolygonSvgCode(ColorMap &map, short field, bool stroke, int width );
+  String getInterpolatedPolygonSvgCode(ColorMap &map, int decompLevel, short field, bool stroke, int width );
+  String getWhitePolygonSvgCode(int width);
   Vec3D getVertex(int);
   void add(Node *node);
   void add(Vec3D point);
@@ -87,18 +87,18 @@ public:
 class PolygonPatches
 {
 private:
+  int _decompLevel;
+  List<PolygonPatch *> _polygonPatches;
+  friend class Polygon;
+
   PolygonPatch *createPolygonPatch();
   void createSubPatch(int points, Vec3D *coords, double *valuesR, int *valuesI, ColorMap &map);
   void createSubPatch2(int points, Vec3D *coords, double *valuesR, int *valuesI, ColorMap &map);
   void reorderPoints(Vec3D *coords, int cur);
 
 public:
-  int decompLevel;
-  List<PolygonPatch *> patches;
-
-public:
   // constructeurs
-  PolygonPatches();
+  PolygonPatches(int level);
   ~PolygonPatches() {}
   void createPatch(Polygon *polygon, ColorMap &map, short field);
 };

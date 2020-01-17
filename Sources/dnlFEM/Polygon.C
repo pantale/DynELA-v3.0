@@ -126,18 +126,20 @@ void Polygon::remapVertices(Vec3D center, Vec3D worldCenter, Vec3D worldScale)
 }
 
 //-----------------------------------------------------------------------------
-String Polygon::getWhitePolygonSvgCode()
+String Polygon::getWhitePolygonSvgCode(int width)
 //-----------------------------------------------------------------------------
 {
   String svgcode = "";
   String tmp1, tmp2;
   Vec3D point;
+  String tmpWidth;
+  tmpWidth.convert(width);
 
   // Begin polygon
   svgcode += "<polygon\n";
   svgcode += " stroke=\"black\"\n";
   svgcode += " fill=\"white\"\n";
-  svgcode += " stroke-width=\"1\"\n";
+  svgcode += " stroke-width=\"" + tmpWidth + "\"\n";
   svgcode += " stroke-linejoin=\"round\"\n";
   svgcode += " points=\"";
 
@@ -210,7 +212,7 @@ String Polygon::getFlatPolygonSvgCode(ColorMap &map, short field, bool stroke, i
 }
 
 //-----------------------------------------------------------------------------
-String Polygon::getInterpolatedPolygonSvgCode(ColorMap &map, short field, bool stroke, int width)
+String Polygon::getInterpolatedPolygonSvgCode(ColorMap &map, int decompLevel, short field, bool stroke, int width)
 //-----------------------------------------------------------------------------
 {
   String svgcode = "";
@@ -218,14 +220,14 @@ String Polygon::getInterpolatedPolygonSvgCode(ColorMap &map, short field, bool s
   Vec3D point;
   String tmpWidth;
   tmpWidth.convert(width);
-  PolygonPatches patches;
+  PolygonPatches _polygonPatches(decompLevel);
   PolygonPatch *patch;
   String col;
 
-  patches.createPatch(this, map, field);
+  _polygonPatches.createPatch(this, map, field);
 
-  patch = patches.patches.first();
-  while ((patch = patches.patches.currentUp()) != NULL)
+  patch = _polygonPatches._polygonPatches.first();
+  while ((patch = _polygonPatches._polygonPatches.currentUp()) != NULL)
   {
     // Begin polygon
     svgcode += "<polygon\n";
@@ -280,14 +282,14 @@ void Polygon::rotate(Tensor2 Mat)
 {
   for (int i = 0; i < points; i++)
     vertices[i] = Mat * vertices[i];
-   computeCenter();
+  computeCenter();
 }
 
 //-----------------------------------------------------------------------------
-PolygonPatches::PolygonPatches()
+PolygonPatches::PolygonPatches(int level)
 //-----------------------------------------------------------------------------
 {
-  decompLevel = 1;
+  _decompLevel = level;
 }
 
 //-----------------------------------------------------------------------------
@@ -300,7 +302,7 @@ void PolygonPatches::createPatch(Polygon *polygon, ColorMap &map, short field)
   int nb = polygon->points;
 
   // Flush list of patches
-  patches.flush();
+  _polygonPatches.flush();
 
   for (int i = 0; i < nb; i++)
   {
@@ -326,7 +328,7 @@ PolygonPatch *PolygonPatches::createPolygonPatch()
 //-----------------------------------------------------------------------------
 {
   PolygonPatch *poly = new PolygonPatch;
-  patches << poly;
+  _polygonPatches << poly;
   return poly;
 }
 
@@ -550,7 +552,7 @@ void PolygonPatches::createSubPatch(int points, Vec3D *coords, double *valuesR, 
   }
 
   // subdivision de l'element
-  decompLevel--;
+  _decompLevel--;
 
   // calcul du milieu de l'element indice 8
   coords[8] = (coords[0] + coords[1] + coords[2] + coords[3]) / 4.;
@@ -587,7 +589,7 @@ void PolygonPatches::createSubPatch(int points, Vec3D *coords, double *valuesR, 
   CPY(2, 8);
   CPY(3, 7);
 
-  if (decompLevel == 0)
+  if (_decompLevel == 0)
     createSubPatch2(4, crds, valR, valI, map);
   else
     createSubPatch(4, crds, valR, valI, map);
@@ -597,7 +599,7 @@ void PolygonPatches::createSubPatch(int points, Vec3D *coords, double *valuesR, 
   CPY(1, 1);
   CPY(2, 5);
   CPY(3, 8);
-  if (decompLevel == 0)
+  if (_decompLevel == 0)
     createSubPatch2(4, crds, valR, valI, map);
   else
     createSubPatch(4, crds, valR, valI, map);
@@ -607,7 +609,7 @@ void PolygonPatches::createSubPatch(int points, Vec3D *coords, double *valuesR, 
   CPY(1, 5);
   CPY(2, 2);
   CPY(3, 6);
-  if (decompLevel == 0)
+  if (_decompLevel == 0)
     createSubPatch2(4, crds, valR, valI, map);
   else
     createSubPatch(4, crds, valR, valI, map);
@@ -617,12 +619,12 @@ void PolygonPatches::createSubPatch(int points, Vec3D *coords, double *valuesR, 
   CPY(1, 8);
   CPY(2, 6);
   CPY(3, 3);
-  if (decompLevel == 0)
+  if (_decompLevel == 0)
     createSubPatch2(4, crds, valR, valI, map);
   else
     createSubPatch(4, crds, valR, valI, map);
 
-  decompLevel++;
+  _decompLevel++;
 }
 
 //-----------------------------------------------------------------------------

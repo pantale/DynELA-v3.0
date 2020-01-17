@@ -169,8 +169,8 @@ model.parallel.setCores(4)
 model.solve()
 
 svg = dnl.SvgInterface("SVG")
-svg.title = False
-svg.legendPos(350, 150)
+svg.setTitleDisplay(False)
+svg.setLegendPosition(350, 150)
 svg.write(dnl.String("temperatureCP.svg"),dnl.Field.temperature)
 svg.write(dnl.String("vonMisesCP.svg"),dnl.Field.vonMises)
 svg.write(dnl.String("plasticStrainCP.svg"),dnl.Field.plasticStrain)

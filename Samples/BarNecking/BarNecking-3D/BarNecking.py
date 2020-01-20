@@ -10148,14 +10148,16 @@ model.add(vonMisesHist2)
 # Parallel computation
 model.parallel.setCores(4)
 
-model.solve()
-
 svg = dnl.SvgInterface("SVG")
-svg.setTitlePosition(False)
+svg.setTitleDisplay(False)
 svg.setLegendPosition(100, 280)
 svg.rotate(dnl.Vec3D(0, 1, 0), 190)
 svg.rotate(dnl.Vec3D(1, 0, 0), -70)
 svg.rotate(dnl.Vec3D(0, 1, 0), -60)
+svg.write(dnl.String("mesh.svg"))
+
+model.solve()
+
 svg.write(dnl.String("temperatureCP.svg"),dnl.Field.temperature)
 svg.write(dnl.String("vonMisesCP.svg"),dnl.Field.vonMises)
 svg.write(dnl.String("plasticStrainCP.svg"),dnl.Field.plasticStrain)

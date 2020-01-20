@@ -1,8 +1,13 @@
 # DynELA file to treat
 FILE = Tensile
 
+# Pictures for documentation
+GENERIC = Tensile3D
+OUTPUTS = plasticStrain.svg stress_11.svg stress_12.svg stress_22.svg temperature.svg vonMises.svg
+OUTDIR = $(DYNELA)/Documentation/Figures/Samples/Element
+
 # Nothing to touch here after
-TOP = /home/pantale/SynologyDrive/DynELA/Samples
+TOP = $(DYNELA)/Samples
 
 all:
 	./runBench.py --run
@@ -10,6 +15,9 @@ all:
 
 reference:
 	./runBench.py --reference
+
+install:
+	@for OUTPUT in $(OUTPUTS); do rsync --checksum --no-times $$OUTPUT $(OUTDIR)/$(GENERIC)_$$OUTPUT; done
 
 clean:
 	@echo "Cleaning: $(PWD)"

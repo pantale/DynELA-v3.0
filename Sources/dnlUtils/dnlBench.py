@@ -6,7 +6,8 @@ Created on Thu Nov  7 14:14:48 2019
 @author: pantale
 """
 
-iconsDir = '/home/pantale/SynologyDrive/DynELA/Samples/Flags'
+import os
+iconsDir = os.environ['DYNELA'] + '/Samples/Flags'
 
 import subprocess
 import shutil

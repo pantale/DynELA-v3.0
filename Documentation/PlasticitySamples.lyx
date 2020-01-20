@@ -572,7 +572,7 @@ noprefix "false"
 ) and the models give quite the same results as reported in Table 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "tab:Samples!Impact!TaylorAxi-comparison"
+reference "tab:Samples!Plasticity!BarAxi-comparison"
 plural "false"
 caps "false"
 noprefix "false"
@@ -599,7 +599,7 @@ noprefix "false"
 Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "fig:Samples!Impact!TaylorAxi-comparison"
+reference "fig:Samples!Plasticity!BarAxi-comparison"
 plural "false"
 caps "false"
 noprefix "false"
@@ -650,7 +650,7 @@ As reported in this figure and according to the results presented in Table
  
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "tab:Samples!Impact!TaylorAxi-comparison"
+reference "tab:Samples!Plasticity!BarAxi-comparison"
 plural "false"
 caps "false"
 noprefix "false"
@@ -670,7 +670,7 @@ status open
 \noindent
 \align center
 \begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/BarNecking/BarNecking-Axi/temperatureCP.svg
+	filename Figures/Samples/Plasticity/BarNecking_temperatureCP.svg
 	lyxscale 25
 	height 50col%
 
@@ -691,7 +691,7 @@ hspace*{3cm}
 
 
 \begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/BarNecking/BarNecking-Axi/Abaqus/temperature.svg
+	filename Figures/Samples/Plasticity/BarNecking-Abaqus_temperature.svg
 	lyxscale 25
 	height 50col%
 
@@ -738,7 +738,7 @@ status open
 \noindent
 \align center
 \begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/BarNecking/BarNecking-Axi/vonMisesCP.svg
+	filename Figures/Samples/Plasticity/BarNecking_vonMisesCP.svg
 	lyxscale 25
 	height 50col%
 
@@ -759,7 +759,7 @@ hspace*{3cm}
 
 
 \begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/BarNecking/BarNecking-Axi/Abaqus/mises.svg
+	filename Figures/Samples/Plasticity/BarNecking-Abaqus_vonMises.svg
 	lyxscale 25
 	height 50col%
 
@@ -888,10 +888,10 @@ end{center}
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Comparison of numerical results for the Axisymmetric Taylor impact test
+Comparison of numerical results for the necking of a circular bar test
 \begin_inset CommandInset label
 LatexCommand label
-name "tab:Samples!Impact!TaylorAxi-comparison"
+name "tab:Samples!Plasticity!BarAxi-comparison"
 
 \end_inset
 
@@ -928,7 +928,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/BarNecking/BarNecking-Axi/Radius.svg
+	filename Figures/Samples/Plasticity/BarNecking_radius.svg
 	lyxscale 50
 	width 45col%
 
@@ -944,41 +944,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/BarNecking/BarNecking-Axi/KineticEnergy.svg
-	lyxscale 50
-	width 45col%
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/BarNecking/BarNecking-Axi/Temperature.svg
-	lyxscale 50
-	width 45col%
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/BarNecking/BarNecking-Axi/Peeq.svg
+	filename Figures/Samples/Plasticity/BarNecking_kineticEnergy.svg
 	lyxscale 50
 	width 45col%
 
@@ -996,7 +962,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/BarNecking/BarNecking-Axi/Mises.svg
+	filename Figures/Samples/Plasticity/BarNecking_temperature.svg
 	lyxscale 50
 	width 45col%
 
@@ -1012,7 +978,41 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/BarNecking/BarNecking-Axi/TimeStep.svg
+	filename Figures/Samples/Plasticity/BarNecking_plasticStrain.svg
+	lyxscale 50
+	width 45col%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Figures/Samples/Plasticity/BarNecking_vonMises.svg
+	lyxscale 50
+	width 45col%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Figures/Samples/Plasticity/BarNecking_timeStep.svg
 	lyxscale 50
 	width 45col%
 
@@ -1035,11 +1035,11 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Comparison of numerical and analytical resultsfor the Axisymmetric Taylor
- impact test
+Comparison of numerical and analytical results necking of a circular bar
+ test
 \begin_inset CommandInset label
 LatexCommand label
-name "fig:Samples!Impact!TaylorAxi-comparison"
+name "fig:Samples!Plasticity!BarAxi-comparison"
 
 \end_inset
 

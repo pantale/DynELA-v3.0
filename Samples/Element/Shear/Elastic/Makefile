@@ -1,8 +1,13 @@
 # DynELA file to treat
 FILE = Shear-Elastic
 
+# Pictures for documentation
+GENERIC = $(FILE)
+OUTPUTS = stress_11.svg stress_12.svg stress_22.svg vonMises.svg
+OUTDIR = $(DYNELA)/Documentation/Figures/Samples/Element
+
 # Nothing to touch here after
-TOP = /home/pantale/SynologyDrive/DynELA/Samples
+TOP = $(DYNELA)/Samples
 
 # Store current path
 HERE = $(PWD)
@@ -13,6 +18,9 @@ all:
 
 reference:
 	./runBench.py --reference
+
+install:
+	@for OUTPUT in $(OUTPUTS); do rsync --checksum --no-times $$OUTPUT $(OUTDIR)/$(GENERIC)_$$OUTPUT; done
 
 clean:
 	@echo "Cleaning: $(PWD)"

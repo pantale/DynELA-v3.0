@@ -654,7 +654,7 @@ status open
 \noindent
 \align center
 \begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Taylor/Taylor-Axi/temperatureCP.svg
+	filename Figures/Samples/Impact/Taylor-Axi_temperatureCP.svg
 	lyxscale 25
 	height 50col%
 
@@ -675,7 +675,7 @@ hspace*{3cm}
 
 
 \begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Taylor/Taylor-Axi/Abaqus/temperature.svg
+	filename Figures/Samples/Impact/Taylor-Axi-Abaqus_Temperature.svg
 	lyxscale 25
 	height 50col%
 
@@ -843,7 +843,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Taylor/Taylor-Axi/Radius.svg
+	filename Figures/Samples/Impact/Taylor-Axi_radius.svg
 	lyxscale 50
 	width 45col%
 
@@ -859,41 +859,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Taylor/Taylor-Axi/Height.svg
-	lyxscale 50
-	width 45col%
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Taylor/Taylor-Axi/Temperature.svg
-	lyxscale 50
-	width 45col%
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Taylor/Taylor-Axi/Peeq.svg
+	filename Figures/Samples/Impact/Taylor-Axi_height.svg
 	lyxscale 50
 	width 45col%
 
@@ -911,7 +877,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Taylor/Taylor-Axi/Mises.svg
+	filename Figures/Samples/Impact/Taylor-Axi_temperature.svg
 	lyxscale 50
 	width 45col%
 
@@ -927,7 +893,41 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Taylor/Taylor-Axi/TimeStep.svg
+	filename Figures/Samples/Impact/Taylor-Axi_plasticStrain.svg
+	lyxscale 50
+	width 45col%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Figures/Samples/Impact/Taylor-Axi_vonMises.svg
+	lyxscale 50
+	width 45col%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Figures/Samples/Impact/Taylor-Axi_timeStep.svg
 	lyxscale 50
 	width 45col%
 
@@ -950,7 +950,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Comparison of numerical and analytical resultsfor the Axisymmetric Taylor
+Comparison of numerical and analytical results for the Axisymmetric Taylor
  impact test
 \begin_inset CommandInset label
 LatexCommand label
@@ -1046,7 +1046,7 @@ status open
 \noindent
 \align center
 \begin_inset Graphics
-	filename Figures/Taylor3D.svg
+	filename Figures/Samples/Impact/Taylor-3D_mesh.svg
 	lyxscale 50
 	width 50col%
 
@@ -1229,7 +1229,7 @@ status open
 \noindent
 \align center
 \begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Taylor/Taylor-3D/temperatureCP.svg
+	filename Figures/Samples/Impact/Taylor-3D_temperatureCP.svg
 	lyxscale 50
 	width 80col%
 
@@ -1396,7 +1396,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Taylor/Taylor-3D/Radius.svg
+	filename Figures/Samples/Impact/Taylor-3D_radius.svg
 	lyxscale 50
 	width 45col%
 
@@ -1412,41 +1412,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Taylor/Taylor-3D/Height.svg
-	lyxscale 50
-	width 45col%
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Taylor/Taylor-3D/Temperature.svg
-	lyxscale 50
-	width 45col%
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Taylor/Taylor-3D/Peeq.svg
+	filename Figures/Samples/Impact/Taylor-3D_height.svg
 	lyxscale 50
 	width 45col%
 
@@ -1464,7 +1430,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Taylor/Taylor-3D/Mises.svg
+	filename Figures/Samples/Impact/Taylor-3D_temperature.svg
 	lyxscale 50
 	width 45col%
 
@@ -1480,7 +1446,41 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Taylor/Taylor-3D/TimeStep.svg
+	filename Figures/Samples/Impact/Taylor-3D_plasticStrain.svg
+	lyxscale 50
+	width 45col%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Figures/Samples/Impact/Taylor-3D_vonMises.svg
+	lyxscale 50
+	width 45col%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Figures/Samples/Impact/Taylor-3D_timeStep.svg
 	lyxscale 50
 	width 45col%
 
@@ -1503,7 +1503,8 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Comparison of numerical and analytical resultsfor the 3D Taylor impact test
+Comparison of numerical and analytical results for the 3D Taylor impact
+ test
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:Samples!Impact!Taylor3D-comparison"

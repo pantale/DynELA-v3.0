@@ -1,8 +1,13 @@
 # DynELA file to treat
-FILE = Taylor-3D
+FILE = Taylor
+
+# Pictures for documentation
+GENERIC = Taylor-3D
+OUTPUTS = plasticStrainCP.svg temperatureCP.svg radius.svg height.svg temperature.svg plasticStrain.svg vonMises.svg timeStep.svg mesh.svg
+OUTDIR = $(DYNELA)/Documentation/Figures/Samples/Impact
 
 # Nothing to touch here after
-TOP = /home/pantale/SynologyDrive/DynELA/Samples
+TOP = $(DYNELA)/Samples
 
 all:
 	./runBench.py --run
@@ -10,6 +15,9 @@ all:
 
 reference:
 	./runBench.py --reference
+
+install:
+	@for OUTPUT in $(OUTPUTS); do rsync --checksum --no-times $$OUTPUT $(OUTDIR)/$(GENERIC)_$$OUTPUT; done
 
 clean:
 	@echo "Cleaning: $(PWD)"

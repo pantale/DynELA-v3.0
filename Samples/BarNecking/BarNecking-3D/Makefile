@@ -2,7 +2,7 @@
 FILE = BarNecking
 
 # Nothing to touch here after
-TOP = /home/pantale/SynologyDrive/DynELA/Samples
+TOP = $(DYNELA)/Samples
 
 all:
 	./runBench.py --run

@@ -619,7 +619,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Element/Tensile/ElQua4N2D/Stress_11.svg
+	filename Figures/Samples/Element/Tensile_stress_11.svg
 	lyxscale 50
 	width 45col%
 
@@ -635,41 +635,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Element/Tensile/ElQua4N2D/Stress_22.svg
-	lyxscale 50
-	width 45col%
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Element/Tensile/ElQua4N2D/Stress_12.svg
-	lyxscale 50
-	width 45col%
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Element/Tensile/ElQua4N2D/VonMises.svg
+	filename Figures/Samples/Element/Tensile_stress_22.svg
 	lyxscale 50
 	width 45col%
 
@@ -687,7 +653,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Element/Tensile/ElQua4N2D/PlasticStrain.svg
+	filename Figures/Samples/Element/Tensile_stress_12.svg
 	lyxscale 50
 	width 45col%
 
@@ -703,7 +669,41 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Element/Tensile/ElQua4N2D/Temperature.svg
+	filename Figures/Samples/Element/Tensile_vonMises.svg
+	lyxscale 50
+	width 45col%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Figures/Samples/Element/Tensile_plasticStrain.svg
+	lyxscale 50
+	width 45col%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Figures/Samples/Element/Tensile_temperature.svg
 	lyxscale 50
 	width 45col%
 
@@ -967,7 +967,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Element/Tensile/ElHex8N3D/Stress_11.svg
+	filename Figures/Samples/Element/Tensile3D_stress_11.svg
 	lyxscale 50
 	width 45col%
 
@@ -983,41 +983,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Element/Tensile/ElHex8N3D/Stress_22.svg
-	lyxscale 50
-	width 45col%
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Element/Tensile/ElHex8N3D/Stress_12.svg
-	lyxscale 50
-	width 45col%
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Element/Tensile/ElHex8N3D/VonMises.svg
+	filename Figures/Samples/Element/Tensile3D_stress_22.svg
 	lyxscale 50
 	width 45col%
 
@@ -1035,7 +1001,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Element/Tensile/ElHex8N3D/PlasticStrain.svg
+	filename Figures/Samples/Element/Tensile3D_stress_12.svg
 	lyxscale 50
 	width 45col%
 
@@ -1051,7 +1017,41 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Element/Tensile/ElHex8N3D/Temperature.svg
+	filename Figures/Samples/Element/Tensile3D_vonMises.svg
+	lyxscale 50
+	width 45col%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Figures/Samples/Element/Tensile3D_plasticStrain.svg
+	lyxscale 50
+	width 45col%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Figures/Samples/Element/Tensile3D_temperature.svg
 	lyxscale 50
 	width 45col%
 
@@ -1272,7 +1272,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Element/Radial/ElQua4NAx/Stress_11.svg
+	filename Figures/Samples/Element/Radial_stress_11.svg
 	lyxscale 50
 	width 45col%
 
@@ -1288,41 +1288,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Element/Radial/ElQua4NAx/Stress_22.svg
-	lyxscale 50
-	width 45col%
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Element/Radial/ElQua4NAx/Stress_12.svg
-	lyxscale 50
-	width 45col%
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Element/Radial/ElQua4NAx/VonMises.svg
+	filename Figures/Samples/Element/Radial_stress_22.svg
 	lyxscale 50
 	width 45col%
 
@@ -1340,7 +1306,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Element/Radial/ElQua4NAx/PlasticStrain.svg
+	filename Figures/Samples/Element/Radial_stress_12.svg
 	lyxscale 50
 	width 45col%
 
@@ -1356,7 +1322,41 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Element/Radial/ElQua4NAx/Temperature.svg
+	filename Figures/Samples/Element/Radial_vonMises.svg
+	lyxscale 50
+	width 45col%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Figures/Samples/Element/Radial_plasticStrain.svg
+	lyxscale 50
+	width 45col%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Figures/Samples/Element/Radial_temperature.svg
 	lyxscale 50
 	width 45col%
 
@@ -1561,7 +1561,7 @@ status collapsed
 \noindent
 \align center
 \begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Element/Torus/ElQua4NAx/DispX.svg
+	filename Figures/Samples/Element/Torus_dispX.svg
 	lyxscale 50
 	width 50col%
 
@@ -1733,7 +1733,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Element/Torus/ElQua4NAx/Stress_11.svg
+	filename Figures/Samples/Element/Torus_stress_11.svg
 	lyxscale 50
 	width 45col%
 
@@ -1749,41 +1749,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Element/Torus/ElQua4NAx/Stress_22.svg
-	lyxscale 50
-	width 45col%
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Element/Torus/ElQua4NAx/Stress_12.svg
-	lyxscale 50
-	width 45col%
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Element/Torus/ElQua4NAx/VonMises.svg
+	filename Figures/Samples/Element/Torus_stress_22.svg
 	lyxscale 50
 	width 45col%
 
@@ -1801,7 +1767,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Element/Torus/ElQua4NAx/PlasticStrain.svg
+	filename Figures/Samples/Element/Torus_stress_12.svg
 	lyxscale 50
 	width 45col%
 
@@ -1817,7 +1783,41 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Element/Torus/ElQua4NAx/Temperature.svg
+	filename Figures/Samples/Element/Torus_vonMises.svg
+	lyxscale 50
+	width 45col%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Figures/Samples/Element/Torus_plasticStrain.svg
+	lyxscale 50
+	width 45col%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Figures/Samples/Element/Torus_temperature.svg
 	lyxscale 50
 	width 45col%
 
@@ -2125,7 +2125,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Element/Shear/Elastic/Stress_11.svg
+	filename Figures/Samples/Element/Shear-Elastic_stress_11.svg
 	lyxscale 50
 	width 45col%
 
@@ -2141,7 +2141,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Element/Shear/Elastic/Stress_22.svg
+	filename Figures/Samples/Element/Shear-Elastic_stress_22.svg
 	lyxscale 50
 	width 45col%
 
@@ -2159,7 +2159,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Element/Shear/Elastic/Stress_12.svg
+	filename Figures/Samples/Element/Shear-Elastic_stress_12.svg
 	lyxscale 50
 	width 45col%
 
@@ -2175,7 +2175,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Element/Shear/Elastic/VonMises.svg
+	filename Figures/Samples/Element/Shear-Elastic_vonMises.svg
 	lyxscale 50
 	width 45col%
 
@@ -2333,7 +2333,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Element/Shear/ElQua4N2D/Stress_11.svg
+	filename Figures/Samples/Element/Shear-Plastic_stress_11.svg
 	lyxscale 50
 	width 45col%
 
@@ -2349,41 +2349,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Element/Shear/ElQua4N2D/Stress_22.svg
-	lyxscale 50
-	width 45col%
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Element/Shear/ElQua4N2D/Stress_12.svg
-	lyxscale 50
-	width 45col%
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Element/Shear/ElQua4N2D/VonMises.svg
+	filename Figures/Samples/Element/Shear-Plastic_stress_22.svg
 	lyxscale 50
 	width 45col%
 
@@ -2401,7 +2367,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Element/Shear/ElQua4N2D/PlasticStrain.svg
+	filename Figures/Samples/Element/Shear-Plastic_stress_12.svg
 	lyxscale 50
 	width 45col%
 
@@ -2417,7 +2383,41 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /home/pantale/SynologyDrive/DynELA/Samples/Element/Shear/ElQua4N2D/Temperature.svg
+	filename Figures/Samples/Element/Shear-Plastic_vonMises.svg
+	lyxscale 50
+	width 45col%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Figures/Samples/Element/Shear-Plastic_plasticStrain.svg
+	lyxscale 50
+	width 45col%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Figures/Samples/Element/Shear-Plastic_temperature.svg
 	lyxscale 50
 	width 45col%
 

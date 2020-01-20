@@ -2,7 +2,7 @@
 FILE = Shear-Elastic
 
 # Nothing to touch here after
-TOP = /home/pantale/SynologyDrive/DynELA/Samples
+TOP = $(DYNELA)/Samples
 
 all:
 	python AnalyticSolutions.py

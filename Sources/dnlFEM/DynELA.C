@@ -74,6 +74,7 @@ DynELA::DynELA(char *newName)
 
   // creates a model
   model = new Model;
+  model->name = name;
 
   // Creates a settings and add it
   settings = new Settings;

@@ -1,6 +1,8 @@
 # DynELA Finite Element Code v.3.0
 
-This repository contains the DynELA Finite Element Code v.3.0. The DynELA Finite Element Code is an Explicit FEM code written in C++ using a Python's interface for creating the FEM models. This is a new version of the early proposed v.2 code written between 1996 and 2010. The previous version is included into the CAE Linux distribution. The aim of v.3.0 is to provide a new version of the code, along with some documentation.
+<img src="Documentation/Figures/Taylor3D.png" width="50%" alt="Taylor impact test" align="right"/>
+
+This repository contains the DynELA Finite Element Code v.3.0. The DynELA Finite Element Code is an Explicit FEM code written in C++ using a Python's interface for creating the Finite Element Models. This is a new version of the early proposed v.2 code written between 1996 and 2010. The previous version has been included into the CAE Linux distribution some year ago and the corresponding work has been published in some Scientific Journals (Advances in Engineering Software, Journal of Computational and Applied Mathematics;...). The aim of v.3.0 is to provide a new version of the code with enhancements concerning the constitutive laws, a new programming interface based on Python 3 formalism, along with some documentation.
 
 ## Download and installation procedure:
 
@@ -54,6 +56,8 @@ Running the tests in the Samples directory can be done through the Makefiles con
 	make
 	
 ## Postprocessing:
+
+DynELA now has a class for direct export of contourplot results using SVG vectorial format for a 2D or 3D mesh via the Python command interface.
 
 The DynELA FEM code can generate VTK files for the results. I'm using the Paraview postprocessor to visualize those results. Paraview is available here: https://www.paraview.org/download
 

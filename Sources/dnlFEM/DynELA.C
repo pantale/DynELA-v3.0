@@ -241,11 +241,7 @@ bool DynELA::createNode(long nodeNumber, double xCoord, double yCoord, double zC
   model.add(newNode);
 
   // add the newNode
-  nodes << newNode;
-  //nodes.compact();
-
-  /*    if (nodes.getSize() % nodeDisplayOnlineFrequency == 0)
-    displayOnline(); */
+  //nodes << newNode;
 
   // logFile
   char st[80];
@@ -267,14 +263,14 @@ bool DynELA::createNode(long nodeNumber, double xCoord, double yCoord, double zC
 long DynELA::getNodesNumber()
 //-----------------------------------------------------------------------------
 {
-  return nodes.getSize();
+  return model.nodes.getSize();
 }
 
 //-----------------------------------------------------------------------------
 long DynELA::getElementsNumber()
 //-----------------------------------------------------------------------------
 {
-  return elements.getSize();
+  return model.elements.getSize();
 }
 
 //-----------------------------------------------------------------------------
@@ -335,7 +331,7 @@ bool DynELA::createElement(long elementNumber, long nodesIndex, ...)
   model.create(pel, nNodes);
 
   // add the element
-  elements << pel;
+  //elements << pel;
   //elements.compact();
 
   String str;
@@ -363,20 +359,6 @@ void DynELA::setDefaultElement(short type)
 {
   _defaultElement = type;
 }
-
-/* //-----------------------------------------------------------------------------
-Model *DynELA::model
-//-----------------------------------------------------------------------------
-{
-  return models.current();
-}
- */
-/* //-----------------------------------------------------------------------------
-void DynELA::add(Parallel *_parallel)
-//-----------------------------------------------------------------------------
-{
-  parallel = _parallel;
-} */
 
 //-----------------------------------------------------------------------------
 void DynELA::add(HistoryFile *newHistoryFile)
@@ -421,12 +403,12 @@ void DynELA::add(Material *material, ElementSet *elementSet)
   material->_elementsSet << elementSet;
 
   // attach the material to the structure if not already done
-  for (i = 0; i < materials.getSize(); i++)
+  for (i = 0; i < model.materials.getSize(); i++)
   {
-    if (materials(i) == material)
+    if (model.materials(i) == material)
     {
       already = true;
-      i = materials.getSize();
+      i = model.materials.getSize();
     }
   }
   if (already == false)
@@ -449,9 +431,9 @@ void DynELA::addMaterial(Material *pmat)
 
   if (pmat->name != "")
   {
-    for (i = 0; i < materials.getSize(); i++)
+    for (i = 0; i < model.materials.getSize(); i++)
     {
-      if (materials(i)->name == pmat->name)
+      if (model.materials(i)->name == pmat->name)
       {
         fatalError("DynELA::addMaterial", "Material %s already exist\n", pmat->name.chars());
       }
@@ -459,7 +441,7 @@ void DynELA::addMaterial(Material *pmat)
   }
 
   // ajout e la liste courante
-  materials << pmat;
+  model.materials << pmat;
 
   // logFile
   logFile << "Material " << pmat->name << " added to " << name << "\n";
@@ -630,8 +612,8 @@ void DynELA::translate(Vec3D translateVector, NodeSet *nodeSet)
     for (long i = 0; i < nodeSet->getSize(); i++)
       nodeSet->nodes(i)->coordinates += translateVector;
   else
-    for (long i = 0; i < nodes.getSize(); i++)
-      nodes(i)->coordinates += translateVector;
+    for (long i = 0; i < model.nodes.getSize(); i++)
+      model.nodes(i)->coordinates += translateVector;
 }
 
 //-----------------------------------------------------------------------------
@@ -642,8 +624,8 @@ void DynELA::scale(double scaleValue, NodeSet *nodeSet)
     for (long i = 0; i < nodeSet->getSize(); i++)
       nodeSet->nodes(i)->coordinates *= scaleValue;
   else
-    for (long i = 0; i < nodes.getSize(); i++)
-      nodes(i)->coordinates *= scaleValue;
+    for (long i = 0; i < model.nodes.getSize(); i++)
+      model.nodes(i)->coordinates *= scaleValue;
 }
 
 //-----------------------------------------------------------------------------
@@ -655,9 +637,9 @@ void DynELA::scale(Vec3D scaleVector, NodeSet *nodeSet)
       for (long c = 0; c < 3; c++)
         nodeSet->nodes(i)->coordinates(c) *= scaleVector(c);
   else
-    for (long i = 0; i < nodes.getSize(); i++)
+    for (long i = 0; i < model.nodes.getSize(); i++)
       for (long c = 0; c < 3; c++)
-        nodes(i)->coordinates(c) *= scaleVector(c);
+        model.nodes(i)->coordinates(c) *= scaleVector(c);
 }
 
 //-----------------------------------------------------------------------------
@@ -703,8 +685,8 @@ void DynELA::rotate(String set, double angle, NodeSet *nodeSet)
     for (long i = 0; i < nodeSet->getSize(); i++)
       nodeSet->nodes(i)->coordinates = Mat * nodeSet->nodes(i)->coordinates;
   else
-    for (long i = 0; i < nodes.getSize(); i++)
-      nodes(i)->coordinates = Mat * nodes(i)->coordinates;
+    for (long i = 0; i < model.nodes.getSize(); i++)
+      model.nodes(i)->coordinates = Mat * model.nodes(i)->coordinates;
 }
 
 //-----------------------------------------------------------------------------
@@ -732,8 +714,8 @@ void DynELA::rotate(Vec3D axis, double angle, NodeSet *nodeSet)
     for (long i = 0; i < nodeSet->getSize(); i++)
       nodeSet->nodes(i)->coordinates = Mat * nodeSet->nodes(i)->coordinates;
   else
-    for (long i = 0; i < nodes.getSize(); i++)
-      nodes(i)->coordinates = Mat * nodes(i)->coordinates;
+    for (long i = 0; i < model.nodes.getSize(); i++)
+     model.nodes(i)->coordinates = Mat * model.nodes(i)->coordinates;
 }
 
 //!calcule les coordonnees mini et maxi de l'ensemble des noeuds d'une structure
@@ -753,12 +735,12 @@ void DynELA::getGlobalBox(Vec3D &minPoint, Vec3D &maxPoint)
   long i, j;
 
   // affectation par defaut au commencement
-  maxPoint = minPoint = nodes(0)->coordinates;
+  maxPoint = minPoint = model.nodes(0)->coordinates;
 
   // boucle de recherche
-  for (i = 1; i < nodes.getSize(); i++)
+  for (i = 1; i < model.nodes.getSize(); i++)
   {
-    coordinates = nodes(i)->coordinates;
+    coordinates = model.nodes(i)->coordinates;
 
     for (j = 0; j < 3; j++)
     {
@@ -864,10 +846,10 @@ void DynELA::getNodalValuesRange(short field, double &min, double &max)
     fatalError("DynELA::getNodalValuesRange", "field must be scalar");
   }
 
-  Node *pnd = nodes.first();
+  Node *pnd = model.nodes.first();
   double val;
   min = max = pnd->getNodalValue(field);
-  while ((pnd = nodes.currentUp()) != NULL)
+  while ((pnd = model.nodes.currentUp()) != NULL)
   {
     val = pnd->getNodalValue(field);
     if (val < min)
@@ -924,17 +906,17 @@ bool DynELA::initSolve ()
   if (models.getSize()==0) return (false);
 
   // verification de la coherence des materiaux
-  for (i = 0; i < materials.getSize (); i++)
+  for (i = 0; i < model.materials.getSize (); i++)
     {
-      logFile << "Verification of material "<<i<<" named "<<materials (i)->name<<" ...\n";
-      materials (i)->checkValues ();
+      logFile << "Verification of material "<<i<<" named "<<model.materials (i)->name<<" ...\n";
+      model.materials (i)->checkValues ();
     }
 
   // calcul des materiaux 
-  for (i = 0; i < materials.getSize (); i++)
+  for (i = 0; i < model.materials.getSize (); i++)
     {
-      logFile << "Initialisation of material "<<i<<" named "<<materials (i)->name<<" ...\n";
-      materials (i)->computeHookeTensor ();
+      logFile << "Initialisation of material "<<i<<" named "<<model.materials (i)->name<<" ...\n";
+      model.materials (i)->computeHookeTensor ();
     }
 
   logFile << "\nEnd of initialisation of solver phase ........\n";
@@ -963,11 +945,11 @@ Material * DynELA::getMaterial (String name)
 //-----------------------------------------------------------------------------
 {
   // balayage de la liste des materiaux
-  for (long i = 0; i < materials.getSize (); i++)
+  for (long i = 0; i < model.materials.getSize (); i++)
     {
       // materiau trouve
-      if (materials (i)->name == name)
-	return materials (i);
+      if (model.materials (i)->name == name)
+	return model.materials (i);
     }
 
   // materiau non trouve
@@ -1127,7 +1109,7 @@ void DynELA::displayOnline()
 	 models.getSize(),(models.getSize() > 1 ? "s" : ""),
 	 nodes.getSize(),(nodes.getSize()>1 ? "s" : ""),
 	 elements.getSize(),(elements.getSize()>1 ? "s" : ""),
-	 materials.getSize(),(materials.getSize()>1 ? "s" : ""));
+	 model.materials.getSize(),(model.materials.getSize()>1 ? "s" : ""));
 
   // reset currentModel
  // physics(indPhy);

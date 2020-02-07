@@ -95,11 +95,11 @@ void VtkInterface::headerWrite()
 void VtkInterface::nodesWrite()
 //-----------------------------------------------------------------------------
 {
-  long nbNodes = dynelaData->nodes.getSize();
+  long nbNodes = dynelaData->model.nodes.getSize();
   _stream << "POINTS " << nbNodes << " float\n";
 
   for (long i = 0; i < nbNodes; i++)
-    _stream << dynelaData->nodes(i)->coordinates(0) << " " << dynelaData->nodes(i)->coordinates(1) << " " << dynelaData->nodes(i)->coordinates(2) << "\n";
+    _stream << dynelaData->model.nodes(i)->coordinates(0) << " " << dynelaData->model.nodes(i)->coordinates(1) << " " << dynelaData->model.nodes(i)->coordinates(2) << "\n";
 
   _stream << "\n";
 }
@@ -108,20 +108,20 @@ void VtkInterface::nodesWrite()
 void VtkInterface::elementsWrite()
 //-----------------------------------------------------------------------------
 {
-  long nbElements = dynelaData->elements.getSize();
+  long nbElements = dynelaData->model.elements.getSize();
   long totNodes = 0;
   long nbNodes;
   Element *pElement;
 
   for (long i = 0; i < nbElements; i++)
-    totNodes += dynelaData->elements(i)->nodes.getSize();
+    totNodes += dynelaData->model.elements(i)->nodes.getSize();
   totNodes += nbElements;
 
   _stream << "CELLS " << nbElements << " " << totNodes << "\n";
 
   for (long i = 0; i < nbElements; i++)
   {
-    pElement = dynelaData->elements(i);
+    pElement = dynelaData->model.elements(i);
     nbNodes = pElement->nodes.getSize();
     _stream << nbNodes << " ";
     for (int j = 0; j < nbNodes; j++)
@@ -133,7 +133,7 @@ void VtkInterface::elementsWrite()
 
   _stream << "CELL_TYPES " << nbElements << "\n";
   for (long i = 0; i < nbElements; i++)
-    _stream << dynelaData->elements(i)->getVtkType() << "\n";
+    _stream << dynelaData->model.elements(i)->getVtkType() << "\n";
 
   _stream << "\n";
 }
@@ -142,7 +142,7 @@ void VtkInterface::elementsWrite()
 void VtkInterface::nodesNumbersWrite()
 //-----------------------------------------------------------------------------
 {
-  long nbNodes = dynelaData->nodes.getSize();
+  long nbNodes = dynelaData->model.nodes.getSize();
   _stream << "SCALARS nodesNumbers" << nbNodes << " float\n";
 
   _stream << "\n";
@@ -152,7 +152,7 @@ void VtkInterface::nodesNumbersWrite()
 void VtkInterface::dataWrite()
 //-----------------------------------------------------------------------------
 {
-  long nbNodes = dynelaData->nodes.getSize();
+  long nbNodes = dynelaData->model.nodes.getSize();
   short field;
   Field fields;
   bool lookupWriten = false;
@@ -174,7 +174,7 @@ void VtkInterface::dataWrite()
         //  lookupWriten = true;
       }
       for (long j = 0; j < nbNodes; j++)
-        _stream << dynelaData->nodes(j)->getNodalValue(field) << "\n";
+        _stream << dynelaData->model.nodes(j)->getNodalValue(field) << "\n";
     }
 
     // Vector field
@@ -184,7 +184,7 @@ void VtkInterface::dataWrite()
       _stream << "VECTORS " << _name << " float\n";
       for (long j = 0; j < nbNodes; j++)
       {
-        Vec3D v = dynelaData->nodes(j)->getNodalVec3D(field);
+        Vec3D v = dynelaData->model.nodes(j)->getNodalVec3D(field);
         _stream << v(0) << " " << v(1) << " " << v(2) << "\n";
       }
     }
@@ -196,7 +196,7 @@ void VtkInterface::dataWrite()
       _stream << "TENSORS " << _name << " float\n";
       for (long j = 0; j < nbNodes; j++)
       {
-        SymTensor2 t = dynelaData->nodes(j)->getNodalSymTensor(field);
+        SymTensor2 t = dynelaData->model.nodes(j)->getNodalSymTensor(field);
         _stream << t(0, 0) << " " << t(0, 1) << " " << t(0, 2) << " " << t(1, 0) << " " << t(1, 1) << " " << t(1, 2) << " " << t(2, 0) << " " << t(2, 1) << " " << t(2, 2) << "\n";
       }
     }

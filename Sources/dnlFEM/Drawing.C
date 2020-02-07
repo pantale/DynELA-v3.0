@@ -150,8 +150,8 @@ bool compareCentersZXY(Polygon *p1, Polygon *p2)
 void Drawing::initPolygons()
 //-----------------------------------------------------------------------------
 {
-  Element *pel = dynelaData->elements.first();
-  while ((pel = dynelaData->elements.currentUp()) != NULL)
+  Element *pel = dynelaData->model.elements.first();
+  while ((pel = dynelaData->model.elements.currentUp()) != NULL)
   {
     for (int face = 0; face < pel->getNumberOfFaces(); face++)
     {
@@ -172,7 +172,7 @@ void Drawing::initPolygons()
     }
   }
 
-  pel = dynelaData->elements.first();
+  pel = dynelaData->model.elements.first();
   if (pel->getFamily() == Element::Threedimensional)
   {
     for (int pass = 0; pass < 3; pass++)
@@ -258,7 +258,7 @@ void Drawing::rotate(Vec3D axis, double angle)
 void Drawing::mapToWorld()
 //-----------------------------------------------------------------------------
 {
-  if (dynelaData->elements.first()->getFamily() == Element::Threedimensional)
+  if (dynelaData->model.elements.first()->getFamily() == Element::Threedimensional)
   {
     zBufferSort();
   }

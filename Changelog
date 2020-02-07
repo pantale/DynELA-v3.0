@@ -1,3 +1,6 @@
+07/02/2020 - Modification of including and building tree
+           - Transfer of Nodes, Elements and Material to Model class
+
 17/01/2020 - Add more control on produced SVG images
 
 16/01/2020 - Add 3D SVG export

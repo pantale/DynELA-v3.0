@@ -529,7 +529,7 @@ bool Model::initSolve()
   /*   if (dynelaData->parallel != NULL)
   {
  */
-  // Dispatch base elements
+  // Dispatch elements to cores
   dynelaData->parallel.dispatchElements(elements);
   /*   }
  */

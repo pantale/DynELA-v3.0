@@ -78,11 +78,6 @@ private:
   short _resultFileIndex = 0;               //!< Current result file index
   String _resultFileName;                   //!< Current result file name
 
-protected:
-  List<Element *> elements;   //!< Elements list of the structure
-  List<Material *> materials; //!< Materials list of the structure
-  List<Node *> nodes;         //!< Nodes list of the structure
-
 public:
   double endSaveTime = 0.0;       //!< Final save time
   double nextSaveTime = 0.0;      //!< Next save time

@@ -22,6 +22,7 @@
 #define __dnlFEM_Solver_h__
 
 #include <String.h>
+
 class Model;
 
 /* #include <upFemSolver.h>

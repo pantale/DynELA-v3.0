@@ -19,7 +19,7 @@
   \date 1997-2004
 */
 
-#include "ColorMap.h"
+#include <ColorMap.h>
 
 //-----------------------------------------------------------------------------
 ColorMap::ColorMap()

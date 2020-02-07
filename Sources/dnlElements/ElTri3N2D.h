@@ -21,9 +21,7 @@ This file is the declaration file for the ElementPlane class.
 #ifndef __dnlElements_ElTri3n2D_h__
 #define __dnlElements_ElTri3n2D_h__
 
-class Element2D;
 #include <Element2D.h>
-
 class ElTri3N2D : public Element2D
 {
 

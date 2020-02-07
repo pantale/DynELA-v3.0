@@ -13,7 +13,7 @@
 #ifndef __dnlMaths_Function_h__
 #define __dnlMaths_Function_h__
 
-#include <dnlKernel.h>
+#include <String.h>
 
 /*!
   \file Function.h

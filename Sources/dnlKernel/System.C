@@ -19,9 +19,9 @@
   \date 1997-2004
 */
 
-#include "System.h"
-#include "Errors.h"
-#include "Exception.h"
+#include <System.h>
+#include <Errors.h>
+#include <Exception.h>
 
 #include <cstring>
 #include <cstdlib>

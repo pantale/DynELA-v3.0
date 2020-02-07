@@ -23,8 +23,6 @@
 
 */
 
-//using namespace std;
-
 class Exception
 {
 

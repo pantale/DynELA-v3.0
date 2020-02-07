@@ -19,8 +19,8 @@
 */
 
 #include <BoundaryCondition.h>
-#include <Boundary.h>
-#include <Node.h>
+/* #include <Boundary.h>
+#include <Node.h> */
 
 //!constructeur par defaut de la classe BoundaryCondition
 /*!

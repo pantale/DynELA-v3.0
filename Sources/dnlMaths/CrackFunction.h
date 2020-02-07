@@ -22,7 +22,8 @@
 #ifndef __dnlMaths_CrackFunction_h__
 #define __dnlMaths_CrackFunction_h__
 
-#include "DiscreteFunction.h"
+#include <List.h>
+#include <DiscreteFunction.h>
 
 /*!
   \class CrackFunction

@@ -22,8 +22,8 @@
 #define __dnlBC_BoundarySpeed_h__
 
 #include <Boundary.h>
-#include <Vec3D.h>
-class Node;
+/* #include <Vec3D.h>
+class Node; */
 
 class BoundarySpeed : public Boundary
 {

@@ -22,8 +22,8 @@
 #ifndef __dnlMaths_DiscreteFunction_h__
 #define __dnlMaths_DiscreteFunction_h__
 
-//#include <dnlKernel.h>
-#include "Function.h"
+#include <List.h>
+#include <Function.h>
 
 /*!
   \class coupleReal
@@ -86,7 +86,7 @@ private:
   void sort();
 
 public:
-  DiscreteFunction(char* newName = NULL);
+  DiscreteFunction(char *newName = NULL);
   DiscreteFunction(const DiscreteFunction &);
   ~DiscreteFunction();
 

@@ -21,6 +21,8 @@
 
 #ifndef __dnlMaths_RampFunction_h__
 #define __dnlMaths_RampFunction_h__
+
+//#include <dnlKernel.h>
 #include <Function.h>
 
 class RampFunction : public Function

@@ -34,7 +34,12 @@
   Class Tensor4 implementation
 */
 
+#include <fstream>
+
 #include <Tensor4.h>
+#include <Tensor3.h>
+#include <Tensor2.h>
+#include <Vec3D.h>
 #include <NumpyInterface.h>
 
 /*!
@@ -56,16 +61,16 @@
   \since DynELA 0.9.5
 */
 //-----------------------------------------------------------------------------
-Tensor4::Tensor4 ()
+Tensor4::Tensor4()
 //-----------------------------------------------------------------------------
 {
   // initialisation
-  setToValue (0.);
+  setToValue(0.);
 }
 
 //!destructeur de la classe Tensor4
 //-----------------------------------------------------------------------------
-Tensor4::~Tensor4 ()
+Tensor4::~Tensor4()
 //-----------------------------------------------------------------------------
 {
 }
@@ -84,10 +89,10 @@ Tensor4::~Tensor4 ()
   \since DynELA 0.9.5
 */
 //-----------------------------------------------------------------------------
-std::ostream & operator << (std::ostream & os, const Tensor4 & t1)
+std::ostream &operator<<(std::ostream &os, const Tensor4 &t1)
 //-----------------------------------------------------------------------------
 {
-  t1.print (os);
+  t1.print(os);
   return os;
 }
 
@@ -99,26 +104,25 @@ std::ostream & operator << (std::ostream & os, const Tensor4 & t1)
   \since DynELA 0.9.5
 */
 //-----------------------------------------------------------------------------
-void
-Tensor4::print (std::ostream & os) const
+void Tensor4::print(std::ostream &os) const
 //-----------------------------------------------------------------------------
 {
   long i, j, k, l;
   os << "tensor 3x3x3\n";
   for (i = 0; i < 3; i++)
+  {
+    for (j = 0; j < 3; j++)
     {
-      for (j = 0; j < 3; j++)
-	{
-	  for (k = 0; k < 3; k++)
-	    {
-	      for (l = 0; l < 3; l++)
-		{
-		  os << "T[" << i << "," << j << "," << k << "," << l << "]="
-		    << v[dnlTensor4Ind (i, j, k, l, 3)];
-		}
-	    }
-	}
+      for (k = 0; k < 3; k++)
+      {
+        for (l = 0; l < 3; l++)
+        {
+          os << "T[" << i << "," << j << "," << k << "," << l << "]="
+             << v[dnlTensor4Ind(i, j, k, l, 3)];
+        }
+      }
     }
+  }
 }
 
 //!renvoie un tenseur identite e partir d'un tenseur quelconque
@@ -135,17 +139,17 @@ Tensor4::print (std::ostream & os) const
   \since DynELA 0.9.5
 */
 //-----------------------------------------------------------------------------
-void
-Tensor4::setToUnity ()
+void Tensor4::setToUnity()
 //-----------------------------------------------------------------------------
 {
   for (long i = 0; i < 3; i++)
     for (long j = 0; j < 3; j++)
       for (long k = 0; k < 3; k++)
-	for (long l = 0; l < 3; l++)
-	  v[dnlTensor4Ind (i, j, k, l, 3)] =
-	    (dnlKronecker (i, k) * dnlKronecker (j, l) +
-	     dnlKronecker (i, l) * dnlKronecker (j, k)) / 2.;
+        for (long l = 0; l < 3; l++)
+          v[dnlTensor4Ind(i, j, k, l, 3)] =
+              (dnlKronecker(i, k) * dnlKronecker(j, l) +
+               dnlKronecker(i, l) * dnlKronecker(j, k)) /
+              2.;
 }
 
 //!affectation d'egalite
@@ -161,10 +165,10 @@ Tensor4::setToUnity ()
   \since DynELA 0.9.5
 */
 //-----------------------------------------------------------------------------
-Tensor4 & Tensor4::operator = (const double & val)
+Tensor4 &Tensor4::operator=(const double &val)
 //-----------------------------------------------------------------------------
 {
-  setToValue (val);
+  setToValue(val);
   return *this;
 }
 
@@ -181,10 +185,10 @@ Tensor4 & Tensor4::operator = (const double & val)
   \since DynELA 0.9.5
 */
 //-----------------------------------------------------------------------------
-Tensor4 & Tensor4::operator = (const Tensor4 & t1)
+Tensor4 &Tensor4::operator=(const Tensor4 &t1)
 //-----------------------------------------------------------------------------
 {
-  memcpy (v, t1.v, 81 * sizeof (double));
+  memcpy(v, t1.v, 81 * sizeof(double));
   return *this;
 }
 
@@ -202,7 +206,7 @@ Tensor4 & Tensor4::operator = (const Tensor4 & t1)
 */
 //-----------------------------------------------------------------------------
 Tensor4
-Tensor4::operator + (const Tensor4 & t1) const
+Tensor4::operator+(const Tensor4 &t1) const
 //-----------------------------------------------------------------------------
 {
   // creation d'un nouveau tenseur
@@ -230,7 +234,7 @@ Tensor4::operator + (const Tensor4 & t1) const
 */
 //-----------------------------------------------------------------------------
 Tensor4
-Tensor4::operator - (const Tensor4 & t1) const
+Tensor4::operator-(const Tensor4 &t1) const
 //-----------------------------------------------------------------------------
 {
   // creation d'un nouveau tenseur
@@ -259,7 +263,7 @@ Tensor4::operator - (const Tensor4 & t1) const
 */
 //-----------------------------------------------------------------------------
 Tensor4
-Tensor4::operator * (const double & lambda) const
+    Tensor4::operator*(const double &lambda) const
 //-----------------------------------------------------------------------------
 {
   Tensor4 t2;
@@ -286,7 +290,7 @@ Tensor4::operator * (const double & lambda) const
 */
 //-----------------------------------------------------------------------------
 Tensor4
-Tensor4::operator / (const double & lambda) const
+Tensor4::operator/(const double &lambda) const
 //-----------------------------------------------------------------------------
 {
   Tensor4 t2;
@@ -312,7 +316,7 @@ Tensor4::operator / (const double & lambda) const
 */
 //-----------------------------------------------------------------------------
 Tensor4
-operator * (const double & lambda, const Tensor4 & t1)
+operator*(const double &lambda, const Tensor4 &t1)
 //-----------------------------------------------------------------------------
 {
   Tensor4 t2;
@@ -338,8 +342,7 @@ operator * (const double & lambda, const Tensor4 & t1)
   \since DynELA 0.9.5
 */
 //-----------------------------------------------------------------------------
-Tensor3
-Tensor4::operator * (const Vec3D & v1) const
+Tensor3 Tensor4::operator*(const Vec3D &v1) const
 //-----------------------------------------------------------------------------
 {
   Tensor3 t3;
@@ -347,8 +350,8 @@ Tensor4::operator * (const Vec3D & v1) const
   for (long i = 0; i < 3; i++)
     for (long j = 0; j < 3; j++)
       for (long k = 0; k < 3; k++)
-	for (long l = 0; l < 3; l++)
-	  t3 (i, j, k) += v[dnlTensor4Ind (i, j, k, l, 3)] * v1 (l);
+        for (long l = 0; l < 3; l++)
+          t3(i, j, k) += v[dnlTensor4Ind(i, j, k, l, 3)] * v1(l);
 
   return t3;
 }
@@ -370,7 +373,7 @@ Tensor4::operator * (const Vec3D & v1) const
 */
 //-----------------------------------------------------------------------------
 Tensor2
-Tensor4::operator * (const Tensor2 & t2) const
+    Tensor4::operator*(const Tensor2 &t2) const
 //-----------------------------------------------------------------------------
 {
   Tensor2 t3;
@@ -378,8 +381,8 @@ Tensor4::operator * (const Tensor2 & t2) const
   for (long i = 0; i < 3; i++)
     for (long j = 0; j < 3; j++)
       for (long k = 0; k < 3; k++)
-	for (long l = 0; l < 3; l++)
-	  t3 (i, j) += v[dnlTensor4Ind (i, j, k, l, 3)] * t2 (k, l);
+        for (long l = 0; l < 3; l++)
+          t3(i, j) += v[dnlTensor4Ind(i, j, k, l, 3)] * t2(k, l);
 
   return t3;
 }
@@ -392,8 +395,7 @@ Tensor4::operator * (const Tensor2 & t2) const
   \since DynELA 0.9.5
 */
 //-----------------------------------------------------------------------------
-bool
-Tensor4::operator == (const Tensor4 & t1) const
+bool Tensor4::operator==(const Tensor4 &t1) const
 //-----------------------------------------------------------------------------
 {
   long i;
@@ -412,13 +414,11 @@ Tensor4::operator == (const Tensor4 & t1) const
   \since DynELA 0.9.5
 */
 //-----------------------------------------------------------------------------
-bool
-Tensor4::operator != (const Tensor4 & t1) const
+bool Tensor4::operator!=(const Tensor4 &t1) const
 //-----------------------------------------------------------------------------
 {
   return !(*this == t1);
 }
-
 
 //!sortie sur flux std::ofstream
 /*!
@@ -434,11 +434,10 @@ Tensor4::operator != (const Tensor4 & t1) const
   \since DynELA 0.9.5
 */
 //-----------------------------------------------------------------------------
-void
-Tensor4::write (std::ofstream & ofs) const
+void Tensor4::write(std::ofstream &ofs) const
 //-----------------------------------------------------------------------------
 {
-  ofs.write ((char *) v, 81 * sizeof (double));
+  ofs.write((char *)v, 81 * sizeof(double));
 }
 
 //!lecture sur flux std::ifstream
@@ -455,11 +454,10 @@ Tensor4::write (std::ofstream & ofs) const
   \since DynELA 0.9.5
 */
 //-----------------------------------------------------------------------------
-void
-Tensor4::read (std::ifstream & ifs)
+void Tensor4::read(std::ifstream &ifs)
 //-----------------------------------------------------------------------------
 {
-  ifs.read ((char *) v, 81 * sizeof (double));
+  ifs.read((char *)v, 81 * sizeof(double));
 }
 
 //!sortie sur flux std::ofstream
@@ -476,10 +474,10 @@ Tensor4::read (std::ifstream & ifs)
   \since DynELA 0.9.5
 */
 //-----------------------------------------------------------------------------
-std::ofstream & operator << (std::ofstream & os, const Tensor4 & t1)
+std::ofstream &operator<<(std::ofstream &os, const Tensor4 &t1)
 //-----------------------------------------------------------------------------
 {
-  t1.write (os);
+  t1.write(os);
   return os;
 }
 
@@ -497,10 +495,10 @@ std::ofstream & operator << (std::ofstream & os, const Tensor4 & t1)
   \since DynELA 0.9.5
 */
 //-----------------------------------------------------------------------------
-std::ifstream & operator >> (std::ifstream & is, Tensor4 & t1)
+std::ifstream &operator>>(std::ifstream &is, Tensor4 &t1)
 //-----------------------------------------------------------------------------
 {
-  t1.read (is);
+  t1.read(is);
   return is;
 }
 
@@ -518,10 +516,10 @@ std::ifstream & operator >> (std::ifstream & is, Tensor4 & t1)
 void Tensor4::numpyWrite(std::string filename, bool initialize) const
 //-----------------------------------------------------------------------------
 {
-    std::string mode = "a";
-    if (initialize)
-        mode = "w";
-    NumpyInterface::npySave(filename, &v[0], {3,3,3,3}, mode);
+  std::string mode = "a";
+  if (initialize)
+    mode = "w";
+  NumpyInterface::npySave(filename, &v[0], {3, 3, 3, 3}, mode);
 }
 
 //!Saves the content of a Tensor4 into a NumPyZ file
@@ -538,10 +536,10 @@ void Tensor4::numpyWrite(std::string filename, bool initialize) const
 void Tensor4::numpyWriteZ(std::string filename, std::string name, bool initialize) const
 //-----------------------------------------------------------------------------
 {
-    std::string mode = "a";
-    if (initialize)
-        mode = "w";
-    NumpyInterface::npzSave(filename, name, &v[0], {3,3,3,3}, mode);
+  std::string mode = "a";
+  if (initialize)
+    mode = "w";
+  NumpyInterface::npzSave(filename, name, &v[0], {3, 3, 3, 3}, mode);
 }
 
 //!Read the content of a Tensor4 from a NumPy file
@@ -558,12 +556,12 @@ void Tensor4::numpyWriteZ(std::string filename, std::string name, bool initializ
 void Tensor4::numpyRead(std::string filename)
 //-----------------------------------------------------------------------------
 {
-    NumpyInterface::NumpyArray arr = NumpyInterface::npyLoad(filename);
-    if (arr.num_vals != 81)
-    {
-        std::cout << "ERROR\n";
-    }
-    memcpy(v, arr.data<double *>(),  arr.num_vals * arr.word_size);
+  NumpyInterface::NumpyArray arr = NumpyInterface::npyLoad(filename);
+  if (arr.num_vals != 81)
+  {
+    std::cout << "ERROR\n";
+  }
+  memcpy(v, arr.data<double *>(), arr.num_vals * arr.word_size);
 }
 
 //!Read the content of a Tensor4 from a NumPyZ file
@@ -580,10 +578,10 @@ void Tensor4::numpyRead(std::string filename)
 void Tensor4::numpyReadZ(std::string filename, std::string name)
 //-----------------------------------------------------------------------------
 {
-    NumpyInterface::NumpyArray arr = NumpyInterface::npzLoad(filename, name);
-    if (arr.num_vals != 81)
-    {
-        std::cout << "ERROR\n";
-    }
-    memcpy(v, arr.data<double *>(),  arr.num_vals * arr.word_size);
+  NumpyInterface::NumpyArray arr = NumpyInterface::npzLoad(filename, name);
+  if (arr.num_vals != 81)
+  {
+    std::cout << "ERROR\n";
+  }
+  memcpy(v, arr.data<double *>(), arr.num_vals * arr.word_size);
 }

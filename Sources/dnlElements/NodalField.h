@@ -21,7 +21,7 @@
 #ifndef __dnlElements_NodalField_h__
 #define __dnlElements_NodalField_h__
 
-#include <Vec3D.h>
+#include <dnlMaths.h>
 
 class NodalField
 {

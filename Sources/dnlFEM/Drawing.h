@@ -21,9 +21,9 @@
 #ifndef __dnlFEM_Drawing_h__
 #define __dnlFEM_Drawing_h__
 
-#include <String.h>
 #include <Vec3D.h>
-#include <Polygon.h>
+
+class Polygon;
 
 class Drawing
 {

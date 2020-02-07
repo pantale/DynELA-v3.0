@@ -20,9 +20,9 @@
 #ifndef __dnlKernel_LogFile_h__
 #define __dnlKernel_LogFile_h__
 
-#include <String.h>
 #include <iostream>
 #include <fstream>
+#include <String.h>
 
 class LogFile
 {

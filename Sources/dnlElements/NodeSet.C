@@ -19,8 +19,7 @@
 */
 
 #include <NodeSet.h>
-#include <Errors.h>
-//#include <DynELA.h>
+#include <Node.h>
 
 //-----------------------------------------------------------------------------
 NodeSet::NodeSet(char *_name)
@@ -48,7 +47,7 @@ NodeSet::~NodeSet()
 void NodeSet::setName(char *_name)
 //-----------------------------------------------------------------------------
 {
-    name = _name;
+  name = _name;
 }
 
 //!Add a new node to the current NodeSet

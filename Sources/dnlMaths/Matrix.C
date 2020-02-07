@@ -27,10 +27,10 @@
 #include <lapacke.h>
 #include <cblas.h>
 
-#include "NumpyInterface.h"
-#include "Matrix.h"
-#include "MatrixDiag.h"
-#include "Tensor2.h"
+#include <Matrix.h>
+#include <NumpyInterface.h>
+#include <MatrixDiag.h>
+#include <Tensor2.h>
 
 //!constructeur de la classe Matrix
 /*!

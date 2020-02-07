@@ -21,15 +21,20 @@
 #ifndef __dnlFEM_DynELA_h__
 #define __dnlFEM_DynELA_h__
 
-#include <Node.h>
+#include <omp.h>
+
+#include <dnlKernel.h>
 #include <Element.h>
+
+#include <Parallel.h>
+#include <Drawing.h> 
+
+/* #include <Element.h>
 #include <LogFile.h>
 #include <Settings.h>
 #include <Timer.h>
 #include <Parallel.h>
-#include <Drawing.h>
-
-#include <omp.h>
+#include <Drawing.h> */
 
 class DynELA;
 #ifndef SWIG
@@ -52,18 +57,25 @@ extern DynELA *dynelaData;
   \version 1.0.0
   \date 1997-2004
 */
-class Model;
+
+class VtkInterface;
+class Boundary;
+class HistoryFile;
+class Solver;
+//class Node;
+class Material;
+class ElementSet;
+class NodeSet;
+
+/* class Model;
 class Node;
 class Element;
 class LogFile;
 class Material;
 class NodeSet;
 class ElementSet;
-class VtkInterface;
-class Boundary;
-class Solver;
 class Parallel;
-class HistoryFile;
+ */
 
 /* class Element;
 class Node;

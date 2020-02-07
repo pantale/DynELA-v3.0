@@ -21,9 +21,7 @@
 #ifndef __dnlFEM_Model_h__
 #define __dnlFEM_Model_h__
 
-#include <String.h>
-#include <List.h>
-#include <DynELA.h>
+#include <DynELA.h> 
 
 class Node;
 class Element;

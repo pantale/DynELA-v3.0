@@ -12,27 +12,32 @@
   \brief Definition of the basic mathematical operators and constants.
 
   This file defines all the mathematical constants, tools and basic operators.
-  \ingroup dnlKernel
+  \ingroup dnlElements
   \author &copy; Olivier PANTALE
   \date 1997-2019
 */
 
-#ifndef __dnlKernel_h__
-#define __dnlKernel_h__
+#ifndef __dnlElements_h__
+#define __dnlElements_h__
 
-// Common headers of Kernel folder
+// Common headers of Maths folder
+#include <dnlMaterials.h>
 
-#include <Defines.h>
-#include <Errors.h>
-#include <Exception.h>
-#include <Field.h>
-#include <List.h>
-#include <LogFile.h>
-#include <MacAddress.h>
-#include <Macros.h>
-#include <Settings.h>
-#include <String.h>
-#include <System.h>
-#include <Timer.h>
+#include <Element2D.h>
+#include <Element3D.h>
+#include <ElementAxi.h>
+#include <ElementData.h>
+#include <Element.h>
+#include <ElementPlane.h>
+#include <ElementSet.h>
+#include <ElHex8N3D.h>
+#include <ElQua4N2D.h>
+#include <ElQua4NAx.h>
+#include <ElTet10N3D.h>
+#include <ElTet4N3D.h>
+#include <ElTri3N2D.h>
+#include <NodalField.h>
+#include <Node.h>
+#include <NodeSet.h>
 
 #endif

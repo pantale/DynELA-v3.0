@@ -17,7 +17,7 @@
   \date 1997-2019
 */
 
-#include "Timer.h"
+#include <Timer.h>
 #include <iostream>
 #include <fstream>
 

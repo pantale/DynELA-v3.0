@@ -21,9 +21,7 @@
 #ifndef __dnlElements_IntegrationPoint_h__
 #define __dnlElements_IntegrationPoint_h__
 
-#include <SymTensor2.h>
-#include <Tensor2.h>
-#include <Matrix.h>
+#include <dnlMaths.h>
 
 struct IntegrationPointData;
 

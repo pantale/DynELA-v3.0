@@ -19,6 +19,14 @@
 */
 
 #include <DynELA.h>
+#include <Node.h>
+#include <NodeSet.h>
+#include <BoundaryCondition.h>
+#include <Model.h>
+#include <VtkInterface.h>
+#include <Solver.h>
+
+/* #include <DynELA.h>
 #include <Model.h>
 #include <Material.h>
 #include <Node.h>
@@ -35,15 +43,17 @@
 #include <ElementSet.h>
 #include <BoundaryCondition.h>
 #include <Boundary.h>
-#include <Solver.h>
 #include <Field.h>
 #include <VtkInterface.h>
-#include <Parallel.h>
+#include <Parallel.h> */
 
 /* #define nodeDisplayOnlineFrequency 100
 #define elementDisplayOnlineFrequency 100
  */
+
+class DynELA;
 DynELA *dynelaData = NULL; // initialisation par defaut sur NULL
+
 /* extern String parsedFileName;
 extern CPUrecord recordTimes;
  */

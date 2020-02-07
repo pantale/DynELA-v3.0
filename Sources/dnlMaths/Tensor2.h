@@ -27,6 +27,8 @@
 #define __dnlMaths_Tensor2_h__
 
 #include <string>
+#include <string.h>
+#include <Errors.h>
 #include <Macros.h>
 
 class Vec3D;

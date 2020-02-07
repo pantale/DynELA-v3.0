@@ -24,6 +24,8 @@
   \date 1997-2019
 */
 
+#include <fstream>
+
 #include <Vec3D.h>
 #include <NumpyInterface.h>
 #include <Tensor2.h>

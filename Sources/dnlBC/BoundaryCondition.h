@@ -21,10 +21,10 @@
 #ifndef __dnlBC_BoundaryCondition_h__
 #define __dnlBC_BoundaryCondition_h__
 
-#include <List.h>
+#include <Boundary.h>
 
-class Boundary;
-class Node;
+/* class Boundary;
+class Node; */
 
 class BoundaryCondition
 {

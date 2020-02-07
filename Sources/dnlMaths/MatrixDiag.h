@@ -25,8 +25,8 @@
 #ifndef __dnlMaths_MatrixDiag_h__
 #define __dnlMaths_MatrixDiag_h__
 
+#include <Matrices.h>
 #include <Vector.h>
-#include <Matrix.h>
 
 /*!
   \class MatrixDiag MatrixDiag.h

@@ -21,8 +21,7 @@
 #ifndef __dnlMaterials_HardeningLaw_h__
 #define __dnlMaterials_HardeningLaw_h__
 
-//#include <upFemSolver.h>
-#include <String.h>
+#include <dnlMaths.h>
 
 class ElementSet;
 

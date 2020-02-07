@@ -21,6 +21,8 @@
 
 #ifndef __dnlMaths_PolynomialFunction_h__
 #define __dnlMaths_PolynomialFunction_h__
+
+#include <List.h>
 #include <Function.h>
 
 struct PolynomialFragment

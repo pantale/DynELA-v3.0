@@ -22,10 +22,13 @@
 #ifndef __dnlMaths_Tensor3_h__
 #define __dnlMaths_Tensor3_h__
 
-#include <Vec3D.h>
-#include <Tensor2.h>
+#include <string>
+#include <string.h>
+#include <Errors.h>
+#include <Macros.h>
 
 class Vec3D;
+class Tensor2;
 
 /*!
   \class Tensor3

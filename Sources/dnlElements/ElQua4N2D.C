@@ -21,13 +21,6 @@
 #include <ElQua4N2D.h>
 #include <Node.h>
 
-/* #include <Model.h>
-#include <io_Structure.h>
-#include <DynELA.h>
-#include <IntegrationPoint.h>
-//#include <Physic.h>
-*/
-
 const ElementData ElQua4N2D::_elementData = {
     "ElQua4N2D",            // name of the Element
     Element::ElQua4N2D,     // Type of the Element

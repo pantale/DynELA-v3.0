@@ -12,27 +12,23 @@
   \brief Definition of the basic mathematical operators and constants.
 
   This file defines all the mathematical constants, tools and basic operators.
-  \ingroup dnlKernel
+  \ingroup dnlMaterials
   \author &copy; Olivier PANTALE
   \date 1997-2019
 */
 
-#ifndef __dnlKernel_h__
-#define __dnlKernel_h__
+#ifndef __dnlMaterials_h__
+#define __dnlMaterials_h__
 
-// Common headers of Kernel folder
+// Common headers of Maths folder
+#include <dnlMaths.h>
 
-#include <Defines.h>
-#include <Errors.h>
-#include <Exception.h>
-#include <Field.h>
-#include <List.h>
-#include <LogFile.h>
-#include <MacAddress.h>
-#include <Macros.h>
-#include <Settings.h>
-#include <String.h>
-#include <System.h>
-#include <Timer.h>
+#include <ElasticLaw.h>
+#include <ElastoplasticLaw.h>
+#include <HardeningLaw.h>
+#include <IntegrationPoint.h>
+#include <JohnsonCookLaw.h>
+#include <Material.h>
+#include <TabularLaw.h>
 
 #endif

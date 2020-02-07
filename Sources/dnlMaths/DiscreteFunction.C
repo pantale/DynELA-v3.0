@@ -19,10 +19,11 @@
   \date 1997-2019
 */
 
-#include "DiscreteFunction.h"
-#include "NumpyInterface.h"
 #include <Macros.h>
-#include <String.h>
+#include <Exception.h>
+
+#include <DiscreteFunction.h>
+#include <NumpyInterface.h>
 
 //!Default constructor for the coupleReal class
 //-----------------------------------------------------------------------------

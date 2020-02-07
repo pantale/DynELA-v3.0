@@ -21,35 +21,22 @@
 #ifndef __dnlMaterials_Material_h__
 #define __dnlMaterials_Material_h__
 
-//#include <upFemSolver.h>
-#include <Vec3D.h>
-#include <Tensor4.h>
-#include <String.h>
-#include <Matrix.h>
-#include <HardeningLaw.h>
+#include <dnlMaths.h>
 
 class ElementSet;
+class HardeningLaw;
 
 /*!
   \file Material.h
   \brief fichier .h de definition de la classe generique des materiaux
   \ingroup femLibrary
 
-  Ce fichier sert e la definition la classe generique des materiaux.
+  Ce fichier sert à la definition la classe generique des materiaux.
 
   \author &copy; Olivier PANTALE
   \version 0.9.6
   \date 1997-2004
 */
-
-/* #define lawName_Material "generic material"
-#define Name_Material "Material"
-
-class IntegrationPoint;
-class Element;
-class HardeningLaw;
-class Viscosity;
- */
 
 /*!
   \brief Classe virtuelle de gestion des materiaux
@@ -99,7 +86,7 @@ public:
   virtual ~Material();
 
   bool checkValues();
-//  bool isLinear();
+  //  bool isLinear();
   bool isYield();
   double getBulkModulus();
   double getLambda();

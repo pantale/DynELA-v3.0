@@ -19,15 +19,8 @@
 */
 
 #include <Element2D.h>
-#include <NodalField.h>
 #include <Node.h>
-
-/* #include <IntegrationPoint.h>
-#include <Material.h>
-#include <DynELA.h>
-#include <io_Structure.h>
-//#include <Physic.h>
-#include <Model.h> */
+#include <NodalField.h>
 
 //-----------------------------------------------------------------------------
 Element2D::Element2D(long elementNumber) : ElementPlane(elementNumber)

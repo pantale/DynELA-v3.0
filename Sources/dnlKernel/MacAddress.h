@@ -20,8 +20,8 @@
 #ifndef __dnlKernel_MacAddress_h__
 #define __dnlKernel_MacAddress_h__
 
-#include "String.h"
-#include "List.h"
+#include <String.h>
+#include <List.h>
 
 /*!
   \brief MacAddress class definition.

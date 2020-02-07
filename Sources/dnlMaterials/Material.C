@@ -19,7 +19,7 @@
 */
 
 #include <Material.h>
-//#include <HardeningLaw.h>
+#include <HardeningLaw.h>
 
 //-----------------------------------------------------------------------------
 Material::Material(char *newName)

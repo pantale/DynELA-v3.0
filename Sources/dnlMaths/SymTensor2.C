@@ -23,10 +23,12 @@
   \date 1997-2019
 */
 
+#include <fstream>
+
 #include <SymTensor2.h>
 #include <NumpyInterface.h>
-#include <Timer.h>
 #include <Tensor2.h>
+#include <Vec3D.h>
 
 #define precisionPolarDecompose 10.0E-10
 

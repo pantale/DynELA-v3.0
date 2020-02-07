@@ -21,13 +21,6 @@
 #include <ElQua4NAx.h>
 #include <Node.h>
 
-/* #include <Model.h>
-#include <io_Structure.h>
-#include <DynELA.h>
-#include <IntegrationPoint.h>
-//#include <Physic.h>
-*/
-
 const ElementData ElQua4NAx::_elementData = {
     "ElQua4NAx",          // name of the Element
     Element::ElQua4NAx,   // Type of the Element

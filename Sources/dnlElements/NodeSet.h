@@ -21,9 +21,9 @@
 #ifndef __dnlElements_NodeSet_h__
 #define __dnlElements_NodeSet_h__
 
-#include <String.h>
-#include <List.h>
-#include <Node.h>
+#include <dnlMaths.h>
+
+class Node;
 
 class NodeSet
 {

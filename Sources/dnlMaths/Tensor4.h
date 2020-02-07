@@ -49,11 +49,15 @@
   \date 1997-2004  
 */
 
-#include <Vec3D.h>
-#include <Tensor2.h>
-#include <Tensor3.h>
+//#include <dnlKernel.h>
+#include <string>
+#include <string.h>
+#include <Errors.h>
+#include <Macros.h>
 
 class Vec3D;
+class Tensor2;
+class Tensor3;
 
 /*!
   \class Tensor4 Tensor4.h

@@ -19,6 +19,8 @@
   \date 1997-2019
 */
 
+#include <Macros.h>
+#include <Errors.h>
 #include <RampFunction.h>
 
 //-----------------------------------------------------------------------------

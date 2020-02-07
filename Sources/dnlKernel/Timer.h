@@ -23,8 +23,8 @@
 #include <iostream>
 #include <chrono>
 #include <ctime>
-#include "String.h"
-#include "List.h"
+#include <String.h>
+#include <List.h>
 
 class Timer
 {

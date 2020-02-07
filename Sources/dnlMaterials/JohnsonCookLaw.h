@@ -22,7 +22,6 @@
 #define __dnlMaterials_JohnsonCookLaw_h__
 
 #include <HardeningLaw.h>
-//class IntegrationPoint;
 
 /*!
   \class JohnsonCookLaw

@@ -21,12 +21,11 @@
 #ifndef __dnlBC_Boundary_h__
 #define __dnlBC_Boundary_h__
 
-#include <List.h>
-#include <String.h>
+#include <dnlElements.h>
 
-class Node;
+/* class Node;
 class NodeSet;
-class Function;
+class Function; */
 
 class Boundary
 {

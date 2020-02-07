@@ -19,9 +19,9 @@
 */
 
 #include <BoundaryAcceleration.h>
-#include <Node.h>
+/* #include <Node.h>
 #include <NodalField.h>
-
+ */
 //-----------------------------------------------------------------------------
 BoundaryAcceleration::BoundaryAcceleration(char *newName) : Boundary(newName)
 //-----------------------------------------------------------------------------

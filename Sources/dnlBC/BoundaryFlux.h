@@ -22,9 +22,9 @@
 #define __dnlBC_BoundaryFlux_h__
 
 #include <Boundary.h>
-#include <Vec3D.h>
+/* #include <Vec3D.h>
 class Node;
-
+ */
 class BoundaryFlux : public Boundary
 {
 

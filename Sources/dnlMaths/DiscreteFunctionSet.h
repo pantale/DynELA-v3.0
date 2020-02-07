@@ -21,8 +21,8 @@
 
 #ifndef __dnlMaths_DiscreteFunctionSet_h__
 #define __dnlMaths_DiscreteFunctionSet_h__
+
 #include <DiscreteFunction.h>
-//#include <Function.h>
 
 /*!
   \class DiscreteFunctionSet

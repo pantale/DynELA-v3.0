@@ -22,11 +22,12 @@
   \since DynELA 1.0
   \date 1997-2019
 */
+#include <fstream>
 
 #include <Tensor2.h>
 #include <SymTensor2.h>
+#include <Vec3D.h>
 #include <NumpyInterface.h>
-#include <Timer.h>
 
 #define precisionPolarDecompose 10.0E-10
 

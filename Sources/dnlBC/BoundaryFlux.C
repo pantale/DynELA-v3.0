@@ -19,9 +19,9 @@
 */
 
 #include <BoundaryFlux.h>
-#include <Node.h>
+/* #include <Node.h>
 #include <NodalField.h>
-
+ */
 //!constructeur par defaut de la classe BoundaryFlux
 /*!
   Cette methode est le constructeur par defaut de la classe BoundaryFlux. En pratique, ici, on ne fait rien de plus que les allocations de memoire necessaires.

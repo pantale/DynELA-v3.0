@@ -21,7 +21,7 @@
   \date 1997-2004
 */
 
-#include "Function.h"
+#include <Function.h>
 
 //!constructeur par defaut de la classe Function
 /*!
@@ -30,10 +30,10 @@
   \since 0.9.5
 */
 //-----------------------------------------------------------------------------
-Function::Function(char* newName)
+Function::Function(char *newName)
 //-----------------------------------------------------------------------------
 {
-       if (newName != NULL)
+  if (newName != NULL)
     name = newName;
 }
 

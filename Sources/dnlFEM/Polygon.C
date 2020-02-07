@@ -21,6 +21,7 @@
 #include <Polygon.h>
 #include <Field.h>
 #include <DynELA.h>
+#include <Node.h>
 
 //-----------------------------------------------------------------------------
 Polygon::Polygon()

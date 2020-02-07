@@ -17,7 +17,7 @@
   \author &copy; Olivier PANTALE
   \date 1997-2019
 */
-#include <Errors.h>
+
 #include <JohnsonCookLaw.h>
 #include <IntegrationPoint.h>
 #include <Material.h>

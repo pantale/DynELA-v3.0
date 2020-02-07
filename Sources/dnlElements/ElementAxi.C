@@ -22,13 +22,6 @@
 #include <Node.h>
 #include <NodalField.h>
 
-/* #include <IntegrationPoint.h>
-#include <Material.h>
-#include <DynELA.h>
-#include <io_Structure.h>
-// #include <Physic.h>
-#include <Model.h>
- */
 //-----------------------------------------------------------------------------
 ElementAxi::ElementAxi(long elementNumber) : ElementPlane(elementNumber)
 //-----------------------------------------------------------------------------

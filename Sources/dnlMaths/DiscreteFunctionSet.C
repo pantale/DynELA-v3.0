@@ -19,7 +19,8 @@
   \date 1997-2019
 */
 
-#include "DiscreteFunctionSet.h"
+#include <Defines.h>
+#include <DiscreteFunctionSet.h>
 
 //!Constructor of the DiscreteFunctionSet class
 //-----------------------------------------------------------------------------

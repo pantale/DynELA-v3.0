@@ -19,6 +19,7 @@
   \date 1997-2019
 */
 
+#include <Macros.h>
 #include <SinusFunction.h>
 
 //!constructeur par defaut de la classe SinusFunction

@@ -21,8 +21,7 @@
 #ifndef __dnlFEM_Parallel_h__
 #define __dnlFEM_Parallel_h__
 
-#include <String.h>
-#include <List.h>
+#include <dnlKernel.h>
 #include <omp.h>
 
 class Element;

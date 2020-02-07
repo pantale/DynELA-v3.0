@@ -21,7 +21,7 @@
 #define __dnlMaths_ColorMap_h__
 
 #include <Vec3D.h>
-#include <DiscreteFunction.h>
+#include <DiscreteFunction.h> 
 
 class ColorMap
 {

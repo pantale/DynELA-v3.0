@@ -18,9 +18,11 @@
   \date 1997-2019
 */
 
-#include <Drawing.h>
-#include <DynELA.h>
 #include <Element.h>
+
+#include <Drawing.h>
+#include <Polygon.h>
+#include <DynELA.h>
 
 //-----------------------------------------------------------------------------
 Drawing::Drawing()

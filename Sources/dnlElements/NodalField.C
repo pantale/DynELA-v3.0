@@ -18,7 +18,7 @@
   \date 1997-2019
 */
 
-#include "NodalField.h"
+#include <NodalField.h>
 
 //-----------------------------------------------------------------------------
 NodalField::NodalField()

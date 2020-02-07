@@ -18,11 +18,9 @@
   \date 1997-2019
 */
 
-#include <Errors.h>
 #include <Solver.h>
+#include <dnlKernel.h>
 #include <Model.h>
-#include <Settings.h>
-
 /* 
 #include <DynELA.h>
 //#include <Grid.h>

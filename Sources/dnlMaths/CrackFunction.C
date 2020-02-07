@@ -19,7 +19,8 @@
   \date 1997-2019
 */
 
-#include "CrackFunction.h"
+#include <Macros.h>
+#include <CrackFunction.h>
 
 //!Constructor of the CrackFunction class
 //-----------------------------------------------------------------------------

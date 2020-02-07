@@ -20,22 +20,7 @@
 
 #include <Element.h>
 #include <Node.h>
-#include <IntegrationPoint.h>
-#include <NodalField.h>
-#include <Material.h>
 #include <Field.h>
-//#include <Model.h>
-
-/* #include <Node.h>
-
-extern CPUrecord recordTimes;
-
-#ifdef G2TR_STUDY
-// #include <Physic.h>
-#include <DynELA.h>
-#include <Solver.h>
-#endif
- */
 
 //-----------------------------------------------------------------------------
 Element::Element(long elementNumber)

@@ -21,14 +21,18 @@
 #ifndef __dnlFEM_Polygon_h__
 #define __dnlFEM_Polygon_h__
 
-#include <String.h>
-#include <List.h>
+#include <Vec3D.h>
+#include <ColorMap.h>
+
+/* #include <List.h>
 #include <iostream>
 #include <fstream>
 #include <Vec3D.h>
 #include <Tensor2.h>
 #include <Node.h>
-#include <ColorMap.h>
+#include <ColorMap.h> */
+
+class Node;
 
 #define PolygonMaxNodes 8
 

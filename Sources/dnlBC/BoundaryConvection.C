@@ -19,8 +19,8 @@
 */
 
 #include <BoundaryConvection.h>
-#include <Node.h>
-#include <NodalField.h>
+/* #include <Node.h>
+#include <NodalField.h> */
 
 //!constructeur par defaut de la classe BoundaryConvection
 /*!

@@ -19,25 +19,28 @@
   \date 1997-2019
 */
 
-#include <Tensor3.h>
-#include <NumpyInterface.h>
+#include <fstream>
 
+#include <Tensor3.h>
+#include <Tensor2.h>
+#include <Vec3D.h>
+#include <NumpyInterface.h>
 
 //!Constructor of the Tensor3 class
 /*!
   This method is the default constructor of a third order tensor. All components are initialized to zero by default.
 */
 //-----------------------------------------------------------------------------
-Tensor3::Tensor3 ()
+Tensor3::Tensor3()
 //-----------------------------------------------------------------------------
 {
-    // initialisation
-    setToValue ( 0. );
+  // initialisation
+  setToValue(0.);
 }
 
 //!Destructor of the Tensor3 class
 //-----------------------------------------------------------------------------
-Tensor3::~Tensor3 ()
+Tensor3::~Tensor3()
 //-----------------------------------------------------------------------------
 {
 }
@@ -52,11 +55,11 @@ Tensor3::~Tensor3 ()
   \param os Output flux
 */
 //-----------------------------------------------------------------------------
-std::ostream &operator << ( std::ostream &os, const Tensor3 &t1 )
+std::ostream &operator<<(std::ostream &os, const Tensor3 &t1)
 //-----------------------------------------------------------------------------
 {
-    t1.print ( os );
-    return os;
+  t1.print(os);
+  return os;
 }
 
 //!Print the content of a third order tensor to the output flux for display
@@ -64,19 +67,21 @@ std::ostream &operator << ( std::ostream &os, const Tensor3 &t1 )
   \param os Output flux
 */
 //-----------------------------------------------------------------------------
-void Tensor3::print ( std::ostream &os ) const
+void Tensor3::print(std::ostream &os) const
 //-----------------------------------------------------------------------------
 {
-    long i, j, k;
-    os << "tensor 3x3x3\n";
-    for ( i = 0; i < 3; i++ ) {
-        for ( j = 0; j < 3; j++ ) {
-            for ( k = 0; k < 3; k++ ) {
-                os << "T[" << i << "," << j << "," << k << "]=" <<
-                   v[dnlTensor3Ind ( i, j, k, 3 )];
-            }
-        }
+  long i, j, k;
+  os << "tensor 3x3x3\n";
+  for (i = 0; i < 3; i++)
+  {
+    for (j = 0; j < 3; j++)
+    {
+      for (k = 0; k < 3; k++)
+      {
+        os << "T[" << i << "," << j << "," << k << "]=" << v[dnlTensor3Ind(i, j, k, 3)];
+      }
     }
+  }
 }
 
 //!Returns an identity tensor
@@ -91,16 +96,16 @@ void Tensor3::print ( std::ostream &os ) const
   \warning This method modify it's argument
 */
 //-----------------------------------------------------------------------------
-void Tensor3::setToUnity ()
+void Tensor3::setToUnity()
 //-----------------------------------------------------------------------------
 {
-    setToValue ( 0. );
-    v[dnlTensor3Ind ( 0, 1, 2, 3 )] = 1.;
-    v[dnlTensor3Ind ( 1, 2, 0, 3 )] = 1.;
-    v[dnlTensor3Ind ( 2, 0, 1, 3 )] = 1.;
-    v[dnlTensor3Ind ( 2, 1, 0, 3 )] = -1.;
-    v[dnlTensor3Ind ( 1, 0, 2, 3 )] = -1.;
-    v[dnlTensor3Ind ( 0, 2, 1, 3 )] = -1.;
+  setToValue(0.);
+  v[dnlTensor3Ind(0, 1, 2, 3)] = 1.;
+  v[dnlTensor3Ind(1, 2, 0, 3)] = 1.;
+  v[dnlTensor3Ind(2, 0, 1, 3)] = 1.;
+  v[dnlTensor3Ind(2, 1, 0, 3)] = -1.;
+  v[dnlTensor3Ind(1, 0, 2, 3)] = -1.;
+  v[dnlTensor3Ind(0, 2, 1, 3)] = -1.;
 }
 
 //!Fill a third order tensor with a scalar value
@@ -115,11 +120,11 @@ void Tensor3::setToUnity ()
   \param val double value to give to all components of the third order tensor
 */
 //-----------------------------------------------------------------------------
-Tensor3 &Tensor3::operator = ( const double &val )
+Tensor3 &Tensor3::operator=(const double &val)
 //-----------------------------------------------------------------------------
 {
-    setToValue ( val );
-    return *this;
+  setToValue(val);
+  return *this;
 }
 
 //!Copy the content of a third order tensor into a new one
@@ -134,11 +139,11 @@ Tensor3 &Tensor3::operator = ( const double &val )
   \param t1 Second third order tensor to use for the operation
 */
 //-----------------------------------------------------------------------------
-Tensor3 &Tensor3::operator = ( const Tensor3 &t1 )
+Tensor3 &Tensor3::operator=(const Tensor3 &t1)
 //-----------------------------------------------------------------------------
 {
-    memcpy ( v, t1.v, 27 * sizeof ( double ) );
-    return *this;
+  memcpy(v, t1.v, 27 * sizeof(double));
+  return *this;
 }
 
 //!Addition of 2 third order tensors
@@ -155,19 +160,20 @@ Tensor3 &Tensor3::operator = ( const Tensor3 &t1 )
   \param t1 Second third order tensor to use for the operation
 */
 //-----------------------------------------------------------------------------
-Tensor3 Tensor3::operator + ( const Tensor3 &t1 ) const
+Tensor3 Tensor3::operator+(const Tensor3 &t1) const
 //-----------------------------------------------------------------------------
 {
-    // creation d'un nouveau tenseur
-    Tensor3 t2;
+  // creation d'un nouveau tenseur
+  Tensor3 t2;
 
-    // calcul de la somme
-    for ( long i = 0; i < 27; i++ ) {
-        t2.v[i] = v[i] + t1.v[i];
-    }
+  // calcul de la somme
+  for (long i = 0; i < 27; i++)
+  {
+    t2.v[i] = v[i] + t1.v[i];
+  }
 
-    // renvoi de l'objet
-    return t2;
+  // renvoi de l'objet
+  return t2;
 }
 
 //!Difference of 2 third order tensors
@@ -184,19 +190,20 @@ Tensor3 Tensor3::operator + ( const Tensor3 &t1 ) const
   \param t1 Second third order tensor to use for the operation
 */
 //-----------------------------------------------------------------------------
-Tensor3 Tensor3::operator - ( const Tensor3 &t1 ) const
+Tensor3 Tensor3::operator-(const Tensor3 &t1) const
 //-----------------------------------------------------------------------------
 {
-    // creation d'un nouveau tenseur
-    Tensor3 t2;
+  // creation d'un nouveau tenseur
+  Tensor3 t2;
 
-    // calcul de la somme
-    for ( long i = 0; i < 27; i++ ) {
-        t2.v[i] = v[i] - t1.v[i];
-    }
+  // calcul de la somme
+  for (long i = 0; i < 27; i++)
+  {
+    t2.v[i] = v[i] - t1.v[i];
+  }
 
-    // renvoi de l'objet
-    return t2;
+  // renvoi de l'objet
+  return t2;
 }
 
 //!Multiplication of a third order tensor by a scalar value
@@ -214,16 +221,17 @@ Tensor3 Tensor3::operator - ( const Tensor3 &t1 ) const
   \param lambda Scalar value to use for the multiplication
 */
 //-----------------------------------------------------------------------------
-Tensor3 Tensor3::operator * ( const double &lambda ) const
+Tensor3 Tensor3::operator*(const double &lambda) const
 //-----------------------------------------------------------------------------
 {
-    Tensor3 t2;
+  Tensor3 t2;
 
-    for ( long i = 0; i < 27; i++ ) {
-        t2.v[i] = lambda * v[i];
-    }
+  for (long i = 0; i < 27; i++)
+  {
+    t2.v[i] = lambda * v[i];
+  }
 
-    return t2;
+  return t2;
 }
 
 //!Division of a third order tensor by a scalar value
@@ -242,16 +250,17 @@ Tensor3 Tensor3::operator * ( const double &lambda ) const
   \param lambda Scalar value to use for the multiplication
 */
 //-----------------------------------------------------------------------------
-Tensor3 Tensor3::operator / ( const double &lambda ) const
+Tensor3 Tensor3::operator/(const double &lambda) const
 //-----------------------------------------------------------------------------
 {
-    Tensor3 t2;
+  Tensor3 t2;
 
-    for ( long i = 0; i < 27; i++ ) {
-        t2.v[i] = v[i] / lambda;
-    }
+  for (long i = 0; i < 27; i++)
+  {
+    t2.v[i] = v[i] / lambda;
+  }
 
-    return t2;
+  return t2;
 }
 
 //!Multiplication of a third order tensor by a scalar value
@@ -270,16 +279,17 @@ Tensor3 Tensor3::operator / ( const double &lambda ) const
   \param t1 Second third order tensor to use for the operation
 */
 //-----------------------------------------------------------------------------
-Tensor3 operator * ( const double &lambda, const Tensor3 &t1 )
+Tensor3 operator*(const double &lambda, const Tensor3 &t1)
 //-----------------------------------------------------------------------------
 {
-    Tensor3 t2;
+  Tensor3 t2;
 
-    for ( long i = 0; i < 27; i++ ) {
-        t2.v[i] = lambda * t1.v[i];
-    }
+  for (long i = 0; i < 27; i++)
+  {
+    t2.v[i] = lambda * t1.v[i];
+  }
 
-    return t2;
+  return t2;
 }
 
 //!Multiplication of a third order tensor by a vector
@@ -298,18 +308,19 @@ Tensor3 operator * ( const double &lambda, const Tensor3 &t1 )
   \param v1 Vector to use for the operation
 */
 //-----------------------------------------------------------------------------
-Tensor2 Tensor3::operator * ( const Vec3D &v1 ) const
+Tensor2 Tensor3::operator*(const Vec3D &v1) const
 //-----------------------------------------------------------------------------
 {
-    Tensor2 t2;
+  Tensor2 t2;
 
-    for ( long i = 0; i < 3; i++ )
-        for ( long j = 0; j < 3; j++ )
-            for ( long k = 0; k < 3; k++ ) {
-                t2 ( i, j ) += v[dnlTensor3Ind ( i, j, k, 3 )] * v1 ( k );
-            }
+  for (long i = 0; i < 3; i++)
+    for (long j = 0; j < 3; j++)
+      for (long k = 0; k < 3; k++)
+      {
+        t2(i, j) += v[dnlTensor3Ind(i, j, k, 3)] * v1(k);
+      }
 
-    return t2;
+  return t2;
 }
 
 //!Test the equality of two third order tensors
@@ -320,16 +331,17 @@ Tensor2 Tensor3::operator * ( const Vec3D &v1 ) const
   \param t1 Second third order tensor to use for the operation
 */
 //-----------------------------------------------------------------------------
-bool Tensor3::operator == ( const Tensor3 &t1 ) const
+bool Tensor3::operator==(const Tensor3 &t1) const
 //-----------------------------------------------------------------------------
 {
-    long i;
+  long i;
 
-    for ( i = 0; i < 27; i++ )
-        if ( v[i] != t1.v[i] ) {
-            return false;
-        }
-    return true;
+  for (i = 0; i < 27; i++)
+    if (v[i] != t1.v[i])
+    {
+      return false;
+    }
+  return true;
 }
 
 //!Test the equality of two third order tensors
@@ -340,12 +352,11 @@ bool Tensor3::operator == ( const Tensor3 &t1 ) const
   \param t1 Second third order tensor to use for the operation
 */
 //-----------------------------------------------------------------------------
-bool Tensor3::operator != ( const Tensor3 &t1 ) const
+bool Tensor3::operator!=(const Tensor3 &t1) const
 //-----------------------------------------------------------------------------
 {
-    return ! ( *this == t1 );
+  return !(*this == t1);
 }
-
 
 //!Writes a third order tensor in a binary flux for storage
 /*!
@@ -360,10 +371,10 @@ bool Tensor3::operator != ( const Tensor3 &t1 ) const
   \param ofs Output file stream to use for writting operation
 */
 //-----------------------------------------------------------------------------
-void Tensor3::write ( std::ofstream &ofs ) const
+void Tensor3::write(std::ofstream &ofs) const
 //-----------------------------------------------------------------------------
 {
-    ofs.write ( ( char * ) v, 27 * sizeof ( double ) );
+  ofs.write((char *)v, 27 * sizeof(double));
 }
 
 //!Reads a third order tensor in a binary flux from storage
@@ -379,10 +390,10 @@ void Tensor3::write ( std::ofstream &ofs ) const
   \param ofs Input file stream to use for reading operation
 */
 //-----------------------------------------------------------------------------
-void Tensor3::read ( std::ifstream &ifs )
+void Tensor3::read(std::ifstream &ifs)
 //-----------------------------------------------------------------------------
 {
-    ifs.read ( ( char * ) v, 27 * sizeof ( double ) );
+  ifs.read((char *)v, 27 * sizeof(double));
 }
 
 //!Writes a third order tensor in a binary flux for storage
@@ -399,11 +410,11 @@ void Tensor3::read ( std::ifstream &ifs )
   \param t1 Second third order tensor to use for the operation
 */
 //-----------------------------------------------------------------------------
-std::ofstream &operator << ( std::ofstream &os, const Tensor3 &t1 )
+std::ofstream &operator<<(std::ofstream &os, const Tensor3 &t1)
 //-----------------------------------------------------------------------------
 {
-    t1.write ( os );
-    return os;
+  t1.write(os);
+  return os;
 }
 
 //!Reads a third order tensor from a binary flux for storage
@@ -420,11 +431,11 @@ std::ofstream &operator << ( std::ofstream &os, const Tensor3 &t1 )
   \param t1 Second third order tensor to use for the operation
 */
 //-----------------------------------------------------------------------------
-std::ifstream &operator >> ( std::ifstream &is, Tensor3 &t1 )
+std::ifstream &operator>>(std::ifstream &is, Tensor3 &t1)
 //-----------------------------------------------------------------------------
 {
-    t1.read ( is );
-    return is;
+  t1.read(is);
+  return is;
 }
 
 //!Saves the content of a Tensor3 into a NumPy file
@@ -441,10 +452,10 @@ std::ifstream &operator >> ( std::ifstream &is, Tensor3 &t1 )
 void Tensor3::numpyWrite(std::string filename, bool initialize) const
 //-----------------------------------------------------------------------------
 {
-    std::string mode = "a";
-    if (initialize)
-        mode = "w";
-    NumpyInterface::npySave(filename, &v[0], {3,3,3}, mode);
+  std::string mode = "a";
+  if (initialize)
+    mode = "w";
+  NumpyInterface::npySave(filename, &v[0], {3, 3, 3}, mode);
 }
 
 //!Saves the content of a Tensor3 into a NumPyZ file
@@ -461,10 +472,10 @@ void Tensor3::numpyWrite(std::string filename, bool initialize) const
 void Tensor3::numpyWriteZ(std::string filename, std::string name, bool initialize) const
 //-----------------------------------------------------------------------------
 {
-    std::string mode = "a";
-    if (initialize)
-        mode = "w";
-    NumpyInterface::npzSave(filename, name, &v[0], {3,3,3}, mode);
+  std::string mode = "a";
+  if (initialize)
+    mode = "w";
+  NumpyInterface::npzSave(filename, name, &v[0], {3, 3, 3}, mode);
 }
 
 //!Read the content of a Tensor3 from a NumPy file
@@ -481,12 +492,12 @@ void Tensor3::numpyWriteZ(std::string filename, std::string name, bool initializ
 void Tensor3::numpyRead(std::string filename)
 //-----------------------------------------------------------------------------
 {
-    NumpyInterface::NumpyArray arr = NumpyInterface::npyLoad(filename);
-    if (arr.num_vals != 27)
-    {
-        std::cout << "ERROR\n";
-    }
-    memcpy(v, arr.data<double *>(),  arr.num_vals * arr.word_size);
+  NumpyInterface::NumpyArray arr = NumpyInterface::npyLoad(filename);
+  if (arr.num_vals != 27)
+  {
+    std::cout << "ERROR\n";
+  }
+  memcpy(v, arr.data<double *>(), arr.num_vals * arr.word_size);
 }
 
 //!Read the content of a Tensor3 from a NumPyZ file
@@ -503,10 +514,10 @@ void Tensor3::numpyRead(std::string filename)
 void Tensor3::numpyReadZ(std::string filename, std::string name)
 //-----------------------------------------------------------------------------
 {
-    NumpyInterface::NumpyArray arr = NumpyInterface::npzLoad(filename, name);
-    if (arr.num_vals != 27)
-    {
-        std::cout << "ERROR\n";
-    }
-    memcpy(v, arr.data<double *>(),  arr.num_vals * arr.word_size);
+  NumpyInterface::NumpyArray arr = NumpyInterface::npzLoad(filename, name);
+  if (arr.num_vals != 27)
+  {
+    std::cout << "ERROR\n";
+  }
+  memcpy(v, arr.data<double *>(), arr.num_vals * arr.word_size);
 }

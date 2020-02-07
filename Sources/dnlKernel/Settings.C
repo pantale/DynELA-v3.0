@@ -17,8 +17,8 @@
   \date 1997-2019
 */
 
-#include "Settings.h"
-#include "System.h"
+#include <Settings.h>
+#include <System.h>
 #include <fstream>
 
 /* const SettingsDefauts settingsDefauts[] ={

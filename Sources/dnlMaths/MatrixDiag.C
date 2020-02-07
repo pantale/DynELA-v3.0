@@ -24,8 +24,8 @@
   \date 1997-2019
 */
 
-#include "NumpyInterface.h"
-#include "MatrixDiag.h"
+#include <MatrixDiag.h>
+#include <NumpyInterface.h>
 
 //!constructeur de la classe MatrixDiag
 /*!

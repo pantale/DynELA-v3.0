@@ -21,13 +21,13 @@ This file is the declaration file for the Element class.
 #ifndef __dnlElements_Element_h__
 #define __dnlElements_Element_h__
 
-#include <Vec3D.h>
-#include <Vector.h>
+#include <dnlMaterials.h>
+#include <ElementData.h>
+/* #include <Vector.h>
 #include <Matrix.h>
 #include <MatrixDiag.h>
 #include <Tensor2.h>
-#include <ElementData.h>
-#include <IntegrationPoint.h>
+#include <IntegrationPoint.h> */
 
 // necessary class definition before use
 /* class Node;
@@ -36,11 +36,11 @@ class IntegrationPointBase;
 class IntegrationPoint;
 class UnderIntegrationPoint;
  */
-class IntegrationPoint;
+//class IntegrationPoint;
 //class UnderIntegrationPoint;
 class Node;
 class Model;
-class Material;
+//class Material;
 
 class Element
 {

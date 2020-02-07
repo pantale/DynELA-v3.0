@@ -24,6 +24,7 @@
 #include <Model.h>
 #include <NodalField.h>
 #include <BoundaryCondition.h>
+#include <Material.h>
 
 extern DynELA *dynelaData;
 

@@ -25,7 +25,10 @@
 #ifndef __dnlMaths_Vec3D_h__
 #define __dnlMaths_Vec3D_h__
 
-#include <dnlKernel.h>
+#include <string>
+#include <string.h>
+#include <Errors.h>
+#include <Macros.h>
 
 class Tensor2;
 class SymTensor2;

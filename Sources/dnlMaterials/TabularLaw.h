@@ -22,7 +22,6 @@
 #define __dnlMaterials_TabularLaw_h__
 
 #include <HardeningLaw.h>
-#include <DiscreteFunction.h>
 
 //class Element;
 

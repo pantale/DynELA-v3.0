@@ -26,10 +26,13 @@
 #ifndef __dnlMaths_SymTensor2_h__
 #define __dnlMaths_SymTensor2_h__
 
-#include <Vec3D.h>
-//#include <math.h>
+#include <string>
+#include <string.h>
+#include <Errors.h>
+#include <Macros.h>
 
 class Vec3D;
+class Tensor2;
 struct SymTensor2Index
 {
     int index[3][3];

@@ -19,9 +19,9 @@
 */
 
 #include <BoundaryDisplacement.h>
-#include <Node.h>
+/* #include <Node.h>
 #include <NodalField.h>
-#include <Function.h>
+#include <Function.h> */
 
 //!constructeur par defaut de la classe BoundaryDisplacement
 /*!

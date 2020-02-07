@@ -24,10 +24,9 @@
   \date 1997-2019
 */
 
-#include "Vector.h"
-#include "Matrix.h"
-#include "NumpyInterface.h"
-#include <cstdarg>
+#include <Vector.h>
+#include <Matrix.h>
+#include <NumpyInterface.h>
 
 //!Constructor of the Vector class
 /*!

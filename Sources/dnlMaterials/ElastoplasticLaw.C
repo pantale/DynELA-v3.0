@@ -19,7 +19,6 @@
 */
 
 #include <ElastoplasticLaw.h>
-#include <Errors.h>
 #include <IntegrationPoint.h>
 
 //-----------------------------------------------------------------------------

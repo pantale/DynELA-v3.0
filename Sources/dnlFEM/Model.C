@@ -19,7 +19,12 @@
 */
 
 #include <Model.h>
-#include <Node.h>
+#include <Element.h>
+#include <HistoryFile.h>
+#include <Solver.h>
+#include <BoundaryCondition.h>
+
+/* #include <Node.h>
 #include <Element.h>
 #include <NodeSet.h>
 #include <ElementSet.h>
@@ -27,7 +32,7 @@
 #include <Solver.h>
 #include <BoundaryCondition.h>
 #include <HistoryFile.h>
-#include <Parallel.h>
+#include <Parallel.h> */
 
 //-----------------------------------------------------------------------------
 Model::Model(char *newName)

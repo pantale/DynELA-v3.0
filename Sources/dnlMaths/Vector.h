@@ -25,7 +25,10 @@
 #ifndef __dnlMaths_Vector_h__
 #define __dnlMaths_Vector_h__
 
-#include <dnlKernel.h>
+#include <string>
+#include <string.h>
+#include <Errors.h>
+#include <Macros.h>
 
 /*
   \enum OutVector

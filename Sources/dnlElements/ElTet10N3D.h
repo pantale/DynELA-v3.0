@@ -22,7 +22,6 @@ This file is the declaration file for the ElementPlane class.
 #define __dnlElements_ElTet10n3D_h__
 
 #include <Element3D.h>
-class Element3D;
 
 class ElTet10N3D : public Element3D
 {

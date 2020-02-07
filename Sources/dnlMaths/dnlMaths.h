@@ -12,27 +12,31 @@
   \brief Definition of the basic mathematical operators and constants.
 
   This file defines all the mathematical constants, tools and basic operators.
-  \ingroup dnlKernel
+  \ingroup dnlMaths
   \author &copy; Olivier PANTALE
   \date 1997-2019
 */
 
-#ifndef __dnlKernel_h__
-#define __dnlKernel_h__
+#ifndef __dnlMaths_h__
+#define __dnlMaths_h__
 
-// Common headers of Kernel folder
-
-#include <Defines.h>
-#include <Errors.h>
-#include <Exception.h>
-#include <Field.h>
-#include <List.h>
-#include <LogFile.h>
-#include <MacAddress.h>
-#include <Macros.h>
-#include <Settings.h>
-#include <String.h>
-#include <System.h>
-#include <Timer.h>
+#include <ColorMap.h>
+#include <CrackFunction.h>
+#include <DiscreteFunction.h>
+#include <DiscreteFunctionSet.h>
+#include <Function.h>
+#include <Matrices.h>
+#include <Matrix.h>
+#include <MatrixDiag.h>
+#include <NumpyInterface.h>
+#include <PolynomialFunction.h>
+#include <RampFunction.h>
+#include <SinusFunction.h>
+#include <SymTensor2.h>
+#include <Tensor2.h>
+#include <Tensor3.h>
+#include <Tensor4.h>
+#include <Vec3D.h>
+#include <Vector.h>
 
 #endif

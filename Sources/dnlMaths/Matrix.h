@@ -25,8 +25,9 @@
 #ifndef __dnlMaths_Matrix_h__
 #define __dnlMaths_Matrix_h__
 
-#include <Vector.h>
 #include <Matrices.h>
+#include <Vector.h>
+
 class MatrixDiag;
 class Tensor2;
 

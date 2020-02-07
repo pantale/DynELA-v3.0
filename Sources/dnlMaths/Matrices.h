@@ -48,7 +48,13 @@
   \date 1997-2004
 */
 
-#include <dnlKernel.h>
+#include <ostream>
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <string.h>
+#include <Errors.h>
+#include <Macros.h>
 
 #define Ind(i, j, __rows, __cols) ((i) * (__cols) + (j))
 

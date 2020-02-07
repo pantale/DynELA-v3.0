@@ -11,7 +11,7 @@
 	Class Exception implementation
 */
 
-#include "Exception.h"
+#include <Exception.h>
 
 /*!
   \class Exception Exception.C

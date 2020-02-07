@@ -23,7 +23,6 @@ This file is the declaration file for the ElQua4NAx class.
 
 //#define Name_ElQua4nAx "ElQua4NAx"
 
-class ElementAxi;
 #include <ElementAxi.h>
 
 class ElQua4NAx : public ElementAxi

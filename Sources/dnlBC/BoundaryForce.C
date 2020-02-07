@@ -19,9 +19,9 @@
 */
 
 #include <BoundaryForce.h>
-#include <Node.h>
+/* #include <Node.h>
 #include <NodalField.h>
-#include <Function.h>
+#include <Function.h> */
 //!constructeur par defaut de la classe BoundaryForce
 /*!
   Cette methode est le constructeur par defaut de la classe BoundaryForce. En pratique, ici, on ne fait rien de plus que les allocations de memoire necessaires.

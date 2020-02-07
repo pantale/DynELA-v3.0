@@ -40,7 +40,7 @@ const SymTensor2Index SymTensor2::indexes = {0, 1, 2, 1, 3, 4, 2, 4, 5};
 SymTensor2::SymTensor2()
 //-----------------------------------------------------------------------------
 {
-    setToValue(0.0);
+  setToValue(0.0);
 }
 
 //!Copy constructor of the SymTensor2 class
@@ -48,7 +48,7 @@ SymTensor2::SymTensor2()
 SymTensor2::SymTensor2(const SymTensor2 &tensor)
 //-----------------------------------------------------------------------------
 {
-    memcpy(_data, tensor._data, 6 * sizeof(double));
+  memcpy(_data, tensor._data, 6 * sizeof(double));
 }
 
 //!Constructor of the SymTensor2 class
@@ -59,12 +59,12 @@ SymTensor2::SymTensor2(const SymTensor2 &tensor)
 SymTensor2::SymTensor2(double t1, double t2, double t3, double t4, double t5, double t6)
 //-----------------------------------------------------------------------------
 {
-    _data[0] = t1;
-    _data[1] = t2;
-    _data[2] = t3;
-    _data[3] = t4;
-    _data[4] = t5;
-    _data[5] = t6;
+  _data[0] = t1;
+  _data[1] = t2;
+  _data[2] = t3;
+  _data[3] = t4;
+  _data[4] = t5;
+  _data[5] = t6;
 }
 
 //!Destructor of the SymTensor2 class
@@ -87,8 +87,8 @@ SymTensor2::~SymTensor2()
 std::ostream &operator<<(std::ostream &os, const SymTensor2 &tensor1)
 //-----------------------------------------------------------------------------
 {
-    tensor1.print(os);
-    return os;
+  tensor1.print(os);
+  return os;
 }
 
 //!Print the content of a second order tensor to the output flux for display
@@ -99,24 +99,24 @@ std::ostream &operator<<(std::ostream &os, const SymTensor2 &tensor1)
 void SymTensor2::print(std::ostream &os) const
 //-----------------------------------------------------------------------------
 {
-    int i, j;
-    os << "tensor 3x3 ={{";
-    for (i = 0; i < 3; i++)
+  int i, j;
+  os << "tensor 3x3 ={{";
+  for (i = 0; i < 3; i++)
+  {
+    for (j = 0; j < 3; j++)
     {
-        for (j = 0; j < 3; j++)
-        {
-            if (j != 0)
-            {
-                os << ",";
-            }
-            os << _data[indexes.index[i][j]];
-        }
-        if (i != 2)
-        {
-            os << "},{";
-        }
+      if (j != 0)
+      {
+        os << ",";
+      }
+      os << _data[indexes.index[i][j]];
     }
-    os << "}}";
+    if (i != 2)
+    {
+      os << "},{";
+    }
+  }
+  os << "}}";
 }
 
 //!Returns a unity tensor
@@ -134,19 +134,19 @@ void SymTensor2::print(std::ostream &os) const
 void SymTensor2::setToUnity()
 //-----------------------------------------------------------------------------
 {
-    _data[0] = 1.0;
-    _data[3] = 1.0;
-    _data[5] = 1.0;
-    _data[1] = 0.0;
-    _data[2] = 0.0;
-    _data[4] = 0.0;
+  _data[0] = 1.0;
+  _data[1] = 0.0;
+  _data[2] = 0.0;
+  _data[3] = 1.0;
+  _data[4] = 0.0;
+  _data[5] = 1.0;
 }
 
 //-----------------------------------------------------------------------------
 void SymTensor2::setToZero()
 //-----------------------------------------------------------------------------
 {
-    setToValue(0.0);
+  setToValue(0.0);
 }
 
 //!Fill a second order tensor with a scalar value
@@ -164,8 +164,8 @@ void SymTensor2::setToZero()
 SymTensor2 &SymTensor2::operator=(const double &val)
 //-----------------------------------------------------------------------------
 {
-    setToValue(val);
-    return *this;
+  setToValue(val);
+  return *this;
 }
 
 //!Copy the content of a second order tensor into a new one
@@ -183,8 +183,8 @@ SymTensor2 &SymTensor2::operator=(const double &val)
 SymTensor2 &SymTensor2::operator=(const SymTensor2 &tensor)
 //-----------------------------------------------------------------------------
 {
-    memcpy(_data, tensor._data, 6 * sizeof(double));
-    return *this;
+  memcpy(_data, tensor._data, 6 * sizeof(double));
+  return *this;
 }
 
 //!Addition of 2 second order tensors
@@ -204,19 +204,19 @@ SymTensor2 &SymTensor2::operator=(const SymTensor2 &tensor)
 SymTensor2 SymTensor2::operator+(const SymTensor2 &tensor) const
 //-----------------------------------------------------------------------------
 {
-    // creation d'un nouveau tenseur
-    SymTensor2 result;
+  // creation d'un nouveau tenseur
+  SymTensor2 result;
 
-    // calcul de la somme
-    result._data[0] = _data[0] + tensor._data[0];
-    result._data[1] = _data[1] + tensor._data[1];
-    result._data[2] = _data[2] + tensor._data[2];
-    result._data[3] = _data[3] + tensor._data[3];
-    result._data[4] = _data[4] + tensor._data[4];
-    result._data[5] = _data[5] + tensor._data[5];
+  // calcul de la somme
+  result._data[0] = _data[0] + tensor._data[0];
+  result._data[1] = _data[1] + tensor._data[1];
+  result._data[2] = _data[2] + tensor._data[2];
+  result._data[3] = _data[3] + tensor._data[3];
+  result._data[4] = _data[4] + tensor._data[4];
+  result._data[5] = _data[5] + tensor._data[5];
 
-    // renvoi de l'objet
-    return result;
+  // renvoi de l'objet
+  return result;
 }
 
 //!Difference of 2 second order tensors
@@ -236,35 +236,35 @@ SymTensor2 SymTensor2::operator+(const SymTensor2 &tensor) const
 SymTensor2 SymTensor2::operator-(const SymTensor2 &tensor) const
 //-----------------------------------------------------------------------------
 {
-    // creation d'un nouveau tenseur
-    SymTensor2 result;
+  // creation d'un nouveau tenseur
+  SymTensor2 result;
 
-    // calcul de la somme
-    result._data[0] = _data[0] - tensor._data[0];
-    result._data[1] = _data[1] - tensor._data[1];
-    result._data[2] = _data[2] - tensor._data[2];
-    result._data[3] = _data[3] - tensor._data[3];
-    result._data[4] = _data[4] - tensor._data[4];
-    result._data[5] = _data[5] - tensor._data[5];
+  // calcul de la somme
+  result._data[0] = _data[0] - tensor._data[0];
+  result._data[1] = _data[1] - tensor._data[1];
+  result._data[2] = _data[2] - tensor._data[2];
+  result._data[3] = _data[3] - tensor._data[3];
+  result._data[4] = _data[4] - tensor._data[4];
+  result._data[5] = _data[5] - tensor._data[5];
 
-    // renvoi de l'objet
-    return result;
+  // renvoi de l'objet
+  return result;
 }
 
 //-----------------------------------------------------------------------------
 SymTensor2 SymTensor2::operator-() const
 //-----------------------------------------------------------------------------
 {
-    SymTensor2 result;
+  SymTensor2 result;
 
-    result._data[0] = -_data[0];
-    result._data[1] = -_data[1];
-    result._data[2] = -_data[2];
-    result._data[3] = -_data[3];
-    result._data[4] = -_data[4];
-    result._data[5] = -_data[5];
+  result._data[0] = -_data[0];
+  result._data[1] = -_data[1];
+  result._data[2] = -_data[2];
+  result._data[3] = -_data[3];
+  result._data[4] = -_data[4];
+  result._data[5] = -_data[5];
 
-    return result;
+  return result;
 }
 
 //!Multiplication of a second order tensor by a scalar value
@@ -285,16 +285,16 @@ SymTensor2 SymTensor2::operator-() const
 SymTensor2 SymTensor2::operator*(const double lambda) const
 //-----------------------------------------------------------------------------
 {
-    SymTensor2 result;
+  SymTensor2 result;
 
-    result._data[0] = lambda * _data[0];
-    result._data[1] = lambda * _data[1];
-    result._data[2] = lambda * _data[2];
-    result._data[3] = lambda * _data[3];
-    result._data[4] = lambda * _data[4];
-    result._data[5] = lambda * _data[5];
+  result._data[0] = lambda * _data[0];
+  result._data[1] = lambda * _data[1];
+  result._data[2] = lambda * _data[2];
+  result._data[3] = lambda * _data[3];
+  result._data[4] = lambda * _data[4];
+  result._data[5] = lambda * _data[5];
 
-    return result;
+  return result;
 }
 
 //!Division of a second order tensor by a scalar value
@@ -316,23 +316,23 @@ SymTensor2 SymTensor2::operator*(const double lambda) const
 SymTensor2 SymTensor2::operator/(const double lambda) const
 //-----------------------------------------------------------------------------
 {
-    SymTensor2 result;
+  SymTensor2 result;
 
 #ifdef VERIF_maths
-    if (lambda == 0.0)
-    {
-        fatalError("SymTensor2:: operator /", "divide by zero");
-    }
+  if (lambda == 0.0)
+  {
+    fatalError("SymTensor2:: operator /", "divide by zero");
+  }
 #endif
 
-    result._data[0] = _data[0] / lambda;
-    result._data[1] = _data[1] / lambda;
-    result._data[2] = _data[2] / lambda;
-    result._data[3] = _data[3] / lambda;
-    result._data[4] = _data[4] / lambda;
-    result._data[5] = _data[5] / lambda;
+  result._data[0] = _data[0] / lambda;
+  result._data[1] = _data[1] / lambda;
+  result._data[2] = _data[2] / lambda;
+  result._data[3] = _data[3] / lambda;
+  result._data[4] = _data[4] / lambda;
+  result._data[5] = _data[5] / lambda;
 
-    return result;
+  return result;
 }
 
 //!Multiplication of a second order tensor by a scalar value
@@ -354,16 +354,16 @@ SymTensor2 SymTensor2::operator/(const double lambda) const
 SymTensor2 operator*(const double &lambda, const SymTensor2 &tensor)
 //-----------------------------------------------------------------------------
 {
-    SymTensor2 result;
+  SymTensor2 result;
 
-    result._data[0] = lambda * tensor._data[0];
-    result._data[1] = lambda * tensor._data[1];
-    result._data[2] = lambda * tensor._data[2];
-    result._data[3] = lambda * tensor._data[3];
-    result._data[4] = lambda * tensor._data[4];
-    result._data[5] = lambda * tensor._data[5];
+  result._data[0] = lambda * tensor._data[0];
+  result._data[1] = lambda * tensor._data[1];
+  result._data[2] = lambda * tensor._data[2];
+  result._data[3] = lambda * tensor._data[3];
+  result._data[4] = lambda * tensor._data[4];
+  result._data[5] = lambda * tensor._data[5];
 
-    return result;
+  return result;
 }
 
 //!Multiplication of 2 second order tensors
@@ -382,16 +382,16 @@ SymTensor2 operator*(const double &lambda, const SymTensor2 &tensor)
 SymTensor2 SymTensor2::singleProduct() const
 //-----------------------------------------------------------------------------
 {
-    SymTensor2 result;
+  SymTensor2 result;
 
-    result._data[0] = _data[0] * _data[0] + _data[1] * _data[1] + _data[2] * _data[2];
-    result._data[1] = _data[0] * _data[1] + _data[1] * _data[3] + _data[2] * _data[4];
-    result._data[2] = _data[0] * _data[2] + _data[1] * _data[4] + _data[2] * _data[5];
-    result._data[3] = _data[1] * _data[1] + _data[3] * _data[3] + _data[4] * _data[4];
-    result._data[4] = _data[1] * _data[2] + _data[3] * _data[4] + _data[4] * _data[5];
-    result._data[5] = _data[2] * _data[2] + _data[4] * _data[4] + _data[5] * _data[5];
+  result._data[0] = _data[0] * _data[0] + _data[1] * _data[1] + _data[2] * _data[2];
+  result._data[1] = _data[0] * _data[1] + _data[1] * _data[3] + _data[2] * _data[4];
+  result._data[2] = _data[0] * _data[2] + _data[1] * _data[4] + _data[2] * _data[5];
+  result._data[3] = _data[1] * _data[1] + _data[3] * _data[3] + _data[4] * _data[4];
+  result._data[4] = _data[1] * _data[2] + _data[3] * _data[4] + _data[4] * _data[5];
+  result._data[5] = _data[2] * _data[2] + _data[4] * _data[4] + _data[5] * _data[5];
 
-    return result;
+  return result;
 }
 
 //!Multiplication of 2 second order tensors
@@ -410,70 +410,70 @@ SymTensor2 SymTensor2::singleProduct() const
 Tensor2 SymTensor2::operator*(const SymTensor2 &tensor) const
 //-----------------------------------------------------------------------------
 {
-    Tensor2 result;
+  Tensor2 result;
 
-    result._data[0] = _data[0] * tensor._data[0] + _data[1] * tensor._data[1] + _data[2] * tensor._data[2];
-    result._data[1] = _data[0] * tensor._data[1] + _data[1] * tensor._data[3] + _data[2] * tensor._data[4];
-    result._data[2] = _data[0] * tensor._data[2] + _data[1] * tensor._data[4] + _data[2] * tensor._data[5];
-    result._data[3] = _data[1] * tensor._data[0] + _data[3] * tensor._data[1] + _data[4] * tensor._data[2];
-    result._data[4] = _data[1] * tensor._data[1] + _data[3] * tensor._data[3] + _data[4] * tensor._data[4];
-    result._data[5] = _data[1] * tensor._data[2] + _data[3] * tensor._data[4] + _data[4] * tensor._data[5];
-    result._data[6] = _data[2] * tensor._data[0] + _data[4] * tensor._data[1] + _data[5] * tensor._data[2];
-    result._data[7] = _data[2] * tensor._data[1] + _data[4] * tensor._data[3] + _data[5] * tensor._data[4];
-    result._data[8] = _data[2] * tensor._data[2] + _data[4] * tensor._data[4] + _data[5] * tensor._data[5];
+  result._data[0] = _data[0] * tensor._data[0] + _data[1] * tensor._data[1] + _data[2] * tensor._data[2];
+  result._data[1] = _data[0] * tensor._data[1] + _data[1] * tensor._data[3] + _data[2] * tensor._data[4];
+  result._data[2] = _data[0] * tensor._data[2] + _data[1] * tensor._data[4] + _data[2] * tensor._data[5];
+  result._data[3] = _data[1] * tensor._data[0] + _data[3] * tensor._data[1] + _data[4] * tensor._data[2];
+  result._data[4] = _data[1] * tensor._data[1] + _data[3] * tensor._data[3] + _data[4] * tensor._data[4];
+  result._data[5] = _data[1] * tensor._data[2] + _data[3] * tensor._data[4] + _data[4] * tensor._data[5];
+  result._data[6] = _data[2] * tensor._data[0] + _data[4] * tensor._data[1] + _data[5] * tensor._data[2];
+  result._data[7] = _data[2] * tensor._data[1] + _data[4] * tensor._data[3] + _data[5] * tensor._data[4];
+  result._data[8] = _data[2] * tensor._data[2] + _data[4] * tensor._data[4] + _data[5] * tensor._data[5];
 
-    return result;
+  return result;
 }
 
 //-----------------------------------------------------------------------------
 Tensor2 SymTensor2::operator*(const Tensor2 &tensor) const
 //-----------------------------------------------------------------------------
 {
-    Tensor2 result;
+  Tensor2 result;
 
-    result._data[0] = _data[0] * tensor._data[0] + _data[1] * tensor._data[3] + _data[2] * tensor._data[6];
-    result._data[1] = _data[0] * tensor._data[1] + _data[1] * tensor._data[4] + _data[2] * tensor._data[7];
-    result._data[2] = _data[0] * tensor._data[2] + _data[1] * tensor._data[5] + _data[2] * tensor._data[8];
-    result._data[3] = _data[1] * tensor._data[0] + _data[3] * tensor._data[3] + _data[4] * tensor._data[6];
-    result._data[4] = _data[1] * tensor._data[1] + _data[3] * tensor._data[4] + _data[4] * tensor._data[7];
-    result._data[5] = _data[1] * tensor._data[2] + _data[3] * tensor._data[5] + _data[4] * tensor._data[8];
-    result._data[6] = _data[2] * tensor._data[0] + _data[5] * tensor._data[3] + _data[5] * tensor._data[6];
-    result._data[7] = _data[2] * tensor._data[1] + _data[4] * tensor._data[4] + _data[5] * tensor._data[7];
-    result._data[8] = _data[2] * tensor._data[2] + _data[4] * tensor._data[5] + _data[5] * tensor._data[8];
+  result._data[0] = _data[0] * tensor._data[0] + _data[1] * tensor._data[3] + _data[2] * tensor._data[6];
+  result._data[1] = _data[0] * tensor._data[1] + _data[1] * tensor._data[4] + _data[2] * tensor._data[7];
+  result._data[2] = _data[0] * tensor._data[2] + _data[1] * tensor._data[5] + _data[2] * tensor._data[8];
+  result._data[3] = _data[1] * tensor._data[0] + _data[3] * tensor._data[3] + _data[4] * tensor._data[6];
+  result._data[4] = _data[1] * tensor._data[1] + _data[3] * tensor._data[4] + _data[4] * tensor._data[7];
+  result._data[5] = _data[1] * tensor._data[2] + _data[3] * tensor._data[5] + _data[4] * tensor._data[8];
+  result._data[6] = _data[2] * tensor._data[0] + _data[5] * tensor._data[3] + _data[5] * tensor._data[6];
+  result._data[7] = _data[2] * tensor._data[1] + _data[4] * tensor._data[4] + _data[5] * tensor._data[7];
+  result._data[8] = _data[2] * tensor._data[2] + _data[4] * tensor._data[5] + _data[5] * tensor._data[8];
 
-    return result;
+  return result;
 }
 
 //-----------------------------------------------------------------------------
 SymTensor2 SymTensor2::productByRxRT(const Tensor2 R) const
 //-----------------------------------------------------------------------------
 {
-    SymTensor2 result;
+  SymTensor2 result;
 
-    result._data[0] = R._data[0] * R._data[0] * _data[0] + 2 * R._data[0] * (R._data[1] * _data[1] + R._data[2] * _data[2]) + R._data[1] * R._data[1] * _data[3] + 2 * R._data[1] * R._data[2] * _data[4] + R._data[2] * R._data[2] * _data[5];
-    result._data[1] = R._data[0] * (R._data[3] * _data[0] + R._data[4] * _data[1] + R._data[5] * _data[2]) + R._data[1] * (R._data[3] * _data[1] + R._data[4] * _data[3] + R._data[5] * _data[4]) + R._data[2] * (R._data[3] * _data[2] + R._data[4] * _data[4] + R._data[5] * _data[5]);
-    result._data[2] = R._data[0] * (R._data[6] * _data[0] + R._data[7] * _data[1] + R._data[8] * _data[2]) + R._data[1] * (R._data[6] * _data[1] + R._data[7] * _data[3] + R._data[8] * _data[4]) + R._data[2] * (R._data[6] * _data[2] + R._data[7] * _data[4] + R._data[8] * _data[5]);
-    result._data[3] = R._data[3] * R._data[3] * _data[0] + 2 * R._data[3] * (R._data[4] * _data[1] + R._data[5] * _data[2]) + R._data[4] * R._data[4] * _data[3] + 2 * R._data[4] * R._data[5] * _data[4] + R._data[5] * R._data[5] * _data[5];
-    result._data[4] = R._data[3] * (R._data[6] * _data[0] + R._data[7] * _data[1] + R._data[8] * _data[2]) + R._data[4] * (R._data[6] * _data[1] + R._data[7] * _data[3] + R._data[8] * _data[4]) + R._data[5] * (R._data[6] * _data[2] + R._data[7] * _data[4] + R._data[8] * _data[5]);
-    result._data[5] = R._data[6] * R._data[6] * _data[0] + 2 * R._data[6] * (R._data[7] * _data[1] + R._data[8] * _data[2]) + R._data[7] * R._data[7] * _data[3] + 2 * R._data[7] * R._data[8] * _data[4] + R._data[8] * R._data[8] * _data[5];
+  result._data[0] = R._data[0] * R._data[0] * _data[0] + 2 * R._data[0] * (R._data[1] * _data[1] + R._data[2] * _data[2]) + R._data[1] * R._data[1] * _data[3] + 2 * R._data[1] * R._data[2] * _data[4] + R._data[2] * R._data[2] * _data[5];
+  result._data[1] = R._data[0] * (R._data[3] * _data[0] + R._data[4] * _data[1] + R._data[5] * _data[2]) + R._data[1] * (R._data[3] * _data[1] + R._data[4] * _data[3] + R._data[5] * _data[4]) + R._data[2] * (R._data[3] * _data[2] + R._data[4] * _data[4] + R._data[5] * _data[5]);
+  result._data[2] = R._data[0] * (R._data[6] * _data[0] + R._data[7] * _data[1] + R._data[8] * _data[2]) + R._data[1] * (R._data[6] * _data[1] + R._data[7] * _data[3] + R._data[8] * _data[4]) + R._data[2] * (R._data[6] * _data[2] + R._data[7] * _data[4] + R._data[8] * _data[5]);
+  result._data[3] = R._data[3] * R._data[3] * _data[0] + 2 * R._data[3] * (R._data[4] * _data[1] + R._data[5] * _data[2]) + R._data[4] * R._data[4] * _data[3] + 2 * R._data[4] * R._data[5] * _data[4] + R._data[5] * R._data[5] * _data[5];
+  result._data[4] = R._data[3] * (R._data[6] * _data[0] + R._data[7] * _data[1] + R._data[8] * _data[2]) + R._data[4] * (R._data[6] * _data[1] + R._data[7] * _data[3] + R._data[8] * _data[4]) + R._data[5] * (R._data[6] * _data[2] + R._data[7] * _data[4] + R._data[8] * _data[5]);
+  result._data[5] = R._data[6] * R._data[6] * _data[0] + 2 * R._data[6] * (R._data[7] * _data[1] + R._data[8] * _data[2]) + R._data[7] * R._data[7] * _data[3] + 2 * R._data[7] * R._data[8] * _data[4] + R._data[8] * R._data[8] * _data[5];
 
-    return result;
+  return result;
 }
 
 //-----------------------------------------------------------------------------
 SymTensor2 SymTensor2::productByRTxR(const Tensor2 R) const
 //-----------------------------------------------------------------------------
 {
-    SymTensor2 result;
+  SymTensor2 result;
 
-    result._data[0] = R._data[0] * R._data[0] * _data[0] + 2 * R._data[0] * (R._data[3] * _data[1] + R._data[6] * _data[2]) + R._data[3] * R._data[3] * _data[3] + 2 * R._data[3] * R._data[6] * _data[4] + R._data[6] * R._data[6] * _data[5];
-    result._data[1] = R._data[1] * R._data[3] * _data[1] + R._data[1] * R._data[6] * _data[2] + R._data[0] * (R._data[1] * _data[0] + R._data[4] * _data[1] + R._data[7] * _data[2]) + R._data[3] * R._data[4] * _data[3] + R._data[4] * R._data[6] * _data[4] + R._data[3] * R._data[7] * _data[4] + R._data[6] * R._data[7] * _data[5];
-    result._data[2] = R._data[2] * R._data[3] * _data[1] + R._data[2] * R._data[6] * _data[2] + R._data[0] * (R._data[2] * _data[0] + R._data[5] * _data[1] + R._data[8] * _data[2]) + R._data[3] * R._data[5] * _data[3] + R._data[5] * R._data[6] * _data[4] + R._data[3] * R._data[8] * _data[4] + R._data[6] * R._data[8] * _data[5];
-    result._data[3] = R._data[1] * R._data[1] * _data[0] + 2 * R._data[1] * (R._data[4] * _data[1] + R._data[7] * _data[2]) + R._data[4] * R._data[4] * _data[3] + 2 * R._data[4] * R._data[7] * _data[4] + R._data[7] * R._data[7] * _data[5];
-    result._data[4] = R._data[2] * R._data[4] * _data[1] + R._data[2] * R._data[7] * _data[2] + R._data[1] * (R._data[2] * _data[0] + R._data[5] * _data[1] + R._data[8] * _data[2]) + R._data[4] * R._data[5] * _data[3] + R._data[5] * R._data[7] * _data[4] + R._data[4] * R._data[8] * _data[4] + R._data[7] * R._data[8] * _data[5];
-    result._data[5] = R._data[2] * R._data[2] * _data[0] + 2 * R._data[2] * (R._data[5] * _data[1] + R._data[8] * _data[2]) + R._data[5] * R._data[5] * _data[3] + 2 * R._data[5] * R._data[8] * _data[4] + R._data[8] * R._data[8] * _data[5];
+  result._data[0] = R._data[0] * R._data[0] * _data[0] + 2 * R._data[0] * (R._data[3] * _data[1] + R._data[6] * _data[2]) + R._data[3] * R._data[3] * _data[3] + 2 * R._data[3] * R._data[6] * _data[4] + R._data[6] * R._data[6] * _data[5];
+  result._data[1] = R._data[1] * R._data[3] * _data[1] + R._data[1] * R._data[6] * _data[2] + R._data[0] * (R._data[1] * _data[0] + R._data[4] * _data[1] + R._data[7] * _data[2]) + R._data[3] * R._data[4] * _data[3] + R._data[4] * R._data[6] * _data[4] + R._data[3] * R._data[7] * _data[4] + R._data[6] * R._data[7] * _data[5];
+  result._data[2] = R._data[2] * R._data[3] * _data[1] + R._data[2] * R._data[6] * _data[2] + R._data[0] * (R._data[2] * _data[0] + R._data[5] * _data[1] + R._data[8] * _data[2]) + R._data[3] * R._data[5] * _data[3] + R._data[5] * R._data[6] * _data[4] + R._data[3] * R._data[8] * _data[4] + R._data[6] * R._data[8] * _data[5];
+  result._data[3] = R._data[1] * R._data[1] * _data[0] + 2 * R._data[1] * (R._data[4] * _data[1] + R._data[7] * _data[2]) + R._data[4] * R._data[4] * _data[3] + 2 * R._data[4] * R._data[7] * _data[4] + R._data[7] * R._data[7] * _data[5];
+  result._data[4] = R._data[2] * R._data[4] * _data[1] + R._data[2] * R._data[7] * _data[2] + R._data[1] * (R._data[2] * _data[0] + R._data[5] * _data[1] + R._data[8] * _data[2]) + R._data[4] * R._data[5] * _data[3] + R._data[5] * R._data[7] * _data[4] + R._data[4] * R._data[8] * _data[4] + R._data[7] * R._data[8] * _data[5];
+  result._data[5] = R._data[2] * R._data[2] * _data[0] + 2 * R._data[2] * (R._data[5] * _data[1] + R._data[8] * _data[2]) + R._data[5] * R._data[5] * _data[3] + 2 * R._data[5] * R._data[8] * _data[4] + R._data[8] * R._data[8] * _data[5];
 
-    return result;
+  return result;
 }
 
 //!Multiplication of a second order tensor by a vector
@@ -494,13 +494,13 @@ SymTensor2 SymTensor2::productByRTxR(const Tensor2 R) const
 Vec3D SymTensor2::operator*(const Vec3D &vector) const
 //-----------------------------------------------------------------------------
 {
-    Vec3D result;
+  Vec3D result;
 
-    result._data[0] = _data[0] * vector._data[0] + _data[1] * vector._data[1] + _data[2] * vector._data[2];
-    result._data[1] = _data[1] * vector._data[0] + _data[3] * vector._data[1] + _data[4] * vector._data[2];
-    result._data[2] = _data[2] * vector._data[0] + _data[4] * vector._data[1] + _data[5] * vector._data[2];
+  result._data[0] = _data[0] * vector._data[0] + _data[1] * vector._data[1] + _data[2] * vector._data[2];
+  result._data[1] = _data[1] * vector._data[0] + _data[3] * vector._data[1] + _data[4] * vector._data[2];
+  result._data[2] = _data[2] * vector._data[0] + _data[4] * vector._data[1] + _data[5] * vector._data[2];
 
-    return result;
+  return result;
 }
 
 //!Multiplication of 2 second order tensors
@@ -519,7 +519,7 @@ Vec3D SymTensor2::operator*(const Vec3D &vector) const
 Tensor2 SymTensor2::singleProduct(const SymTensor2 tensor) const
 //-----------------------------------------------------------------------------
 {
-    return (*this) * tensor;
+  return (*this) * tensor;
 }
 
 //!Double contracted product of 2 second order tensors
@@ -539,8 +539,8 @@ Tensor2 SymTensor2::singleProduct(const SymTensor2 tensor) const
 double SymTensor2::doubleProduct(const SymTensor2 tensor) const
 //-----------------------------------------------------------------------------
 {
-    return (_data[0] * tensor._data[0] + _data[3] * tensor._data[3] + _data[5] * tensor._data[5] +
-            2.0 * (_data[1] * tensor._data[1] + _data[2] * tensor._data[2] + _data[4] * tensor._data[4]));
+  return (_data[0] * tensor._data[0] + _data[3] * tensor._data[3] + _data[5] * tensor._data[5] +
+          2.0 * (_data[1] * tensor._data[1] + _data[2] * tensor._data[2] + _data[4] * tensor._data[4]));
 }
 
 //!Double contracted product of 2 second order tensors
@@ -560,22 +560,22 @@ double SymTensor2::doubleProduct(const SymTensor2 tensor) const
 double SymTensor2::doubleProduct() const
 //-----------------------------------------------------------------------------
 {
-    return (_data[0] * _data[0] + _data[3] * _data[3] + _data[5] * _data[5] +
-            2.0 * (_data[1] * _data[1] + _data[2] * _data[2] + _data[4] * _data[4]));
+  return (_data[0] * _data[0] + _data[3] * _data[3] + _data[5] * _data[5] +
+          2.0 * (_data[1] * _data[1] + _data[2] * _data[2] + _data[4] * _data[4]));
 }
 
 //-----------------------------------------------------------------------------
 void SymTensor2::computeDeviator(SymTensor2 &deviator, double &pressure) const
 //-----------------------------------------------------------------------------
 {
-    pressure = getThirdTrace();
+  pressure = getThirdTrace();
 
-    deviator._data[0] = _data[0] - pressure;
-    deviator._data[3] = _data[3] - pressure;
-    deviator._data[5] = _data[5] - pressure;
-    deviator._data[1] = _data[1];
-    deviator._data[2] = _data[2];
-    deviator._data[4] = _data[4];
+  deviator._data[0] = _data[0] - pressure;
+  deviator._data[3] = _data[3] - pressure;
+  deviator._data[5] = _data[5] - pressure;
+  deviator._data[1] = _data[1];
+  deviator._data[2] = _data[2];
+  deviator._data[4] = _data[4];
 }
 
 //!Deviator of a second order tensor
@@ -589,14 +589,14 @@ void SymTensor2::computeDeviator(SymTensor2 &deviator, double &pressure) const
 SymTensor2 SymTensor2::getDeviator() const
 //-----------------------------------------------------------------------------
 {
-    SymTensor2 result(*this);
-    double tr = getThirdTrace();
+  SymTensor2 result(*this);
+  double tr = getThirdTrace();
 
-    result._data[0] -= tr;
-    result._data[3] -= tr;
-    result._data[5] -= tr;
+  result._data[0] -= tr;
+  result._data[3] -= tr;
+  result._data[5] -= tr;
 
-    return result;
+  return result;
 }
 
 //!getTranspose of a second order tensor
@@ -610,7 +610,7 @@ SymTensor2 SymTensor2::getDeviator() const
 SymTensor2 SymTensor2::getTranspose() const
 //-----------------------------------------------------------------------------
 {
-    return *this;
+  return *this;
 }
 
 //!Sum of the rows of a second order tensor
@@ -624,7 +624,7 @@ SymTensor2 SymTensor2::getTranspose() const
 Vec3D SymTensor2::rowSum() const
 //-----------------------------------------------------------------------------
 {
-    return Vec3D(_data[0] + _data[1] + _data[2], _data[1] + _data[3] + _data[4], _data[2] + _data[4] + _data[5]);
+  return Vec3D(_data[0] + _data[1] + _data[2], _data[1] + _data[3] + _data[4], _data[2] + _data[4] + _data[5]);
 }
 
 //!Sum of the columns of a second order tensor
@@ -638,7 +638,7 @@ Vec3D SymTensor2::rowSum() const
 Vec3D SymTensor2::columnSum() const
 //-----------------------------------------------------------------------------
 {
-    return Vec3D(_data[0] + _data[1] + _data[2], _data[1] + _data[3] + _data[4], _data[2] + _data[4] + _data[5]);
+  return Vec3D(_data[0] + _data[1] + _data[2], _data[1] + _data[3] + _data[4], _data[2] + _data[4] + _data[5]);
 }
 
 //!Symmetric part of a second order tensor
@@ -658,7 +658,7 @@ Vec3D SymTensor2::columnSum() const
 SymTensor2 SymTensor2::getSymetricPart() const
 //-----------------------------------------------------------------------------
 {
-    return *this;
+  return *this;
 }
 
 //!Skew-symmetric part of a second order tensor
@@ -678,7 +678,7 @@ SymTensor2 SymTensor2::getSymetricPart() const
 SymTensor2 SymTensor2::getSkewSymetricPart() const
 //-----------------------------------------------------------------------------
 {
-    return SymTensor2();
+  return SymTensor2();
 }
 
 //!Extraction of a row from a second order tensor
@@ -693,14 +693,14 @@ SymTensor2 SymTensor2::getSkewSymetricPart() const
 Vec3D SymTensor2::getRow(int row) const
 //-----------------------------------------------------------------------------
 {
-    Vec3D result;
+  Vec3D result;
 
-    for (int i = 0; i < 3; i++)
-    {
-        result(i) = _data[indexes.index[row][i]];
-    }
+  for (int i = 0; i < 3; i++)
+  {
+    result(i) = _data[indexes.index[row][i]];
+  }
 
-    return result;
+  return result;
 }
 
 //!Extraction of a column from a second order tensor
@@ -715,14 +715,14 @@ Vec3D SymTensor2::getRow(int row) const
 Vec3D SymTensor2::getColumn(int col) const
 //-----------------------------------------------------------------------------
 {
-    Vec3D result;
+  Vec3D result;
 
-    for (int i = 0; i < 3; i++)
-    {
-        result(i) = _data[indexes.index[i][col]];
-    }
+  for (int i = 0; i < 3; i++)
+  {
+    result(i) = _data[indexes.index[i][col]];
+  }
 
-    return result;
+  return result;
 }
 
 //!Test the equality of two second order tensors
@@ -736,14 +736,14 @@ Vec3D SymTensor2::getColumn(int col) const
 bool SymTensor2::operator==(const SymTensor2 &tensor) const
 //-----------------------------------------------------------------------------
 {
-    int i;
+  int i;
 
-    for (i = 0; i < 6; i++)
-        if (_data[i] != tensor._data[i])
-        {
-            return false;
-        }
-    return true;
+  for (i = 0; i < 6; i++)
+    if (_data[i] != tensor._data[i])
+    {
+      return false;
+    }
+  return true;
 }
 
 //!Test the equality of two second order tensors
@@ -757,7 +757,7 @@ bool SymTensor2::operator==(const SymTensor2 &tensor) const
 bool SymTensor2::operator!=(const SymTensor2 &tensor) const
 //-----------------------------------------------------------------------------
 {
-    return !(*this == tensor);
+  return !(*this == tensor);
 }
 
 //!Writes a second order tensor in a binary flux for storage
@@ -776,7 +776,7 @@ bool SymTensor2::operator!=(const SymTensor2 &tensor) const
 void SymTensor2::write(std::ofstream &ofs) const
 //-----------------------------------------------------------------------------
 {
-    ofs.write((char *)_data, 6 * sizeof(double));
+  ofs.write((char *)_data, 6 * sizeof(double));
 }
 
 //!Reads a second order tensor in a binary flux from storage
@@ -795,7 +795,7 @@ void SymTensor2::write(std::ofstream &ofs) const
 void SymTensor2::read(std::ifstream &ifs)
 //-----------------------------------------------------------------------------
 {
-    ifs.read((char *)_data, 6 * sizeof(double));
+  ifs.read((char *)_data, 6 * sizeof(double));
 }
 
 //!Writes a second order tensor in a binary flux for storage
@@ -815,8 +815,8 @@ void SymTensor2::read(std::ifstream &ifs)
 std::ofstream &operator<<(std::ofstream &os, const SymTensor2 &tensor)
 //-----------------------------------------------------------------------------
 {
-    tensor.write(os);
-    return os;
+  tensor.write(os);
+  return os;
 }
 
 //!Reads a second order tensor from a binary flux for storage
@@ -836,8 +836,8 @@ std::ofstream &operator<<(std::ofstream &os, const SymTensor2 &tensor)
 std::ifstream &operator>>(std::ifstream &is, SymTensor2 &tensor)
 //-----------------------------------------------------------------------------
 {
-    tensor.read(is);
-    return is;
+  tensor.read(is);
+  return is;
 }
 
 //!Maximum component in a vector
@@ -848,13 +848,13 @@ std::ifstream &operator>>(std::ifstream &is, SymTensor2 &tensor)
 double SymTensor2::maxValue()
 //-----------------------------------------------------------------------------
 {
-    double max = _data[0];
-    for (int i = 1; i < 6; i++)
-    {
-        if (_data[i] > max)
-            max = _data[i];
-    }
-    return max;
+  double max = _data[0];
+  for (int i = 1; i < 6; i++)
+  {
+    if (_data[i] > max)
+      max = _data[i];
+  }
+  return max;
 }
 
 //!Minimum component in a vector
@@ -865,13 +865,13 @@ double SymTensor2::maxValue()
 double SymTensor2::minValue()
 //-----------------------------------------------------------------------------
 {
-    double min = _data[0];
-    for (int i = 1; i < 6; i++)
-    {
-        if (_data[i] < min)
-            min = _data[i];
-    }
-    return min;
+  double min = _data[0];
+  for (int i = 1; i < 6; i++)
+  {
+    if (_data[i] < min)
+      min = _data[i];
+  }
+  return min;
 }
 
 //!Maximum absolute component in a vector
@@ -882,13 +882,13 @@ double SymTensor2::minValue()
 double SymTensor2::maxAbsoluteValue()
 //-----------------------------------------------------------------------------
 {
-    double max = abs(_data[0]);
-    for (int i = 1; i < 6; i++)
-    {
-        if (abs(_data[i]) > max)
-            max = _data[i];
-    }
-    return max;
+  double max = abs(_data[0]);
+  for (int i = 1; i < 6; i++)
+  {
+    if (abs(_data[i]) > max)
+      max = _data[i];
+  }
+  return max;
 }
 
 //!Minimum absolute component in a vector
@@ -899,13 +899,13 @@ double SymTensor2::maxAbsoluteValue()
 double SymTensor2::minAbsoluteValue()
 //-----------------------------------------------------------------------------
 {
-    double min = abs(_data[0]);
-    for (int i = 1; i < 6; i++)
-    {
-        if (abs(_data[i]) < min)
-            min = _data[i];
-    }
-    return min;
+  double min = abs(_data[0]);
+  for (int i = 1; i < 6; i++)
+  {
+    if (abs(_data[i]) < min)
+      min = _data[i];
+  }
+  return min;
 }
 
 //!Inverse of a second order tensor
@@ -927,50 +927,50 @@ SymTensor2 SymTensor2::getInverse() const
 //-----------------------------------------------------------------------------
 {
 
-    double t1 = _data[3] * _data[5];
-    double t2 = _data[2] * _data[4];
-    double t4 = _data[4] * _data[4];
-    double t5 = _data[1] * _data[5];
-    double t6 = _data[2] * _data[3];
+  double t1 = _data[3] * _data[5];
+  double t2 = _data[2] * _data[4];
+  double t4 = _data[4] * _data[4];
+  double t5 = _data[1] * _data[5];
+  double t6 = _data[2] * _data[3];
 
-    double unSurDeter = 1.0 / (_data[0] * t1 + 2.0 * _data[1] * t2 - _data[0] * t4 - _data[1] * t5 - _data[2] * t6);
-    return SymTensor2((t1 - t4) * unSurDeter,
-                      (t2 - t5) * unSurDeter,
-                      (_data[1] * _data[4] - t6) * unSurDeter,
-                      (_data[0] * _data[5] - _data[2] * _data[2]) * unSurDeter,
-                      (_data[2] * _data[1] - _data[0] * _data[4]) * unSurDeter,
-                      (_data[0] * _data[3] - _data[1] * _data[1]) * unSurDeter);
+  double unSurDeter = 1.0 / (_data[0] * t1 + 2.0 * _data[1] * t2 - _data[0] * t4 - _data[1] * t5 - _data[2] * t6);
+  return SymTensor2((t1 - t4) * unSurDeter,
+                    (t2 - t5) * unSurDeter,
+                    (_data[1] * _data[4] - t6) * unSurDeter,
+                    (_data[0] * _data[5] - _data[2] * _data[2]) * unSurDeter,
+                    (_data[2] * _data[1] - _data[0] * _data[4]) * unSurDeter,
+                    (_data[0] * _data[3] - _data[1] * _data[1]) * unSurDeter);
 }
 
 //-----------------------------------------------------------------------------
 SymTensor2 SymTensor2::getMinor() const
 //-----------------------------------------------------------------------------
 {
-    return SymTensor2(_data[3] * _data[5] - _data[4] * _data[4],
-                      _data[5] * _data[1] - _data[4] * _data[2],
-                      _data[1] * _data[4] - _data[2] * _data[3],
-                      _data[5] * _data[0] - _data[2] * _data[2],
-                      _data[0] * _data[4] - _data[2] * _data[1],
-                      _data[0] * _data[3] - _data[1] * _data[1]);
+  return SymTensor2(_data[3] * _data[5] - _data[4] * _data[4],
+                    _data[5] * _data[1] - _data[4] * _data[2],
+                    _data[1] * _data[4] - _data[2] * _data[3],
+                    _data[5] * _data[0] - _data[2] * _data[2],
+                    _data[0] * _data[4] - _data[2] * _data[1],
+                    _data[0] * _data[3] - _data[1] * _data[1]);
 }
 
 //-----------------------------------------------------------------------------
 SymTensor2 SymTensor2::getCofactor() const
 //-----------------------------------------------------------------------------
 {
-    return SymTensor2(_data[3] * _data[5] - _data[4] * _data[4],
-                      _data[4] * _data[2] - _data[5] * _data[1],
-                      _data[1] * _data[4] - _data[2] * _data[3],
-                      _data[5] * _data[0] - _data[2] * _data[2],
-                      _data[2] * _data[1] - _data[0] * _data[4],
-                      _data[0] * _data[3] - _data[1] * _data[1]);
+  return SymTensor2(_data[3] * _data[5] - _data[4] * _data[4],
+                    _data[4] * _data[2] - _data[5] * _data[1],
+                    _data[1] * _data[4] - _data[2] * _data[3],
+                    _data[5] * _data[0] - _data[2] * _data[2],
+                    _data[2] * _data[1] - _data[0] * _data[4],
+                    _data[0] * _data[3] - _data[1] * _data[1]);
 }
 
 //-----------------------------------------------------------------------------
 Vec3D SymTensor2::solve(const Vec3D &b) const
 //-----------------------------------------------------------------------------
 {
-    return Vec3D(getInverse() * b);
+  return Vec3D(getInverse() * b);
 }
 
 //!Polar decomposition of a second order tensor with computation of the \f$ ln[U] \f$ and \f$ R \f$ tensors.
@@ -986,130 +986,130 @@ Vec3D SymTensor2::solve(const Vec3D &b) const
 void SymTensor2::polarDecomposeLnU(SymTensor2 &LnU, Tensor2 &R) const
 //-----------------------------------------------------------------------------
 {
-    int p, q;
-    double alpha, t, Ctheta, Stheta;
-    double _tmp1, _tmp2, _tmp3, _tmp4, _tmp5, _tmp6, _tmp7, _tmp8;
-    double Rot11, Rot12, Rot13, Rot21, Rot22, Rot23, Rot31, Rot32, Rot33;
-    SymTensor2 FF;
-    int it = 1;
+  int p, q;
+  double alpha, t, Ctheta, Stheta;
+  double _tmp1, _tmp2, _tmp3, _tmp4, _tmp5, _tmp6, _tmp7, _tmp8;
+  double Rot11, Rot12, Rot13, Rot21, Rot22, Rot23, Rot31, Rot32, Rot33;
+  SymTensor2 FF;
+  int it = 1;
 
-    // calcul de FF=F(T).F
-    FF._data[0] = dnlSquare(_data[0]) + dnlSquare(_data[1]) + dnlSquare(_data[2]);
-    FF._data[1] = _data[0] * _data[1] + _data[1] * _data[3] + _data[2] * _data[4];
-    FF._data[2] = _data[0] * _data[2] + _data[1] * _data[4] + _data[2] * _data[5];
-    FF._data[3] = dnlSquare(_data[1]) + dnlSquare(_data[3]) + dnlSquare(_data[4]);
-    FF._data[4] = _data[1] * _data[2] + _data[3] * _data[4] + _data[4] * _data[5];
-    FF._data[5] = dnlSquare(_data[2]) + dnlSquare(_data[4]) + dnlSquare(_data[5]);
+  // calcul de FF=F(T).F
+  FF._data[0] = dnlSquare(_data[0]) + dnlSquare(_data[1]) + dnlSquare(_data[2]);
+  FF._data[1] = _data[0] * _data[1] + _data[1] * _data[3] + _data[2] * _data[4];
+  FF._data[2] = _data[0] * _data[2] + _data[1] * _data[4] + _data[2] * _data[5];
+  FF._data[3] = dnlSquare(_data[1]) + dnlSquare(_data[3]) + dnlSquare(_data[4]);
+  FF._data[4] = _data[1] * _data[2] + _data[3] * _data[4] + _data[4] * _data[5];
+  FF._data[5] = dnlSquare(_data[2]) + dnlSquare(_data[4]) + dnlSquare(_data[5]);
 
-    // initialisation de Rot
-    Rot11 = 1.0;
-    Rot22 = 1.0;
-    Rot33 = 1.0;
-    Rot12 = 0.0;
-    Rot13 = 0.0;
-    Rot21 = 0.0;
-    Rot23 = 0.0;
-    Rot31 = 0.0;
-    Rot32 = 0.0;
+  // initialisation de Rot
+  Rot11 = 1.0;
+  Rot22 = 1.0;
+  Rot33 = 1.0;
+  Rot12 = 0.0;
+  Rot13 = 0.0;
+  Rot21 = 0.0;
+  Rot23 = 0.0;
+  Rot31 = 0.0;
+  Rot32 = 0.0;
 
-    while (it < 30)
+  while (it < 30)
+  {
+    // recherche du terme maxi
+    q = (dnlAbs(FF._data[1]) > dnlAbs(FF._data[2]) ? 1 : 2);
+    p = (dnlAbs(FF._data[q]) > dnlAbs(FF._data[4]) ? 0 : 1);
+    if (p == 1)
     {
-        // recherche du terme maxi
-        q = (dnlAbs(FF._data[1]) > dnlAbs(FF._data[2]) ? 1 : 2);
-        p = (dnlAbs(FF._data[q]) > dnlAbs(FF._data[4]) ? 0 : 1);
-        if (p == 1)
-        {
-            q = 2;
-        }
-
-        // test de convergence
-        if (dnlAbs(FF._data[indexes.index[p][q]]) < precisionPolarDecompose)
-        {
-            _tmp1 = log(FF._data[0]);
-            _tmp2 = log(FF._data[3]);
-            _tmp3 = log(FF._data[5]);
-            LnU._data[0] = (dnlSquare(Rot11) * _tmp1 + dnlSquare(Rot12) * _tmp2 + dnlSquare(Rot13) * _tmp3) / 2;
-            LnU._data[3] = (dnlSquare(Rot21) * _tmp1 + dnlSquare(Rot22) * _tmp2 + dnlSquare(Rot23) * _tmp3) / 2;
-            LnU._data[5] = (dnlSquare(Rot31) * _tmp1 + dnlSquare(Rot32) * _tmp2 + dnlSquare(Rot33) * _tmp3) / 2;
-            LnU._data[1] = (Rot11 * Rot21 * _tmp1 + Rot12 * Rot22 * _tmp2 + Rot13 * Rot23 * _tmp3) / 2;
-            LnU._data[2] = (Rot11 * Rot31 * _tmp1 + Rot12 * Rot32 * _tmp2 + Rot13 * Rot33 * _tmp3) / 2;
-            LnU._data[4] = (Rot21 * Rot31 * _tmp1 + Rot22 * Rot32 * _tmp2 + Rot23 * Rot33 * _tmp3) / 2;
-
-            _tmp1 = 1.0 / sqrt(FF._data[0]);
-            _tmp2 = 1.0 / sqrt(FF._data[3]);
-            _tmp3 = 1.0 / sqrt(FF._data[5]);
-            _tmp4 = (Rot13 * _data[0] + Rot23 * _data[1] + Rot33 * _data[2]) * _tmp3;
-            _tmp5 = (Rot12 * _data[0] + Rot22 * _data[1] + Rot32 * _data[2]) * _tmp2;
-            _tmp6 = (Rot11 * _data[0] + Rot21 * _data[1] + Rot31 * _data[2]) * _tmp1;
-            R._data[0] = Rot13 * _tmp4 + Rot12 * _tmp5 + Rot11 * _tmp6;
-            R._data[1] = Rot23 * _tmp4 + Rot22 * _tmp5 + Rot21 * _tmp6;
-            R._data[2] = Rot33 * _tmp4 + Rot32 * _tmp5 + Rot31 * _tmp6;
-            _tmp4 = (Rot13 * _data[1] + Rot23 * _data[3] + Rot33 * _data[4]) * _tmp3;
-            _tmp5 = (Rot12 * _data[1] + Rot22 * _data[3] + Rot32 * _data[4]) * _tmp2;
-            _tmp6 = (Rot11 * _data[1] + Rot21 * _data[3] + Rot31 * _data[4]) * _tmp1;
-            R._data[3] = Rot13 * _tmp4 + Rot12 * _tmp5 + Rot11 * _tmp6;
-            R._data[4] = Rot23 * _tmp4 + Rot22 * _tmp5 + Rot21 * _tmp6;
-            R._data[5] = Rot33 * _tmp4 + Rot32 * _tmp5 + Rot31 * _tmp6;
-            _tmp4 = (Rot13 * _data[2] + Rot23 * _data[4] + Rot33 * _data[5]) * _tmp3;
-            _tmp5 = (Rot12 * _data[2] + Rot22 * _data[4] + Rot32 * _data[5]) * _tmp2;
-            _tmp6 = (Rot11 * _data[2] + Rot21 * _data[4] + Rot31 * _data[5]) * _tmp1;
-            R._data[6] = Rot13 * _tmp4 + Rot12 * _tmp5 + Rot11 * _tmp6;
-            R._data[7] = Rot23 * _tmp4 + Rot22 * _tmp5 + Rot21 * _tmp6;
-            R._data[8] = Rot33 * _tmp4 + Rot32 * _tmp5 + Rot31 * _tmp6;
-            return;
-        }
-
-        // calcul de l'angle
-        alpha = (FF._data[indexes.index[q][q]] - FF._data[indexes.index[p][p]]) / (2. * FF._data[indexes.index[p][q]]);
-        t = (alpha != 0.0 ? 1.0 / (alpha + sqrt(alpha * alpha + 1.0) * (alpha > 0.0 ? 1.0 : -1.0)) : 1.0);
-
-        // calcul des cosinus
-        Ctheta = 1.0 / (sqrt(1.0 + t * t));
-        Stheta = t * Ctheta;
-
-        // calcul du nouveau tenseur
-        R.setToUnity();
-        R(p, q) = Stheta;
-        R(q, p) = -Stheta;
-        R(p, p) = R(q, q) = Ctheta;
-
-        // produit R(T).FF.R avec FF symétrique
-        _tmp1 = FF._data[0] * R._data[0] + FF._data[1] * R._data[3] + FF._data[2] * R._data[6];
-        _tmp2 = FF._data[1] * R._data[0] + FF._data[3] * R._data[3] + FF._data[4] * R._data[6];
-        _tmp3 = FF._data[2] * R._data[0] + FF._data[4] * R._data[3] + FF._data[5] * R._data[6];
-        _tmp4 = FF._data[0] * R._data[1] + FF._data[1] * R._data[4] + FF._data[2] * R._data[7];
-        _tmp5 = FF._data[1] * R._data[1] + FF._data[3] * R._data[4] + FF._data[4] * R._data[7];
-        _tmp6 = FF._data[2] * R._data[1] + FF._data[4] * R._data[4] + FF._data[5] * R._data[7];
-        FF._data[5] = R._data[2] * (FF._data[0] * R._data[2] + FF._data[1] * R._data[5] + FF._data[2] * R._data[8]) +
-                      R._data[5] * (FF._data[1] * R._data[2] + FF._data[3] * R._data[5] + FF._data[4] * R._data[8]) +
-                      R._data[8] * (FF._data[2] * R._data[2] + FF._data[4] * R._data[5] + FF._data[5] * R._data[8]);
-        FF._data[0] = R._data[0] * _tmp1 + R._data[3] * _tmp2 + R._data[6] * _tmp3;
-        FF._data[1] = R._data[1] * _tmp1 + R._data[4] * _tmp2 + R._data[7] * _tmp3;
-        FF._data[2] = R._data[2] * _tmp1 + R._data[5] * _tmp2 + R._data[8] * _tmp3;
-        FF._data[3] = R._data[1] * _tmp4 + R._data[4] * _tmp5 + R._data[7] * _tmp6;
-        FF._data[4] = R._data[2] * _tmp4 + R._data[5] * _tmp5 + R._data[8] * _tmp6;
-
-        // cumulate of R
-        _tmp1 = R._data[0] * Rot11 + R._data[3] * Rot12 + R._data[6] * Rot13;
-        _tmp2 = R._data[1] * Rot11 + R._data[4] * Rot12 + R._data[7] * Rot13;
-        Rot13 = R._data[2] * Rot11 + R._data[5] * Rot12 + R._data[8] * Rot13;
-        _tmp4 = R._data[0] * Rot21 + R._data[3] * Rot22 + R._data[6] * Rot23;
-        _tmp5 = R._data[1] * Rot21 + R._data[4] * Rot22 + R._data[7] * Rot23;
-        Rot23 = R._data[2] * Rot21 + R._data[5] * Rot22 + R._data[8] * Rot23;
-        _tmp7 = R._data[0] * Rot31 + R._data[3] * Rot32 + R._data[6] * Rot33;
-        _tmp8 = R._data[1] * Rot31 + R._data[4] * Rot32 + R._data[7] * Rot33;
-        Rot33 = R._data[2] * Rot31 + R._data[5] * Rot32 + R._data[8] * Rot33;
-        Rot11 = _tmp1;
-        Rot12 = _tmp2;
-        Rot21 = _tmp4;
-        Rot22 = _tmp5;
-        Rot31 = _tmp7;
-        Rot32 = _tmp8;
-        it++;
+      q = 2;
     }
 
-    std::cout << (*this) << std::endl;
-    fatalError("SymTensor2::polarDecomposeLnU", "No convergence");
+    // test de convergence
+    if (dnlAbs(FF._data[indexes.index[p][q]]) < precisionPolarDecompose)
+    {
+      _tmp1 = 0.5 * log(FF._data[0]);
+      _tmp2 = 0.5 * log(FF._data[3]);
+      _tmp3 = 0.5 * log(FF._data[5]);
+      LnU._data[0] = dnlSquare(Rot11) * _tmp1 + dnlSquare(Rot12) * _tmp2 + dnlSquare(Rot13) * _tmp3;
+      LnU._data[3] = dnlSquare(Rot21) * _tmp1 + dnlSquare(Rot22) * _tmp2 + dnlSquare(Rot23) * _tmp3;
+      LnU._data[5] = dnlSquare(Rot31) * _tmp1 + dnlSquare(Rot32) * _tmp2 + dnlSquare(Rot33) * _tmp3;
+      LnU._data[1] = (Rot11 * Rot21 * _tmp1 + Rot12 * Rot22 * _tmp2 + Rot13 * Rot23 * _tmp3);
+      LnU._data[2] = (Rot11 * Rot31 * _tmp1 + Rot12 * Rot32 * _tmp2 + Rot13 * Rot33 * _tmp3);
+      LnU._data[4] = (Rot21 * Rot31 * _tmp1 + Rot22 * Rot32 * _tmp2 + Rot23 * Rot33 * _tmp3);
+
+      _tmp1 = 1.0 / sqrt(FF._data[0]);
+      _tmp2 = 1.0 / sqrt(FF._data[3]);
+      _tmp3 = 1.0 / sqrt(FF._data[5]);
+      _tmp4 = (Rot13 * _data[0] + Rot23 * _data[1] + Rot33 * _data[2]) * _tmp3;
+      _tmp5 = (Rot12 * _data[0] + Rot22 * _data[1] + Rot32 * _data[2]) * _tmp2;
+      _tmp6 = (Rot11 * _data[0] + Rot21 * _data[1] + Rot31 * _data[2]) * _tmp1;
+      R._data[0] = Rot13 * _tmp4 + Rot12 * _tmp5 + Rot11 * _tmp6;
+      R._data[1] = Rot23 * _tmp4 + Rot22 * _tmp5 + Rot21 * _tmp6;
+      R._data[2] = Rot33 * _tmp4 + Rot32 * _tmp5 + Rot31 * _tmp6;
+      _tmp4 = (Rot13 * _data[1] + Rot23 * _data[3] + Rot33 * _data[4]) * _tmp3;
+      _tmp5 = (Rot12 * _data[1] + Rot22 * _data[3] + Rot32 * _data[4]) * _tmp2;
+      _tmp6 = (Rot11 * _data[1] + Rot21 * _data[3] + Rot31 * _data[4]) * _tmp1;
+      R._data[3] = Rot13 * _tmp4 + Rot12 * _tmp5 + Rot11 * _tmp6;
+      R._data[4] = Rot23 * _tmp4 + Rot22 * _tmp5 + Rot21 * _tmp6;
+      R._data[5] = Rot33 * _tmp4 + Rot32 * _tmp5 + Rot31 * _tmp6;
+      _tmp4 = (Rot13 * _data[2] + Rot23 * _data[4] + Rot33 * _data[5]) * _tmp3;
+      _tmp5 = (Rot12 * _data[2] + Rot22 * _data[4] + Rot32 * _data[5]) * _tmp2;
+      _tmp6 = (Rot11 * _data[2] + Rot21 * _data[4] + Rot31 * _data[5]) * _tmp1;
+      R._data[6] = Rot13 * _tmp4 + Rot12 * _tmp5 + Rot11 * _tmp6;
+      R._data[7] = Rot23 * _tmp4 + Rot22 * _tmp5 + Rot21 * _tmp6;
+      R._data[8] = Rot33 * _tmp4 + Rot32 * _tmp5 + Rot31 * _tmp6;
+      return;
+    }
+
+    // calcul de l'angle
+    alpha = (FF._data[indexes.index[q][q]] - FF._data[indexes.index[p][p]]) / (2. * FF._data[indexes.index[p][q]]);
+    t = (alpha != 0.0 ? 1.0 / (alpha + sqrt(alpha * alpha + 1.0) * (alpha > 0.0 ? 1.0 : -1.0)) : 1.0);
+
+    // calcul des cosinus
+    Ctheta = 1.0 / (sqrt(1.0 + t * t));
+    Stheta = t * Ctheta;
+
+    // calcul du nouveau tenseur
+    R.setToUnity();
+    R(p, q) = Stheta;
+    R(q, p) = -Stheta;
+    R(p, p) = R(q, q) = Ctheta;
+
+    // produit R(T).FF.R avec FF symétrique
+    _tmp1 = FF._data[0] * R._data[0] + FF._data[1] * R._data[3] + FF._data[2] * R._data[6];
+    _tmp2 = FF._data[1] * R._data[0] + FF._data[3] * R._data[3] + FF._data[4] * R._data[6];
+    _tmp3 = FF._data[2] * R._data[0] + FF._data[4] * R._data[3] + FF._data[5] * R._data[6];
+    _tmp4 = FF._data[0] * R._data[1] + FF._data[1] * R._data[4] + FF._data[2] * R._data[7];
+    _tmp5 = FF._data[1] * R._data[1] + FF._data[3] * R._data[4] + FF._data[4] * R._data[7];
+    _tmp6 = FF._data[2] * R._data[1] + FF._data[4] * R._data[4] + FF._data[5] * R._data[7];
+    FF._data[5] = R._data[2] * (FF._data[0] * R._data[2] + FF._data[1] * R._data[5] + FF._data[2] * R._data[8]) +
+                  R._data[5] * (FF._data[1] * R._data[2] + FF._data[3] * R._data[5] + FF._data[4] * R._data[8]) +
+                  R._data[8] * (FF._data[2] * R._data[2] + FF._data[4] * R._data[5] + FF._data[5] * R._data[8]);
+    FF._data[0] = R._data[0] * _tmp1 + R._data[3] * _tmp2 + R._data[6] * _tmp3;
+    FF._data[1] = R._data[1] * _tmp1 + R._data[4] * _tmp2 + R._data[7] * _tmp3;
+    FF._data[2] = R._data[2] * _tmp1 + R._data[5] * _tmp2 + R._data[8] * _tmp3;
+    FF._data[3] = R._data[1] * _tmp4 + R._data[4] * _tmp5 + R._data[7] * _tmp6;
+    FF._data[4] = R._data[2] * _tmp4 + R._data[5] * _tmp5 + R._data[8] * _tmp6;
+
+    // cumulate of R
+    _tmp1 = R._data[0] * Rot11 + R._data[3] * Rot12 + R._data[6] * Rot13;
+    _tmp2 = R._data[1] * Rot11 + R._data[4] * Rot12 + R._data[7] * Rot13;
+    Rot13 = R._data[2] * Rot11 + R._data[5] * Rot12 + R._data[8] * Rot13;
+    _tmp4 = R._data[0] * Rot21 + R._data[3] * Rot22 + R._data[6] * Rot23;
+    _tmp5 = R._data[1] * Rot21 + R._data[4] * Rot22 + R._data[7] * Rot23;
+    Rot23 = R._data[2] * Rot21 + R._data[5] * Rot22 + R._data[8] * Rot23;
+    _tmp7 = R._data[0] * Rot31 + R._data[3] * Rot32 + R._data[6] * Rot33;
+    _tmp8 = R._data[1] * Rot31 + R._data[4] * Rot32 + R._data[7] * Rot33;
+    Rot33 = R._data[2] * Rot31 + R._data[5] * Rot32 + R._data[8] * Rot33;
+    Rot11 = _tmp1;
+    Rot12 = _tmp2;
+    Rot21 = _tmp4;
+    Rot22 = _tmp5;
+    Rot31 = _tmp7;
+    Rot32 = _tmp8;
+    it++;
+  }
+
+  std::cout << (*this) << std::endl;
+  fatalError("SymTensor2::polarDecomposeLnU", "No convergence");
 }
 
 //!Polar decomposition of a second order tensor with computation of the \f$ U \f$ and \f$ R \f$ tensors.
@@ -1123,131 +1123,131 @@ void SymTensor2::polarDecomposeLnU(SymTensor2 &LnU, Tensor2 &R) const
 void SymTensor2::polarDecompose(SymTensor2 &U, Tensor2 &R) const
 //-----------------------------------------------------------------------------
 {
-    int p, q;
-    double alpha, t, Ctheta, Stheta;
-    double _tmp1, _tmp2, _tmp3, _tmp4, _tmp5, _tmp6, _tmp7, _tmp8;
-    double Rot11, Rot12, Rot13, Rot21, Rot22, Rot23, Rot31, Rot32, Rot33;
-    SymTensor2 FF;
-    int it = 1;
+  int p, q;
+  double alpha, t, Ctheta, Stheta;
+  double _tmp1, _tmp2, _tmp3, _tmp4, _tmp5, _tmp6, _tmp7, _tmp8;
+  double Rot11, Rot12, Rot13, Rot21, Rot22, Rot23, Rot31, Rot32, Rot33;
+  SymTensor2 FF;
+  int it = 1;
 
-    // calcul de FF=F(T).F
-    FF._data[0] = dnlSquare(_data[0]) + dnlSquare(_data[1]) + dnlSquare(_data[2]);
-    FF._data[1] = _data[0] * _data[1] + _data[1] * _data[3] + _data[2] * _data[4];
-    FF._data[2] = _data[0] * _data[2] + _data[1] * _data[4] + _data[2] * _data[5];
-    FF._data[3] = dnlSquare(_data[1]) + dnlSquare(_data[3]) + dnlSquare(_data[4]);
-    FF._data[4] = _data[1] * _data[2] + _data[3] * _data[4] + _data[4] * _data[5];
-    FF._data[5] = dnlSquare(_data[2]) + dnlSquare(_data[4]) + dnlSquare(_data[5]);
+  // calcul de FF=F(T).F
+  FF._data[0] = dnlSquare(_data[0]) + dnlSquare(_data[1]) + dnlSquare(_data[2]);
+  FF._data[1] = _data[0] * _data[1] + _data[1] * _data[3] + _data[2] * _data[4];
+  FF._data[2] = _data[0] * _data[2] + _data[1] * _data[4] + _data[2] * _data[5];
+  FF._data[3] = dnlSquare(_data[1]) + dnlSquare(_data[3]) + dnlSquare(_data[4]);
+  FF._data[4] = _data[1] * _data[2] + _data[3] * _data[4] + _data[4] * _data[5];
+  FF._data[5] = dnlSquare(_data[2]) + dnlSquare(_data[4]) + dnlSquare(_data[5]);
 
-    // initialisation de Rot
-    Rot11 = 1.0;
-    Rot22 = 1.0;
-    Rot33 = 1.0;
-    Rot12 = 0.0;
-    Rot13 = 0.0;
-    Rot21 = 0.0;
-    Rot23 = 0.0;
-    Rot31 = 0.0;
-    Rot32 = 0.0;
+  // initialisation de Rot
+  Rot11 = 1.0;
+  Rot22 = 1.0;
+  Rot33 = 1.0;
+  Rot12 = 0.0;
+  Rot13 = 0.0;
+  Rot21 = 0.0;
+  Rot23 = 0.0;
+  Rot31 = 0.0;
+  Rot32 = 0.0;
 
-    while (it < 30)
+  while (it < 30)
+  {
+    // recherche du terme maxi
+    q = (dnlAbs(FF._data[1]) > dnlAbs(FF._data[2]) ? 1 : 2);
+    p = (dnlAbs(FF._data[q]) > dnlAbs(FF._data[4]) ? 0 : 1);
+    if (p == 1)
     {
-        // recherche du terme maxi
-        q = (dnlAbs(FF._data[1]) > dnlAbs(FF._data[2]) ? 1 : 2);
-        p = (dnlAbs(FF._data[q]) > dnlAbs(FF._data[4]) ? 0 : 1);
-        if (p == 1)
-        {
-            q = 2;
-        }
-
-        // test de convergence
-        if (dnlAbs(FF._data[indexes.index[p][q]]) < precisionPolarDecompose)
-        {
-            _tmp1 = sqrt(FF._data[0]);
-            _tmp2 = sqrt(FF._data[3]);
-            _tmp3 = sqrt(FF._data[5]);
-            U._data[0] = (dnlSquare(Rot11) * _tmp1 + dnlSquare(Rot12) * _tmp2 + dnlSquare(Rot13) * _tmp3);
-            U._data[3] = (dnlSquare(Rot21) * _tmp1 + dnlSquare(Rot22) * _tmp2 + dnlSquare(Rot23) * _tmp3);
-            U._data[5] = (dnlSquare(Rot31) * _tmp1 + dnlSquare(Rot32) * _tmp2 + dnlSquare(Rot33) * _tmp3);
-            U._data[1] = (Rot11 * Rot21 * _tmp1 + Rot12 * Rot22 * _tmp2 + Rot13 * Rot23 * _tmp3);
-            U._data[2] = (Rot11 * Rot31 * _tmp1 + Rot12 * Rot32 * _tmp2 + Rot13 * Rot33 * _tmp3);
-            U._data[4] = (Rot21 * Rot31 * _tmp1 + Rot22 * Rot32 * _tmp2 + Rot23 * Rot33 * _tmp3);
-
-            _tmp1 = 1.0 / sqrt(FF._data[0]);
-            _tmp2 = 1.0 / sqrt(FF._data[3]);
-            _tmp3 = 1.0 / sqrt(FF._data[5]);
-            _tmp4 = (Rot13 * _data[0] + Rot23 * _data[1] + Rot33 * _data[2]) * _tmp3;
-            _tmp5 = (Rot12 * _data[0] + Rot22 * _data[1] + Rot32 * _data[2]) * _tmp2;
-            _tmp6 = (Rot11 * _data[0] + Rot21 * _data[1] + Rot31 * _data[2]) * _tmp1;
-            R._data[0] = Rot13 * _tmp4 + Rot12 * _tmp5 + Rot11 * _tmp6;
-            R._data[1] = Rot23 * _tmp4 + Rot22 * _tmp5 + Rot21 * _tmp6;
-            R._data[2] = Rot33 * _tmp4 + Rot32 * _tmp5 + Rot31 * _tmp6;
-            _tmp4 = (Rot13 * _data[1] + Rot23 * _data[3] + Rot33 * _data[4]) * _tmp3;
-            _tmp5 = (Rot12 * _data[1] + Rot22 * _data[3] + Rot32 * _data[4]) * _tmp2;
-            _tmp6 = (Rot11 * _data[1] + Rot21 * _data[3] + Rot31 * _data[4]) * _tmp1;
-            R._data[3] = Rot13 * _tmp4 + Rot12 * _tmp5 + Rot11 * _tmp6;
-            R._data[4] = Rot23 * _tmp4 + Rot22 * _tmp5 + Rot21 * _tmp6;
-            R._data[5] = Rot33 * _tmp4 + Rot32 * _tmp5 + Rot31 * _tmp6;
-            _tmp4 = (Rot13 * _data[2] + Rot23 * _data[4] + Rot33 * _data[5]) * _tmp3;
-            _tmp5 = (Rot12 * _data[2] + Rot22 * _data[4] + Rot32 * _data[5]) * _tmp2;
-            _tmp6 = (Rot11 * _data[2] + Rot21 * _data[4] + Rot31 * _data[5]) * _tmp1;
-            R._data[6] = Rot13 * _tmp4 + Rot12 * _tmp5 + Rot11 * _tmp6;
-            R._data[7] = Rot23 * _tmp4 + Rot22 * _tmp5 + Rot21 * _tmp6;
-            R._data[8] = Rot33 * _tmp4 + Rot32 * _tmp5 + Rot31 * _tmp6;
-            return;
-        }
-
-        // calcul de l'angle
-        alpha = (FF._data[indexes.index[q][q]] - FF._data[indexes.index[p][p]]) / (2. * FF._data[indexes.index[p][q]]);
-        t = (alpha != 0.0 ? 1.0 / (alpha + sqrt(alpha * alpha + 1.0) * (alpha > 0.0 ? 1.0 : -1.0)) : 1.0);
-
-        // calcul des cosinus
-        Ctheta = 1.0 / (sqrt(1.0 + t * t));
-        Stheta = t * Ctheta;
-
-        // calcul du nouveau tenseur
-        R.setToUnity();
-        R(p, q) = Stheta;
-        R(q, p) = -Stheta;
-        R(p, p) = R(q, q) = Ctheta;
-
-        // produit R(T).FF.R avec FF symétrique
-        _tmp1 = FF._data[0] * R._data[0] + FF._data[1] * R._data[3] + FF._data[2] * R._data[6];
-        _tmp2 = FF._data[1] * R._data[0] + FF._data[3] * R._data[3] + FF._data[4] * R._data[6];
-        _tmp3 = FF._data[2] * R._data[0] + FF._data[4] * R._data[3] + FF._data[5] * R._data[6];
-        _tmp4 = FF._data[0] * R._data[1] + FF._data[1] * R._data[4] + FF._data[2] * R._data[7];
-        _tmp5 = FF._data[1] * R._data[1] + FF._data[3] * R._data[4] + FF._data[4] * R._data[7];
-        _tmp6 = FF._data[2] * R._data[1] + FF._data[4] * R._data[4] + FF._data[5] * R._data[7];
-        FF._data[5] = R._data[2] * (FF._data[0] * R._data[2] + FF._data[1] * R._data[5] + FF._data[2] * R._data[8]) +
-                      R._data[5] * (FF._data[1] * R._data[2] + FF._data[3] * R._data[5] + FF._data[4] * R._data[8]) +
-                      R._data[8] * (FF._data[2] * R._data[2] + FF._data[4] * R._data[5] + FF._data[5] * R._data[8]);
-        FF._data[0] = R._data[0] * _tmp1 + R._data[3] * _tmp2 + R._data[6] * _tmp3;
-        FF._data[1] = R._data[1] * _tmp1 + R._data[4] * _tmp2 + R._data[7] * _tmp3;
-        FF._data[2] = R._data[2] * _tmp1 + R._data[5] * _tmp2 + R._data[8] * _tmp3;
-        FF._data[3] = R._data[1] * _tmp4 + R._data[4] * _tmp5 + R._data[7] * _tmp6;
-        FF._data[4] = R._data[2] * _tmp4 + R._data[5] * _tmp5 + R._data[8] * _tmp6;
-
-        // cumulate of R
-        _tmp1 = R._data[0] * Rot11 + R._data[3] * Rot12 + R._data[6] * Rot13;
-        _tmp2 = R._data[1] * Rot11 + R._data[4] * Rot12 + R._data[7] * Rot13;
-        Rot13 = R._data[2] * Rot11 + R._data[5] * Rot12 + R._data[8] * Rot13;
-        _tmp4 = R._data[0] * Rot21 + R._data[3] * Rot22 + R._data[6] * Rot23;
-        _tmp5 = R._data[1] * Rot21 + R._data[4] * Rot22 + R._data[7] * Rot23;
-        Rot23 = R._data[2] * Rot21 + R._data[5] * Rot22 + R._data[8] * Rot23;
-        _tmp7 = R._data[0] * Rot31 + R._data[3] * Rot32 + R._data[6] * Rot33;
-        _tmp8 = R._data[1] * Rot31 + R._data[4] * Rot32 + R._data[7] * Rot33;
-        Rot33 = R._data[2] * Rot31 + R._data[5] * Rot32 + R._data[8] * Rot33;
-        Rot11 = _tmp1;
-        Rot12 = _tmp2;
-        Rot21 = _tmp4;
-        Rot22 = _tmp5;
-        Rot31 = _tmp7;
-        Rot32 = _tmp8;
-
-        it++;
+      q = 2;
     }
 
-    std::cout << (*this) << std::endl;
-    fatalError("SymTensor2::polarDecompose", "No convergence");
+    // test de convergence
+    if (dnlAbs(FF._data[indexes.index[p][q]]) < precisionPolarDecompose)
+    {
+      _tmp1 = sqrt(FF._data[0]);
+      _tmp2 = sqrt(FF._data[3]);
+      _tmp3 = sqrt(FF._data[5]);
+      U._data[0] = (dnlSquare(Rot11) * _tmp1 + dnlSquare(Rot12) * _tmp2 + dnlSquare(Rot13) * _tmp3);
+      U._data[3] = (dnlSquare(Rot21) * _tmp1 + dnlSquare(Rot22) * _tmp2 + dnlSquare(Rot23) * _tmp3);
+      U._data[5] = (dnlSquare(Rot31) * _tmp1 + dnlSquare(Rot32) * _tmp2 + dnlSquare(Rot33) * _tmp3);
+      U._data[1] = (Rot11 * Rot21 * _tmp1 + Rot12 * Rot22 * _tmp2 + Rot13 * Rot23 * _tmp3);
+      U._data[2] = (Rot11 * Rot31 * _tmp1 + Rot12 * Rot32 * _tmp2 + Rot13 * Rot33 * _tmp3);
+      U._data[4] = (Rot21 * Rot31 * _tmp1 + Rot22 * Rot32 * _tmp2 + Rot23 * Rot33 * _tmp3);
+
+      _tmp1 = 1.0 / sqrt(FF._data[0]);
+      _tmp2 = 1.0 / sqrt(FF._data[3]);
+      _tmp3 = 1.0 / sqrt(FF._data[5]);
+      _tmp4 = (Rot13 * _data[0] + Rot23 * _data[1] + Rot33 * _data[2]) * _tmp3;
+      _tmp5 = (Rot12 * _data[0] + Rot22 * _data[1] + Rot32 * _data[2]) * _tmp2;
+      _tmp6 = (Rot11 * _data[0] + Rot21 * _data[1] + Rot31 * _data[2]) * _tmp1;
+      R._data[0] = Rot13 * _tmp4 + Rot12 * _tmp5 + Rot11 * _tmp6;
+      R._data[1] = Rot23 * _tmp4 + Rot22 * _tmp5 + Rot21 * _tmp6;
+      R._data[2] = Rot33 * _tmp4 + Rot32 * _tmp5 + Rot31 * _tmp6;
+      _tmp4 = (Rot13 * _data[1] + Rot23 * _data[3] + Rot33 * _data[4]) * _tmp3;
+      _tmp5 = (Rot12 * _data[1] + Rot22 * _data[3] + Rot32 * _data[4]) * _tmp2;
+      _tmp6 = (Rot11 * _data[1] + Rot21 * _data[3] + Rot31 * _data[4]) * _tmp1;
+      R._data[3] = Rot13 * _tmp4 + Rot12 * _tmp5 + Rot11 * _tmp6;
+      R._data[4] = Rot23 * _tmp4 + Rot22 * _tmp5 + Rot21 * _tmp6;
+      R._data[5] = Rot33 * _tmp4 + Rot32 * _tmp5 + Rot31 * _tmp6;
+      _tmp4 = (Rot13 * _data[2] + Rot23 * _data[4] + Rot33 * _data[5]) * _tmp3;
+      _tmp5 = (Rot12 * _data[2] + Rot22 * _data[4] + Rot32 * _data[5]) * _tmp2;
+      _tmp6 = (Rot11 * _data[2] + Rot21 * _data[4] + Rot31 * _data[5]) * _tmp1;
+      R._data[6] = Rot13 * _tmp4 + Rot12 * _tmp5 + Rot11 * _tmp6;
+      R._data[7] = Rot23 * _tmp4 + Rot22 * _tmp5 + Rot21 * _tmp6;
+      R._data[8] = Rot33 * _tmp4 + Rot32 * _tmp5 + Rot31 * _tmp6;
+      return;
+    }
+
+    // calcul de l'angle
+    alpha = (FF._data[indexes.index[q][q]] - FF._data[indexes.index[p][p]]) / (2. * FF._data[indexes.index[p][q]]);
+    t = (alpha != 0.0 ? 1.0 / (alpha + sqrt(alpha * alpha + 1.0) * (alpha > 0.0 ? 1.0 : -1.0)) : 1.0);
+
+    // calcul des cosinus
+    Ctheta = 1.0 / (sqrt(1.0 + t * t));
+    Stheta = t * Ctheta;
+
+    // calcul du nouveau tenseur
+    R.setToUnity();
+    R(p, q) = Stheta;
+    R(q, p) = -Stheta;
+    R(p, p) = R(q, q) = Ctheta;
+
+    // produit R(T).FF.R avec FF symétrique
+    _tmp1 = FF._data[0] * R._data[0] + FF._data[1] * R._data[3] + FF._data[2] * R._data[6];
+    _tmp2 = FF._data[1] * R._data[0] + FF._data[3] * R._data[3] + FF._data[4] * R._data[6];
+    _tmp3 = FF._data[2] * R._data[0] + FF._data[4] * R._data[3] + FF._data[5] * R._data[6];
+    _tmp4 = FF._data[0] * R._data[1] + FF._data[1] * R._data[4] + FF._data[2] * R._data[7];
+    _tmp5 = FF._data[1] * R._data[1] + FF._data[3] * R._data[4] + FF._data[4] * R._data[7];
+    _tmp6 = FF._data[2] * R._data[1] + FF._data[4] * R._data[4] + FF._data[5] * R._data[7];
+    FF._data[5] = R._data[2] * (FF._data[0] * R._data[2] + FF._data[1] * R._data[5] + FF._data[2] * R._data[8]) +
+                  R._data[5] * (FF._data[1] * R._data[2] + FF._data[3] * R._data[5] + FF._data[4] * R._data[8]) +
+                  R._data[8] * (FF._data[2] * R._data[2] + FF._data[4] * R._data[5] + FF._data[5] * R._data[8]);
+    FF._data[0] = R._data[0] * _tmp1 + R._data[3] * _tmp2 + R._data[6] * _tmp3;
+    FF._data[1] = R._data[1] * _tmp1 + R._data[4] * _tmp2 + R._data[7] * _tmp3;
+    FF._data[2] = R._data[2] * _tmp1 + R._data[5] * _tmp2 + R._data[8] * _tmp3;
+    FF._data[3] = R._data[1] * _tmp4 + R._data[4] * _tmp5 + R._data[7] * _tmp6;
+    FF._data[4] = R._data[2] * _tmp4 + R._data[5] * _tmp5 + R._data[8] * _tmp6;
+
+    // cumulate of R
+    _tmp1 = R._data[0] * Rot11 + R._data[3] * Rot12 + R._data[6] * Rot13;
+    _tmp2 = R._data[1] * Rot11 + R._data[4] * Rot12 + R._data[7] * Rot13;
+    Rot13 = R._data[2] * Rot11 + R._data[5] * Rot12 + R._data[8] * Rot13;
+    _tmp4 = R._data[0] * Rot21 + R._data[3] * Rot22 + R._data[6] * Rot23;
+    _tmp5 = R._data[1] * Rot21 + R._data[4] * Rot22 + R._data[7] * Rot23;
+    Rot23 = R._data[2] * Rot21 + R._data[5] * Rot22 + R._data[8] * Rot23;
+    _tmp7 = R._data[0] * Rot31 + R._data[3] * Rot32 + R._data[6] * Rot33;
+    _tmp8 = R._data[1] * Rot31 + R._data[4] * Rot32 + R._data[7] * Rot33;
+    Rot33 = R._data[2] * Rot31 + R._data[5] * Rot32 + R._data[8] * Rot33;
+    Rot11 = _tmp1;
+    Rot12 = _tmp2;
+    Rot21 = _tmp4;
+    Rot22 = _tmp5;
+    Rot31 = _tmp7;
+    Rot32 = _tmp8;
+
+    it++;
+  }
+
+  std::cout << (*this) << std::endl;
+  fatalError("SymTensor2::polarDecompose", "No convergence");
 }
 
 //!Saves the content of a SymTensor2 into a NumPy file
@@ -1264,20 +1264,20 @@ void SymTensor2::polarDecompose(SymTensor2 &U, Tensor2 &R) const
 void SymTensor2::numpyWrite(std::string filename, bool initialize) const
 //-----------------------------------------------------------------------------
 {
-    double nst[9];
-    nst[0] = _data[0];
-    nst[1] = _data[1];
-    nst[2] = _data[2];
-    nst[3] = _data[1];
-    nst[4] = _data[3];
-    nst[5] = _data[4];
-    nst[6] = _data[2];
-    nst[7] = _data[4];
-    nst[8] = _data[5];
-    std::string mode = "a";
-    if (initialize)
-        mode = "w";
-    NumpyInterface::npySave(filename, &nst[0], {3, 3}, mode);
+  double nst[9];
+  nst[0] = _data[0];
+  nst[1] = _data[1];
+  nst[2] = _data[2];
+  nst[3] = _data[1];
+  nst[4] = _data[3];
+  nst[5] = _data[4];
+  nst[6] = _data[2];
+  nst[7] = _data[4];
+  nst[8] = _data[5];
+  std::string mode = "a";
+  if (initialize)
+    mode = "w";
+  NumpyInterface::npySave(filename, &nst[0], {3, 3}, mode);
 }
 
 //!Saves the content of a SymTensor2 into a NumPyZ file
@@ -1294,20 +1294,20 @@ void SymTensor2::numpyWrite(std::string filename, bool initialize) const
 void SymTensor2::numpyWriteZ(std::string filename, std::string name, bool initialize) const
 //-----------------------------------------------------------------------------
 {
-    double nst[9];
-    nst[0] = _data[0];
-    nst[1] = _data[1];
-    nst[2] = _data[2];
-    nst[3] = _data[1];
-    nst[4] = _data[3];
-    nst[5] = _data[4];
-    nst[6] = _data[2];
-    nst[7] = _data[4];
-    nst[8] = _data[5];
-    std::string mode = "a";
-    if (initialize)
-        mode = "w";
-    NumpyInterface::npzSave(filename, name, &nst[0], {3, 3}, mode);
+  double nst[9];
+  nst[0] = _data[0];
+  nst[1] = _data[1];
+  nst[2] = _data[2];
+  nst[3] = _data[1];
+  nst[4] = _data[3];
+  nst[5] = _data[4];
+  nst[6] = _data[2];
+  nst[7] = _data[4];
+  nst[8] = _data[5];
+  std::string mode = "a";
+  if (initialize)
+    mode = "w";
+  NumpyInterface::npzSave(filename, name, &nst[0], {3, 3}, mode);
 }
 
 //!Read the content of a SymTensor2 from a NumPy file
@@ -1324,19 +1324,19 @@ void SymTensor2::numpyWriteZ(std::string filename, std::string name, bool initia
 void SymTensor2::numpyRead(std::string filename)
 //-----------------------------------------------------------------------------
 {
-    NumpyInterface::NumpyArray arr = NumpyInterface::npyLoad(filename);
-    if (arr.num_vals != 9)
-    {
-        std::cout << "ERROR\n";
-    }
-    _data[0] = arr.data<double>()[0];
-    _data[1] = arr.data<double>()[1];
-    _data[2] = arr.data<double>()[2];
-    _data[3] = arr.data<double>()[4];
-    _data[4] = arr.data<double>()[5];
-    _data[5] = arr.data<double>()[8];
+  NumpyInterface::NumpyArray arr = NumpyInterface::npyLoad(filename);
+  if (arr.num_vals != 9)
+  {
+    std::cout << "ERROR\n";
+  }
+  _data[0] = arr.data<double>()[0];
+  _data[1] = arr.data<double>()[1];
+  _data[2] = arr.data<double>()[2];
+  _data[3] = arr.data<double>()[4];
+  _data[4] = arr.data<double>()[5];
+  _data[5] = arr.data<double>()[8];
 
-    // memcpy(_data, arr.data<double *>(), arr.num_vals * arr.word_size);
+  // memcpy(_data, arr.data<double *>(), arr.num_vals * arr.word_size);
 }
 
 //!Read the content of a SymTensor2 from a NumPyZ file
@@ -1353,15 +1353,15 @@ void SymTensor2::numpyRead(std::string filename)
 void SymTensor2::numpyReadZ(std::string filename, std::string name)
 //-----------------------------------------------------------------------------
 {
-    NumpyInterface::NumpyArray arr = NumpyInterface::npzLoad(filename, name);
-    if (arr.num_vals != 9)
-    {
-        std::cout << "ERROR\n";
-    }
-    _data[0] = arr.data<double>()[0];
-    _data[1] = arr.data<double>()[1];
-    _data[2] = arr.data<double>()[2];
-    _data[3] = arr.data<double>()[4];
-    _data[4] = arr.data<double>()[5];
-    _data[5] = arr.data<double>()[8];
+  NumpyInterface::NumpyArray arr = NumpyInterface::npzLoad(filename, name);
+  if (arr.num_vals != 9)
+  {
+    std::cout << "ERROR\n";
+  }
+  _data[0] = arr.data<double>()[0];
+  _data[1] = arr.data<double>()[1];
+  _data[2] = arr.data<double>()[2];
+  _data[3] = arr.data<double>()[4];
+  _data[4] = arr.data<double>()[5];
+  _data[5] = arr.data<double>()[8];
 }

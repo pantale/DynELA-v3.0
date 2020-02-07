@@ -99,7 +99,7 @@ double HistoryFileGlobalItem::getValue()
     return dynelaData->model->solver->timeStep;
     break;
   case Field::timeStep:
-    return dynelaData->model->solver->getComputedTimeStep();
+    return dynelaData->model->solver->getTimeStep();
     break;
   case Field::kineticEnergy:
     return dynelaData->model->getTotalKineticEnergy();

@@ -431,7 +431,7 @@ bool Model::initSolve()
       nodes(nodeId)->boundary->applyInitialOnCurrentFields(nodes(nodeId), 0, 0);
   }
   dynelaData->logFile << "Ok\n";
-  /*  
+
    // Compact nodes list
   dynelaData->logFile << "Compact nodes list ...\n";
   nodes.compact();
@@ -439,6 +439,9 @@ bool Model::initSolve()
   // Compact elements list
   dynelaData->logFile << "Compact elements list ...\n";
   elements.compact();
+
+  /*  
+
  // verification des interfaces
   for (i = 0; i < interfaces.getSize(); i++)
   {
@@ -517,11 +520,12 @@ bool Model::initSolve()
  */
 
   // If parallel computation is requested
-/*   if (dynelaData->parallel != NULL)
+  /*   if (dynelaData->parallel != NULL)
   {
- */    // Dispatch base elements
-    dynelaData->parallel.dispatchElements(elements);
-/*   }
+ */
+  // Dispatch base elements
+  dynelaData->parallel.dispatchElements(elements);
+  /*   }
  */
   return (true);
 }
@@ -530,19 +534,18 @@ bool Model::initSolve()
 void Model::computeMassMatrix(bool forceComputation)
 //-----------------------------------------------------------------------------
 {
-  // If already computed, then return
+  // If already computed and not forced to be recomputed, then return
   if (_massMatrixComputed && !forceComputation)
     return;
 
-  long numberOfNodes, numberOfDDL;
   long globalNodeNumber;
   MatrixDiag elementMassMatrix;
   Element *element = NULL;
 
-  // Matrice Masse avec initialisation
-  numberOfDDL = _numberOfDimensions * nodes.getSize();
+  // Compute size of the Mass matrix ie, the numer of dimensions times number of nodes
+  long numberOfDDL = _numberOfDimensions * nodes.getSize();
   massMatrix.redim(numberOfDDL);
-  //  massMatrix = 0.0;
+  massMatrix = 0.0;
 
   for (long elementId = 0; elementId < elements.getSize(); elementId++)
   {
@@ -550,7 +553,7 @@ void Model::computeMassMatrix(bool forceComputation)
     element = elements(elementId);
 
     // nombre de noeuds de l'element
-    numberOfNodes = element->getNumberOfNodes();
+    int numberOfNodes = element->getNumberOfNodes();
 
     // matrice elementMassMatrix
     elementMassMatrix.redim(numberOfNodes);
@@ -577,7 +580,7 @@ void Model::computeMassMatrix(bool forceComputation)
   for (long nodeId = 0; nodeId < nodes.getSize(); nodeId++)
   {
     // affectation de la masse au noeud
-    nodes(nodeId)->mass = massMatrix(nodes(nodeId)->internalNumber() * _numberOfDimensions);
+    nodes(nodeId)->nodalMass = massMatrix(nodes(nodeId)->internalNumber() * _numberOfDimensions);
   }
 }
 
@@ -585,13 +588,13 @@ void Model::computeMassMatrix(bool forceComputation)
 double Model::getTotalMass()
 //-----------------------------------------------------------------------------
 {
-  double mass = 0.0;
+  double totalMass = 0.0;
 
   for (long nodeId = 0; nodeId < nodes.getSize(); nodeId++)
   {
-    mass += nodes(nodeId)->mass;
+    totalMass += nodes(nodeId)->nodalMass;
   }
-  return (mass);
+  return (totalMass);
 }
 
 //-----------------------------------------------------------------------------
@@ -602,7 +605,7 @@ double Model::getTotalKineticEnergy()
 
   for (long nodeId = 0; nodeId < nodes.getSize(); nodeId++)
   {
-    kineticEnergy += (nodes(nodeId)->mass * nodes(nodeId)->newField->speed.innerProduct()) / 2.0;
+    kineticEnergy += (nodes(nodeId)->nodalMass * nodes(nodeId)->newField->speed.innerProduct()) / 2.0;
   }
   return (kineticEnergy);
 }
@@ -715,7 +718,7 @@ bool Model::solve(double solveUpToTime)
   \author Olivier PANTALE
   \since DynELA 1.0.0
 */
-/*  //-----------------------------------------------------------------------------
+/*//-----------------------------------------------------------------------------
 void Model::computeJacobian()
 //-----------------------------------------------------------------------------
 {
@@ -723,9 +726,10 @@ void Model::computeJacobian()
   cout << "Compute Jacobian\n";
 #endif
 
-  for (long elementId = 0; elementId < elements.getSize(); elementId++)
+  Element *pel = elements.first();
+  while ((pel = elements.currentUp()) != NULL)
   {
-    if (elements(elementId)->computeJacobian() == false)
+    if (pel->computeJacobian() == false)
     {
       std::cerr << "Emergency save of the last result\n";
       std::cerr << "Program aborted\n";
@@ -733,7 +737,7 @@ void Model::computeJacobian()
       exit(-1);
     }
   }
-}  */
+}*/
 
 //-----------------------------------------------------------------------------
 void Model::computeJacobian()
@@ -828,7 +832,7 @@ void Model::computeInternalForces()
 
   // RAZ of internal forces vector
   internalForces.redim(numberOfDDL);
-  // internalForces = 0.0;
+  internalForces = 0.0;
 
   // calcul des forces internes
   for (long elementId = 0; elementId < elements.getSize(); elementId++)

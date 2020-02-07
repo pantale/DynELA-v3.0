@@ -46,13 +46,13 @@ bool ElementPlane::computeJacobian()
 //-----------------------------------------------------------------------------
 {
   Node *node;
-const IntegrationPointData* integrationPointData;
+  const IntegrationPointData *integrationPointData;
 
   for (short intPtId = 0; intPtId < integrationPoints.getSize(); intPtId++)
   {
     // recuperation du point d'integration courant
     setCurrentIntegrationPoint(intPtId);
-integrationPointData = &_elementData->integrationPoint[intPtId];
+    integrationPointData = &_elementData->integrationPoint[intPtId];
 
     // initialisation de J
     _integrationPoint->JxW = 0.0;
@@ -78,16 +78,16 @@ integrationPointData = &_elementData->integrationPoint[intPtId];
     }
 
     // calcul de l'inverse de J
-    _integrationPoint->JxW.computeInverse2x2(_integrationPoint->detJ,_integrationPoint->invJxW);
- 
-     // recalcul de dShapeFunction
+    _integrationPoint->JxW.computeInverse2x2(_integrationPoint->detJ, _integrationPoint->invJxW);
+
+    // recalcul de dShapeFunction
     _integrationPoint->dShapeFunction = integrationPointData->derShapeFunction * _integrationPoint->invJxW;
   }
   return true;
 }
 
 //-----------------------------------------------------------------------------
-void ElementPlane::getV_atIntPoint (Vec3D & v, short time)
+void ElementPlane::getV_atIntPoint(Vec3D &v, short time)
 //-----------------------------------------------------------------------------
 {
   NodalField *field;
@@ -96,12 +96,12 @@ void ElementPlane::getV_atIntPoint (Vec3D & v, short time)
   v = 0.0;
 
   // calcul de v courant
-  for (short nodeId = 0; nodeId < nodes.getSize (); nodeId++)
-    {
-      field = nodes (nodeId)->getNodalField (time);
-       v (0) += _integrationPoint->integrationPointData->shapeFunction (nodeId) * (field->speed (0));
-       v (1) += _integrationPoint->integrationPointData->shapeFunction (nodeId) * (field->speed (1));
-    }
+  for (short nodeId = 0; nodeId < nodes.getSize(); nodeId++)
+  {
+    field = nodes(nodeId)->getNodalField(time);
+    v(0) += _integrationPoint->integrationPointData->shapeFunction(nodeId) * (field->speed(0));
+    v(1) += _integrationPoint->integrationPointData->shapeFunction(nodeId) * (field->speed(1));
+  }
 }
 
 /*

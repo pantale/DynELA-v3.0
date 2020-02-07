@@ -101,9 +101,9 @@ private:
   double _displayTimeIncrement = 10;
 
 protected:
-  ListIndex<Node *> nodes;       //!< Nodes list of the structure
-  ListIndex<Element *> elements; //!< Elements list of the structure
-  List<Material *> materials;    //!< Materials list of the structure
+  List<Node *> nodes;         //!< Nodes list of the structure
+  List<Element *> elements;   //!< Elements list of the structure
+  List<Material *> materials; //!< Materials list of the structure
 
 public:
   double endSaveTime = 0.0;       //!< Final save time

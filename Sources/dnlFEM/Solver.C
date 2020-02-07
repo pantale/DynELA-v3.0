@@ -247,11 +247,11 @@ void Solver::computeTimeStep(bool forceComputation)
       maximumFrequency = 2.0 / model->computeCourantTimeStep();
     }
     break;
-    case PowerIteration:
+ /*    case PowerIteration:
     {
-      //     maximumFrequency = model->computePowerIterationTimeStep();
+           maximumFrequency = model->computePowerIterationTimeStep();
     }
-    break;
+    break; */
     default:
       fatalError("Solver::computeTimeStep", "Unknown method\n");
     }
@@ -259,22 +259,22 @@ void Solver::computeTimeStep(bool forceComputation)
     // Compute timeStep for the integration
     timeStep = _timeStepSafetyFactor * _omegaS / maximumFrequency;
 
-    // Remember previous values
+   /*  // Remember previous values
     _previousTimeStepDate = _computedTimeStepDate;
     _previousTimeStep = _computedTimeStep;
 
     // set actual date
     _computedTimeStepDate = model->currentTime;
-    _computedTimeStep = timeStep;
+    _computedTimeStep = timeStep; */
   }
 
   // interpolation lineaire du timeStep si possible
-  else
+/*   else
   {
     if (_computedTimeStepDate != _previousTimeStepDate)
       timeStep = dnlLinearInterp(_previousTimeStep, _computedTimeStep, (model->currentTime - _previousTimeStepDate) / (_computedTimeStepDate - _previousTimeStepDate));
   }
-}
+ */}
 
 //-----------------------------------------------------------------------------
 void Solver::initialize()
@@ -283,12 +283,13 @@ void Solver::initialize()
 }
 
 //-----------------------------------------------------------------------------
-double Solver::getComputedTimeStep()
+double Solver::getTimeStep()
 //-----------------------------------------------------------------------------
 {
-  return _computedTimeStep;
+  //return _computedTimeStep;
+  return timeStep;
 }
-
+ 
 /*
 
 //-----------------------------------------------------------------------------

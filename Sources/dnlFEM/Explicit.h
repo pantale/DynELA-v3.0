@@ -75,13 +75,12 @@ public:
 
   void setDissipation(double dissipation);
   void solve(double solveUpToTime);
-  void initStep();
+  void beginExplicitStep();
   void computePredictions();
   void explicitSolve();
   void endStep();
   void updateTime();
   void computeDensity();
-
 };
 
 #endif

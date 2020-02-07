@@ -103,6 +103,7 @@ Matrix Material::getHookeMatrix(short type)
   {
   case planeStrain:
     hookeMatrix.redim(3, 3);
+    hookeMatrix = 0.0;
     hookeMatrix(0, 0) = 1.0;
     hookeMatrix(1, 1) = 1.0;
     hookeMatrix(2, 2) = (1.0 - 2.0 * poissonRatio) / (2.0 * (1.0 - poissonRatio));
@@ -112,6 +113,7 @@ Matrix Material::getHookeMatrix(short type)
 
   case planeStress:
     hookeMatrix.redim(3, 3);
+    hookeMatrix = 0.0;
     hookeMatrix(0, 0) = 1.0;
     hookeMatrix(1, 1) = 1.0;
     hookeMatrix(2, 2) = (1.0 - poissonRatio) / 2;
@@ -121,6 +123,7 @@ Matrix Material::getHookeMatrix(short type)
 
   case axisymetric:
     hookeMatrix.redim(4, 4);
+    hookeMatrix = 0.0;
     hookeMatrix(0, 0) = 1.0;
     hookeMatrix(1, 1) = 1.0;
     hookeMatrix(2, 2) = (1.0 - 2.0 * poissonRatio) / (2. * (1.0 - poissonRatio));

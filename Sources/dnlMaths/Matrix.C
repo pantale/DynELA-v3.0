@@ -155,17 +155,10 @@ void Matrix::redim(const long rows, const long cols)
 //-----------------------------------------------------------------------------
 {
   if ((rows == _rows) && (cols == _cols))
-  {
-    // initialisation
-    setToValue(0.0);
     return;
-  }
 
   desallocate();
   allocate(rows, cols);
-
-  // initialisation
-  setToValue(0.0);
 }
 
 //!affichage du contenu d'une matrice

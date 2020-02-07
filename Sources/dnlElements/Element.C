@@ -313,40 +313,40 @@ void Element::initializeData()
 }
 
 //-----------------------------------------------------------------------------
-void Element::computeMassMatrix(MatrixDiag &massMatrix)
+void Element::computeMassMatrix(MatrixDiag &elementMassMatrix)
 //-----------------------------------------------------------------------------
 {
   double WxdJ;
 
 #ifdef VERIF_math
-  // verifier la taille de la matrice massMatrix
-  if ((massMatrix.rows() != _elementData->numberOfNodes) || (massMatrix.columns() != _elementData->numberOfNodes))
+  // verifier la taille de la matrice elementMassMatrix
+  if ((elementMassMatrix.rows() != _elementData->numberOfNodes) || (elementMassMatrix.columns() != _elementData->numberOfNodes))
   {
-    std::cerr << "Error in Element::computeMassMatrix()\nincompatible getSize of matrices massMatrix\n";
+    std::cerr << "Error in Element::computeMassMatrix()\nincompatible getSize of matrices elementMassMatrix\n";
     std::cerr << "expected " << _elementData->numberOfNodes << "x" << _elementData->numberOfNodes << std::endl;
-    std::cerr << "getting  " << massMatrix.rows() << "x" << massMatrix.columns() << std::endl;
+    std::cerr << "getting  " << elementMassMatrix.rows() << "x" << elementMassMatrix.columns() << std::endl;
     exit(-1);
   }
 #endif
 
-  // initialiser massMatrix
-  massMatrix = 0.0;
+  // Initialize the Element Mass Matrix
+  elementMassMatrix = 0.0;
 
   for (short intPoint = 0; intPoint < integrationPoints.getSize(); intPoint++)
   {
-    // recuperation du point d'integration
+    // Get the current integration point
     setCurrentIntegrationPoint(intPoint);
 
-    // calcul du terme d'integration numerique
+    // Compute the numerical integration term
     WxdJ = _integrationPoint->integrationPointData->weight * _integrationPoint->detJ;
     if (getFamily() == Element::Axisymetric)
     {
       WxdJ *= dnl2PI * getRadiusAtIntegrationPoint();
     }
 
-    // calcul de la matrice massMatrix
+    // Computes the Element Mass Matrix
     for (short nodeId = 0; nodeId < _elementData->numberOfNodes; nodeId++)
-      massMatrix(nodeId) += material->density * _elementData->integrationPoint[intPoint].shapeFunction(nodeId) * WxdJ;
+      elementMassMatrix(nodeId) += material->density * _elementData->integrationPoint[intPoint].shapeFunction(nodeId) * WxdJ;
   }
 }
 

@@ -151,15 +151,10 @@ void Vector::redim(const long newSize)
 //-----------------------------------------------------------------------------
 {
   if (newSize == _dataLength)
-  {
-    setToValue(0.0);
     return;
-  }
+
   desallocate();
   allocate(newSize);
-
-  // initialisation
-  setToValue(0.0);
 }
 
 //!Resize a vector

@@ -55,10 +55,10 @@ private:
  */
 public:
   double currentTime = 0.0;         //!< Temps actuel du modele
-                                    // double nextTime = 0.0;           //!< Temps actuel du modele + increment de temps
-  List<Element *> elements;         //!< List of the Elements
+  double nextTime = 0.0;            //!< Temps actuel du modele + increment de temps
+  ListIndex<Element *> elements;    //!< List of the Elements
   List<ElementSet *> elementsSets;  //!< List of the Elements Sets
-  List<Node *> nodes;               //!< List of the Nodes
+  ListIndex<Node *> nodes;          //!< List of the Nodes
   List<NodeSet *> nodesSets;        //!< List of the Nodes Sets
   List<HistoryFile *> historyFiles; //!< List of the History Files
                                     //  List<Solver *> solvers;          //!<liste des solveurs associes au modele

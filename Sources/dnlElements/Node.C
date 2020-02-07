@@ -47,7 +47,7 @@ Node::Node(long nodeNumber, double xCoord, double yCoord, double zCoord)
   number = nodeNumber;
 
   // init des donnees
-  mass = 0.;
+  nodalMass = 0.;
 
   // init par defaut des coordonnees
   coordinates.setValue(xCoord, yCoord, zCoord);
@@ -320,7 +320,7 @@ double Node::getNodalValue(short field)
 {
   // Nodal values
   // _getFromNodal(initialTemperature, initialTemperature);
-  _getFromNodal(mass, mass);
+  _getFromNodal(nodalMass, nodalMass);
   _getScalarFromNodalVec3D(nodeCoordinate, coordinates);
   //_getScalarFromNodalVec3D(initialNodeCoordinate, initialCoordinates);
   _getScalarFromNodalVec3D(normal, normal);

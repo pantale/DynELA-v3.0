@@ -56,7 +56,7 @@ class ElementSet
 {
 public:
   String name;                   //!< Nom public de l'ElementSet
-  ListIndex<Element *> elements; //!< Liste des elements
+  List<Element *> elements; //!< Liste des elements
 
 public:
   // constructeurs

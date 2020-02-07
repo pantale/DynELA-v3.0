@@ -173,15 +173,10 @@ void MatrixDiag::redim(const long newSize)
 //-----------------------------------------------------------------------------
 {
   if (newSize == _rows)
-  {
-    setToValue(0.0);
     return;
-  }
+
   desallocate();
   allocate(newSize);
-
-  // initialisation
-  setToValue(0.0);
 }
 
 //!affichage du contenu d'une matrice

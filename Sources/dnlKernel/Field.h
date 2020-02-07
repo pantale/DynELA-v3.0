@@ -49,7 +49,7 @@ public:
     gamma,                              //!< gamma radial return value
     gammaCumulate,                      //!< Cumul of gamma values
     initialTemperature,                 //!< Initial temperature
-    mass,                               //!< Nodal Mass
+    nodalMass,                               //!< Nodal Mass
     vonMises,                           //!< von Mises equivalent stress
     pressure,                           //!< Pressure
     temperature,                        //!< Current temperature

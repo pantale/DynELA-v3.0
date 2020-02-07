@@ -144,6 +144,7 @@ void Explicit::setDissipation(double dissipation)
 void Explicit::solve(double solveUpToTime)
 //-----------------------------------------------------------------------------
 {
+  // Verify that the model is existing
   assert(model != NULL);
 
   // Verify if we need to run the solver
@@ -152,8 +153,8 @@ void Explicit::solve(double solveUpToTime)
     return;
   }
 
+  // Write information to log file
   dynelaData->logFile << "Solve up to " << solveUpToTime << "\n";
-  //printf("Solve up to %lf\n", solveUpToTime);
 
   // Get the final time of computation
   _solveUpToTime = solveUpToTime;
@@ -172,7 +173,7 @@ void Explicit::solve(double solveUpToTime)
   dynelaData->cpuTimes.timer("TimeStep")->stop();
 
   // Compute the Internal Forces
-  // model->computeInternalForces();
+   model->computeInternalForces();
 
   // Call of time History saves
   model->writeHistoryFiles();
@@ -180,7 +181,7 @@ void Explicit::solve(double solveUpToTime)
   while (model->currentTime < _solveUpToTime)
   {
     // Initialisation of the step
-    initStep();
+    beginExplicitStep(); 
 
     // Display advancing of solution
     if ((currentIncrement % _reportFrequency == 0) || (currentIncrement == 1))
@@ -312,7 +313,7 @@ void Explicit::solve(double solveUpToTime)
 #ifdef computeCpuTimes
       recordTimes.start("Init_Step");
 #endif
-      initStep();
+      beginExplicitStep();
 #ifdef computeCpuTimes
       recordTimes.stop("Init_Step");
 #endif
@@ -406,7 +407,7 @@ void Explicit::solve(double solveUpToTime)
 }
 
 //-----------------------------------------------------------------------------
-void Explicit::initStep()
+void Explicit::beginExplicitStep()
 //-----------------------------------------------------------------------------
 {
   // verification de la projection du temps par rapport au temps final
@@ -415,7 +416,7 @@ void Explicit::initStep()
     timeStep = _solveUpToTime - model->currentTime;
 
   // mise a jour du temps
-  // model->nextTime = model->currentTime + timeStep;
+   model->nextTime = model->currentTime + timeStep;
 
   // incrementation du nombre d'increments
   currentIncrement++;

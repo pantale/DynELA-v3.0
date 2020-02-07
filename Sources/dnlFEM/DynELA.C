@@ -67,12 +67,11 @@ extern CPUrecord recordTimes;
 DynELA::DynELA(char *newName)
 //-----------------------------------------------------------------------------
 {
+  // Affect the name of the model
   if (newName != NULL)
     name = newName;
 
-  //  name = "defaultModel";
-
-  // creates a model
+  // Creates a new Model
   model = new Model;
   model->name = name;
 
@@ -231,9 +230,9 @@ bool DynELA::createNode(long nodeNumber, double xCoord, double yCoord, double zC
   // l'ajouter e la grille courante du modele courant
   model->add(newNode);
 
-  // add the newNode and compact list
+  // add the newNode
   nodes << newNode;
-  nodes.compact();
+  //nodes.compact();
 
   /*    if (nodes.getSize() % nodeDisplayOnlineFrequency == 0)
     displayOnline(); */
@@ -325,9 +324,9 @@ bool DynELA::createElement(long elementNumber, long nodesIndex, ...)
 
   model->create(pel, nNodes);
 
-  // add the element and compact list
+  // add the element
   elements << pel;
-  elements.compact();
+  //elements.compact();
 
   String str;
   logFile << "Element " << pel->getName() << " : " << str.convert(pel->number) << " [";

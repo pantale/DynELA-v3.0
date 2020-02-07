@@ -58,11 +58,11 @@ class Solver
   //  CPUclock theclock;
 
 protected:
-  double _computedTimeStep = 0.0;
-  double _computedTimeStepDate = 0.0;
+  /*  double _computedTimeStep = 0.0;
+  double _computedTimeStepDate = 0.0; */
   double _omegaS = 2.0;
-  double _previousTimeStep = 0.0;
-  double _previousTimeStepDate = 0.0;
+  /*   double _previousTimeStep = 0.0;
+  double _previousTimeStepDate = 0.0; */
   double _solveUpToTime = 0.0;
   double _timeStepSafetyFactor = 0.9;
   int _computeTimeStepFrequency = 10;
@@ -77,7 +77,7 @@ public:
   };
 
 public:
-  Model *model = NULL;     //!< Current model for the solver
+  Model *model = NULL;       //!< Current model for the solver
   double timeStep = 0.0;     //!< Current time step for integration
   double endTime = 0.0;      //!< End time of the solver
   double startTime = 0.0;    //!< Start time of the solver
@@ -103,7 +103,7 @@ public:
   void setTimes(double start_time, double end_time);
   void setTimeStepMethod(short method);
   void setTimeStepSafetyFactor(double safetyfactor);
-  double getComputedTimeStep();
+  double getTimeStep();
   // member functions
   /* 
   bool timeOk ();

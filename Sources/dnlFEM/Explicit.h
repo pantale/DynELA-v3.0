@@ -58,12 +58,12 @@ class Explicit : public Solver
 {
 
 private:
-  short _timeStepMethod;
-  double _rho_b;
-  double _alphaM;
   double _alphaF;
+  double _alphaM;
   double _beta;
   double _gamma;
+  double _rho_b;
+  short _timeStepMethod;
 
   void computeChungHulbertIntegrationParameters();
 
@@ -73,14 +73,14 @@ public:
   Explicit(const Explicit &X);
   ~Explicit();
 
+  void beginExplicitStep();
+  void computeDensity();
+  void computePredictions();
+  void endStep();
+  void explicitSolve();
   void setDissipation(double dissipation);
   void solve(double solveUpToTime);
-  void beginExplicitStep();
-  void computePredictions();
-  void explicitSolve();
-  void endStep();
   void updateTime();
-  void computeDensity();
 };
 
 #endif

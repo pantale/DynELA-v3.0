@@ -23,11 +23,11 @@
 
 #include <List.h>
 #include <String.h>
-class NodeSet;
-class Node;
 class Element;
 class ElementSet;
 class Model;
+class Node;
+class NodeSet;
 
 class HistoryFileItem
 {
@@ -112,8 +112,8 @@ public:
   double getStartTime();
   double getStopTime();
   String getFileName();
-  void add(NodeSet *nodeSet, short field);
   void add(ElementSet *elementSet, short intPt, short field);
+  void add(NodeSet *nodeSet, short field);
   void add(short field);
   void headerWrite();
   void save(double currentTime);

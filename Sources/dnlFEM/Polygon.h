@@ -24,26 +24,18 @@
 #include <Vec3D.h>
 #include <ColorMap.h>
 
-/* #include <List.h>
-#include <iostream>
-#include <fstream>
-#include <Vec3D.h>
-#include <Tensor2.h>
-#include <Node.h>
-#include <ColorMap.h> */
-
 class Node;
 
 #define PolygonMaxNodes 8
 
 class Polygon
 {
-  friend class Drawing;
-  friend class PolygonPatches;
   friend bool compareCentersXYZ(Polygon *p1, Polygon *p2);
   friend bool compareCentersYZX(Polygon *p1, Polygon *p2);
   friend bool compareCentersZXY(Polygon *p1, Polygon *p2);
   friend bool zBufferCenters(Polygon *p1, Polygon *p2);
+  friend class Drawing;
+  friend class PolygonPatches;
 
 private:
   bool visible = true;
@@ -104,6 +96,7 @@ public:
   // constructeurs
   PolygonPatches(int level);
   ~PolygonPatches() {}
+  
   void createPatch(Polygon *polygon, ColorMap &map, short field);
 };
 

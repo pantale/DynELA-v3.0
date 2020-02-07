@@ -18,6 +18,7 @@
   \date 1997-2019
 */
 
+#include <DynELA.h>
 #include <Model.h>
 #include <Element.h>
 #include <HistoryFile.h>

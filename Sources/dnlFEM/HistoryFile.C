@@ -24,6 +24,7 @@
 #include <NodeSet.h>
 #include <ElementSet.h>
 #include <Field.h>
+#include <DynELA.h>
 #include <Model.h>
 #include <Solver.h>
 
@@ -96,13 +97,13 @@ double HistoryFileGlobalItem::getValue()
   switch (_field)
   {
   case Field::realTimeStep:
-    return dynelaData->model->solver->timeStep;
+    return dynelaData->model.solver->timeStep;
     break;
   case Field::timeStep:
-    return dynelaData->model->solver->getTimeStep();
+    return dynelaData->model.solver->getTimeStep();
     break;
   case Field::kineticEnergy:
-    return dynelaData->model->getTotalKineticEnergy();
+    return dynelaData->model.getTotalKineticEnergy();
     break;
   }
 

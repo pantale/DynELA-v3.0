@@ -20,6 +20,7 @@
 
 #include <Solver.h>
 #include <dnlKernel.h>
+#include <DynELA.h>
 #include <Model.h>
 /* 
 #include <DynELA.h>

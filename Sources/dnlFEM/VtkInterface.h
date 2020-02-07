@@ -28,11 +28,10 @@
 
 class VtkInterface
 {
-
 private:
+  List<short> _outputFields;
   std::ofstream _stream;
   String _fileName;
-  List<short> _outputFields;
 
 public:
   String name = "_noname_"; //!< Name of the VTK interface
@@ -42,14 +41,14 @@ public:
   VtkInterface(const VtkInterface &VtkInterface);
   ~VtkInterface();
 
-  void init(String fileName);
-  void write();
-  void close();
-  void initFields();
-  void addField(short field);
-  void removeField(short field);
-  short existField(short field);
   int getNumberOfFields();
+  short existField(short field);
+  void addField(short field);
+  void close();
+  void init(String fileName);
+  void initFields();
+  void removeField(short field);
+  void write();
 
 #ifndef SWIG
   void headerWrite();

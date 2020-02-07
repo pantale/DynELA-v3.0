@@ -88,7 +88,7 @@ void VtkInterface::headerWrite()
   // Write the current time
   _stream << "FIELD FieldData 1\n";
   _stream << "TIME 1 1 double\n";
-  _stream << dynelaData->model->currentTime << "\n";
+  _stream << dynelaData->model.currentTime << "\n";
 }
 
 //-----------------------------------------------------------------------------

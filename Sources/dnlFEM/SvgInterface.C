@@ -313,7 +313,7 @@ void SvgInterface::legendWrite()
   rectangleWrite(offx - 20, offy - 90, offx + _width + 155, offy + _height + 20, "black", 4);
   lineWrite(offx - 20, offy - 20, offx + _width + 155, offy - 20, 4);
 
-  textVal.convert(dynelaData->model->currentTime, "%10.3E");
+  textVal.convert(dynelaData->model.currentTime, "%10.3E");
   textVal = "time:" + textVal;
   textWrite(Vec3D(offx, offy - 30, 0), textVal, 20);
 

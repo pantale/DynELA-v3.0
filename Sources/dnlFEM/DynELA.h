@@ -22,30 +22,17 @@
 #define __dnlFEM_DynELA_h__
 
 #include <omp.h>
-
 #include <dnlKernel.h>
 #include <Element.h>
-
 #include <Parallel.h>
-#include <Drawing.h> 
-
-/* #include <Element.h>
-#include <LogFile.h>
-#include <Settings.h>
-#include <Timer.h>
-#include <Parallel.h>
-#include <Drawing.h> */
+#include <Drawing.h>
+#include <Model.h>
 
 class DynELA;
 #ifndef SWIG
 extern DynELA *dynelaData;
 #endif
 
-/* class ElementSet;
-
-#define versionCheckDefine 1.02
-#define separatorCheckDefine 69
- */
 /*!
   \file DynELA.h
   \brief fichier .h de definition des grilles elements finis
@@ -62,30 +49,9 @@ class VtkInterface;
 class Boundary;
 class HistoryFile;
 class Solver;
-//class Node;
 class Material;
 class ElementSet;
 class NodeSet;
-
-/* class Model;
-class Node;
-class Element;
-class LogFile;
-class Material;
-class NodeSet;
-class ElementSet;
-class Parallel;
- */
-
-/* class Element;
-class Node;
-class io_Structure;
-class Interface;
-class HistoryFile;
-class BoundaryCondition;
-class NodeSet;
- */
-//#include <io_Structure.h>
 
 /*!
   \class DynELA DynELA.h
@@ -99,36 +65,36 @@ class NodeSet;
 */
 class DynELA
 {
-  friend class VtkInterface;
   friend class Drawing;
   friend class SvgInterface;
+  friend class VtkInterface;
 
 private:
+  double _displayTimeIncrement = 10;
+  double _lastElapsedComputeTime = 0;
+  double _lastElapsedTime = 0; //!< Last elapsed time for computing endtime
+  double _nextDisplayTime = 10;
   short _defaultElement = Element::Unknown; //!< Current default Element
   short _resultFileIndex = 0;               //!< Current result file index
   String _resultFileName;                   //!< Current result file name
-  double _lastElapsedTime = 0;              //!< Last elapsed time for computing endtime
-  double _lastElapsedComputeTime = 0;
-  double _nextDisplayTime = 10;
-  double _displayTimeIncrement = 10;
 
 protected:
-  List<Node *> nodes;         //!< Nodes list of the structure
   List<Element *> elements;   //!< Elements list of the structure
   List<Material *> materials; //!< Materials list of the structure
+  List<Node *> nodes;         //!< Nodes list of the structure
 
 public:
   double endSaveTime = 0.0;       //!< Final save time
-  double saveTimeIncrement = 0.0; //!< Increment of save time
   double nextSaveTime = 0.0;      //!< Next save time
+  double saveTimeIncrement = 0.0; //!< Increment of save time
   double startSaveTime = 0.0;     //!< Start save time
-  String name = "_noname_";       //!< name of the object
-  Settings *settings = NULL;      //!< Settings
-  VtkInterface *dataFile = NULL;  //!< Interface for results
-  Parallel parallel;              //!< Parallel computation
-  Model *model = NULL;            //!< Pointer to the model
-  Timers cpuTimes;                //!< Store the CPU Times
   Drawing drawing;
+  Model model;
+  Parallel parallel;             //!< Parallel computation
+  Settings *settings = NULL;     //!< Settings
+  String name = "_noname_";      //!< name of the object
+  Timers cpuTimes;               //!< Store the CPU Times
+  VtkInterface *dataFile = NULL; //!< Interface for results
 
 #ifndef SWIG
   LogFile logFile; //!< Log file
@@ -146,26 +112,26 @@ public:
   long getNodesNumber();
   Node *getNodeByNum(long nodeNumber);
   void add(ElementSet *elementSet, long startNumber = -1, long endNumber = -1, long increment = 1);
+  void add(HistoryFile *newHistoryFile);
   void add(Material *material, ElementSet *elementSet);
   void add(NodeSet *nodeSet, long startNumber = -1, long endNumber = -1, long increment = 1);
-  void add(HistoryFile *newHistoryFile);
   void add(Solver *newSolver);
   void addMaterial(Material *pmat);
   void attachConstantBC(Boundary *boundary, NodeSet *nodeSet);
   void attachInitialBC(Boundary *boundary, NodeSet *nodeSet);
+  void displayEstimatedEnd();
   void getGlobalBox(Vec3D &minPoint, Vec3D &maxPoint);
+  void getNodalValuesRange(short field, double &min, double &max);
   void rotate(String set, double angle, NodeSet *nodeSet = NULL);
   void rotate(Vec3D axis, double angle, NodeSet *nodeSet = NULL);
   void scale(double scaleValue, NodeSet *nodeSet = NULL);
   void scale(Vec3D scaleVector, NodeSet *nodeSet = NULL);
   void setDefaultElement(short type);
   void setSaveTimes(double startSaveTime, double endSaveTime, double saveTimeIncrement);
-  void writeResultFile();
   void solve();
   void translate(Vec3D translateVector, NodeSet *nodeSet = NULL);
+  void writeResultFile();
   void writeVTKFile();
-  void displayEstimatedEnd();
-  void getNodalValuesRange(short field, double &min, double &max);
 
   //  void displayOnline();
 

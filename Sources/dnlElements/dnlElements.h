@@ -20,9 +20,6 @@
 #ifndef __dnlElements_h__
 #define __dnlElements_h__
 
-// Common headers of Maths folder
-#include <dnlMaterials.h>
-
 #include <Element2D.h>
 #include <Element3D.h>
 #include <ElementAxi.h>

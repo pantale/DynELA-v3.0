@@ -21,13 +21,13 @@
 #ifndef __dnlFEM_Model_h__
 #define __dnlFEM_Model_h__
 
-#include <DynELA.h> 
-
-class Node;
+class DynELA;
 class Element;
-class NodeSet;
 class ElementSet;
 class HistoryFile;
+class Node;
+class NodeSet;
+class Solver;
 
 /*!
   \class Model Model.h
@@ -47,29 +47,18 @@ private:
   bool _massMatrixComputed = false; //!< Flag indiquant que la matrice de masse est deja calculee
   short _numberOfDimensions = 0;    //!< Number of dimensions of the model
 
-  /*   
-  Vector EV_TimeStep;
-  double fmax0;
- */
 public:
   double currentTime = 0.0;         //!< Temps actuel du modele
   double nextTime = 0.0;            //!< Temps actuel du modele + increment de temps
-  ListIndex<Element *> elements;    //!< List of the Elements
   List<ElementSet *> elementsSets;  //!< List of the Elements Sets
-  ListIndex<Node *> nodes;          //!< List of the Nodes
-  List<NodeSet *> nodesSets;        //!< List of the Nodes Sets
   List<HistoryFile *> historyFiles; //!< List of the History Files
-                                    //  List<Solver *> solvers;          //!<liste des solveurs associes au modele
-  Solver *solver = NULL;            //!< solveurs associes au modele
+  List<NodeSet *> nodesSets;        //!< List of the Nodes Sets
+  ListIndex<Element *> elements;    //!< List of the Elements
+  ListIndex<Node *> nodes;          //!< List of the Nodes
   MatrixDiag massMatrix;            //!< Mass matrix
-                                    //  Solver *currentSolver = NULL;    //!< Current solver
+  Solver *solver = NULL;            //!< solveurs associes au modele
   String name = "_noname_";         //!< Name of the model
   Vector internalForces;            //!< Vecteur des forces internes
-  /*   
-  List < Interface * > interfaces;          //!< Liste des interfaces de contact du modele
-  FILE* history_file;                       //!< Fichier historique associe au modele
-  long dimension; //!< Nombre de dimensions de la grille 
-  */
 
 private:
   bool add(Element *pel);

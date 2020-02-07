@@ -82,8 +82,8 @@ DynELA::DynELA(char *newName)
     name = newName;
 
   // Creates a new Model
-  model = new Model;
-  model->name = name;
+  //model = new Model;
+  model.name = name;
 
   // Creates a settings and add it
   settings = new Settings;
@@ -185,14 +185,14 @@ Node *DynELA::getNodeByNum(long nodeNumber)
 //-----------------------------------------------------------------------------
 {
   // pehaps it's just the last one (often assumed)
-  if (model->nodes.getSize() > 0)
+  if (model.nodes.getSize() > 0)
   {
-    if (model->nodes.last()->number == nodeNumber)
-      return model->nodes.last();
+    if (model.nodes.last()->number == nodeNumber)
+      return model.nodes.last();
   }
 
   // no so search for it
-  return model->nodes.dichotomySearch(substractNodesNumber, nodeNumber);
+  return model.nodes.dichotomySearch(substractNodesNumber, nodeNumber);
 }
 
 //!recherche d'un element dans la structure en fonction de son numero
@@ -209,14 +209,14 @@ Element *DynELA::getElementByNum(long elementNumber)
 //-----------------------------------------------------------------------------
 {
   // pehaps it's just the last one (often assumed)
-  if (model->elements.getSize() > 0)
+  if (model.elements.getSize() > 0)
   {
-    if (model->elements.last()->number == elementNumber)
-      return model->elements.last();
+    if (model.elements.last()->number == elementNumber)
+      return model.elements.last();
   }
 
   // no so search for it
-  return model->elements.dichotomySearch(substractElementsNumber, elementNumber);
+  return model.elements.dichotomySearch(substractElementsNumber, elementNumber);
 }
 
 //!creation d'un noeud et ajout e la structure
@@ -238,7 +238,7 @@ bool DynELA::createNode(long nodeNumber, double xCoord, double yCoord, double zC
   Node *newNode = new Node(nodeNumber, xCoord, yCoord, zCoord);
 
   // l'ajouter e la grille courante du modele courant
-  model->add(newNode);
+  model.add(newNode);
 
   // add the newNode
   nodes << newNode;
@@ -332,7 +332,7 @@ bool DynELA::createElement(long elementNumber, long nodesIndex, ...)
     nNodes[i] = va_arg(arguments, long);
   }
 
-  model->create(pel, nNodes);
+  model.create(pel, nNodes);
 
   // add the element
   elements << pel;
@@ -382,14 +382,14 @@ void DynELA::add(Parallel *_parallel)
 void DynELA::add(HistoryFile *newHistoryFile)
 //-----------------------------------------------------------------------------
 {
-  model->add(newHistoryFile);
+  model.add(newHistoryFile);
 }
 
 //-----------------------------------------------------------------------------
 void DynELA::add(Solver *newSolver)
 //-----------------------------------------------------------------------------
 {
-  model->add(newSolver);
+  model.add(newSolver);
 }
 
 //!affecte un materiau e un ensemble d'elements
@@ -469,14 +469,14 @@ void DynELA::addMaterial(Material *pmat)
 void DynELA::add(NodeSet *nodeSet, long startNumber, long endNumber, long increment)
 //-----------------------------------------------------------------------------
 {
-  model->add(nodeSet, startNumber, endNumber, increment);
+  model.add(nodeSet, startNumber, endNumber, increment);
 }
 
 //-----------------------------------------------------------------------------
 void DynELA::add(ElementSet *elementSet, long startNumber, long endNumber, long increment)
 //-----------------------------------------------------------------------------
 {
-  model->add(elementSet, startNumber, endNumber, increment);
+  model.add(elementSet, startNumber, endNumber, increment);
 }
 
 //!affecte des conditions aux limites initiales e un ensemble de noeuds
@@ -576,7 +576,7 @@ void DynELA::writeResultFile()
   // Display estimated end of computation
   displayEstimatedEnd();
 
-  if ((model->currentTime >= nextSaveTime) && (model->currentTime <= endSaveTime))
+  if ((model.currentTime >= nextSaveTime) && (model.currentTime <= endSaveTime))
   {
     // Save file
     writeVTKFile();
@@ -593,10 +593,10 @@ void DynELA::displayEstimatedEnd()
   if (dynelaData->cpuTimes.timer("Solver")->getCurrent() >= _nextDisplayTime)
   {
     // Estimate end of computation
-    if (model->currentTime > 0)
+    if (model.currentTime > 0)
     {
       double elapsedTime = dynelaData->cpuTimes.timer("Solver")->getCurrent();
-      int remainingTime = (elapsedTime - _lastElapsedTime) / (model->currentTime - _lastElapsedComputeTime) * (model->solver->endTime - model->currentTime);
+      int remainingTime = (elapsedTime - _lastElapsedTime) / (model.currentTime - _lastElapsedComputeTime) * (model.solver->endTime - model.currentTime);
       int remainingHours, remainingMinutes, remainingSeconds;
       int restOfTime;
       int elapsedHours, elapsedMinutes, elapsedSeconds;
@@ -614,7 +614,7 @@ void DynELA::displayEstimatedEnd()
       printf("Estimated end of computation in %02d:%02d:%02d\n", remainingHours, remainingMinutes, remainingSeconds);
 
       _lastElapsedTime = elapsedTime;
-      _lastElapsedComputeTime = model->currentTime;
+      _lastElapsedComputeTime = model.currentTime;
 
       // Increase the Next Display Time
       _nextDisplayTime += _displayTimeIncrement;
@@ -788,7 +788,7 @@ void DynELA::writeVTKFile()
   // Close the vtk data file
   dataFile->close();
 
-  logFile << "Result file: " << fileName << " written at time " << model->currentTime << " s\n";
+  logFile << "Result file: " << fileName << " written at time " << model.currentTime << " s\n";
 
   // increment the index
   _resultFileIndex++;
@@ -820,10 +820,10 @@ void DynELA::solve()
   logFile.separatorWrite("DynELA Solver Initialization phase");
 
   // Run the init solve of this model
-  model->initSolve();
+  model.initSolve();
 
   // Get the end time of the structure and display it
-  double endOfComputationTime = model->getEndSolveTime();
+  double endOfComputationTime = model.getEndSolveTime();
   logFile << "Set final computation time to: " << endOfComputationTime << " s\n";
 
   // Save initial configuration
@@ -833,7 +833,7 @@ void DynELA::solve()
   logFile.separatorWrite("DynELA Solver phase");
 
   // Run the Explicit Solver
-  solved = model->solve(endOfComputationTime);
+  solved = model.solve(endOfComputationTime);
 
   // Test if solve was Ok or not
   if (solved == false)
@@ -1318,18 +1318,18 @@ void DynELA::compact()
       for (j=0;j<models.getSize();j++)
 	{
 	  pmodel=models(j);
-//	  for(k=0;k<pmodel->grids.getSize();k++)
+//	  for(k=0;k<pmodel.grids.getSize();k++)
 //	    {
 	      elementNum=1;
 	      nodeNum=1;
-//	      pgrid=pmodel->grids(k);
-	      for (l=0;l<pmodel->nodes.getSize();l++)
+//	      pgrid=pmodel.grids(k);
+	      for (l=0;l<pmodel.nodes.getSize();l++)
 		{
-		  pmodel->nodes(l)->number=nodeNum++;
+		  pmodel.nodes(l)->number=nodeNum++;
 		}
-	      for (l=0;l<pmodel->elements.getSize();l++)
+	      for (l=0;l<pmodel.elements.getSize();l++)
 		{
-		  pmodel->elements(l)->number=elementNum++;
+		  pmodel.elements(l)->number=elementNum++;
 		}
 	    }
 	//}

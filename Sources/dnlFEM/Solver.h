@@ -54,16 +54,8 @@ extern String parsedFileName;
 */
 class Solver
 {
-
-  //private:
-  //  CPUclock theclock;
-
 protected:
-  /*  double _computedTimeStep = 0.0;
-  double _computedTimeStepDate = 0.0; */
   double _omegaS = 2.0;
-  /*   double _previousTimeStep = 0.0;
-  double _previousTimeStepDate = 0.0; */
   double _solveUpToTime = 0.0;
   double _timeStepSafetyFactor = 0.9;
   int _computeTimeStepFrequency = 10;
@@ -95,16 +87,16 @@ public:
   bool timeAndIncrementsAreBetweenBounds();
   bool timeIsBetweenBounds();
   bool timeIsBetweenBounds(double time);
+  double getTimeStep();
   virtual void solve(double solveUpToTime) = 0;
   void computeTimeStep(bool forceComputation = false);
   void initialize();
   void setComputeTimeStepFrequency(int frequency);
-  void setModel(Model *newModel);
   void setIncrements(long start, long stop);
+  void setModel(Model *newModel);
   void setTimes(double start_time, double end_time);
   void setTimeStepMethod(short method);
   void setTimeStepSafetyFactor(double safetyfactor);
-  double getTimeStep();
   // member functions
   /* 
   bool timeOk ();

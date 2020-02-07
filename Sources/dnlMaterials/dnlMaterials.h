@@ -20,9 +20,6 @@
 #ifndef __dnlMaterials_h__
 #define __dnlMaterials_h__
 
-// Common headers of Maths folder
-#include <dnlMaths.h>
-
 #include <ElasticLaw.h>
 #include <ElastoplasticLaw.h>
 #include <HardeningLaw.h>

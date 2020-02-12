@@ -34,7 +34,7 @@ private:
   String _fileName;
 
 public:
-  String name = "_noname_"; //!< Name of the VTK interface
+  String name = "_noname_"; // Name of the VTK interface
 
   // constructeurs
   VtkInterface(char *newName = NULL);
@@ -45,7 +45,7 @@ public:
   short existField(short field);
   void addField(short field);
   void close();
-  void init(String fileName);
+  void open(String fileName);
   void initFields();
   void removeField(short field);
   void write();

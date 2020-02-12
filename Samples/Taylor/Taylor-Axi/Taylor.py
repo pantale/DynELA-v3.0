@@ -11,7 +11,7 @@ import dnlPython as dnl
 # Parameters of the model
 nbreSaves = 20
 stopTime = 80.0e-6
-nbrePoints = 250 
+nbrePoints = 250
 width = 3.2
 heigh = 32.4
 nbElementsWidth = 5
@@ -115,6 +115,7 @@ solver = dnl.Explicit("Solver")
 solver.setTimes(0, stopTime)
 model.add(solver)
 solver.setComputeTimeStepFrequency(1)
+#solver.setTimeStepMethod(solver.PowerIteration)
 #solver.setTimeStepSafetyFactor(1.09)
 model.setSaveTimes(0, stopTime, stopTime/nbreSaves)
 

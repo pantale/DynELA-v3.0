@@ -57,7 +57,7 @@ BoundaryRestrain::BoundaryRestrain(const BoundaryRestrain &X)
 }
 
 //-----------------------------------------------------------------------------
-void BoundaryRestrain::applyInitialOnCurrentFields(Node *node, double currentTime, double timeStep)
+void BoundaryRestrain::applyInitial(Node *node, double currentTime, double timeStep)
 //-----------------------------------------------------------------------------
 {
 }
@@ -72,21 +72,21 @@ void BoundaryRestrain::applyConstantOnCurrentFields(Node *node, double currentTi
 {
   if (_restrain(0) > 0)
   {
-    node->currentField->displacementInc(0) = 0.0;
+    node->currentField->displacement(0) = 0.0;
     node->currentField->speed(0) = 0.0;
     node->currentField->acceleration(0) = 0.0;
     //  node->newField->acceleration(0) = 0.0;
   }
   if (_restrain(1) > 0)
   {
-    node->currentField->displacementInc(1) = 0.0;
+    node->currentField->displacement(1) = 0.0;
     node->currentField->speed(1) = 0.0;
     node->currentField->acceleration(1) = 0.0;
     //   node->newField->acceleration(1) = 0.0;
   }
   if (_restrain(2) > 0)
   {
-    node->currentField->displacementInc(2) = 0.0;
+    node->currentField->displacement(2) = 0.0;
     node->currentField->speed(2) = 0.0;
     node->currentField->acceleration(2) = 0.0;
     //   node->newField->acceleration(2) = 0.0;
@@ -99,8 +99,8 @@ void BoundaryRestrain::applyConstantOnNewFields(Node *node, double currentTime, 
 {
   if (_restrain(0) > 0)
   {
-    node->currentField->displacementInc(0) = 0.0;
-    node->newField->displacementInc(0) = 0.0;
+    node->currentField->displacement(0) = 0.0;
+    node->newField->displacement(0) = 0.0;
     node->currentField->speed(0) = 0.0;
     node->newField->speed(0) = 0.0;
     node->currentField->acceleration(0) = 0.0;
@@ -108,8 +108,8 @@ void BoundaryRestrain::applyConstantOnNewFields(Node *node, double currentTime, 
   }
   if (_restrain(1) > 0)
   {
-    node->currentField->displacementInc(1) = 0.0;
-    node->newField->displacementInc(1) = 0.0;
+    node->currentField->displacement(1) = 0.0;
+    node->newField->displacement(1) = 0.0;
     node->currentField->speed(1) = 0.0;
     node->newField->speed(1) = 0.0;
     node->currentField->acceleration(1) = 0.0;
@@ -117,8 +117,8 @@ void BoundaryRestrain::applyConstantOnNewFields(Node *node, double currentTime, 
   }
   if (_restrain(2) > 0)
   {
-    node->currentField->displacementInc(2) = 0.0;
-    node->newField->displacementInc(2) = 0.0;
+    node->currentField->displacement(2) = 0.0;
+    node->newField->displacement(2) = 0.0;
     node->currentField->speed(2) = 0.0;
     node->newField->speed(2) = 0.0;
     node->currentField->acceleration(2) = 0.0;

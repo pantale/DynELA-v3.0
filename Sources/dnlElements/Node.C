@@ -47,11 +47,11 @@ Node::Node(long nodeNumber, double xCoord, double yCoord, double zCoord)
   number = nodeNumber;
 
   // init des donnees
-  nodalMass = 0.;
+  mass = 0.;
 
   // init par defaut des coordonnees
   coordinates.setValue(xCoord, yCoord, zCoord);
-  normal = 0.;
+  //normal = 0.;
 
   // init par defaut de deux champs de donnees
   newField = new NodalField;
@@ -72,7 +72,7 @@ Node::Node(const Node &nd)
   std::cout << "Copy of a Node" << std::endl;
 
   coordinates = nd.coordinates;
-  normal = nd.normal;
+  //normal = nd.normal;
 }
 
 //-----------------------------------------------------------------------------
@@ -192,10 +192,10 @@ void Node::copyNodalFieldToNew()
 {
   // newField->density = currentField->density;
   // newField->densityInc = currentField->densityInc;
-  newField->energy = currentField->energy;
-  newField->energyInc = currentField->energyInc;
+  //newField->energy = currentField->energy;
+  //newField->energyInc = currentField->energyInc;
+  //newField->displacement = currentField->displacement;
   newField->displacement = currentField->displacement;
-  newField->displacementInc = currentField->displacementInc;
   //  newField->flux = currentField->flux;
   // newField->force = currentField->force;
   newField->speed = currentField->speed;
@@ -320,16 +320,16 @@ double Node::getNodalValue(short field)
 {
   // Nodal values
   // _getFromNodal(initialTemperature, initialTemperature);
-  _getFromNodal(nodalMass, nodalMass);
+  _getFromNodal(mass, mass);
   _getScalarFromNodalVec3D(nodeCoordinate, coordinates);
   //_getScalarFromNodalVec3D(initialNodeCoordinate, initialCoordinates);
-  _getScalarFromNodalVec3D(normal, normal);
+  //_getScalarFromNodalVec3D(normal, normal);
+  _getScalarFromNodalVec3D(displacement, displacement);
 
   // NodalField values
-  _getFromNodal(energy, currentField->energy);
-  _getFromNodal(energyIncrement, currentField->energyInc);
-  _getScalarFromNodalVec3D(displacement, currentField->displacement);
-  _getScalarFromNodalVec3D(displacementIncrement, currentField->displacementInc);
+  //_getFromNodal(energy, currentField->energy);
+  //_getFromNodal(energyIncrement, currentField->energyInc);
+  _getScalarFromNodalVec3D(displacementIncrement, currentField->displacement);
   // _getScalarFromNodalVec3D(flux, currentField->flux);
   // _getScalarFromNodalVec3D(force, currentField->force);
   _getScalarFromNodalVec3D(speed, currentField->speed);
@@ -387,11 +387,11 @@ Vec3D Node::getNodalVec3D(short field)
   // Nodal values
   _getFromNodal(nodeCoordinate, coordinates);
   //_getFromNodal(initialNodeCoordinate, initialCoordinates);
-  _getFromNodal(normal, normal);
+  //_getFromNodal(normal, normal);
+  _getFromNodal(displacement, displacement);
 
   // NodalField values
-  _getFromNodal(displacement, currentField->displacement);
-  _getFromNodal(displacementIncrement, currentField->displacementInc);
+  _getFromNodal(displacementIncrement, currentField->displacement);
   // _getFromNodal(flux, currentField->flux);
   // _getFromNodal(force, currentField->force);
   _getFromNodal(speed, currentField->speed);
@@ -552,7 +552,7 @@ double Node::getNodalValue(String field, long component)
   _getScalarNodalFieldVec3D(force,force);
   _getScalarNodalFieldScalar(temperature,T);
   _getScalarNodalFieldVec3D(flux,flux);
-  _getScalarNodalFieldVec3D(displacementInc,displacementInc);
+  _getScalarNodalFieldVec3D(displacement,displacement);
   _getScalarNodalFieldVec3D(displacement,displacement);
 
   // nodal values
@@ -634,7 +634,7 @@ Vec3D Node::getNodalVector(String field)
   getNodalFieldVec3DLocal(acceleration,acceleration);
   getNodalFieldVec3DLocal(force,force);
   getNodalFieldVec3DLocal(flux,flux);
-  getNodalFieldVec3DLocal(displacementInc,displacementInc);
+  getNodalFieldVec3DLocal(displacement,displacement);
   getNodalFieldVec3DLocal(displacement,displacement);
 
   // nodal values

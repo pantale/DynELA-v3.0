@@ -21,7 +21,7 @@ This file is the declaration file for the ElementData class.
 #ifndef __dnlElements_ElementData_h__
 #define __dnlElements_ElementData_h__
 
-#ifndef SWIG
+//#ifndef SWIG
 #define maxNumberOfEdges 12
 #define maxNumberOfFaces 6
 #define maxNumberOfIntegrationPoints 8
@@ -90,6 +90,6 @@ struct ElementData
                                                                          //    ElementEdge edges[maxNumberOfEdges];                                      // List of the edges of the element
     int CheckElementData;
 };
-#endif
+//#endif
 
 #endif

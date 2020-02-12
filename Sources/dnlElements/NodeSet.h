@@ -28,8 +28,8 @@ class Node;
 class NodeSet
 {
 public:
-  String name;             //!< Public name of the NodeSet
-  List<Node *> nodes; //!< List of the nodes
+  String name;             // Public name of the NodeSet
+  List<Node *> nodes; // List of the nodes
 
 public:
   NodeSet(char *newName = NULL);   //! Constructor of the NodeSet class

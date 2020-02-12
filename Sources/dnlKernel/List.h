@@ -54,8 +54,8 @@
   \date 1997-2004
 */
 
-#define DEFAULT_stack_size 10 //!< taille par defaut de la liste
-#define DEFAULT_stack_inc 10  //!< increment par defaut pour la liste
+#define DEFAULT_stack_size 10 // taille par defaut de la liste
+#define DEFAULT_stack_inc 10  // increment par defaut pour la liste
 
 template <class Type>
 class ListIndex;

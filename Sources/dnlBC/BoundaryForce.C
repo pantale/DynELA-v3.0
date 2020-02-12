@@ -57,7 +57,7 @@ BoundaryForce::BoundaryForce(const BoundaryForce &X)
 }
 
 //-----------------------------------------------------------------------------
-void BoundaryForce::applyInitialOnCurrentFields(Node *node, double currentTime, double timeStep)
+void BoundaryForce::applyInitial(Node *node, double currentTime, double timeStep)
 //-----------------------------------------------------------------------------
 {
   //node->newField->_force=_force;

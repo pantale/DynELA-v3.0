@@ -43,7 +43,7 @@ public:
   void setValue(double accX, double accY, double accZ);
   void applyConstantOnNewFields(Node *node, double currentTime, double timeStep);
   void applyConstantOnCurrentFields(Node *node, double currentTime, double timeStep);
-  void applyInitialOnCurrentFields(Node *node, double currentTime, double timeStep);
+  void applyInitial(Node *node, double currentTime, double timeStep);
 
   // fonctions membres
   long getType()

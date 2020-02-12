@@ -42,7 +42,7 @@ ElementPlane::~ElementPlane()
 }
 
 //-----------------------------------------------------------------------------
-bool ElementPlane::computeJacobian()
+bool ElementPlane::computeJacobian(bool reference)
 //-----------------------------------------------------------------------------
 {
   Node *node;
@@ -82,6 +82,15 @@ bool ElementPlane::computeJacobian()
 
     // recalcul de dShapeFunction
     _integrationPoint->dShapeFunction = integrationPointData->derShapeFunction * _integrationPoint->invJxW;
+
+    if (reference)
+    {
+      _integrationPoint->detJ0 = _integrationPoint->detJ;
+      if (getFamily() == Element::Axisymetric)
+      {
+        _integrationPoint->detJ0 = _integrationPoint->detJ * getRadiusAtIntegrationPoint();
+      }
+    }
   }
   return true;
 }
@@ -104,109 +113,90 @@ void ElementPlane::getV_atIntPoint(Vec3D &v, short time)
   }
 }
 
-/*
-
 //-----------------------------------------------------------------------------
-void ElementPlane::computeElasticStiffnessMatrix (Matrix & K, bool under)
+void ElementPlane::computeElasticStiffnessMatrix()
 //-----------------------------------------------------------------------------
 {
   long pt;
   double WxdJ, R;
-  long i,I,j,J;
+  long i, I, j, J;
   long pts;
-  IntegrationPointBase* pInt;
 
   // initialisation
-  K.redim(getNumberOfDimensions()*getNumberOfNodes(),getNumberOfDimensions()*getNumberOfNodes());
-  K=0;
+  stiffnessMatrix = 0;
   Matrix C;
 
   // chargement de la matrice de comportement C
   if (getFamily() == Element::Axisymetric)
-    C=material->getHookeMatrix(Material::axisymetric);
-  else 
-    C=material->getHookeMatrix(Material::planeStrain);
+    C = material->getHookeMatrix(Material::axisymetric);
+  else
+    C = material->getHookeMatrix(Material::planeStrain);
 
   // matrice temporaire
-  Matrix CB(C.rows(),getNumberOfDimensions()*getNumberOfNodes());
+  Matrix CB(C.rows(), getNumberOfDimensions() * getNumberOfNodes());
 
   // nomre de points d'integration
-  if (under)
-    {
-      pts=numberOfUnderIntegrationPoints ();
-    }
-  else
-    {
-      pts=integrationPoints.getSize ();
-    }
+    pts = integrationPoints.getSize();
+  
 
   // parallelisation
-  //#pragma omp parallel for private(WxdJ),shared(K)
+  //#pragma omp parallel for private(WxdJ),shared(stiffnessMatrix)
   // boucle sur les points d'integration
   for (pt = 0; pt < pts; pt++)
+  {
+
+    // recuperation du point d'integration
+      setCurrentIntegrationPoint(pt);    
+
+    // calcul du terme d'integration numerique
+    WxdJ = _integrationPoint->integrationPointData->weight * _integrationPoint->detJ;
+    if (getFamily() == Element::Axisymetric)
     {
-
-      // recuperation du point d'integration
-      if (under)
-	{
-	  getUnderIntegrationPoint (pt);
-	  pInt=underIntegrationPoint;
-	}
-      else 
-	{
-	  setCurrentIntegrationPoint (pt);
-	  pInt=ref;
-	}
-
-      // calcul du terme d'integration numerique
-      WxdJ = pInt->integrationPointData->weight * pInt->detJ;
-      if (getFamily() == Element::Axisymetric)
-	{
-	  R=getRadiusAtIntegrationPoint();
-	  WxdJ *= 2 * PI * R;
-	}
-
-      // calcul de C.B
-      for (i = 0; i < getNumberOfNodes(); i++)
-	{
-	  I=getNumberOfDimensions()*i;
-	  CB(0,I) = (C(0,0)*pInt->dShapeFunction(i,0)+C(0,2)*pInt->dShapeFunction(i,1));
-	  CB(1,I) = (C(1,0)*pInt->dShapeFunction(i,0)+C(1,2)*pInt->dShapeFunction(i,1));
-	  CB(2,I) = (C(2,0)*pInt->dShapeFunction(i,0)+C(2,2)*pInt->dShapeFunction(i,1));
-	  CB(0,I+1) = (C(0,1)*pInt->dShapeFunction(i,1)+C(0,2)*pInt->dShapeFunction(i,0));
-	  CB(1,I+1) = (C(1,1)*pInt->dShapeFunction(i,1)+C(1,2)*pInt->dShapeFunction(i,0));
-	  CB(2,I+1) = (C(2,1)*pInt->dShapeFunction(i,1)+C(2,2)*pInt->dShapeFunction(i,0));
-	  if (getFamily() == Element::Axisymetric)
-	    {
-	      CB(3,I) = (C(3,0)*pInt->dShapeFunction(i,0)+C(3,2)*pInt->dShapeFunction(i,1));
-	      CB(3,I+1) = (C(3,1)*pInt->dShapeFunction(i,1)+C(3,2)*pInt->dShapeFunction(i,0));
-	      CB(0,I) += C(0,3)*pInt->integrationPointData->shapeFunction(i)/R;
-	      CB(1,I) += C(1,3)*pInt->integrationPointData->shapeFunction(i)/R;
-	      CB(2,I) += C(2,3)*pInt->integrationPointData->shapeFunction(i)/R;
-	      CB(3,I) += C(3,3)*pInt->integrationPointData->shapeFunction(i)/R;
-	    }
-	}
-
-      // calcul de BT [C B]
-      for (i = 0; i < getNumberOfNodes(); i++)
-	for (j = 0; j < getNumberOfNodes(); j++)
-	  {
-	    I=getNumberOfDimensions()*i;
-	    J=getNumberOfDimensions()*j;
-	    K(I,J) += (pInt->dShapeFunction(i,0) * CB (0,J) + pInt->dShapeFunction(i,1) * CB (2,J))*WxdJ;
-	    K(I,J+1) += (pInt->dShapeFunction(i,0) * CB (0,J+1) + pInt->dShapeFunction(i,1) * CB (2,J+1))*WxdJ;
-	    K(I+1,J) += (pInt->dShapeFunction(i,1) * CB (1,J) + pInt->dShapeFunction(i,0) * CB (2,J))*WxdJ;
-	    K(I+1,J+1) += (pInt->dShapeFunction(i,1) * CB (1,J+1) + pInt->dShapeFunction(i,0) * CB (2,J+1))*WxdJ;
-	    if (getFamily() == Element::Axisymetric)
-	      {
-		K(I,J) += CB(3,J)*pInt->integrationPointData->shapeFunction(i)/R*WxdJ;
-		K(I,J+1) += CB(3,J+1)*pInt->integrationPointData->shapeFunction(i)/R*WxdJ;
-	      }
-	  }
+      R = getRadiusAtIntegrationPoint();
+      WxdJ *= 2 * PI * R;
     }
+
+    // calcul de C.B
+    for (i = 0; i < getNumberOfNodes(); i++)
+    {
+      I = getNumberOfDimensions() * i;
+      CB(0, I) = (C(0, 0) * _integrationPoint->dShapeFunction(i, 0) + C(0, 2) * _integrationPoint->dShapeFunction(i, 1));
+      CB(1, I) = (C(1, 0) * _integrationPoint->dShapeFunction(i, 0) + C(1, 2) * _integrationPoint->dShapeFunction(i, 1));
+      CB(2, I) = (C(2, 0) * _integrationPoint->dShapeFunction(i, 0) + C(2, 2) * _integrationPoint->dShapeFunction(i, 1));
+      CB(0, I + 1) = (C(0, 1) * _integrationPoint->dShapeFunction(i, 1) + C(0, 2) * _integrationPoint->dShapeFunction(i, 0));
+      CB(1, I + 1) = (C(1, 1) * _integrationPoint->dShapeFunction(i, 1) + C(1, 2) * _integrationPoint->dShapeFunction(i, 0));
+      CB(2, I + 1) = (C(2, 1) * _integrationPoint->dShapeFunction(i, 1) + C(2, 2) * _integrationPoint->dShapeFunction(i, 0));
+      if (getFamily() == Element::Axisymetric)
+      {
+        CB(3, I) = (C(3, 0) * _integrationPoint->dShapeFunction(i, 0) + C(3, 2) * _integrationPoint->dShapeFunction(i, 1));
+        CB(3, I + 1) = (C(3, 1) * _integrationPoint->dShapeFunction(i, 1) + C(3, 2) * _integrationPoint->dShapeFunction(i, 0));
+        CB(0, I) += C(0, 3) * _integrationPoint->integrationPointData->shapeFunction(i) / R;
+        CB(1, I) += C(1, 3) * _integrationPoint->integrationPointData->shapeFunction(i) / R;
+        CB(2, I) += C(2, 3) * _integrationPoint->integrationPointData->shapeFunction(i) / R;
+        CB(3, I) += C(3, 3) * _integrationPoint->integrationPointData->shapeFunction(i) / R;
+      }
+    }
+
+    // calcul de BT [C B]
+    for (i = 0; i < getNumberOfNodes(); i++)
+      for (j = 0; j < getNumberOfNodes(); j++)
+      {
+        I = getNumberOfDimensions() * i;
+        J = getNumberOfDimensions() * j;
+        stiffnessMatrix(I, J) += (_integrationPoint->dShapeFunction(i, 0) * CB(0, J) + _integrationPoint->dShapeFunction(i, 1) * CB(2, J)) * WxdJ;
+        stiffnessMatrix(I, J + 1) += (_integrationPoint->dShapeFunction(i, 0) * CB(0, J + 1) + _integrationPoint->dShapeFunction(i, 1) * CB(2, J + 1)) * WxdJ;
+        stiffnessMatrix(I + 1, J) += (_integrationPoint->dShapeFunction(i, 1) * CB(1, J) + _integrationPoint->dShapeFunction(i, 0) * CB(2, J)) * WxdJ;
+        stiffnessMatrix(I + 1, J + 1) += (_integrationPoint->dShapeFunction(i, 1) * CB(1, J + 1) + _integrationPoint->dShapeFunction(i, 0) * CB(2, J + 1)) * WxdJ;
+        if (getFamily() == Element::Axisymetric)
+        {
+          stiffnessMatrix(I, J) += CB(3, J) * _integrationPoint->integrationPointData->shapeFunction(i) / R * WxdJ;
+          stiffnessMatrix(I, J + 1) += CB(3, J + 1) * _integrationPoint->integrationPointData->shapeFunction(i) / R * WxdJ;
+        }
+      }
+  }
 }
 
-
+/*
 //-----------------------------------------------------------------------------
 void ElementPlane::getU_atIntPoint (Vec3D & u, short time)
 //-----------------------------------------------------------------------------
@@ -221,8 +211,8 @@ void ElementPlane::getU_atIntPoint (Vec3D & u, short time)
   for (i = 0; i < nodes.getSize (); i++)
     {
       field = nodes (i)->getNodalField (time);
-       u (0) += _integrationPoint->integrationPointData->shapeFunction (i) * field->displacementInc (0);
-       u (1) += _integrationPoint->integrationPointData->shapeFunction (i) * field->displacementInc (1);
+       u (0) += _integrationPoint->integrationPointData->shapeFunction (i) * field->displacement (0);
+       u (1) += _integrationPoint->integrationPointData->shapeFunction (i) * field->displacement (1);
     }
 }
 */

@@ -36,11 +36,12 @@ public:
   void getDerShapeFunctionAtPoint(Matrix &derShapeFunctions, const Vec3D &point) const = 0;
   double getCharacteristicLength() = 0;
   double getRadiusAtIntegrationPoint();
-  bool computeJacobian();
+  bool computeJacobian(bool reference = false);
   void computeDeformationGradient(Tensor2 &F, short time);
   bool checkLevel2();
   void getV_atIntPoint(Vec3D &v, short time);
   void getdV_atIntPoint(Tensor2 &dv, short time);
+  void computeElasticStiffnessMatrix();
 
   /*   long numberOfUnderIntegrationPoints () = 0;
   double getVolume () = 0;
@@ -49,7 +50,6 @@ public:
   void computeGlob2Loc () = 0;
   void glob2Loc (const Vec3D & point, Vec3D & local) = 0;
 
-  void computeElasticStiffnessMatrix (Matrix & K, bool under=true);
   void getU_atIntPoint (Vec3D & u, short time);
     {
       

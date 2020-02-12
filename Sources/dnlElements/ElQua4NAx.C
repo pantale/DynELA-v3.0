@@ -8,10 +8,10 @@
  **************************************************************************/
 
 /*!
-  \file ElementPlane.C
-  \brief Definition file for the ElementPlane class
+  \file ElQua4NAx.C
+  \brief Definition file for the ElQua4N2D class
 
-  This file is the definition file for the ElementPlane class.
+  This file is the definition file for the ElQua4NAx class.
 
   \ingroup dnlElements
   \author &copy; Olivier PANTALE
@@ -246,6 +246,7 @@ ElQua4NAx::ElQua4NAx(long elementNumber) : ElementAxi(elementNumber)
 {
     _globalToLocal.redim(2, 4);
     Element::_elementData = &_elementData;
+    stiffnessMatrix.redim(8, 8);
 
     // Check the data structure
     if (_elementData.CheckElementData != 10010110)

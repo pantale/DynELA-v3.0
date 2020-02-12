@@ -50,7 +50,7 @@ BoundaryAcceleration::~BoundaryAcceleration()
 }
 
 //-----------------------------------------------------------------------------
-void BoundaryAcceleration::applyInitialOnCurrentFields(Node *node, double currentTime, double timeStep)
+void BoundaryAcceleration::applyInitial(Node *node, double currentTime, double timeStep)
 //-----------------------------------------------------------------------------
 {
 }

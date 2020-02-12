@@ -45,7 +45,7 @@ public:
   }
   void applyConstantOnNewFields(Node *node, double currentTime, double timeStep);
   void applyConstantOnCurrentFields(Node *node, double currentTime, double timeStep);
-  void applyInitialOnCurrentFields(Node *node, double currentTime, double timeStep);
+  void applyInitial(Node *node, double currentTime, double timeStep);
   double getValue();
   void setValue(double newTemperaure);
 };

@@ -18,6 +18,7 @@
   \date 1997-2019
 */
 
+#include <Tensor2.h>
 #include <Polygon.h>
 #include <Field.h>
 #include <DynELA.h>
@@ -127,20 +128,20 @@ void Polygon::remapVertices(Vec3D center, Vec3D worldCenter, Vec3D worldScale)
 }
 
 //-----------------------------------------------------------------------------
-String Polygon::getWhitePolygonSvgCode(int width)
+String Polygon::getWhitePolygonSvgCode(double width)
 //-----------------------------------------------------------------------------
 {
   String svgcode = "";
   String tmp1, tmp2;
   Vec3D point;
-  String tmpWidth;
-  tmpWidth.convert(width);
+  String stringWidth;
+  stringWidth.convert(width,"%g");
 
   // Begin polygon
   svgcode += "<polygon\n";
   svgcode += " stroke=\"black\"\n";
   svgcode += " fill=\"white\"\n";
-  svgcode += " stroke-width=\"" + tmpWidth + "\"\n";
+  svgcode += " stroke-width=\"" + stringWidth + "\"\n";
   svgcode += " stroke-linejoin=\"round\"\n";
   svgcode += " points=\"";
 
@@ -161,14 +162,14 @@ String Polygon::getWhitePolygonSvgCode(int width)
 }
 
 //-----------------------------------------------------------------------------
-String Polygon::getFlatPolygonSvgCode(ColorMap &map, short field, bool stroke, int width)
+String Polygon::getFlatPolygonSvgCode(ColorMap &map, short field, bool stroke, double width)
 //-----------------------------------------------------------------------------
 {
   String svgcode = "";
   String tmp1, tmp2;
   Vec3D point;
-  String tmpWidth;
-  tmpWidth.convert(width);
+  String stringWidth;
+  stringWidth.convert(width,"%g");
 
   double val = 0;
   for (int i = 0; i < points; i++)
@@ -185,7 +186,7 @@ String Polygon::getFlatPolygonSvgCode(ColorMap &map, short field, bool stroke, i
   if (stroke)
   {
     svgcode += " stroke=\"black\"\n";
-    svgcode += " stroke-width=\"" + tmpWidth + "\"\n";
+    svgcode += " stroke-width=\"" + stringWidth + "\"\n";
   }
   else
   {
@@ -213,14 +214,14 @@ String Polygon::getFlatPolygonSvgCode(ColorMap &map, short field, bool stroke, i
 }
 
 //-----------------------------------------------------------------------------
-String Polygon::getInterpolatedPolygonSvgCode(ColorMap &map, int decompLevel, short field, bool stroke, int width)
+String Polygon::getInterpolatedPolygonSvgCode(ColorMap &map, int decompLevel, short field, bool stroke, double width)
 //-----------------------------------------------------------------------------
 {
   String svgcode = "";
   String tmp1, tmp2;
   Vec3D point;
-  String tmpWidth;
-  tmpWidth.convert(width);
+  String stringWidth;
+  stringWidth.convert(width,"%g");
   PolygonPatches _polygonPatches(decompLevel);
   PolygonPatch *patch;
   String col;
@@ -258,7 +259,7 @@ String Polygon::getInterpolatedPolygonSvgCode(ColorMap &map, int decompLevel, sh
     svgcode += " stroke=\"black\"\n";
     svgcode += " fill=\"none\"\n";
 
-    svgcode += " stroke-width=\"" + tmpWidth + "\"\n";
+    svgcode += " stroke-width=\"" + stringWidth + "\"\n";
     svgcode += " points=\"";
 
     // polygon points

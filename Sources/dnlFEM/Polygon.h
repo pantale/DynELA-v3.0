@@ -52,9 +52,9 @@ public:
 
   bool isVisible() { return visible; }
   int numberOfPoints();
-  String getFlatPolygonSvgCode(ColorMap &map, short field, bool stroke, int width );
-  String getInterpolatedPolygonSvgCode(ColorMap &map, int decompLevel, short field, bool stroke, int width );
-  String getWhitePolygonSvgCode(int width);
+  String getFlatPolygonSvgCode(ColorMap &map, short field, bool stroke, double width );
+  String getInterpolatedPolygonSvgCode(ColorMap &map, int decompLevel, short field, bool stroke, double width );
+  String getWhitePolygonSvgCode(double width);
   Vec3D getVertex(int);
   void add(Node *node);
   void add(Vec3D point);

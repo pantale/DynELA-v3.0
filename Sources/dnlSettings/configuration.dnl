@@ -7,11 +7,11 @@ DynELA = Explicit Solver v. 3.0
 ComputeTimeStepFrequency = 10
 TimeStepSafetyFactor = 0.9
 TimeStepMethod = 0
-ReportFrequency = 100
+ReportFrequency = 1000
 DisplayProgress = 60
 
 # Defaults vtk fields
-VtkFields = Stress, Strain, PlasticStrain, vonMises, yield, pressure, plasticStrain, plasticStrainRate, gamma, gammaCumulate, temperature, speed, displacement
+VtkFields = Stress, Strain, PlasticStrain, vonMises, yield, pressure, plasticStrain, plasticStrainRate, gamma, gammaCumulate, temperature, speed, displacement, displacementIncrement
 
 # Default Files Names
 CpuFileName = CPU-times.log

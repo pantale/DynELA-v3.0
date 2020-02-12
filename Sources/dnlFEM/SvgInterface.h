@@ -48,12 +48,12 @@ private:
   const Vec3D _svgBottomLeft = Vec3D(0, 0, 0);
   const Vec3D _svgTopRight = Vec3D(1600, 1600, 0);
   double _height = 16;
+  double _meshWidth = 1;
   double _scale = 1;
   double _scaleRatio = 0.95;
   double _width = 16;
   int _legendX = 30;
   int _legendY = 30;
-  int _meshWidth = 1;
   int _patchDecompLevel = 1;
   int _titleX = 50;
   int _titleY = 1550;
@@ -70,9 +70,9 @@ private:
   void initSvgFile(String fileName);
   void interpolatedPolygonsWrite();
   void legendWrite();
-  void lineWrite(int x1, int y1, int x2, int y2, int width = 1);
+  void lineWrite(int x1, int y1, int x2, int y2, double width = 1);
   void meshWrite();
-  void rectangleWrite(int x1, int y1, int x2, int y2, String col = "black", int width = 1);
+  void rectangleWrite(int x1, int y1, int x2, int y2, String col = "black", double width = 1);
   void tailWrite();
   void textWrite(Vec3D location, String text, int size = 30, String color = "black");
 #endif
@@ -80,7 +80,7 @@ private:
 public:
   ColorMap colorMap;
   short field;
-  String name = "_noname_"; //!< Name of the SVG interface
+  String name = "_noname_"; // Name of the SVG interface
 
   // constructeurs
   SvgInterface(char *newName = NULL);
@@ -94,7 +94,7 @@ public:
   void setLegendPosition(int x, int y);
   void setMeshDisplay(bool display);
   void setTitleDisplay(bool display);
-  void setMeshWidth(int width);
+  void setMeshWidth(double width);
   void setPatchLevel(int level);
   void setTitlePosition(int x, int y);
   void write(String fileName, short field = -1);

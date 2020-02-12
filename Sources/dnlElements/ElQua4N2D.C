@@ -246,6 +246,7 @@ ElQua4N2D::ElQua4N2D(long elementNumber) : Element2D(elementNumber)
 {
     _globalToLocal.redim(2, 4);
     Element::_elementData = &_elementData;
+    stiffnessMatrix.redim(8,8);
 
     // Check the data structure
     if (_elementData.CheckElementData != 10010110)

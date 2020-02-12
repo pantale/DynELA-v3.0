@@ -127,10 +127,10 @@ Boundary *BoundaryCondition::getConstant(long i)
 }
 
 //-----------------------------------------------------------------------------
-bool BoundaryCondition::applyInitialOnCurrentFields(Node *node, double currentTime, double timeStep)
+bool BoundaryCondition::applyInitial(Node *node, double currentTime, double timeStep)
 //-----------------------------------------------------------------------------
 {
-  long conditionId;
+  short conditionId;
 
   // if no initial condition found return false
   if (!existInitial() && !existConstant())
@@ -138,10 +138,10 @@ bool BoundaryCondition::applyInitialOnCurrentFields(Node *node, double currentTi
 
   // apply the initial conditions
   for (conditionId = 0; conditionId < initial.getSize(); conditionId++)
-    initial(conditionId)->applyInitialOnCurrentFields(node, currentTime, timeStep);
+    initial(conditionId)->applyInitial(node, currentTime, timeStep);
 
   for (conditionId = 0; conditionId < constant.getSize(); conditionId++)
-    constant(conditionId)->applyInitialOnCurrentFields(node, currentTime, timeStep);
+    constant(conditionId)->applyInitial(node, currentTime, timeStep);
 
   // return true
   return true;
@@ -160,7 +160,7 @@ bool BoundaryCondition::applyConstantOnCurrentFields(Node *node, double currentT
     return false;
 
   // apply the constant conditions
-  for (long i = 0; i < constant.getSize(); i++)
+  for (short i = 0; i < constant.getSize(); i++)
   {
     constant(i)->applyConstantOnCurrentFields(node, currentTime, timeStep);
   }
@@ -178,7 +178,7 @@ bool BoundaryCondition::applyConstantOnNewFields(Node *node, double currentTime,
     return false;
 
   // apply the constant conditions
-  for (long boundaryId = 0; boundaryId < constant.getSize(); boundaryId++)
+  for (short boundaryId = 0; boundaryId < constant.getSize(); boundaryId++)
   {
     constant(boundaryId)->applyConstantOnNewFields(node, currentTime, timeStep);
   }

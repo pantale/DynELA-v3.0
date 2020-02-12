@@ -43,12 +43,12 @@ public:
   };
 
 protected:
-  Function *_function; //!< Fonction discrete associee si elle existe
+  Function *_function; // Fonction discrete associee si elle existe
 
 public:
   List<NodeSet *> nodeSet;
  // List<bool> typeSet;
-  String name; //!< Public name of the BoundaryCondition
+  String name; // Public name of the BoundaryCondition
 
 public:
   Boundary(char *newName = NULL);
@@ -56,7 +56,7 @@ public:
   virtual ~Boundary();
 
   virtual long getType() = 0;
-  virtual void applyInitialOnCurrentFields(Node *node, double currentTime, double timeStep) = 0;
+  virtual void applyInitial(Node *node, double currentTime, double timeStep) = 0;
   virtual void applyConstantOnCurrentFields(Node *node, double currentTime, double timeStep) = 0;
   virtual void applyConstantOnNewFields(Node *node, double currentTime, double timeStep) { fatalError("Pas prevu encore", "applyConstantOnNewFields %c", &node); }
   Function *getFunction();

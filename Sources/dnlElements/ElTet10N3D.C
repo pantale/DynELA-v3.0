@@ -398,6 +398,7 @@ ElTet10N3D::ElTet10N3D(long elementNumber) : Element3D(elementNumber)
     // redim du _globalToLocal ?
     _globalToLocal.redim(3, 10);
     Element::_elementData = &_elementData;
+    stiffnessMatrix.redim(30, 30);
 
     // Check the data structure
     if (_elementData.CheckElementData != 10010110)

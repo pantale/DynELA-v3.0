@@ -535,6 +535,7 @@ ElHex8N3D::ElHex8N3D(long elementNumber) : Element3D(elementNumber)
 {
     _globalToLocal.redim(3, 8);
     Element::_elementData = &_elementData;
+    stiffnessMatrix.redim(24, 24);
 
     // Check the data structure
     if (_elementData.CheckElementData != 10010110)
@@ -627,6 +628,7 @@ void ElHex8N3D::getDerShapeFunctionAtPoint(Matrix &derShapeFunctions, const Vec3
                    4 * dnlSquare(-(x2 * x3) + x1 * (x2 - x4) + x3 * x4 + y1 * y2 - y2 * y3 - y1 * y4 + y3 * y4 + z1 * z2 - z2 * z3 - z1 * z4 + z3 * z4)) / \
               4;                                                                                                                                           \
     }
+
 //-----------------------------------------------------------------------------
 double ElHex8N3D::getCharacteristicLength()
 //-----------------------------------------------------------------------------

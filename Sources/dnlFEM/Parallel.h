@@ -32,7 +32,7 @@ class Element;
 class ElementsChunk
 {
 public:
-  List<Element *> elements; //!< List of the elements of the chunk
+  List<Element *> elements; // List of the elements of the chunk
 
 public:
   ElementsChunk() {}
@@ -45,7 +45,7 @@ class Parallel
 private:
   int _cores = 1;
   int _maxThreads = 1;
-  ElementsChunk **_elementsChunks; //!< Elements chunks
+  ElementsChunk **_elementsChunks; // Elements chunks
 
 private:
   ElementsChunk **_initChunkList();

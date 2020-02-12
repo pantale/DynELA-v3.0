@@ -258,10 +258,10 @@ void Drawing::rotate(Vec3D axis, double angle)
 void Drawing::mapToWorld()
 //-----------------------------------------------------------------------------
 {
-  if (dynelaData->model.elements.first()->getFamily() == Element::Threedimensional)
-  {
-    zBufferSort();
-  }
+  // Zbuffer diaplay
+  // if (dynelaData->model.elements.first()->getFamily() == Element::Threedimensional)
+  zBufferSort();
+
   Polygon *polygon = polygons.first();
   while ((polygon = polygons.currentUp()) != NULL)
   {

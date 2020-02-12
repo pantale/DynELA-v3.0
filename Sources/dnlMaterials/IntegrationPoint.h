@@ -35,13 +35,13 @@ class IntegrationPointBase
 {
 
 public:
-  double detJ;                                      //!< Determinant du Jacobien
-  double detJ0;                                     //!< Determinant du Jacobien de la configuration de reference
-  Matrix dShapeFunction;                            //!< Matrice des derivees des fonctions d'interpolation par rapport aux coordonnees physiques
-  Matrix invJxW;                                    //!< Inverse du Jacobien de l'element au point d'integration
-  Matrix JxW;                                       //!< Jacobien de l'element au point d'integration
-  Tensor2 R;                                        //!< Rotation tensor for the integration pount
-  const IntegrationPointData *integrationPointData; //!< Data storage for the integration point data
+  double detJ;                                      // Determinant du Jacobien
+  double detJ0;                                     // Determinant du Jacobien de la configuration de reference
+  Matrix dShapeFunction;                            // Matrice des derivees des fonctions d'interpolation par rapport aux coordonnees physiques
+  Matrix invJxW;                                    // Inverse du Jacobien de l'element au point d'integration
+  Matrix JxW;                                       // Jacobien de l'element au point d'integration
+  Tensor2 R;                                        // Rotation tensor for the integration pount
+  const IntegrationPointData *integrationPointData; // Data storage for the integration point data
 
 public:
   IntegrationPointBase(int dimension, int numberOfNodes);
@@ -63,21 +63,21 @@ class IntegrationPoint : public IntegrationPointBase
 {
 
 public:
-  double yieldStress = 0.0;       //!< parametre d'ecrouissage
-  double plasticStrain = 0.0;     //!< parametre d'ecrouissage
-  double plasticStrainRate = 0.0; //!< parametre d'ecrouissage
-  double pressure = 0.0;          //!< partie spherique du tenseur des contraintes
-  double gamma = 0.0;             //!< state variable for VUMAT gamma
-  double gammaCumulate = 0.0;     //!< state variable for VUMAT gamma
-  double temperature = 0.0;       //!< state variable for VUMAT temperature
-  double internalEnergy = 0.0;    //!<
-  double inelasticEnergy = 0.0;   //!<
-  double density;                 //!<
-  SymTensor2 Strain;              //!< tenseur des deformations
-  SymTensor2 StrainInc;           //!< increment du tenseur des deformations
-  SymTensor2 PlasticStrain;       //!< tenseur des deformations plastiques
-  SymTensor2 PlasticStrainInc;    //!< increment du tenseur des deformations plastiques
-  SymTensor2 Stress;              //!< tenseur des contraintes
+  double yieldStress = 0.0;       // parametre d'ecrouissage
+  double plasticStrain = 0.0;     // parametre d'ecrouissage
+  double plasticStrainRate = 0.0; // parametre d'ecrouissage
+  double pressure = 0.0;          // partie spherique du tenseur des contraintes
+  double gamma = 0.0;             // state variable for VUMAT gamma
+  double gammaCumulate = 0.0;     // state variable for VUMAT gamma
+  double temperature = 0.0;       // state variable for VUMAT temperature
+  double internalEnergy = 0.0;    //
+  double inelasticEnergy = 0.0;   //
+  double density;                 //
+  SymTensor2 Strain;              // tenseur des deformations
+  SymTensor2 StrainInc;           // increment du tenseur des deformations
+  SymTensor2 PlasticStrain;       // tenseur des deformations plastiques
+  SymTensor2 PlasticStrainInc;    // increment du tenseur des deformations plastiques
+  SymTensor2 Stress;              // tenseur des contraintes
 
 public:
   IntegrationPoint(int dimension, int numberOfNodes);

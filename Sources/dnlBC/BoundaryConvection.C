@@ -81,7 +81,7 @@ void BoundaryConvection::setValue(double x, double y)
 }
 
 //-----------------------------------------------------------------------------
-void BoundaryConvection::applyInitialOnCurrentFields(Node *node, double currentTime, double timeStep)
+void BoundaryConvection::applyInitial(Node *node, double currentTime, double timeStep)
 //-----------------------------------------------------------------------------
 {
   //node->newField->force=force;

@@ -38,7 +38,7 @@
 class Function
 {
 public:
-  String name; //!< nom de la fonction discrete
+  String name; // nom de la fonction discrete
 
 public:
   Function(char* newName = NULL);

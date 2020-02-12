@@ -68,8 +68,8 @@
 #ifndef SWIG
 enum OutMatrix
 {
-  outMatrixTypeNormal = 0, //!< format Mathematica
-  outMatrixTypeMupad       //!< format Mupad
+  outMatrixTypeNormal = 0, // format Mathematica
+  outMatrixTypeMupad       // format Mupad
 };
 #endif
 
@@ -88,9 +88,9 @@ class Matrices
 {
 
 protected:
-  unsigned long _rows;      //!< nombre de lignes de la matrice
-  unsigned long _cols;      //!< nombre de colonnes de la matrice
-  char outType; //!< definit le type de format d'affichage
+  unsigned long _rows;      // nombre de lignes de la matrice
+  unsigned long _cols;      // nombre de colonnes de la matrice
+  char outType; // definit le type de format d'affichage
 
 public:
   Matrices();
@@ -100,7 +100,7 @@ public:
   long rows() const;
   long columns() const;
   void setOutType(char outT);
-  virtual long Memory() const = 0; //!< calcule la taille requise pour le stockage de la matrice en memoire
+  virtual long Memory() const = 0; // calcule la taille requise pour le stockage de la matrice en memoire
 };
 
 //------inline functions-------------------------------------------------------

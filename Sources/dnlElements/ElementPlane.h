@@ -35,13 +35,13 @@ public:
   void getDerShapeFunctionAtPoint(Matrix &derShapeFunctions, const Vec3D &point) const = 0;
   double getCharacteristicLength() = 0;
   double getRadiusAtIntegrationPoint() = 0;
-  bool computeJacobian();
-  void getV_atIntPoint (Vec3D & v, short time);
+  bool computeJacobian(bool reference = false);
+  void getV_atIntPoint(Vec3D &v, short time);
+  void computeElasticStiffnessMatrix();
 
   /*  
   void getU_atIntPoint (Vec3D & u, short time);
   long numberOfUnderIntegrationPoints () = 0;
-  void computeElasticStiffnessMatrix (Matrix & K, bool under=true);
   double getVolume () = 0;
   // bool getUnderIntegrPointCoords (long, Vec3D & coords, double& weight) = 0;
   //void getIntgtoNodes (Vector & N, const Vec3D & point) const = 0;

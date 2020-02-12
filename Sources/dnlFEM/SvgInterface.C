@@ -239,7 +239,7 @@ void SvgInterface::filledRectangleWrite(int x1, int y1, int x2, int y2, String c
 }
 
 //-----------------------------------------------------------------------------
-void SvgInterface::rectangleWrite(int x1, int y1, int x2, int y2, String col, int width)
+void SvgInterface::rectangleWrite(int x1, int y1, int x2, int y2, String col, double width)
 //-----------------------------------------------------------------------------
 {
   _stream << "<polygon\n";
@@ -256,7 +256,7 @@ void SvgInterface::rectangleWrite(int x1, int y1, int x2, int y2, String col, in
 }
 
 //-----------------------------------------------------------------------------
-void SvgInterface::lineWrite(int x1, int y1, int x2, int y2, int width)
+void SvgInterface::lineWrite(int x1, int y1, int x2, int y2, double width)
 //-----------------------------------------------------------------------------
 {
   _stream << "<line x1=\"" << x1 << "\" y1=\"" << y1 << "\" x2=\"" << x2 << "\" y2=\"" << y2 << "\" stroke=\"black\" stroke-width=\"" << width << "\"/>\n";
@@ -425,7 +425,7 @@ void SvgInterface::setMeshDisplay(bool display)
 }
 
 //-----------------------------------------------------------------------------
-void SvgInterface::setMeshWidth(int width)
+void SvgInterface::setMeshWidth(double width)
 //-----------------------------------------------------------------------------
 {
   _meshWidth = width;

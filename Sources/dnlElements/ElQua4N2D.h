@@ -21,7 +21,6 @@ This file is the declaration file for the ElQua4N2D class.
 #ifndef __dnlElements_ElQua4n2D_h__
 #define __dnlElements_ElQua4n2D_h__
 
-//#define Name_ElQua4n2D "ElQua4N2D"
 
 class Element2D;
 #include <Element2D.h>
@@ -41,16 +40,6 @@ public:
   void getDerShapeFunctionAtPoint(Matrix &derShapeFunctions, const Vec3D &point) const;
   double getCharacteristicLength();
   double getArea();
-
-  /*   long numberOfUnderIntegrationPoints ()
-  {
-    return 1;
-  }
-
-  // bool getUnderIntegrPointCoords (long, Vec3D & coords, double& weight) ;
-  void computeGlob2Loc ();
-  void glob2Loc (const Vec3D & point, Vec3D & local);
-  //void getIntgtoNodes (Vector & N, const Vec3D & point) const; */
 };
-/*>ElQua4N2D:*/
+
 #endif

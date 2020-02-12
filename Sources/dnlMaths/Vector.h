@@ -40,8 +40,8 @@
 #ifndef SWIG
 enum OutVector
 {
-  outVectorTypeNormal = 0, //!< format Mathematica
-  outVectorTypeMupad       //!< format Mupad
+  outVectorTypeNormal = 0, // format Mathematica
+  outVectorTypeMupad       // format Mupad
 };
 class Matrix;
 #endif

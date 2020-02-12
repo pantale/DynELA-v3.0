@@ -43,7 +43,7 @@ public:
   long getType() { return Boundary::Convection; }
   void applyConstantOnNewFields(Node *node, double currentTime, double timeStep);
   void applyConstantOnCurrentFields(Node *node, double currentTime, double timeStep);
-  void applyInitialOnCurrentFields(Node *node, double currentTime, double timeStep);
+  void applyInitial(Node *node, double currentTime, double timeStep);
   Vec3D getValue();
   void setValue(double newhc, double newTf);
 };

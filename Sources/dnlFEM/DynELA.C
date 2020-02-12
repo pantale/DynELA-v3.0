@@ -20,43 +20,16 @@
 
 #include <DynELA.h>
 #include <Node.h>
+#include <Element.h>
 #include <NodeSet.h>
 #include <BoundaryCondition.h>
 #include <Model.h>
 #include <VtkInterface.h>
 #include <Solver.h>
 
-/* #include <DynELA.h>
-#include <Model.h>
-#include <Material.h>
-#include <Node.h>
-#include <Element.h>
-#include <NodeSet.h>
-#include <ElementSet.h>
-#include <LogFile.h>
-#include <ElQua4N2D.h>
-#include <ElTri3N2D.h>
-#include <ElQua4NAx.h>
-#include <ElHex8N3D.h>
-#include <ElTet4N3D.h>
-#include <ElTet10N3D.h>
-#include <ElementSet.h>
-#include <BoundaryCondition.h>
-#include <Boundary.h>
-#include <Field.h>
-#include <VtkInterface.h>
-#include <Parallel.h> */
-
-/* #define nodeDisplayOnlineFrequency 100
-#define elementDisplayOnlineFrequency 100
- */
-
 class DynELA;
 DynELA *dynelaData = NULL; // initialisation par defaut sur NULL
 
-/* extern String parsedFileName;
-extern CPUrecord recordTimes;
- */
 /*!
   \file DynELA.C
   \brief fichier .C de definition des structures elements finis
@@ -77,37 +50,40 @@ extern CPUrecord recordTimes;
 DynELA::DynELA(char *newName)
 //-----------------------------------------------------------------------------
 {
-  // Affect the name of the model
   if (newName != NULL)
+  {
+    // Affects the name
     name = newName;
 
-  // Creates a new Model
-  //model = new Model;
-  model.name = name;
+    // Transfer the name to the model
+    model.name = "Model_" + name;
+  }
 
-  // Creates a settings and add it
+  // Initialize the default element to Unknown element (here is better than in .h file)
+  _defaultElement = Element::Unknown;
+
+  // Creates a settings and Initialize
   settings = new Settings;
 
-  // refer the global DynELA object
+  // Checks if already referenced to global object
   if (dynelaData != NULL)
   {
     fatalError("DynELA::DynELA", "Only One DynELA object is allowed for a Finite Element program");
   }
+  // Add global reference to the model
   dynelaData = this;
 
   // on cree egalement un fichier log pour la lecture des donnees
-  //  logFile = new LogFile(inter_name+".log");
-  // logFile = new LogFile("DynELA.log");
   logFile.init("DynELA.log");
 
   // Creates a VTK interface for storing results
   dataFile = new VtkInterface;
-  _resultFileName = name;
+  _VTKresultFileName = name;
 
   // Creates and start a global timer
   cpuTimes.timer("Global")->start();
 
-  // Creates the timers
+  // Creates the sub-timers
   cpuTimes.add(new Timer("Global:Solver"));
   cpuTimes.add(new Timer("Solver:TimeStep"));
   cpuTimes.add(new Timer("Solver:Jacobian"));
@@ -124,19 +100,6 @@ DynELA::DynELA(char *newName)
   omp_set_num_threads(1);
   printf("Num Threads %d\n", omp_get_max_threads());
  */
-  /*  
-
-  // creer les fichiers de sauvegarde
-  resultFile=new io_Data;
-  String inter_name=parsedFileName.before(sourceFileExtension);
-  resultFile->binaryFile()=true;
-  resultFile->link(inter_name);
-  resultFile->link(this);
-
-  nextSaveTime=0.0;
-  previousSaveTime=-1;
-  currentTime=0.0;
-  _defaultElement=NULL; */
 }
 
 //!constructeur par recopie de la classe DynELA
@@ -329,10 +292,6 @@ bool DynELA::createElement(long elementNumber, long nodesIndex, ...)
   }
 
   model.create(pel, nNodes);
-
-  // add the element
-  //elements << pel;
-  //elements.compact();
 
   String str;
   logFile << "Element " << pel->getName() << " : " << str.convert(pel->number) << " [";
@@ -587,7 +546,7 @@ void DynELA::displayEstimatedEnd()
       restOfTime = int(elapsedTime) % 3600;
       elapsedMinutes = restOfTime / 60;
       elapsedSeconds = restOfTime % 60;
-      printf("Elapsed time %02d:%02d:%02d\n", elapsedHours, elapsedMinutes, elapsedSeconds);
+      printf("Current computational time %02d:%02d:%02d\n", elapsedHours, elapsedMinutes, elapsedSeconds);
 
       remainingHours = remainingTime / 3600;
       restOfTime = int(remainingTime) % 3600;
@@ -715,7 +674,7 @@ void DynELA::rotate(Vec3D axis, double angle, NodeSet *nodeSet)
       nodeSet->nodes(i)->coordinates = Mat * nodeSet->nodes(i)->coordinates;
   else
     for (long i = 0; i < model.nodes.getSize(); i++)
-     model.nodes(i)->coordinates = Mat * model.nodes(i)->coordinates;
+      model.nodes(i)->coordinates = Mat * model.nodes(i)->coordinates;
 }
 
 //!calcule les coordonnees mini et maxi de l'ensemble des noeuds d'une structure
@@ -758,11 +717,11 @@ void DynELA::writeVTKFile()
 {
   String fileName;
   String number;
-  number.convert(_resultFileIndex, 3);
-  fileName = _resultFileName + number + ".vtk";
+  number.convert(_VTKresultFileIndex, 3);
+  fileName = _VTKresultFileName + number + ".vtk";
 
   // Initialize the vtk data file
-  dataFile->init(fileName);
+  dataFile->open(fileName);
 
   // Write the vtk data file
   dataFile->write();
@@ -771,9 +730,10 @@ void DynELA::writeVTKFile()
   dataFile->close();
 
   logFile << "Result file: " << fileName << " written at time " << model.currentTime << " s\n";
+  std::cout << "Write VTK result file: " << fileName << " at time " << model.currentTime << " s\n";
 
   // increment the index
-  _resultFileIndex++;
+  _VTKresultFileIndex++;
 }
 
 //!lancement du solveur general
@@ -794,9 +754,6 @@ void DynELA::solve()
   // Start Solver timer
   cpuTimes.timer("Solver")->start();
 
-  // Set the value of solved
-  bool solved = false;
-
   // Display start of solve phase
   std::cout << "\nProcessing DynELA ...\n";
   logFile.separatorWrite("DynELA Solver Initialization phase");
@@ -815,10 +772,10 @@ void DynELA::solve()
   logFile.separatorWrite("DynELA Solver phase");
 
   // Run the Explicit Solver
-  solved = model.solve(endOfComputationTime);
+  bool solvedIsOK = model.solve(endOfComputationTime);
 
   // Test if solve was Ok or not
-  if (solved == false)
+  if (solvedIsOK == false)
   {
     // Emergency write of a result file
     writeVTKFile();

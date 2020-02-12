@@ -114,11 +114,11 @@ double MatrixDiag::minValue()
 double MatrixDiag::maxAbsoluteValue()
 //-----------------------------------------------------------------------------
 {
-  double val = abs(_data[0]);
+  double val = dnlAbs(_data[0]);
 
   for (long i = 1; i < _rows; i++)
-    if (abs(_data[i]) > val)
-      val = abs(_data[i]);
+    if (dnlAbs(_data[i]) > val)
+      val = dnlAbs(_data[i]);
 
   return val;
 }
@@ -131,11 +131,11 @@ double MatrixDiag::maxAbsoluteValue()
 double MatrixDiag::minAbsoluteValue()
 //-----------------------------------------------------------------------------
 {
-  double val = abs(_data[0]);
+  double val = dnlAbs(_data[0]);
 
   for (long i = 1; i < _rows; i++)
-    if (abs(_data[i]) < val)
-      val = abs(_data[i]);
+    if (dnlAbs(_data[i]) < val)
+      val = dnlAbs(_data[i]);
 
   return val;
 }

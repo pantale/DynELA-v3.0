@@ -79,8 +79,8 @@ protected:
   bool Sort;
 
 public:
-  char style;  //!< First style variable for the discrete function. This is useful for storing information about this feature
-  char style2; //!< Second style variable for the discrete function. This is useful for storing information about this feature
+  char style;  // First style variable for the discrete function. This is useful for storing information about this feature
+  char style2; // Second style variable for the discrete function. This is useful for storing information about this feature
 
 private:
   void sort();

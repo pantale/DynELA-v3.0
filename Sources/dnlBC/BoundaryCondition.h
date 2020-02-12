@@ -30,8 +30,8 @@ class BoundaryCondition
 {
 
 protected:
-  List<Boundary *> constant; //!< Liste des conditions aux limites constantes
-  List<Boundary *> initial;  //!< Liste des conditions aux limites initiales
+  List<Boundary *> constant; // Liste des conditions aux limites constantes
+  List<Boundary *> initial;  // Liste des conditions aux limites initiales
 
 public:
   // constructeurs
@@ -41,7 +41,7 @@ public:
 
   bool applyConstantOnCurrentFields(Node *node, double currentTime, double timeStep);
   bool applyConstantOnNewFields(Node *node, double currentTime, double timeStep);
-  bool applyInitialOnCurrentFields(Node *node, double currentTime, double timeStep);
+  bool applyInitial(Node *node, double currentTime, double timeStep);
   bool existConstant();
   bool existInitial();
   Boundary *getConstant(long i);

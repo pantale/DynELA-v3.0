@@ -29,7 +29,7 @@ class BoundarySpeed : public Boundary
 {
 
 private:
-  Vec3D _speed; //!< Vecteur contenant la vitesse du point
+  Vec3D _speed; // Vecteur contenant la vitesse du point
 
 public:
   // constructeurs
@@ -40,7 +40,7 @@ public:
 
   void applyConstantOnCurrentFields(Node *node, double currentTime, double timeStep);
   void applyConstantOnNewFields(Node *node, double currentTime, double timeStep);
-  void applyInitialOnCurrentFields(Node *node, double currentTime, double timeStep);
+  void applyInitial(Node *node, double currentTime, double timeStep);
   Vec3D getValue();
   void setValue(const Vec3D &newSpeed);
   void setValue(double speedX, double speedY, double speedZ);

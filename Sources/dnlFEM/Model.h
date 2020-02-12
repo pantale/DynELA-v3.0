@@ -8,10 +8,10 @@
  **************************************************************************/
 
 /*!
-  \file NodeSet.h
-  \brief Declaration file for the NodeSet class
+  \file Model.h
+  \brief Declaration file for the Model class
 
-  This file is the declaration file for the NodeSet class.
+  This file is the declaration file for the Model class.
 
   \ingroup dnlFEM
   \author &copy; Olivier PANTALE
@@ -21,6 +21,9 @@
 #ifndef __dnlFEM_Model_h__
 #define __dnlFEM_Model_h__
 
+#include <MatrixDiag.h>
+#include <Vector.h>
+
 class DynELA;
 class Element;
 class ElementSet;
@@ -28,6 +31,7 @@ class HistoryFile;
 class Node;
 class NodeSet;
 class Solver;
+class Material;
 
 /*!
   \class Model Model.h
@@ -44,22 +48,26 @@ class Model
   friend class DynELA;
 
 private:
-  bool _massMatrixComputed = false; //!< Flag indiquant que la matrice de masse est deja calculee
-  short _numberOfDimensions = 0;    //!< Number of dimensions of the model
+  bool _massMatrixComputed = false;        // Flag defining that the mass matrix has already been computed
+  double _powerIterationFreqMax = 0.0;     // Initial value for the max frequency
+  double _powerIterationPrecision = 1e-4;  // Precision of the Power Iteration Agorithm
+  int _powerIterationMaxIterations = 1000; // Max number of iterations for the Power Iteration Agorithm
+  short _numberOfDimensions = 0;           // Number of dimensions of the model
+  Vector _powerIterationEV;
 
 public:
-  double currentTime = 0.0;         //!< Temps actuel du modele
-  double nextTime = 0.0;            //!< Temps actuel du modele + increment de temps
-  List<ElementSet *> elementsSets;  //!< List of the Elements Sets
-  List<HistoryFile *> historyFiles; //!< List of the History Files
-  List<Material *> materials;       //!< Materials list of the structure
-  List<NodeSet *> nodesSets;        //!< List of the Nodes Sets
-  ListIndex<Element *> elements;    //!< List of the Elements
-  ListIndex<Node *> nodes;          //!< List of the Nodes
-  MatrixDiag massMatrix;            //!< Mass matrix
-  Solver *solver = NULL;            //!< solveurs associes au modele
-  String name = "_noname_";         //!< Name of the model
-  Vector internalForces;            //!< Vecteur des forces internes
+  double currentTime = 0.0;         // Temps actuel du modele
+  double nextTime = 0.0;            // Temps actuel du modele + increment de temps
+  List<ElementSet *> elementsSets;  // List of the Elements Sets
+  List<HistoryFile *> historyFiles; // List of the History Files
+  List<Material *> materials;       // Materials list of the structure
+  List<NodeSet *> nodesSets;        // List of the Nodes Sets
+  ListIndex<Element *> elements;    // List of the Elements
+  ListIndex<Node *> nodes;          // List of the Nodes
+  MatrixDiag massMatrix;            // Mass matrix
+  Solver *solver = NULL;            // solveurs associes au modele
+  String name = "_noname_";         // Name of the model
+  Vector internalForces;            // Vecteur des forces internes
 
 private:
   bool add(Element *pel);
@@ -79,15 +87,17 @@ public:
   bool initSolve();
   bool solve(double solveUpToTime = -1.0);
   double computeCourantTimeStep();
+  double computePowerIterationTimeStep();
   double getEndSolveTime();
   double getTotalKineticEnergy();
   double getTotalMass();
   Element *getElementByNum(long elementNumber);
   Node *getNodeByNum(long nodeNumber);
   short getNumberOfDimensions();
+  void compactNodesAndElements();
   void computeFinalRotation();
   void computeInternalForces();
-  void computeJacobian();
+  void computeJacobian(bool reference = false);
   void computeMassMatrix(bool forceComputation = false);
   void computePressure();
   void computeStrains();
@@ -95,10 +105,8 @@ public:
   void create(Element *pel, long *listOfNodesNumber);
   void transfertQuantities();
   void writeHistoryFiles();
-  /* 
-  
-  double computePowerIterationTimeStep();
 
+  /* 
   // gestion du temps
   double getTime ();
   void updateTime ();
@@ -126,7 +134,7 @@ public:
   //void setGrid(Grid* grid);
 
   // direct implementation
-  long getNumberOfDimensions() {return dimension;} //!< Dimension topologique de la grille
+  long getNumberOfDimensions() {return dimension;} // Dimension topologique de la grille
   */
 };
 

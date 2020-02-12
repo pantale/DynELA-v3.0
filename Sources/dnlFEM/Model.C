@@ -50,7 +50,7 @@ Model::Model(char *newName)
   // attacher a global model
   history_file = NULL;
 
-  fmax0 = 0.0;
+  _powerIterationFreqMax = 0.0;
 
   // redimensionner les listes pour gagner du temps dans les lectures
   // on utilise des blocs de 100 allocations pour les noeuds et les elements
@@ -348,17 +348,17 @@ bool Model::checkTopology()
 //-----------------------------------------------------------------------------
 {
   // Verify coherence of the elements
-  short family = elements(0)->getFamily();
+  short firstElementFamily = elements(0)->getFamily();
 
   for (long i = 1; i < elements.getSize(); i++)
-    if (family != elements(i)->getFamily())
+    if (firstElementFamily != elements(i)->getFamily())
     {
       std::cout << "Passing from ";
-      if (family == Element::Bidimensional)
+      if (firstElementFamily == Element::Bidimensional)
         std::cout << "2D";
-      if (family == Element::Axisymetric)
+      if (firstElementFamily == Element::Axisymetric)
         std::cout << "2D Axi";
-      if (family == Element::Threedimensional)
+      if (firstElementFamily == Element::Threedimensional)
         std::cout << "3D";
       std::cout << " to ";
       if (elements(i)->getFamily() == Element::Bidimensional)
@@ -379,10 +379,10 @@ bool Model::checkTopology()
 bool Model::initSolve()
 //-----------------------------------------------------------------------------
 {
-  //Solver *solver;
-
+  // Log initialization of the model
   dynelaData->logFile << "\nInitializing model : " << name << "\n";
-  // If list of element is void, nothing to do
+
+  // If the list of element is void, nothing to do and return false
   if (elements.getSize() == 0)
     return false;
 
@@ -434,18 +434,12 @@ bool Model::initSolve()
   for (int nodeId = 0; nodeId < nodes.getSize(); nodeId++)
   {
     if (nodes(nodeId)->boundary != NULL)
-      nodes(nodeId)->boundary->applyInitialOnCurrentFields(nodes(nodeId), 0, 0);
+      nodes(nodeId)->boundary->applyInitial(nodes(nodeId), 0, 0);
   }
   dynelaData->logFile << "Ok\n";
 
-   // Compact nodes list
-  dynelaData->logFile << "Compact nodes list ...\n";
-  nodes.compact();
-
-  // Compact elements list
-  dynelaData->logFile << "Compact elements list ...\n";
-  elements.compact();
-
+  // Compact nodes and elements list
+  compactNodesAndElements();
   /*  
 
  // verification des interfaces
@@ -525,15 +519,23 @@ bool Model::initSolve()
 
  */
 
-  // If parallel computation is requested
-  /*   if (dynelaData->parallel != NULL)
-  {
- */
   // Dispatch elements to cores
   dynelaData->parallel.dispatchElements(elements);
-  /*   }
- */
+
   return (true);
+}
+
+//-----------------------------------------------------------------------------
+void Model::compactNodesAndElements()
+//-----------------------------------------------------------------------------
+{
+  // Compact nodes list
+  dynelaData->logFile << "Compact nodes list ...\n";
+  nodes.compact();
+
+  // Compact elements list
+  dynelaData->logFile << "Compact elements list ...\n";
+  elements.compact();
 }
 
 //-----------------------------------------------------------------------------
@@ -544,13 +546,20 @@ void Model::computeMassMatrix(bool forceComputation)
   if (_massMatrixComputed && !forceComputation)
     return;
 
+  // Just to check but have to be removed !!!
+  if (_massMatrixComputed)
+    fatalError("Model::computeMassMatrix(bool forceComputation) called twice");
+
+  // local variables
   long globalNodeNumber;
   MatrixDiag elementMassMatrix;
-  Element *element = NULL;
+  Element *element;
 
   // Compute size of the Mass matrix ie, the numer of dimensions times number of nodes
   long numberOfDDL = _numberOfDimensions * nodes.getSize();
   massMatrix.redim(numberOfDDL);
+
+  // Initialize the Mass matrix
   massMatrix = 0.0;
 
   for (long elementId = 0; elementId < elements.getSize(); elementId++)
@@ -558,48 +567,49 @@ void Model::computeMassMatrix(bool forceComputation)
     // Get the current element
     element = elements(elementId);
 
-    // nombre de noeuds de l'element
+    // Number of nodes of the element
     int numberOfNodes = element->getNumberOfNodes();
 
-    // matrice elementMassMatrix
+    // Redim the local Mass matrix
     elementMassMatrix.redim(numberOfNodes);
 
-    // calcul de la matrice de masse sur l'element courant
+    // Computes the local mass matrix of the element
     element->computeMassMatrix(elementMassMatrix);
 
-    // assemblage de la matrice de masse
+    // Assembly phase for the global mass matrix
     for (short nodeId = 0; nodeId < numberOfNodes; nodeId++)
     {
-      // recuperation du numero global
+      // Get the real node number
       globalNodeNumber = element->nodes(nodeId)->internalNumber();
 
-      // assemblage de M
+      // Assembly of the mass matrix
       for (short dim = 0; dim < _numberOfDimensions; dim++)
         massMatrix(globalNodeNumber * _numberOfDimensions + dim) += elementMassMatrix(nodeId);
     }
   }
 
-  // flag de la masse
-  _massMatrixComputed = true;
-
-  // redistribution des masses sur les noeuds
+  // Redistribution of nodal masses to nodes
   for (long nodeId = 0; nodeId < nodes.getSize(); nodeId++)
-  {
-    // affectation de la masse au noeud
-    nodes(nodeId)->nodalMass = massMatrix(nodes(nodeId)->internalNumber() * _numberOfDimensions);
-  }
+    nodes(nodeId)->mass = massMatrix(nodes(nodeId)->internalNumber() * _numberOfDimensions);
+
+  // Mass matrix has been computed, remember it !
+  _massMatrixComputed = true;
 }
 
 //-----------------------------------------------------------------------------
 double Model::getTotalMass()
 //-----------------------------------------------------------------------------
 {
+  // Initialize the total mass
   double totalMass = 0.0;
 
+  // Loop over all nodes of the model and sum of nodal masses
   for (long nodeId = 0; nodeId < nodes.getSize(); nodeId++)
   {
-    totalMass += nodes(nodeId)->nodalMass;
+    totalMass += nodes(nodeId)->mass;
   }
+
+  // return the value
   return (totalMass);
 }
 
@@ -607,12 +617,16 @@ double Model::getTotalMass()
 double Model::getTotalKineticEnergy()
 //-----------------------------------------------------------------------------
 {
+  // Initialize the kinetic energy
   double kineticEnergy = 0.0;
 
+  // Loop over all nodes of the model and sum of kinetic energies of nodes
   for (long nodeId = 0; nodeId < nodes.getSize(); nodeId++)
   {
-    kineticEnergy += (nodes(nodeId)->nodalMass * nodes(nodeId)->newField->speed.innerProduct()) / 2.0;
+    kineticEnergy += (nodes(nodeId)->mass * nodes(nodeId)->currentField->speed.innerProduct()) / 2.0;
   }
+
+  // return the value
   return (kineticEnergy);
 }
 
@@ -746,7 +760,7 @@ void Model::computeJacobian()
 }*/
 
 //-----------------------------------------------------------------------------
-void Model::computeJacobian()
+void Model::computeJacobian(bool reference)
 //-----------------------------------------------------------------------------
 {
 #pragma omp parallel
@@ -756,7 +770,7 @@ void Model::computeJacobian()
     Element *pel = chunk->elements.first();
     while ((pel = chunk->elements.currentUp()) != NULL)
     {
-      if (pel->computeJacobian() == false)
+      if (pel->computeJacobian(reference) == false)
       {
         std::cerr << "Emergency save of the last result\n";
         std::cerr << "Program aborted\n";
@@ -900,7 +914,7 @@ void Model::add(HistoryFile *newHistoryFile)
   // logFile
   dynelaData->logFile << "HistoryFile " << newHistoryFile->name << " linked to current model\n";
 }
-/*
+
 //-----------------------------------------------------------------------------
 double Model::computePowerIterationTimeStep()
 //-----------------------------------------------------------------------------
@@ -909,74 +923,62 @@ double Model::computePowerIterationTimeStep()
   bool ok = false;
   long iteration = 0;
   double convergence;
-  double limite = maximumFrequencyConvergence;
-  long i, el;
+  long i;
   Element *pel;
-  // double ray;
 
   // matrices globales
   long numberOfDDL = _numberOfDimensions * nodes.getSize();
 
-  long loop_el = elements.getSize();
-  for (el = 0; el < loop_el; el++)
+  pel = elements.first();
+  while ((pel = elements.currentUp()) != NULL)
   {
     // recuperation de l'element
-    pel = elements(el);
-
-    //calcul des forces elastiques
-    pel->computeElasticStiffnessMatrix(pel->stiffnessMatrix, false);
+    pel->computeElasticStiffnessMatrix();
   }
 
   // initialisation du vecteur si besoin
-  //  fmax0=0;
-  if ((fmax0 == 0) || (EV_TimeStep.getSize() != numberOfDDL))
+  if ((_powerIterationFreqMax == 0) || (_powerIterationEV.getSize() != numberOfDDL))
   {
-    EV_TimeStep.redim(numberOfDDL);
-    EV_TimeStep(0) = 1.0;
+    _powerIterationEV.redim(numberOfDDL);
+    _powerIterationEV(0) = 1.0;
     for (i = 1; i < numberOfDDL; i++)
-      EV_TimeStep(i) = EV_TimeStep(i - 1) - 2. / (numberOfDDL - 1);
+      _powerIterationEV(i) = _powerIterationEV(i - 1) - 2. / (numberOfDDL - 1);
   }
 
-  Vector loc;
-  Vector EV0;
+  Vector localValues;
+  Vector powerIterationEV0;
 
   while (!ok)
   {
     iteration++;
-    EV0 = EV_TimeStep;
-    EV_TimeStep = 0.0;
-    //  long loop_el=elements.getSize();
-    for (el = 0; el < loop_el; el++)
+    powerIterationEV0 = _powerIterationEV;
+    pel = elements.first();
+    while ((pel = elements.currentUp()) != NULL)
     {
-      // recuperation de l'element
-      pel = elements(el);
-      loc.redim(pel->stiffnessMatrix.rows());
-      loc = 0.;
+      localValues.redim(pel->stiffnessMatrix.rows());
+      localValues = 0.;
       long loop_I = pel->nodes.getSize();
       long *ind = new long[loop_I];
       for (long I = 0; I < loop_I; I++)
-        ind[I] = pel->nodes(I)->Id;
-      loc.scatterFrom(EV0, ind, _numberOfDimensions);
-      loc = pel->stiffnessMatrix * loc;
-      EV_TimeStep.gatherFrom(loc, ind, _numberOfDimensions);
+        ind[I] = pel->nodes(I)->internalNumber();
+      localValues.scatterFrom(powerIterationEV0, ind, _numberOfDimensions);
+      localValues = pel->stiffnessMatrix * localValues;
+      _powerIterationEV.gatherFrom(localValues, ind, _numberOfDimensions);
       delete[] ind;
     }
 
-    //      ray= EV0.dotProduct(EV_TimeStep)/EV0.dotProduct(massMatrix*EV0);
-    massMatrix.divideBy(EV_TimeStep);
-    fmax = EV_TimeStep.maxAbsoluteValue();
-
-    EV_TimeStep /= fmax;
-    convergence = dnlAbs(fmax - fmax0) / fmax;
-    //      convergence = dnlAbs(fmax-ray)/(fmax+ray);
+    massMatrix.divideBy(_powerIterationEV);
+    fmax = _powerIterationEV.maxAbsoluteValue();
+    _powerIterationEV /= fmax;
+    convergence = dnlAbs(fmax - _powerIterationFreqMax) / fmax;
 
     // verifier si on a converge
-    if (convergence < limite)
+    if (convergence < _powerIterationPrecision)
       ok = true;
 
-    fmax0 = fmax;
+    _powerIterationFreqMax = fmax;
 
-    if (iteration > maximumFrequencyMaxIterations)
+    if (iteration > _powerIterationMaxIterations)
     {
       fatalError("Model::computePowerIterationTimeStep", "power iteration method not converged %10.4E\n", convergence);
     }
@@ -984,7 +986,7 @@ double Model::computePowerIterationTimeStep()
 
   return sqrt(fmax);
 }
-
+/*
 //-----------------------------------------------------------------------------
 void Model::print(ostream &os) const
 //-----------------------------------------------------------------------------

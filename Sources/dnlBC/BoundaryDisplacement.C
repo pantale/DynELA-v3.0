@@ -58,7 +58,7 @@ BoundaryDisplacement::BoundaryDisplacement(const BoundaryDisplacement &X)
 }
 
 //-----------------------------------------------------------------------------
-void BoundaryDisplacement::applyInitialOnCurrentFields(Node *node, double currentTime, double timeStep)
+void BoundaryDisplacement::applyInitial(Node *node, double currentTime, double timeStep)
 //-----------------------------------------------------------------------------
 {
 }
@@ -82,8 +82,8 @@ void BoundaryDisplacement::applyConstantOnNewFields(Node *node, double currentTi
       if (_function == NULL)
       {
         // deplacement constant
-        node->currentField->displacementInc(i) = _displacement(i);
-        node->newField->displacementInc(i) = _displacement(i);
+        node->currentField->displacement(i) = _displacement(i);
+        node->newField->displacement(i) = _displacement(i);
 
         // vitesse imposee
         node->currentField->speed(i) = _displacement(i) / timeStep;
@@ -98,8 +98,8 @@ void BoundaryDisplacement::applyConstantOnNewFields(Node *node, double currentTi
       else
       {
         // deplacement constant
-        node->currentField->displacementInc(i) = _displacement(i) * _function->getValue(currentTime);
-        node->newField->displacementInc(i) = _displacement(i) * _function->getValue(currentTime + timeStep);
+        node->currentField->displacement(i) = _displacement(i) * _function->getValue(currentTime);
+        node->newField->displacement(i) = _displacement(i) * _function->getValue(currentTime + timeStep);
 
         // vitesse imposee
         node->currentField->speed(i) = _displacement(i) / timeStep * _function->getValue(currentTime);

@@ -85,27 +85,29 @@ void Parallel::setCores(int cores)
 }
 
 //-----------------------------------------------------------------------------
-void Parallel::dispatchElements(List<Element *> elementList)
+void Parallel::dispatchElements(List<Element *> elements)
 //-----------------------------------------------------------------------------
 {
   // Set initial core
-  int core = 0;
+  int coreId = 0;
 
-  // loop over cores
-  for (long elementId = 0; elementId < elementList.getSize(); elementId++)
+  // Loop over available cores
+  for (long elementId = 0; elementId < elements.getSize(); elementId++)
   {
-    Element *pel = elementList(elementId);
-    _elementsChunks[core]->elements << pel;
-    core++;
-    if (core >= _cores)
-      core = 0;
+    // Add element to chunk coreId
+    _elementsChunks[coreId]->elements << elements(elementId);
+
+    // Increase coreId id
+    coreId++;
+    if (coreId >= _cores)
+      coreId = 0;
   }
 
   dynelaData->logFile << "Parallel computation elements dispatch\n";
   // display cores
-  for (core = 0; core < _cores; core++)
+  for (int core = 0; core < _cores; core++)
   {
-    printf("core %d - %ld elements\n", core, _elementsChunks[core]->elements.getSize());
-    dynelaData->logFile << "core " << core << " - " << _elementsChunks[core]->elements.getSize() << " element(s)\n";
+    printf("CPU core %d - %ld elements\n", core + 1, _elementsChunks[core]->elements.getSize());
+    dynelaData->logFile << "CPU core " << core + 1 << " - " << _elementsChunks[core]->elements.getSize() << " element(s)\n";
   }
 }

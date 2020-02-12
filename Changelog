@@ -1,3 +1,7 @@
+12/02/2020 - Implementation of the Power Iteration Method to compute timeSteps
+
+11/02/2020 - Cleaning of Objects and tracking of bugs
+
 07/02/2020 - Modification of including and building tree
            - Transfer of Nodes, Elements and Material to Model class
 

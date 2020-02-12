@@ -792,11 +792,11 @@ double Vector::minValue()
 double Vector::maxAbsoluteValue()
 //-----------------------------------------------------------------------------
 {
-  double val = abs(_data[0]);
+  double val = dnlAbs(_data[0]);
 
   for (long i = 1; i < _dataLength; i++)
-    if (abs(_data[i]) > val)
-      val = abs(_data[i]);
+    if (dnlAbs(_data[i]) > val)
+      val = dnlAbs(_data[i]);
 
   return val;
 }
@@ -809,11 +809,11 @@ double Vector::maxAbsoluteValue()
 double Vector::minAbsoluteValue()
 //-----------------------------------------------------------------------------
 {
-  double val = abs(_data[0]);
+  double val = dnlAbs(_data[0]);
 
   for (long i = 1; i < _dataLength; i++)
-    if (abs(_data[i]) < val)
-      val = abs(_data[i]);
+    if (dnlAbs(_data[i]) < val)
+      val = dnlAbs(_data[i]);
 
   return val;
 }

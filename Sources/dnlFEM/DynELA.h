@@ -8,10 +8,10 @@
  **************************************************************************/
 
 /*!
-  \file NodeSet.h
-  \brief Declaration file for the NodeSet class
+  \file DynELA.h
+  \brief Declaration file for the DynELA class
 
-  This file is the declaration file for the NodeSet class.
+  This file is the declaration file for the DynELA class.
 
   \ingroup dnlFEM
   \author &copy; Olivier PANTALE
@@ -23,7 +23,6 @@
 
 #include <omp.h>
 #include <dnlKernel.h>
-#include <Element.h>
 #include <Parallel.h>
 #include <Drawing.h>
 #include <Model.h>
@@ -72,27 +71,27 @@ class DynELA
 private:
   double _displayTimeIncrement = 10;
   double _lastElapsedComputeTime = 0;
-  double _lastElapsedTime = 0; //!< Last elapsed time for computing endtime
+  double _lastElapsedTime = 0; // Last elapsed time for computing endtime
   double _nextDisplayTime = 10;
-  short _defaultElement = Element::Unknown; //!< Current default Element
-  short _resultFileIndex = 0;               //!< Current result file index
-  String _resultFileName;                   //!< Current result file name
+  short _defaultElement;      // Current default Element
+  short _VTKresultFileIndex = 0; // Current result file index
+  String _VTKresultFileName;     // Current result file name
 
 public:
-  double endSaveTime = 0.0;       //!< Final save time
-  double nextSaveTime = 0.0;      //!< Next save time
-  double saveTimeIncrement = 0.0; //!< Increment of save time
-  double startSaveTime = 0.0;     //!< Start save time
+  double endSaveTime = 0.0;       // Final save time
+  double nextSaveTime = 0.0;      // Next save time
+  double saveTimeIncrement = 0.0; // Increment of save time
+  double startSaveTime = 0.0;     // Start save time
   Drawing drawing;
   Model model;
-  Parallel parallel;             //!< Parallel computation
-  Settings *settings = NULL;     //!< Settings
-  String name = "_noname_";      //!< name of the object
-  Timers cpuTimes;               //!< Store the CPU Times
-  VtkInterface *dataFile = NULL; //!< Interface for results
+  Parallel parallel;             // Parallel computation
+  Settings *settings = NULL;     // Settings
+  String name = "_noname_";      // name of the object
+  Timers cpuTimes;               // Store the CPU Times
+  VtkInterface *dataFile = NULL; // Interface for results
 
 #ifndef SWIG
-  LogFile logFile; //!< Log file
+  LogFile logFile; // Log file
 #endif
 
 public:

@@ -70,14 +70,14 @@ public:
   };
 
 public:
-  Model *model = NULL;       //!< Current model for the solver
-  double timeStep = 0.0;     //!< Current time step for integration
-  double endTime = 0.0;      //!< End time of the solver
-  double startTime = 0.0;    //!< Start time of the solver
-  long currentIncrement = 0; //!< Current increment
-  long endIncrement = 0;     //!< Final increment
-  long startIncrement = 0;   //!< Initial increment
-  String name = "_noname_";  //!< Name of the solver
+  Model *model = NULL;       // Current model for the solver
+  double timeStep = 0.0;     // Current time step for integration
+  double endTime = 0.0;      // End time of the solver
+  double startTime = 0.0;    // Start time of the solver
+  long currentIncrement = 0; // Current increment
+  long endIncrement = 0;     // Final increment
+  long startIncrement = 0;   // Initial increment
+  String name = "_noname_";  // Name of the solver
 
 public:
   Solver(char *newName = NULL);

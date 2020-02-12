@@ -284,9 +284,9 @@ void Element::initializeData()
   }
 
   // Compute Jacobian of the element
-  computeJacobian();
+  //computeJacobian(true);
 
-  for (int intPoint = 0; intPoint < integrationPoints.getSize(); intPoint++)
+  /*   for (int intPoint = 0; intPoint < integrationPoints.getSize(); intPoint++)
   {
     setCurrentIntegrationPoint(intPoint);
     _integrationPoint->detJ0 = _integrationPoint->detJ;
@@ -294,7 +294,7 @@ void Element::initializeData()
     {
       _integrationPoint->detJ0 = _integrationPoint->detJ * getRadiusAtIntegrationPoint();
     }
-  }
+  } */
 }
 
 //-----------------------------------------------------------------------------
@@ -343,15 +343,15 @@ double Element::getElongationWaveSpeed()
   double density = 0.0;
   double poissonRatio = material->poissonRatio;
 
-  // calcul de la densite moyenne de l'element (est-ce vraiment necessaire ?)
+  // Computes mean density of the element
   for (short intPoint = 0; intPoint < integrationPoints.getSize(); intPoint++)
   {
-    // recuperation densité du point d'integration
+    // Sum of the densities over all integration points
     density += getIntegrationPoint(intPoint)->density;
   }
   density /= integrationPoints.getSize();
 
-  // vitesse du son dans le materiau
+  // Get back the elongational wave speed of the material
   return sqrt((material->youngModulus * (1.0 - poissonRatio)) / (density * (1.0 + poissonRatio) * (1.0 - 2.0 * poissonRatio)));
 }
 
@@ -1037,6 +1037,63 @@ Node *Element::getNodeOnFace(short face, short node)
   assert(_elementData != NULL);
 #endif
   return nodes(_elementData->faces[face].number[node]);
+}
+
+//-----------------------------------------------------------------------------
+void Element::dumpElementData() const
+//-----------------------------------------------------------------------------
+{
+  std::cout << "Dump Element\n";
+  std::cout << "name : " << _elementData->name << "\n";
+  std::cout << "type : " << _elementData->type << "\n";
+  std::cout << "family : " << _elementData->family << "\n";
+  std::cout << "numberOfDimensions : " << _elementData->numberOfDimensions << "\n";
+  std::cout << "numberOfDDL : " << _elementData->numberOfDDL << "\n";
+  std::cout << "vtkType : " << _elementData->vtkType << "\n";
+  std::cout << "numberOfNodes : " << _elementData->numberOfNodes << "\n";
+  std::cout << "numberOfIntegrationPoints : " << _elementData->numberOfIntegrationPoints << "\n";
+  std::cout << "numberOfFaces : " << _elementData->numberOfFaces << "\n";
+
+  for (int i = 0; i < _elementData->numberOfNodes; i++)
+  {
+    std::cout << " - node " << i << "\n";
+    std::cout << "localCoords : " << _elementData->nodes[i].localCoords << "\n";
+    std::cout << "numberOfNeighbourNodes : " << _elementData->nodes[i].numberOfNeighbourNodes << "\n";
+    std::cout << "neighbour : [";
+    for (int k = 0; k < _elementData->nodes[i].numberOfNeighbourNodes; k++)
+    {
+      if (k != 0)
+        std::cout << ", ";
+      std::cout << _elementData->nodes[i].neighbour[k];
+    }
+    std::cout << "]\n";
+    std::cout << "integrationPointsToNode : " << _elementData->nodes[i].integrationPointsToNode << "\n";
+  }
+
+  for (int i = 0; i < _elementData->numberOfIntegrationPoints; i++)
+  {
+    std::cout << " - int Point " << i << "\n";
+    std::cout << "coords : " << _elementData->integrationPoint[i].coords << "\n";
+    std::cout << "weight : " << _elementData->integrationPoint[i].weight << "\n";
+    std::cout << "shapeFunction : " << _elementData->integrationPoint[i].shapeFunction << "\n";
+    std::cout << "derShapeFunction : " << _elementData->integrationPoint[i].derShapeFunction << "\n";
+  }
+
+  for (int i = 0; i < _elementData->numberOfFaces; i++)
+  {
+    std::cout << " - Face " << i << "\n";
+    std::cout << "numberOfNodes : " << _elementData->faces[i].numberOfNodes << "\n";
+    std::cout << "number : [";
+    for (int k = 0; k < _elementData->faces[i].numberOfNodes; k++)
+    {
+      if (k != 0)
+        std::cout << ", ";
+      std::cout << _elementData->faces[i].number[k];
+    }
+    std::cout << "]\n";
+  }
+
+  std::cout << "CheckElementData : " << _elementData->CheckElementData << "\n";
 }
 
 // --------------------------- ADDED AFTER IS TO BE DELETED

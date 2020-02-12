@@ -69,7 +69,7 @@ BoundaryFlux::~BoundaryFlux()
 }
 
 //-----------------------------------------------------------------------------
-void BoundaryFlux::applyInitialOnCurrentFields(Node *node, double currentTime, double timeStep)
+void BoundaryFlux::applyInitial(Node *node, double currentTime, double timeStep)
 //-----------------------------------------------------------------------------
 {
 //  node->newField->flux = _flux;

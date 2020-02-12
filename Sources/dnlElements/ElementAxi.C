@@ -45,10 +45,10 @@ ElementAxi::~ElementAxi()
 double ElementAxi::getRadiusAtIntegrationPoint()
 //-----------------------------------------------------------------------------
 {
-  // initialisation a zero de v
+  // Initialize currentRadius to zero
   double currentRadius = 0.0;
 
-  // calcul de v courant
+  // Computes currentRadius
   for (short nodeId = 0; nodeId < nodes.getSize(); nodeId++)
   {
     currentRadius += _integrationPoint->integrationPointData->shapeFunction(nodeId) * nodes(nodeId)->coordinates(0);
@@ -64,18 +64,18 @@ void ElementAxi::computeDeformationGradient(Tensor2 &F, short time)
   NodalField *field;
   double Vr = 0.0;
 
-  // initialisation a zero de F
+  // Initialize F to zero
   F.setToUnity();
 
   // calcul de F
   for (short nodeId = 0; nodeId < nodes.getSize(); nodeId++)
   {
     field = nodes(nodeId)->getNodalField(time);
-    F(0, 0) += _integrationPoint->dShapeFunction(nodeId, 0) * field->displacementInc(0);
-    F(0, 1) += _integrationPoint->dShapeFunction(nodeId, 1) * field->displacementInc(0);
-    F(1, 0) += _integrationPoint->dShapeFunction(nodeId, 0) * field->displacementInc(1);
-    F(1, 1) += _integrationPoint->dShapeFunction(nodeId, 1) * field->displacementInc(1);
-    Vr += _integrationPoint->integrationPointData->shapeFunction(nodeId) * field->displacementInc(0);
+    F(0, 0) += _integrationPoint->dShapeFunction(nodeId, 0) * field->displacement(0);
+    F(0, 1) += _integrationPoint->dShapeFunction(nodeId, 1) * field->displacement(0);
+    F(1, 0) += _integrationPoint->dShapeFunction(nodeId, 0) * field->displacement(1);
+    F(1, 1) += _integrationPoint->dShapeFunction(nodeId, 1) * field->displacement(1);
+    Vr += _integrationPoint->integrationPointData->shapeFunction(nodeId) * field->displacement(0);
   }
 
   // calcul F terme axisymetrique
@@ -115,7 +115,7 @@ void ElementAxi::getdV_atIntPoint(Tensor2 &dv, short time)
   NodalField *field;
   Vec3D v;
 
-  // initialisation a zero de dv
+  // Initialize dv to zero
   dv = 0.;
 
   // calcul de dv
@@ -145,7 +145,7 @@ void ElementAxi::getdU_atIntPoint (Tensor2 & du, short time)
   double v;
   double R;
 
-  // initialisation a zero de du
+  // Initialize du to zero
   du = 0.;
   v = 0.;
 
@@ -153,11 +153,11 @@ void ElementAxi::getdU_atIntPoint (Tensor2 & du, short time)
   for (k = 0; k < getNumberOfNodes(); k++)
     {
       field = nodes (k)->getNodalField (time);
-      du (0, 0) += _integrationPoint->dShapeFunction (k, 0) * field->displacementInc (0);
-      du (0, 1) += _integrationPoint->dShapeFunction (k, 1) * field->displacementInc (0);
-      du (1, 0) += _integrationPoint->dShapeFunction (k, 0) * field->displacementInc (1);
-      du (1, 1) += _integrationPoint->dShapeFunction (k, 1) * field->displacementInc (1);
-       v += _integrationPoint->integrationPointData->shapeFunction (k) * field->displacementInc (0);
+      du (0, 0) += _integrationPoint->dShapeFunction (k, 0) * field->displacement (0);
+      du (0, 1) += _integrationPoint->dShapeFunction (k, 1) * field->displacement (0);
+      du (1, 0) += _integrationPoint->dShapeFunction (k, 0) * field->displacement (1);
+      du (1, 1) += _integrationPoint->dShapeFunction (k, 1) * field->displacement (1);
+       v += _integrationPoint->integrationPointData->shapeFunction (k) * field->displacement (0);
     }
 
   // calcul du terme axisymetrique

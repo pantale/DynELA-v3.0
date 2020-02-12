@@ -44,7 +44,7 @@ public:
     return Boundary::Force;
   }
   void applyConstantOnCurrentFields(Node *node, double currentTime, double timeStep);
-  void applyInitialOnCurrentFields(Node *node, double currentTime, double timeStep);
+  void applyInitial(Node *node, double currentTime, double timeStep);
   Vec3D getValue();
   void setValue(const Vec3D &newForce);
   void setValue(double forceX, double forceY, double forceZ);

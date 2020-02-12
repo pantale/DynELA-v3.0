@@ -48,12 +48,12 @@ VtkInterface::~VtkInterface()
 }
 
 //-----------------------------------------------------------------------------
-void VtkInterface::init(String fileName)
+void VtkInterface::open(String fileName)
 //-----------------------------------------------------------------------------
 {
   if (fileName == "")
   {
-    fatalError("VtkInterface::init", "Must specify a log filename in the constructor");
+    fatalError("VtkInterface::open", "Must specify a log filename in the constructor");
   }
 
   // put the name
@@ -64,7 +64,7 @@ void VtkInterface::init(String fileName)
 
   if (!_stream.is_open())
   {
-    fatalError("VtkInterface::init", "Cannot open _stream for file %s", _fileName.chars());
+    fatalError("VtkInterface::open", "Cannot open _stream for file %s", _fileName.chars());
   }
 }
 

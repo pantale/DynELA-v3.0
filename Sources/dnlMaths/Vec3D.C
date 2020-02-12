@@ -230,19 +230,19 @@ double Vec3D::minValue()
 double Vec3D::maxAbsoluteValue()
 //-----------------------------------------------------------------------------
 {
-    if (abs(_data[0]) >= abs(_data[1]))
+    if (dnlAbs(_data[0]) >= dnlAbs(_data[1]))
     {
-        if (abs(_data[0]) >= abs(_data[2]))
-            return _data[0];
+        if (dnlAbs(_data[0]) >= dnlAbs(_data[2]))
+            return dnlAbs(_data[0]);
         else
-            return _data[2];
+            return dnlAbs(_data[2]);
     }
     else
     {
-        if (abs(_data[1]) >= abs(_data[2]))
-            return _data[1];
+        if (dnlAbs(_data[1]) >= dnlAbs(_data[2]))
+            return dnlAbs(_data[1]);
         else
-            return _data[2];
+            return dnlAbs(_data[2]);
     }
 }
 
@@ -254,19 +254,19 @@ double Vec3D::maxAbsoluteValue()
 double Vec3D::minAbsoluteValue()
 //-----------------------------------------------------------------------------
 {
-    if (abs(_data[0]) <= abs(_data[1]))
+    if (dnlAbs(_data[0]) <= dnlAbs(_data[1]))
     {
-        if (abs(_data[0]) <= abs(_data[2]))
-            return _data[0];
+        if (dnlAbs(_data[0]) <= dnlAbs(_data[2]))
+            return dnlAbs(_data[0]);
         else
-            return _data[2];
+            return dnlAbs(_data[2]);
     }
     else
     {
-        if (abs(_data[1]) <= abs(_data[2]))
-            return _data[1];
+        if (dnlAbs(_data[1]) <= dnlAbs(_data[2]))
+            return dnlAbs(_data[1]);
         else
-            return _data[2];
+            return dnlAbs(_data[2]);
     }
 }
 

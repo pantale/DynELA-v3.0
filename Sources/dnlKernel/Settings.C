@@ -21,11 +21,6 @@
 #include <System.h>
 #include <fstream>
 
-/* const SettingsDefauts settingsDefauts[] ={
-  {"DynELA", "Explicit v. 3.0"}, 
-  {"END","END"}
-};
- */
 //-----------------------------------------------------------------------------
 Settings::Settings() : _isChanged(false)
 //-----------------------------------------------------------------------------
@@ -34,6 +29,7 @@ Settings::Settings() : _isChanged(false)
     System sys = System();
     String path = sys.getEnvValue("DYNELA_BIN");
 
+    // Loads the settings from configuration file
     if (path != "")
     {
         loadFromFile(path + "/configuration.dnl");

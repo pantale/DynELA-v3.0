@@ -64,21 +64,21 @@ public:
 #endif
 
 protected:
-  HardeningLaw *_hardening = NULL; //!< Hardening law of the current material
-  List<ElementSet *> _elementsSet; //!< Liste d'elements qui referencent ce materiau
-  Tensor4 _hookeTensor;            //!< Fourth order Hooke tensor
-  Vec3D _color;                    //!< Associated _color of the material for the post-processor
+  HardeningLaw *_hardening = NULL; // Hardening law of the current material
+  List<ElementSet *> _elementsSet; // Liste d'elements qui referencent ce materiau
+  Tensor4 _hookeTensor;            // Fourth order Hooke tensor
+  Vec3D _color;                    // Associated _color of the material for the post-processor
 
 public:
-  String name = "_noname_";         //!< Given _name of the material
-  double youngModulus = 0.0;        //!< Young modulus of the material  \f$E\f$
-  double poissonRatio = 0.0;        //!< Poisson ratio of the material  \f$\nu\f$
-  double density = 0.0;             //!< Material density of the material \f$\rho\f$
-  double heatCapacity = 0.0;        //!< Specific Heat capacity of the material \f$C_{p}\f$
-  double dilatation = 0.0;          //!< Dilatation coefficient of the material \f$\alpha\f$
-  double initialTemperature = 0.0;  //!< Reference temperature of the material  \f$T_{0}\f$
-  double thermalConductivity = 0.0; //!< Thermal thermalConductivity of the material \f$\lambda}\f$
-  double taylorQuinney = 0.0;       //!< Taylor-Quinney coefficient \f$\eta\f$ defining the amount of plastic work converted into heat energy
+  String name = "_noname_";         // Given _name of the material
+  double youngModulus = 0.0;        // Young modulus of the material  \f$E\f$
+  double poissonRatio = 0.0;        // Poisson ratio of the material  \f$\nu\f$
+  double density = 0.0;             // Material density of the material \f$\rho\f$
+  double heatCapacity = 0.0;        // Specific Heat capacity of the material \f$C_{p}\f$
+  double dilatation = 0.0;          // Dilatation coefficient of the material \f$\alpha\f$
+  double initialTemperature = 0.0;  // Reference temperature of the material  \f$T_{0}\f$
+  double thermalConductivity = 0.0; // Thermal thermalConductivity of the material \f$\lambda}\f$
+  double taylorQuinney = 0.0;       // Taylor-Quinney coefficient \f$\eta\f$ defining the amount of plastic work converted into heat energy
 
 public:
   Material(char *newName = NULL);

@@ -69,7 +69,7 @@ BoundaryTemperature::~BoundaryTemperature()
 }
 
 //-----------------------------------------------------------------------------
-void BoundaryTemperature::applyInitialOnCurrentFields(Node *node, double currentTime, double timeStep)
+void BoundaryTemperature::applyInitial(Node *node, double currentTime, double timeStep)
 //-----------------------------------------------------------------------------
 {
   //  node->newField->_temperature=_temperature;

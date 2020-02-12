@@ -162,7 +162,7 @@ void Explicit::solve(double solveUpToTime)
 
   // Compute the Jacobian
   dynelaData->cpuTimes.timer("Jacobian")->start();
-  model->computeJacobian();
+  model->computeJacobian(true);
   dynelaData->cpuTimes.timer("Jacobian")->stop();
 
   // Compute the Mass Matrix if not already computed
@@ -174,7 +174,7 @@ void Explicit::solve(double solveUpToTime)
   dynelaData->cpuTimes.timer("TimeStep")->stop();
 
   // Compute the Internal Forces
-   model->computeInternalForces();
+  model->computeInternalForces();
 
   // Call of time History saves
   model->writeHistoryFiles();
@@ -182,7 +182,7 @@ void Explicit::solve(double solveUpToTime)
   while (model->currentTime < _solveUpToTime)
   {
     // Initialisation of the step
-    beginExplicitStep(); 
+    beginExplicitStep();
 
     // Display advancing of solution
     if ((currentIncrement % _reportFrequency == 0) || (currentIncrement == 1))
@@ -417,7 +417,7 @@ void Explicit::beginExplicitStep()
     timeStep = _solveUpToTime - model->currentTime;
 
   // mise a jour du temps
-   model->nextTime = model->currentTime + timeStep;
+  model->nextTime = model->currentTime + timeStep;
 
   // incrementation du nombre d'increments
   currentIncrement++;
@@ -455,12 +455,12 @@ void Explicit::computePredictions()
 #endif
 
     // prediction du deplacement
-    node->newField->displacementInc = timeStep * node->currentField->speed + (0.5 - _beta) * timeStep * timeStep * node->currentField->acceleration;
-    //node->newField->displacement = node->currentField->displacement + node->newField->displacementInc;
-    /*  node->newField->displacementInc = node->currentField->acceleration;
-    node->newField->displacementInc *= timeStep * (0.5 - _beta);
-    node->newField->displacementInc += node->currentField->speed;
-    node->newField->displacementInc *= timeStep;
+    node->newField->displacement = timeStep * node->currentField->speed + (0.5 - _beta) * timeStep * timeStep * node->currentField->acceleration;
+    //node->newField->displacement = node->currentField->displacement + node->newField->displacement;
+    /*  node->newField->displacement = node->currentField->acceleration;
+    node->newField->displacement *= timeStep * (0.5 - _beta);
+    node->newField->displacement += node->currentField->speed;
+    node->newField->displacement *= timeStep;
  */
 
     // prediction de la vitesse
@@ -476,7 +476,7 @@ void Explicit::computePredictions()
     if (node->boundary != NULL)
       node->boundary->applyConstantOnNewFields(node, model->currentTime, timeStep);
 
-    //  node->newField->displacement = node->currentField->displacement + node->newField->displacementInc;
+    //  node->newField->displacement = node->currentField->displacement + node->newField->displacement;
   }
 }
 
@@ -520,7 +520,7 @@ void Explicit::explicitSolve()
     node->newField->speed += _gamma * timeStep * node->newField->acceleration;
 
     // mise e jour du deplacement
-    node->newField->displacementInc += _beta * dnlSquare(timeStep) * node->newField->acceleration;
+    node->newField->displacement += _beta * dnlSquare(timeStep) * node->newField->acceleration;
 
     // application des conditions aux limites imposees
     if (node->boundary != NULL)
@@ -529,10 +529,10 @@ void Explicit::explicitSolve()
     // prise en compte du contact
 
     // prise en compte des conditions aux limites
-    node->newField->displacement = node->currentField->displacement + node->newField->displacementInc;
+    node->displacement += node->newField->displacement;
 
     // mise à jour de la position des noeuds
-    node->coordinates += node->newField->displacementInc;
+    node->coordinates += node->newField->displacement;
   }
 }
 
@@ -540,16 +540,8 @@ void Explicit::explicitSolve()
 void Explicit::endStep()
 //-----------------------------------------------------------------------------
 {
-  // calcul des reactions
-
   // update du time
-  updateTime();
-
-  // history file
-  /*  fprintf (model->history_file, "%8.4E %8.4E %8.4E %8.4E\n", model->getCurrentTime(), 
-	   timeStep , _computedTimeStep, model->getTotalKineticEnergy ());
-  fflush (model->history_file);
- */
+  model->currentTime += timeStep;
 
   // sauvegarde des history file
   model->writeHistoryFiles();
@@ -558,13 +550,6 @@ void Explicit::endStep()
 
   // swap des valeurs nodales
   model->transfertQuantities();
-}
-
-//-----------------------------------------------------------------------------
-void Explicit::updateTime()
-//-----------------------------------------------------------------------------
-{
-  model->currentTime += timeStep;
 }
 
 //-----------------------------------------------------------------------------

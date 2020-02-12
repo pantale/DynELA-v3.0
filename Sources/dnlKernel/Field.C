@@ -30,7 +30,7 @@ const char *const Field::vtkNames[] = {
     NAME_VEC3D("displacementIncrement"),
     NAME_VEC3D("initialNodeCoordinate"),
     NAME_VEC3D("nodeCoordinate"),
-    NAME_VEC3D("normal"),
+    //NAME_VEC3D("normal"),
     NAME_VEC3D("speed"),
     NAME_VEC3D("speedIncrement"),
     "density",
@@ -96,7 +96,30 @@ short Field::getField(String name)
 short Field::getType(short field)
 //-----------------------------------------------------------------------------
 {
-  if (field == Field::displacement)
+  switch (field)
+  {
+  // Those guys are all Vec3D
+  case Field::displacement:
+  case Field::displacementIncrement:
+  case Field::initialNodeCoordinate:
+  case Field::nodeCoordinate:
+  //case Field::normal:
+  case Field::speed:
+  case Field::speedIncrement:
+    return 1;
+    break;
+
+    // And those guys are Tensor2
+  case Field::Strain:
+  case Field::StrainInc:
+  case Field::PlasticStrain:
+  case Field::PlasticStrainInc:
+  case Field::DeviatoricStress:
+  case Field::Stress:
+    return 2;
+    break;
+  }
+  /*   if (field == Field::displacement)
     return 1;
   if (field == Field::displacementIncrement)
     return 1;
@@ -110,6 +133,8 @@ short Field::getType(short field)
     return 1;
   if (field == Field::speedIncrement)
     return 1;
+
+  // And those guys are Tensor2
   if (field == Field::Strain)
     return 2;
   if (field == Field::StrainInc)
@@ -121,7 +146,8 @@ short Field::getType(short field)
   if (field == Field::DeviatoricStress)
     return 2;
   if (field == Field::Stress)
-    return 2;
+    return 2; */
 
+  // Default type is a scalar
   return 0;
 }

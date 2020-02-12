@@ -214,6 +214,7 @@ ElTet4N3D::ElTet4N3D(long elementNumber) : Element3D(elementNumber)
 {
     _globalToLocal.redim(3, 4);
     Element::_elementData = &_elementData;
+    stiffnessMatrix.redim(12, 12);
 
     // Check the data structure
     if (_elementData.CheckElementData != 10010110)

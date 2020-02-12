@@ -17,7 +17,6 @@
   #include "Drawing.h"
   #include "HistoryFile.h"
   #include "Solver.h"
-  #include "ExplicitOld.h"
   #include "Explicit.h"
   #include "Parallel.h"
 %}
@@ -29,6 +28,5 @@
 %include "Drawing.h"
 %include "HistoryFile.h"
 %include "Solver.h"
-%include "ExplicitOld.h"
 %include "Explicit.h"
 %include "Parallel.h"

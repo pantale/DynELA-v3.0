@@ -73,8 +73,8 @@ public:
   int search(const String &, int = 0) const;
   long getInt() const;
   String &convert(double, const char * = "%lf");
-  String &convert(int, short leading=0);
-  String &convert(long, short leading=0);
+  String &convert(int, short leading = 0);
+  String &convert(long, short leading = 0);
   String &replace(const char, const char);
   String &replace(const String &, const String &);
   String afterItem(char c, int = 0) const;

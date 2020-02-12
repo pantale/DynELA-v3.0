@@ -46,8 +46,8 @@ class Element
 {
     friend class Node;
     friend class ListIndex<Element *>; //! To be able to use ListIndex
-    long _listIndex;                   //!< Local index used for the ListIndex management.
-    Vec3D _nodeMin, _nodeMax;          //!< Bounding box of an element.
+    long _listIndex;                   // Local index used for the ListIndex management.
+    Vec3D _nodeMin, _nodeMax;          // Bounding box of an element.
 
 protected:
     Matrix _globalToLocal;
@@ -55,14 +55,12 @@ protected:
     IntegrationPoint *_integrationPoint;
 
 public:
-    //   Model *model;
     List<IntegrationPoint *> integrationPoints;
-    //    List<UnderIntegrationPoint *> underIntegrationPoints;
     ListIndex<Node *> nodes;
     long number;
     Material *material;
     Matrix stiffnessMatrix;
-    //    UnderIntegrationPoint *underIntegrationPoint;
+
     enum
     {
         Unknown = 0,
@@ -73,14 +71,15 @@ public:
         ElTet4N3D,
         ElTet10N3D
     };
-#ifndef SWIG
+
+//#ifndef SWIG
     enum
     {
         Bidimensional = 0,
         Axisymetric,
         Threedimensional
     };
-#endif
+//#endif
 
 public:
     Element(long elementNumber = 1);
@@ -122,7 +121,7 @@ public:
     String getName() const;
     Vec3D getLocalNodeCoords(short node) const;
     virtual bool checkLevel2() = 0;
-    virtual bool computeJacobian() = 0;
+    virtual bool computeJacobian(bool reference = false) = 0;
     virtual double getCharacteristicLength() = 0;
     virtual double getRadiusAtIntegrationPoint() = 0;
     virtual void computeDeformationGradient(Tensor2 &F, short time) = 0;
@@ -153,6 +152,9 @@ public:
     double getIntPointValueExtract(short field, short intPoint);
     void computeDensity();
     Node *getNodeOnFace(short face, short node);
+    const ElementData *getElementData() const;
+    void dumpElementData() const;
+    virtual void computeElasticStiffnessMatrix() = 0;
 
     /*   
     void clearIntegrationPoint();
@@ -172,7 +174,6 @@ public:
     Node *getNodeOnEdge(short edge, short node);
     Node *getNeighbourNode(short node, short neighbour);
 
-    virtual void computeElasticStiffnessMatrix(Matrix &K, bool under = true) = 0;
     void computeMassEquation(MatrixDiag &M);
     void computeEnergyEquation(MatrixDiag &M, Vector &F);
     void computeConstitutiveIntegration(MatrixDiag &M, Vector &F);
@@ -250,6 +251,12 @@ inline short Element::getNumberOfFaces() const
     return _elementData->numberOfFaces;
 }
 
+//-----------------------------------------------------------------------------
+inline const ElementData *Element::getElementData() const
+//-----------------------------------------------------------------------------
+{
+    return _elementData;
+}
 /* //-----------------------------------------------------------------------------
 inline short Element::getNumberOfEdges() const
 //-----------------------------------------------------------------------------

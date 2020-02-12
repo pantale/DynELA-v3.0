@@ -80,7 +80,6 @@ public:
   void explicitSolve();
   void setDissipation(double dissipation);
   void solve(double solveUpToTime);
-  void updateTime();
 };
 
 #endif

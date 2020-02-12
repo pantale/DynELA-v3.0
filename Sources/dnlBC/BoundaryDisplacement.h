@@ -40,7 +40,7 @@ public:
 
   void applyConstantOnNewFields(Node *node, double currentTime, double timeStep);
   void applyConstantOnCurrentFields(Node *node, double currentTime, double timeStep);
-  void applyInitialOnCurrentFields(Node *node, double currentTime, double timeStep);
+  void applyInitial(Node *node, double currentTime, double timeStep);
   Vec3D getValue();
   void setValue(const Vec3D &newDisplacement);
   void setValue(double dispX, double dispY, double dispZ);

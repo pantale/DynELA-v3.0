@@ -124,6 +124,7 @@ model.attachConstantBC(speedBC, topNS)
 solver = dnl.Explicit("Solver")
 solver.setTimes(0, stopTime)
 model.add(solver)
+#solver.setTimeStepMethod(solver.PowerIteration)
 #solver.setTimeStepSafetyFactor(0.6)
 model.setSaveTimes(0, stopTime, stopTime / nbreSaves)
 

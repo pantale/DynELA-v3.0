@@ -304,11 +304,11 @@ double Matrix::minValue() const
 double Matrix::maxAbsoluteValue() const
 //-----------------------------------------------------------------------------
 {
-  double max = abs(_data[0]);
+  double max = dnlAbs(_data[0]);
   for (int i = 1; i < _dataLength; i++)
   {
-    if (abs(_data[i]) > max)
-      max = _data[i];
+    if (dnlAbs(_data[i]) > max)
+      max = dnlAbs(_data[i]);
   }
   return max;
 }
@@ -321,11 +321,11 @@ double Matrix::maxAbsoluteValue() const
 double Matrix::minAbsoluteValue() const
 //-----------------------------------------------------------------------------
 {
-  double min = abs(_data[0]);
+  double min = dnlAbs(_data[0]);
   for (int i = 1; i < _dataLength; i++)
   {
-    if (abs(_data[i]) < min)
-      min = _data[i];
+    if (dnlAbs(_data[i]) < min)
+      min = dnlAbs(_data[i]);
   }
   return min;
 }

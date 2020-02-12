@@ -21,8 +21,8 @@ This file is the declaration file for the ElQua4NAx class.
 #ifndef __dnlElements_ElQua4nAx_h__
 #define __dnlElements_ElQua4nAx_h__
 
-//#define Name_ElQua4nAx "ElQua4NAx"
 
+class ElementAxi;
 #include <ElementAxi.h>
 
 class ElQua4NAx : public ElementAxi
@@ -40,15 +40,6 @@ public:
   void getDerShapeFunctionAtPoint(Matrix &derShapeFunctions, const Vec3D &point) const;
   double getCharacteristicLength();
   double getArea();
-
-  /*  long numberOfUnderIntegrationPoints ()
-  {
-    return 1;
-  }
-  // bool getUnderIntegrPointCoords (long, Vec3D & coords, double& weight) ;
-  void computeGlob2Loc ();
-  void glob2Loc (const Vec3D & point, Vec3D & local);
-  //void getIntgtoNodes (Vector & N, const Vec3D & point) const; */
 };
 
 #endif

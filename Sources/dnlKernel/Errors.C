@@ -25,7 +25,7 @@ The functions defined in this files serves to display messages and warnings.
 #include <cstdio>
 #include <cstdlib>
 
-long totalWarningMessagesDisplayed = 1; //!< Total number of warnings actually displayed. This later is initialized to 1.
+long totalWarningMessagesDisplayed = 1; // Total number of warnings actually displayed. This later is initialized to 1.
 
 /*!
 \brief Displays a warning message

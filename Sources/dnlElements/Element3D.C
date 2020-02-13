@@ -307,9 +307,7 @@ void Element3D::computeElasticStiffnessMatrix(bool underIntegration)
 
   // initialisation
   stiffnessMatrix = 0;
-  Matrix C;
-
-  C = material->getHookeMatrix(Material::threedimensional);
+  Matrix C = material->getHookeMatrix(Material::threedimensional);
 
   // matrice temporaire
   Matrix CB(C.rows(), getNumberOfDimensions() * getNumberOfNodes());
@@ -324,7 +322,6 @@ void Element3D::computeElasticStiffnessMatrix(bool underIntegration)
   {
     pts = integrationPoints.getSize();
   }
-  //pts = underIntegrationPoints.getSize();
 
   // parallelisation
   //#pragma omp parallel for private(WxdJ),shared(stiffnessMatrix)
@@ -348,7 +345,20 @@ void Element3D::computeElasticStiffnessMatrix(bool underIntegration)
     for (i = 0; i < getNumberOfNodes(); i++)
     {
       I = getNumberOfDimensions() * i;
-      CB(0, I) = (C(0, 0) * currentIntPoint->dShapeFunction(i, 0) + C(0, 3) * currentIntPoint->dShapeFunction(i, 1) + C(0, 5) * currentIntPoint->dShapeFunction(i, 2));
+      CB(0, I) = C(0, 0) * currentIntPoint->dShapeFunction(i, 0);
+      CB(3, I) = C(3, 3) * currentIntPoint->dShapeFunction(i, 1);
+      CB(5, I) = C(5, 5) * currentIntPoint->dShapeFunction(i, 2);
+      CB(0, I + 1) = C(0, 1) * currentIntPoint->dShapeFunction(i, 1);
+      CB(1, I + 1) = C(1, 1) * currentIntPoint->dShapeFunction(i, 1);
+      CB(2, I + 1) = C(2, 1) * currentIntPoint->dShapeFunction(i, 1);
+      CB(3, I + 1) = C(3, 3) * currentIntPoint->dShapeFunction(i, 0);
+      CB(4, I + 1) = C(4, 4) * currentIntPoint->dShapeFunction(i, 2);
+      CB(0, I + 2) = C(0, 2) * currentIntPoint->dShapeFunction(i, 2);
+      CB(1, I + 2) = C(1, 2) * currentIntPoint->dShapeFunction(i, 2);
+      CB(2, I + 2) = C(2, 2) * currentIntPoint->dShapeFunction(i, 2);
+      CB(4, I + 2) = C(4, 4) * currentIntPoint->dShapeFunction(i, 1);
+      CB(5, I + 2) = C(5, 5) * currentIntPoint->dShapeFunction(i, 0);
+      /*       CB(0, I) = (C(0, 0) * currentIntPoint->dShapeFunction(i, 0) + C(0, 3) * currentIntPoint->dShapeFunction(i, 1) + C(0, 5) * currentIntPoint->dShapeFunction(i, 2));
       CB(1, I) = (C(1, 0) * currentIntPoint->dShapeFunction(i, 0) + C(1, 3) * currentIntPoint->dShapeFunction(i, 1) + C(1, 5) * currentIntPoint->dShapeFunction(i, 2));
       CB(2, I) = (C(2, 0) * currentIntPoint->dShapeFunction(i, 0) + C(2, 3) * currentIntPoint->dShapeFunction(i, 1) + C(2, 5) * currentIntPoint->dShapeFunction(i, 2));
       CB(3, I) = (C(3, 0) * currentIntPoint->dShapeFunction(i, 0) + C(3, 3) * currentIntPoint->dShapeFunction(i, 1) + C(3, 5) * currentIntPoint->dShapeFunction(i, 2));
@@ -365,7 +375,7 @@ void Element3D::computeElasticStiffnessMatrix(bool underIntegration)
       CB(2, I + 2) = (C(2, 2) * currentIntPoint->dShapeFunction(i, 2) + C(2, 4) * currentIntPoint->dShapeFunction(i, 1) + C(2, 5) * currentIntPoint->dShapeFunction(i, 0));
       CB(3, I + 2) = (C(3, 2) * currentIntPoint->dShapeFunction(i, 2) + C(3, 4) * currentIntPoint->dShapeFunction(i, 1) + C(3, 5) * currentIntPoint->dShapeFunction(i, 0));
       CB(4, I + 2) = (C(4, 2) * currentIntPoint->dShapeFunction(i, 2) + C(4, 4) * currentIntPoint->dShapeFunction(i, 1) + C(4, 5) * currentIntPoint->dShapeFunction(i, 0));
-      CB(5, I + 2) = (C(5, 2) * currentIntPoint->dShapeFunction(i, 2) + C(5, 4) * currentIntPoint->dShapeFunction(i, 1) + C(5, 5) * currentIntPoint->dShapeFunction(i, 0));
+      CB(5, I + 2) = (C(5, 2) * currentIntPoint->dShapeFunction(i, 2) + C(5, 4) * currentIntPoint->dShapeFunction(i, 1) + C(5, 5) * currentIntPoint->dShapeFunction(i, 0)); */
     }
 
     // calcul de BT [C B]

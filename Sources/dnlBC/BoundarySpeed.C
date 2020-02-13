@@ -23,7 +23,7 @@
 #include <NodalField.h>
 #include <Function.h> */
 
-//!constructeur par defaut de la classe BoundarySpeed
+//constructeur par defaut de la classe BoundarySpeed
 /*!
   Cette methode est le constructeur par defaut de la classe BoundarySpeed. En pratique, ici, on ne fait rien de plus que les allocations de memoire necessaires.
   \author Olivier PANTALE
@@ -43,7 +43,7 @@ BoundarySpeed::BoundarySpeed(const Vec3D &newSpeed)
   _speed = newSpeed;
 }
 
-//!constructeur par recopie de la classe BoundarySpeed
+//constructeur par recopie de la classe BoundarySpeed
 /*!
   Cette methode est le constructeur par recopie de la classe BoundarySpeed.
   \warning La recopie n'est pas prevue ici, cette methode genere une erreur d'execution
@@ -71,7 +71,7 @@ void BoundarySpeed::applyInitial(Node *node, double currentTime, double timeStep
   node->newField->acceleration = 0.0;
 }
 
-//!Application d'une condition limite Imposee en vitesse sur un noeud
+//Application d'une condition limite Imposee en vitesse sur un noeud
 /*!
   Cette methode applique des conditions aux limites imposees en vitesse sur un noeud. Deux cas se presentent selon la nature de la vitesse imposee (constante ou variable dans le temps).
   Dans le cas oe la vitesse imposee est constante dans le temps, on applique simplement dans la direction contrainte une acceleration nulle et une vitesse imposee constante egale e la vitesse de la CL.
@@ -205,7 +205,7 @@ void BoundarySpeed::applyConstantOnNewFields(Node *node, double currentTime, dou
   } 
 }
 
-//!destructeur de la classe BoundarySpeed
+//destructeur de la classe BoundarySpeed
 /*!
   Cette methode est le destructeur de la classe BoundarySpeed.
   \author Olivier PANTALE

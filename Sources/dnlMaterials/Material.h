@@ -116,7 +116,7 @@ public:
  */
 };
 
-//! Returns the first Lame coefficient \f$ \mu \f$
+// Returns the first Lame coefficient \f$ \mu \f$
 /*!
 This method computes and returns the value of the first Lame coefficient \f$ \mu \f$ given by the following expression
 \f[ \mu=\frac{E}{2(1+\poissonRatio)}, \f]
@@ -130,7 +130,7 @@ inline double Material::getTwoShearModulus()
   return youngModulus / (1.0 + poissonRatio);
 }
 
-//! Returns the shear modulus
+// Returns the shear modulus
 /*!
 This method computes and returns the value of the shear modulus \f$ G \f$ given by the following expression
 \f[ G=\frac{E}{2(1+\poissonRatio)}, \f]
@@ -144,7 +144,7 @@ inline double Material::getShearModulus()
   return youngModulus / (2.0 * (1.0 + poissonRatio));
 }
 
-//! Returns the second Lame coefficient \f$ \lambda \f$
+// Returns the second Lame coefficient \f$ \lambda \f$
 /*!
 This method computes and returns the value of the second Lame coefficient \f$ \lambda \f$ given by the following expression
 \f[ \lambda=\frac{\poissonRatio E}{(1+\poissonRatio)(1-2\poissonRatio)}, \f]
@@ -158,7 +158,7 @@ inline double Material::getLambda()
   return poissonRatio * youngModulus / ((1.0 + poissonRatio) * (1.0 - 2.0 * poissonRatio));
 }
 
-//! Returns the Bulk modulus \f$K\f$ of the material
+// Returns the Bulk modulus \f$K\f$ of the material
 /*!
 This method computes and returns the value of the Bulk modulus \f$ K \f$ given by the following expression
 \f[ K=\frac{1}{3}\left(3\lambda+2G\right)=\frac{E}{3(1-2\poissonRatio)}, \f]
@@ -172,7 +172,7 @@ inline double Material::getBulkModulus()
   return youngModulus / (3.0 * (1.0 - 2.0 * poissonRatio));
 }
 
-//! Returns the Heat Fraction of the material
+// Returns the Heat Fraction of the material
 /*!
 This method computes and returns the value of the Heat Fraction given by the following expression
 \f[ Hf=\frac{\eta}{\rho*C_p} \f]

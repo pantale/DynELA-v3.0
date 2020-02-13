@@ -23,7 +23,7 @@
 #include <NodalField.h>
 #include <Function.h> */
 
-//!constructeur par defaut de la classe BoundaryDisplacement
+//constructeur par defaut de la classe BoundaryDisplacement
 /*!
   Cette methode est le constructeur par defaut de la classe BoundaryDisplacement. En pratique, ici, on ne fait rien de plus que les allocations de memoire necessaires.
   \author Olivier PANTALE
@@ -42,7 +42,7 @@ BoundaryDisplacement::BoundaryDisplacement(const Vec3D &newDisplacement)
   _displacement = newDisplacement;
 }
 
-//!constructeur par recopie de la classe BoundaryDisplacement
+//constructeur par recopie de la classe BoundaryDisplacement
 /*!
   Cette methode est le constructeur par recopie de la classe BoundaryDisplacement.
   \warning La recopie n'est pas prevue ici, cette methode genere une erreur d'execution
@@ -63,7 +63,7 @@ void BoundaryDisplacement::applyInitial(Node *node, double currentTime, double t
 {
 }
 
-//!Application d'une condition limite Imposee en deplacement sur un noeud
+//Application d'une condition limite Imposee en deplacement sur un noeud
 /*!
 Cette methode applique une condition aux limites imposee en vitesse sur un noeud. Dans la direction de la condition imposee, la vitesse, le deplacement et l'acceleration materielle du noeud sont imposes nuls.
 */

@@ -119,7 +119,7 @@ inline bool Tensor3::indexOK ( long i, long j, long k ) const
     return ( false );
 }
 
-//!Access to the values T[i,j,k] of a third order tensor
+//Access to the values T[i,j,k] of a third order tensor
 /*!
   \param i long 1
   \param j long 2
@@ -136,7 +136,7 @@ inline double & Tensor3::operator () ( long i, long j, long k )
     return v[dnlTensor3Ind ( i, j, k, 3 )];
 }
 
-//!Access to the values T[i,j,k] of a third order tensor (Read only method)
+//Access to the values T[i,j,k] of a third order tensor (Read only method)
 /*!
   \param i long 1
   \param j long 2
@@ -153,7 +153,7 @@ inline double Tensor3::operator () ( long i, long j, long k ) const
     return v[dnlTensor3Ind ( i, j, k, 3 )];
 }
 
-//!Fill a third order tensor with a scalar value
+//Fill a third order tensor with a scalar value
 /*!
   This method is a surdefinition of the = operator for the third order tensor class.
 
@@ -173,7 +173,7 @@ inline void Tensor3::setToValue ( double val )
     }
 }
 
-//!Addition of 2 third order tensors
+//Addition of 2 third order tensors
 /*!
   This method defines the addition of 2 third order tensors.
 
@@ -194,7 +194,7 @@ inline void Tensor3::operator += ( const Tensor3 & tens )
     }
 }
 
-//!Difference of 2 third order tensors
+//Difference of 2 third order tensors
 /*!
   This method defines the difference of 2 third order tensors.
 
@@ -215,7 +215,7 @@ inline void Tensor3::operator -= ( const Tensor3 & tens )
     }
 }
 
-//!Multiplication of a third order tensor by a scalar value
+//Multiplication of a third order tensor by a scalar value
 /*!
   This method defines the multiplication of a third order tensor by a scalar value
   
@@ -236,7 +236,7 @@ inline void Tensor3::operator *= ( const double val )
     }
 }
 
-//!Division of a third order tensor by a scalar value
+//Division of a third order tensor by a scalar value
 /*!
   This method defines the division of a third order tensor by a scalar value
   

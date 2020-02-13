@@ -29,7 +29,7 @@
 #include <pwd.h>
 #include <libgen.h>
 
-//!execution d'une commande systeme
+//execution d'une commande systeme
 /*!
   Cette methode execute une commande externe. Lancement d'un nouveau processus par l'intermediaire de la commande systeme \b system(). Le nouveau programme est un nouveau processus totalement independant de l'application actuelle. Le seul lien est que le programme appelant attend la fin de l'execution du nouveau processus pour continuer les operations (saus si on utilise la parametre magique & dans la ligne de commande... Vous connaissez System ?). Comme cette commande est simple, l'environnement de travail pour l'execution du nouveau process est /bin/sh. Un message d'erreur est genere si un probleme e ete rencontre au cours de l'execution.
 
@@ -60,7 +60,7 @@ int System::execute(const String &cmd)
   return status;
 }
 
-//!recupere la valeur associee e une variable d'environnement
+//recupere la valeur associee e une variable d'environnement
 /*!
   Cette methode recupere la valeur associee e une variable d'environnement System. Si cette variable n'est pas definie, cette methode renvoie la chaine de caracteres suivante "cannot get \<var\> value". La valeur retournee est de type String.
 \param envname nom de la variable d'environnement
@@ -90,7 +90,7 @@ String System::getEnvValue(const String &envname)
   return (s);
 }
 
-//!teste la presence d'une variable d'environnement definie
+//teste la presence d'une variable d'environnement definie
 /*!
   Cette methode teste la definition d'une variable d'environnement. Elle renvoie une valeur booleenne qui renseigne sur l'etat de definition de cette variable d'environnement.
 \param envname nom de la variable d'environnement
@@ -112,7 +112,7 @@ bool System::existEnvValue(const String &envname)
   return false;
 }
 
-//!renvoie le login de l'utilisateur
+//renvoie le login de l'utilisateur
 /*!
   Cette methode renvoie le login de l'utilisateur du systeme sous forme d'une chaine de caracteres.
 \return login de l'utilisateur ou "unknown user" si cette information ne peut pas etre donnee
@@ -138,7 +138,7 @@ String System::getLogin()
   return (pwd->pw_name);
 }
 
-//!renvoie le nom de la machine
+//renvoie le nom de la machine
 /*!
   Cette methode renvoie le nom de la machine sur laquelle l'application est en cours d'execution.
 \return nom de la machine ou "unknown host" si cette information ne peut pas etre donnee
@@ -167,7 +167,7 @@ String System::getHostname()
   return (s);
 }
 
-//!renvoie la date et l'heure courante
+//renvoie la date et l'heure courante
 /*!
   Cette methode renvoie la date et l'heure courante au niveau du systeme.
 \param full : cette valeur booleenne definit la nature du resultat retourne. Si la valeur est true le format est alors le format comple sous la forme (Fri Jan 25 15:08:24 2002) si cette valeur est false, alors le format retourne est le format court de la forme (Jan 25, 2002). La valeur par defaut si rien n'est precise est true.
@@ -211,7 +211,7 @@ String System::getDate(bool full)
   return (s);
 }
 
-//!renvoie l'heure courante
+//renvoie l'heure courante
 /*!
   Cette methode renvoie l'heure courante au niveau du systeme.
   \return valeur de l'heure courante sous forme d'un String (format : 14:23:26)
@@ -231,7 +231,7 @@ String System::getTime()
   return (s);
 }
 
-//!renvoie le nom du repertoire courant
+//renvoie le nom du repertoire courant
 /*!
   Cette methode renvoie le nom du repertoire courant depuis lequel l'execution e ete lancee.
   \return repertoire courant ou "unknown pathname" si cette information ne peut etre donnee.
@@ -277,7 +277,7 @@ String System::getExePath()
   return path;
 }
 
-//!renvoie le hostid de la machine
+//renvoie le hostid de la machine
 /*!
   Cette methode renvoie le hostid de la machine sur laquelle le programme est execute. Le hostid est une valeur entiere generalement donnee sous une forme hexadecimale 0xFFFFFFFF sur 32 bits. Ce numero est unique par machine.
   \return hostId de la machine.

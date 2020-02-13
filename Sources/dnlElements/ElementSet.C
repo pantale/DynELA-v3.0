@@ -22,7 +22,7 @@
 #include <Errors.h>
 //#include <DynELA.h>
 
-//!constructeur de la classe ElementSet
+//constructeur de la classe ElementSet
 /*!
   Cette methode construit un ElementSet vide.
   \author Olivier PANTALE
@@ -37,7 +37,7 @@ ElementSet::ElementSet(char *_name)
 }
 
 
-//!constructeur par recopie de la classe ElementSet
+//constructeur par recopie de la classe ElementSet
 /*!
   Cette methode construit un ElementSet vide par recopie d'un autre. 
   Elle n'est pas finalisee.
@@ -52,7 +52,7 @@ ElementSet::ElementSet(const ElementSet &X)
   exit(-1);
 }
 
-//!destructeur de la classe ElementSet
+//destructeur de la classe ElementSet
 /*!
   Cette methode detruit un ElementSet.
   \author Olivier PANTALE
@@ -71,7 +71,7 @@ void ElementSet::setName(char *_name)
     name = _name;
 }
 
-//!ajoute un element e un ElementSet
+//ajoute un element e un ElementSet
 /*!
   Cette methode ajoute un element existant e un ElementSet. L'element est directement specifie par son pointeur, aucune verification n'est effectuee par cette methode.
   \param element pointeur sur un element
@@ -85,7 +85,7 @@ void ElementSet::add(Element *element)
   elements << element;
 }
 
-//!nombre d'elements dans la liste
+//nombre d'elements dans la liste
 /*!
   Cette methode renvoie le nombre d'elements dans un ElementSet
   \return nombre d'elements de la liste
@@ -99,7 +99,7 @@ long ElementSet::getSize()
   return elements.getSize();
 }
 
-//!ajoute un ElementSet e un ElementSet
+//ajoute un ElementSet e un ElementSet
 /*!
   Cette methode ajoute un ElementSet existant e un ElementSet.
   \param elementSet ElementSet a fusionner
@@ -116,7 +116,7 @@ void ElementSet::add(ElementSet *elementSet)
   }
 }
 
-//!recupere un pointeur sur le ieme element d'un ElementSet
+//recupere un pointeur sur le ieme element d'un ElementSet
 /*!
   Cette methode renvoie un pointeur sur le ieme element d'une liste d'elements contenue dans un ElementSet.
   \param item place de l'element dans la liste.
@@ -131,7 +131,7 @@ Element *ElementSet::getElement(long item)
   return (elements(item));
 }
 
-//!recupere le numero du ieme noeud d'un node set
+//recupere le numero du ieme noeud d'un node set
 /*!
   Cette methode renvoie le numero du ieme noeud d'une liste de noeuds contenue dans un NodeSet.
   \param i place du noeud dans la liste.

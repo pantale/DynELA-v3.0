@@ -25,7 +25,7 @@
   \date 1997-2004
 */
 
-//!constructeur par defaut de la classe String
+//constructeur par defaut de la classe String
 /*!
   Allocation memoire pour une chaine de caracteres vide. Cette methode est utilisee pour creer l'allocation memoire pour une chaine de caracteres vide.
 
@@ -42,7 +42,7 @@ String::String()
 {
 }
 
-//!constructeur de la classe String e partir d'un caractere unique
+//constructeur de la classe String e partir d'un caractere unique
 /*!
   Ce constructeur alloue l'espace memoire pour une chaine de caracteres e partir de la donnee d'un seul caractere. Cette methode peut sembler inutile car utiliser un String pour un seul caractere est bien bete, mais elle permet de faire l'addition de petits bouts de chaine de caracteres.
 
@@ -59,7 +59,7 @@ String::String()
 // {
 // }
 
-//!constructeur e partir d'un type char*
+//constructeur e partir d'un type char*
 /*!
   Ce constructeur permet d'allouer l'espace memoire pour un String et d'initialiser cette chaine de caracteres e partir d'une suite de caracteres standerd de type char*.
   
@@ -90,7 +90,7 @@ String::String(const String &st) // : std::string (st)
 {
   assign(st);
 }
-//!destructeur associe e la classe String
+//destructeur associe e la classe String
 /*!
   Ceci est le destructeur de la classe String.
   \author &copy; Olivier PANTALE
@@ -102,7 +102,7 @@ String::~String()
 {
 }
 
-//!constructeur e partir d'un type std::string
+//constructeur e partir d'un type std::string
 /*!
   Ce constructeur permet d'allouer l'espace memoire pour un String et d'initialiser cette chaine de caracteres e partir d'une suite de caracteres standerd de type char*.
   
@@ -134,7 +134,7 @@ String &String::operator=(const char *st)
 //  return (*this);
 // }
 
-//!conversion d'une valeur numerique entiere en un String
+//conversion d'une valeur numerique entiere en un String
 /*!
   Cette methode permet de convertir une valeur numerique de type int en une chaine de caracteres.
 
@@ -164,7 +164,7 @@ String &String::convert(int val, short leading)
   return *this;
 }
 
-//!conversion d'une valeur numerique entiere en un String
+//conversion d'une valeur numerique entiere en un String
 /*!
   Cette methode permet de convertir une valeur numerique de type int en une chaine de caracteres.
 
@@ -194,7 +194,7 @@ String &String::convert(long val, short leading)
   return *this;
 }
 
-//!conversion d'une valeur reelle en un String
+//conversion d'une valeur reelle en un String
 /*!
   Cette methode permet de convertir une valeur numerique reelle en une chaine de caracteres en specifiant le type de conversion par une chaine de caracteres de contrele.
 
@@ -220,7 +220,7 @@ String &String::convert(double val, const char *st)
   return *this;
 }
 
-//!remplacement d'un caractere dans une chaine
+//remplacement d'un caractere dans une chaine
 /*!
   Cette methode recherche et remplace un caractere donne par un autre dans une chaine de caracteres.
   \param fromItem caractere e remplacer dans la chaine
@@ -246,7 +246,7 @@ String &String::replace(const char fromItem, const char to)
   return (*this);
 }
 
-//!remplacement d'une sous chaine de caracteres dans une chaine
+//remplacement d'une sous chaine de caracteres dans une chaine
 /*!
   Cette methode recherche et remplace une sous-chaine de caracteres donnee par une autre dans une chaine de caracteres.
   \param fromItem sous-chaine de caracteres e remplacer dans la chaine
@@ -273,7 +273,7 @@ String &String::replace(const String &fromItem, const String &to)
   return (*this);
 }
 
-//!extraction d'une sous-chaine de caracteres d'une chaine de caracteres
+//extraction d'une sous-chaine de caracteres d'une chaine de caracteres
 /*!
   Cette methode extrait une sous-chaine de caracteres dans une chaine de caracteres. La position de la sous-chaine est donnee par la valeur de l'long de depart et la longueur de la sous-chaine. La chaine d'origine est inchangee.
 
@@ -298,7 +298,7 @@ String::subString(int startpos, int length) const
   return ret;
 }
 
-//!recherche d'un caractere dans une chaine
+//recherche d'un caractere dans une chaine
 /*!
   Cette methode cherche un caractere dans une chaine de caracteres e partir d'une position donnee dans la chaine.
 
@@ -324,7 +324,7 @@ int String::search(char c, int startpos) const
   return pos;
 }
 
-//!recherche d'une sous chaine de caracteres dans une chaine
+//recherche d'une sous chaine de caracteres dans une chaine
 /*!
   Cette methode cherche une sous chaine de caracteres dans une chaine de caracteres e partir d'une position donnee dans la chaine.
 
@@ -350,7 +350,7 @@ int String::search(const String &substring, int startpos) const
   return pos;
 }
 
-//!suppression d'une partie d'une chaine de caracteres
+//suppression d'une partie d'une chaine de caracteres
 /*!
   Cette methode supprime une partie d'une chaine de caracteres e partir d'une position donnee et sur une longueur donnee. La chaine donnees est modifiee
 
@@ -371,7 +371,7 @@ void String::remove(int startpos, int length)
   std::string::replace(startpos, length, "");
 }
 
-//!suppression d'une partie d'une chaine de caracteres
+//suppression d'une partie d'une chaine de caracteres
 /*!
   Cette methode supprime une partie d'une chaine de caracteres specifiee dans une autre chaine e partir d'une position de depart donnee. La chaine donnees est modifiee
 
@@ -392,7 +392,7 @@ void String::remove(const String &y, int startpos)
   std::string::replace(find(y, startpos), y.length(), "");
 }
 
-//!suppression d'un caractere dans une chaine
+//suppression d'un caractere dans une chaine
 /*!
   Cette methode supprime un caractere specifie dans une autre chaine e partir d'une position de depart donnee. La chaine donnees est modifiee
 
@@ -413,7 +413,7 @@ void String::remove(char c, int startpos)
   std::string::replace(find(c, startpos), 1, "");
 }
 
-//!extraction d'une sous-chaine de caracteres d'une chaine de caracteres
+//extraction d'une sous-chaine de caracteres d'une chaine de caracteres
 /*!
   Cette methode extrait une sous-chaine de caracteres dans une chaine de caracteres. La position de la sous-chaine est donnee par la valeur de l'long de depart et la longueur de la sous-chaine.
 
@@ -435,7 +435,7 @@ String String::atItem(int first, int len) const
   return subString(first, len);
 }
 
-//!extraction d'une sous-chaine de caracteres d'une chaine de caracteres
+//extraction d'une sous-chaine de caracteres d'une chaine de caracteres
 /*!
   Cette methode extrait une sous-chaine de caracteres dans une chaine de caracteres. La position de la sous-chaine est donnee par la valeur de l'long de depart et la longueur de la sous-chaine.
 
@@ -458,7 +458,7 @@ String::operator()(int first, int len) const
   return subString(first, len);
 }
 
-//!extraction d'une sous-chaine de caracteres d'une chaine de caracteres
+//extraction d'une sous-chaine de caracteres d'une chaine de caracteres
 /*!
   Cette methode extrait une sous-chaine de caracteres dans une chaine de caracteres avant une position donnee.
 
@@ -479,7 +479,7 @@ String String::beforeItem(int pos) const
   return subString(0, pos);
 }
 
-//!extraction d'une sous-chaine de caracteres d'une chaine de caracteres
+//extraction d'une sous-chaine de caracteres d'une chaine de caracteres
 /*!
   Cette methode extrait une sous-chaine de caracteres dans une chaine de caracteres avant une position donnee (caractere compris).
 
@@ -501,7 +501,7 @@ String::throughItem(int pos) const
   return subString(0, pos + 1);
 }
 
-//!extraction d'une sous-chaine de caracteres d'une chaine de caracteres
+//extraction d'une sous-chaine de caracteres d'une chaine de caracteres
 /*!
   Cette methode extrait une sous-chaine de caracteres dans une chaine de caracteres apres une position donnee.
 
@@ -522,7 +522,7 @@ String String::afterItem(int pos) const
   return subString(pos + 1, length() - (pos + 1));
 }
 
-//!extraction d'une sous-chaine de caracteres d'une chaine de caracteres
+//extraction d'une sous-chaine de caracteres d'une chaine de caracteres
 /*!
   Cette methode extrait une sous-chaine de caracteres dans une chaine de caracteres apres une position donnee (caractere compris).
 
@@ -542,7 +542,7 @@ String String::fromItem(int pos) const
 {
   return subString(pos, length() - pos);
 }
-//!extraction d'une sous-chaine de caracteres d'une chaine de caracteres
+//extraction d'une sous-chaine de caracteres d'une chaine de caracteres
 /*!
   Cette methode extrait une sous-chaine de caracteres dans une chaine de caracteres. La position de la sous-chaine est donnee par la premiere occurence d'une chaine donnee en parametres e partir d'une position donnee.
 
@@ -568,7 +568,7 @@ String String::atItem(const String &y, int startpos) const
   return subString(first, y.length());
 }
 
-//!extraction d'un caractere d'une chaine de caracteres
+//extraction d'un caractere d'une chaine de caracteres
 /*!
   Cette methode extrait un caractere dans une chaine de caracteres. La position du caractere est donnee par la premiere occurence dde ce caractere donne en parametre e partir d'une position donnee. 
 
@@ -595,7 +595,7 @@ String String::atItem(char c, int startpos) const
     return "";
   return subString(first, 1);
 }
-//!extraction d'une sous-chaine de caracteres d'une chaine de caracteres
+//extraction d'une sous-chaine de caracteres d'une chaine de caracteres
 /*!
   Cette methode extrait une sous-chaine de caracteres dans une chaine de caracteres avant une position donnee par la premiere occurence d'une chaine donnee en parametre de cette methode.
 
@@ -620,7 +620,7 @@ String String::beforeItem(const String &y, int startpos) const
   return subString(0, last);
 }
 
-//!extraction d'une sous-chaine de caracteres d'une chaine de caracteres
+//extraction d'une sous-chaine de caracteres d'une chaine de caracteres
 /*!
   Cette methode extrait une sous-chaine de caracteres dans une chaine de caracteres avant une position donnee par la premiere occurence d'un caractere donne en parametre de cette methode.
 
@@ -643,7 +643,7 @@ String String::beforeItem(char c, int startpos) const
   return subString(0, last);
 }
 
-//!extraction d'une sous-chaine de caracteres d'une chaine de caracteres
+//extraction d'une sous-chaine de caracteres d'une chaine de caracteres
 /*!
   Cette methode extrait une sous-chaine de caracteres dans une chaine de caracteres avant une position donnee par la premiere occurence d'une chaine donnee en parametre de cette methode. La sous chaine recherchee est incluse.
 
@@ -670,7 +670,7 @@ String String::throughItem(const String &y, int startpos) const
   return subString(0, last);
 }
 
-//!extraction d'une sous-chaine de caracteres d'une chaine de caracteres
+//extraction d'une sous-chaine de caracteres d'une chaine de caracteres
 /*!
   Cette methode extrait une sous-chaine de caracteres dans une chaine de caracteres avant une position donnee par la premiere occurence d'un caractere donne en parametre de cette methode. Le caractere recherche est inclus.
 
@@ -698,7 +698,7 @@ String::throughItem(char c, int startpos) const
   return subString(0, last);
 }
 
-//!extraction d'une sous-chaine de caracteres d'une chaine de caracteres
+//extraction d'une sous-chaine de caracteres d'une chaine de caracteres
 /*!
   Cette methode extrait une sous-chaine de caracteres dans une chaine de caracteres apres une position donnee par la premiere occurence d'une chaine donnee en parametre de cette methode.
 
@@ -725,7 +725,7 @@ String String::afterItem(const String &y, int startpos) const
   return subString(first, length() - first);
 }
 
-//!extraction d'une sous-chaine de caracteres d'une chaine de caracteres
+//extraction d'une sous-chaine de caracteres d'une chaine de caracteres
 /*!
   Cette methode extrait une sous-chaine de caracteres dans une chaine de caracteres apres une position donnee par la derniere occurence d'une chaine donnee en parametre de cette methode.
 
@@ -763,7 +763,7 @@ String::beforeLast(const String &y) const
   return atItem(0, pos - 1);
 }
 
-//!extraction d'une sous-chaine de caracteres d'une chaine de caracteres
+//extraction d'une sous-chaine de caracteres d'une chaine de caracteres
 /*!
   Cette methode extrait une sous-chaine de caracteres dans une chaine de caracteres apres une position donnee par la premiere occurence d'un caractere donne en parametre de cette methode.
 
@@ -790,7 +790,7 @@ String String::afterItem(char c, int startpos) const
   return subString(first, length() - first);
 }
 
-//!extraction d'une sous-chaine de caracteres d'une chaine de caracteres
+//extraction d'une sous-chaine de caracteres d'une chaine de caracteres
 /*!
   Cette methode extrait une sous-chaine de caracteres dans une chaine de caracteres apres une position donnee par la premiere occurence d'une chaine donnee en parametre de cette methode. La sous-chaine est incluse.
 
@@ -815,7 +815,7 @@ String String::fromItem(const String &y, int startpos) const
   return subString(first, length() - first);
 }
 
-//!extraction d'une sous-chaine de caracteres d'une chaine de caracteres
+//extraction d'une sous-chaine de caracteres d'une chaine de caracteres
 /*!
   Cette methode extrait une sous-chaine de caracteres dans une chaine de caracteres apres une position donnee par la premiere occurence d'un caractere donne en parametre de cette methode.
 
@@ -840,7 +840,7 @@ String String::fromItem(char c, int startpos) const
   return subString(first, length() - first);
 }
 
-//!remplit une chaine de caractere e partir d'un fichier
+//remplit une chaine de caractere e partir d'un fichier
 /*!
   Cette methode list une chaine de caracteres sur un fichier et retourne un String contenant cette chaine de caracteres. Les caracteres sont lus dans le fichier jusqu'au caractere de fin de ligne '\n'. Si la fin de fichier est atteinte, cette methode renvoie 0, sinon elle renvoie 1.Cette methode se trouve donc bien nommee.
 
@@ -874,7 +874,7 @@ bool String::scanFileLine(FILE *pfile)
   return 1;
 }
 
-//!suppression des blancs inutiles
+//suppression des blancs inutiles
 /*!
   Cette methode supprime les blancs en debut et fin d'une chaine de caracteres comme indique ci dessous:
 
@@ -896,7 +896,7 @@ void String::strip()
   *this = subString(start, stop - start + 1);
 }
 
-//!teste la presence d'une chaine dans une autre et renvoie la position
+//teste la presence d'une chaine dans une autre et renvoie la position
 /*!
   Cette methode recherche une chaine de caracteres dans une autre en tenant compte ou non de la difference majuscules/minuscules. Cette methode e ete developpee pour bibView.
   \param substring chaine de caracteres e rechercher
@@ -969,7 +969,7 @@ int String::containsWithCaseSub(const String &substring, bool cas) const
   return -1;
 }
 
-//!teste la presence d'une chaine dans une autre
+//teste la presence d'une chaine dans une autre
 /*!
   Cette methode recherche une chaine de caracteres dans une autre en tenant compte ou non de la difference majuscules/minuscules. Cette methode e ete developpee pour bibView.
   \param substring chaine de caracteres e rechercher
@@ -985,7 +985,7 @@ bool String::containsWithCase(const String &substring, bool cas) const
   return (containsWithCaseSub(substring, cas) >= 0);
 }
 
-//!convertit une chaine de caracteres en un type char*
+//convertit une chaine de caracteres en un type char*
 /*!
   Cette methode convertit une chaine de caracteres en un type char*.
 
@@ -1005,7 +1005,7 @@ const char *String::chars() const
   return c_str();
 }
 
-//!teste la presence d'un caractere dans une chaine
+//teste la presence d'un caractere dans une chaine
 /*!
   Cette methode teste si une chaine de caracteres contient un caractere donne.
   \param c caractere e rechercher
@@ -1022,7 +1022,7 @@ bool String::contains(char c, int startpos) const
   return false;
 }
 
-//!recherche d'un caractere dans une chaine
+//recherche d'un caractere dans une chaine
 /*!
   Cette methode cherche une sous-chaine de caracteres dans une chaine existante et retourne true, ou la valeur false si cette chaine n'existe pas.
   \param startpos position de depart pour la recherche
@@ -1040,7 +1040,7 @@ bool String::contains(const String &substring, int startpos) const
   return false;
 }
 
-//!ecrit une chaine de caracteres sur le flux de sortie
+//ecrit une chaine de caracteres sur le flux de sortie
 /*!
   Cette methode ecrit une chaine de caracteres sur le flux de donnees ostream. Si la chaine de caracteres est vide, "empty" est ecrit sur la sortie.
 
@@ -1055,7 +1055,7 @@ void String::dump(const String &s) const
   std::cout << *this << std::endl;
 }
 
-//!teste si une chaine de caracteres est vide
+//teste si une chaine de caracteres est vide
 /*!
   Cette methode teste si une chaine de caracteres est vide.
   \return true si la chaine de caracteres est vide false dans le cas contraire
@@ -1069,7 +1069,7 @@ bool String::empty() const
   return ((*this) == "");
 }
 
-//!teste si une chaine de caracteres est non vide
+//teste si une chaine de caracteres est non vide
 /*!
   Cette methode teste si une chaine de caracteres est non vide.
   \return true si la chaine de caracteres est non vide false dans le cas contraire
@@ -1083,7 +1083,7 @@ bool String::ok() const
   return !(empty());
 }
 
-//!renvoie le premier caractere d'un String
+//renvoie le premier caractere d'un String
 /*!
   Cette methode retourne le premier caractere d'un std::string
   \return premier caractere du String
@@ -1097,7 +1097,7 @@ char String::firstchar() const
   return std::string::at(0);
 }
 
-//!renvoie le dernier caractere d'un String
+//renvoie le dernier caractere d'un String
 /*!
   Cette methode retourne le dernier caractere d'un std::string
   \return dernier caractere du String
@@ -1111,7 +1111,7 @@ char String::lastchar() const
   return std::string::at(length() - 1);
 }
 
-//!conversion des caracteres en minuscules
+//conversion des caracteres en minuscules
 /*!
   Cette methode convertit les caracteres d'une chaine en minuscules
   \author &copy; Olivier PANTALE
@@ -1131,7 +1131,7 @@ void String::lowerCase()
   }
 }
 
-//!conversion des caracteres en majuscules
+//conversion des caracteres en majuscules
 /*!
   Cette methode convertit les caracteres d'une chaine en majuscules
   \author &copy; Olivier PANTALE
@@ -1151,7 +1151,7 @@ void String::upperCase()
   }
 }
 
-//!convertit un String en un reel
+//convertit un String en un reel
 /*!
   Cette methode extrait d'un String une valeur reelle e une colonne donnee.
 
@@ -1187,7 +1187,7 @@ String::getRealAtPos(int pos, String sep)
   return val;
 }
 
-//!extrait une valeur reelle d'un std::string
+//extrait une valeur reelle d'un std::string
 /*!
   Cette methode extrait d'un String une valeur reelle et reduit cette chaine de caracteres. Si elle ne contient plus de valeurs e extraire, cette methode renvoie false au moment de l'extraction de la derniere valeur de la ligne.
 
@@ -1229,7 +1229,7 @@ bool String::popReal(double &ret, String sep)
   return false;
 }
 
-//!extrait une valeur entiere d'un std::string
+//extrait une valeur entiere d'un std::string
 /*!
   Cette methode extrait d'un String une valeur entiere et reduit cette chaine de caracteres. Si elle ne contient plus de valeurs e extraire, cette methode renvoie false au moment de l'extraction de la derniere valeur de la ligne.
 
@@ -1259,7 +1259,7 @@ bool String::popInt(long &val, String sep)
   return ret;
 }
 
-//!extrait un mot d'une chaine de caracteres
+//extrait un mot d'une chaine de caracteres
 /*!
   Cette methode extrait un mot d'une chaine de caracteres. Cette methode retourne la valeur true s'il reste des mosts dans la chaine, false dans le cas contraire.
   \param ret mot extrait de la chaine de caracteres
@@ -1291,7 +1291,7 @@ bool String::popString(String &ret, String sep)
   return false;
 }
 
-//!conversion d'un String en un entier
+//conversion d'un String en un entier
 //-----------------------------------------------------------------------------
 long String::getInt() const
 //-----------------------------------------------------------------------------
@@ -1299,7 +1299,7 @@ long String::getInt() const
   return atoi(c_str());
 }
 
-//!conversion d'un String en un reel
+//conversion d'un String en un reel
 //-----------------------------------------------------------------------------
 double String::getReal() const
 //-----------------------------------------------------------------------------
@@ -1307,7 +1307,7 @@ double String::getReal() const
   return atof(c_str());
 }
 
-//!ajout d'une extension si elle n'est pas presente
+//ajout d'une extension si elle n'est pas presente
 //-----------------------------------------------------------------------------
 void String::addExtension(String ext)
 //-----------------------------------------------------------------------------

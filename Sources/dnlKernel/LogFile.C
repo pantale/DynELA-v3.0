@@ -21,7 +21,7 @@
 #include <System.h>
 #include <Errors.h>
 
-//!Constructeur de la classe LogFile
+//Constructeur de la classe LogFile
 /*!
   Le constructeur ouvre le fichier e creer et ajoute automatiquement un entete standard en haut de celui-ci (voir methode headerWrite()).
   \param str nom du fichier log e creer
@@ -36,7 +36,7 @@ LogFile::LogFile()
   _level = 1;
 }
 
-//!Destructeur de la classe LogFile
+//Destructeur de la classe LogFile
 /*!
   \author Olivier PANTALE
   \since DynELA 1.0.0
@@ -195,7 +195,7 @@ void LogFile::outputString(String str)
   }
 }
 
-//!reglage de niveau de sortie pour les prochains messages
+//reglage de niveau de sortie pour les prochains messages
 /*!
   Cette methode permet de specifier que les prochains messages achemines seront de niveau donne en argument. Tous les masseges de niveau plus eleve que celui-ci seront ignores.
   \param lev nouveau niveau
@@ -209,7 +209,7 @@ void LogFile::setLevel(int lev)
   _level = lev;
 }
 
-//!reglage de niveau de sortie pour les prochains messages
+//reglage de niveau de sortie pour les prochains messages
 /*!
   Cette methode permet de specifier que les prochains messages achemines seront de niveau plus eleve d'une unite. Tous les masseges de niveau plus eleve que celui-ci seront ignores.
   \param lev nouveau niveau
@@ -223,7 +223,7 @@ void LogFile::upLevel()
   _level++;
 }
 
-//!reglage de niveau de sortie pour les prochains messages
+//reglage de niveau de sortie pour les prochains messages
 /*!
   Cette methode permet de specifier que les prochains messages achemines seront de niveau plus bas d'une unite. Tous les masseges de niveau plus eleve que celui-ci seront ignores.
   \param lev nouveau niveau

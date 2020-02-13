@@ -23,7 +23,7 @@
 
 #include <Function.h>
 
-//!constructeur par defaut de la classe Function
+//constructeur par defaut de la classe Function
 /*!
   Ce constructeur alloue la memoire pour la creation d'une fonction discrete. Par defaut, la nouvelle fonction est definie avec le flag \ref Sort actif, c'est e dire que les points de la fonction sont automatiquement tries sur l'axe des abscisses.
   \author &copy; Olivier PANTALE

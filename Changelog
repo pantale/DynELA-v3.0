@@ -1,3 +1,6 @@
+13/02/2020 - Add the Under integration points to elements
+           - Option to compute Power Iteration Method with under integration of stiffness matrix
+
 12/02/2020 - Implementation of the Power Iteration Method to compute timeSteps
 
 11/02/2020 - Cleaning of Objects and tracking of bugs

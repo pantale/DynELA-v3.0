@@ -22,7 +22,7 @@
 #include <Macros.h>
 #include <CrackFunction.h>
 
-//!Constructor of the CrackFunction class
+//Constructor of the CrackFunction class
 //-----------------------------------------------------------------------------
 CrackFunction::CrackFunction()
 //-----------------------------------------------------------------------------
@@ -32,14 +32,14 @@ CrackFunction::CrackFunction()
     Sort = false;
 }
 
-//!Copy constructor of the CrackFunction class
+//Copy constructor of the CrackFunction class
 //-----------------------------------------------------------------------------
 CrackFunction::CrackFunction(const CrackFunction &X)
 //-----------------------------------------------------------------------------
 {
 }
 
-//!Destructor of the CrackFunction class
+//Destructor of the CrackFunction class
 //-----------------------------------------------------------------------------
 CrackFunction::~CrackFunction()
 //-----------------------------------------------------------------------------

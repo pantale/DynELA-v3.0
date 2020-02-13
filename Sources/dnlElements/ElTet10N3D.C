@@ -187,6 +187,29 @@ const ElementData ElTet10N3D::_elementData = {
         //
     },
 
+    1, // Number of under integration points of the Element
+    {
+        // Under integration point 1
+        {
+            Vec3D(1.0 / 4, 1.0 / 4, 1.0 / 4),                             // Coordinates of the under integration point
+            1.0 / 6,                                                      // Weight associated to the under integration point
+            Vector(10, -1.0 / 8, -1.0 / 8, -1.0 / 8, -1.0 / 8,            // Shape functions at the under integration point
+                   1.0 / 4, 1.0 / 4, 1.0 / 4, 1.0 / 4, 1.0 / 4, 1.0 / 4), //
+            Matrix(4, 3,                                                  // Derivatives of the shape functions at the under integration point
+                   0.0, 0.0, 0.0,                                         //
+                   0.0, 0.0, 0.0,                                         //
+                   0.0, 0.0, 0.0,                                         //
+                   0.0, 0.0, 0.0,                                         //
+                   0.0, -1.0, -1.0,                                       //
+                   +1.0, +1.0, 0.0,                                       //
+                   -1.0, 0.0, -1.0,                                       //
+                   -1.0, -1.0, 0.0,                                       //
+                   +1.0, 0.0, +1.0,                                       //
+                   0.0, +1.0, 1.0)                                        //
+        }
+        //
+    },
+
     4, // Number of faces of the element
     {
         // Face number 1
@@ -292,29 +315,6 @@ const ElementData ElTet10N3D::_elementData = {
                    -1 - 3.0 / sqrt(5.0), -1 - 3.0 / sqrt(5.0), -4 / sqrt(5.0),                         //
                    1 + 3.0 / sqrt(5.0), 0.0, 1.0 - 1.0 / sqrt(5.0),                                    //
                    0.0, 1 + 3.0 / sqrt(5.0), 1.0 - 1.0 / sqrt(5.0))                                    //
-        }
-        //
-    },
-
-    1, // Number of under integration points of the Element
-    {
-        // Under integration point 1
-        {
-            Vec3D(1.0 / 4, 1.0 / 4, 1.0 / 4),                                   // Coordinates of the under integration point
-            1.0 / 6,                                                                // Weight associated to the under integration point
-            Vector(10, -1.0 / 8, -1.0 / 8, -1.0 / 8, -1.0 / 8,                // Shape functions at the under integration point
-                   1.0 / 4, 1.0 / 4, 1.0 / 4, 1.0 / 4, 1.0 / 4, 1.0 / 4), //
-            Matrix(4, 3,                                                              // Derivatives of the shape functions at the under integration point
-                   0.0, 0.0, 0.0,                                                     //
-                   0.0, 0.0, 0.0,                                                     //
-                   0.0, 0.0, 0.0,                                                     //
-                   0.0, 0.0, 0.0,                                                     //
-                   0.0, -1.0, -1.0,                                                   //
-                   +1.0, +1.0, 0.0,                                                   //
-                   -1.0, 0.0, -1.0,                                                   //
-                   -1.0, -1.0, 0.0,                                                   //
-                   +1.0, 0.0, +1.0,                                                   //
-                   0.0, +1.0, 1.0)                                                    //
         }
         //
     },

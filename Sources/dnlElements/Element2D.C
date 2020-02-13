@@ -41,16 +41,7 @@ Element2D::~Element2D()
 {
 }
 
-//-----------------------------------------------------------------------------
-double Element2D::getRadiusAtIntegrationPoint()
-//-----------------------------------------------------------------------------
-{
-  fatalError("Element2D::getRadiusAtIntegrationPoint",
-             "Method is not callable\n");
-  return 0.0;
-}
-
-//!Calcul du gradient des deformations F
+//Calcul du gradient des deformations F
 ///*!
 //Cette methode effectue le calcul du gradient des deformations F au point d'integration e l'instant time. La relation utilisee pour ce calcul est donnee par:
 //\f[  F=1+\frac{\partial \overrightarrow{u}}{\partial \overrightarrow{X}} \f]

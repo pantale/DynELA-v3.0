@@ -66,7 +66,8 @@ public:
   enum
   {
     Courant,
-    PowerIteration
+    PowerIteration,
+    PowerIterationUnder
   };
 
 public:

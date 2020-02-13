@@ -77,7 +77,7 @@ Model::~Model()
 {
 }
 
-//!Ajout d'un noeud e la grille courante
+//Ajout d'un noeud e la grille courante
 /*!
   Cette methode ajoute un noeud e la grille courante. Cette methode effectue des verifications de base comme par exemple la presence d'un noeud portant le meme numero que le nouveau noeud dans la liste. En cas de doublon, cette methode stoppe le processus de construction et renvoie une erreur.
   \param newNode pointeur sur le nouveau noeud e ajouter e la grille
@@ -185,7 +185,7 @@ void Model::create(Element *newElement, long *listOfNodes)
   }
 }
 
-//!Add new nodes to the current NodeSet
+//Add new nodes to the current NodeSet
 /*!
   This method adds a set of existing nodes and a NodeSet. The nodes are specified by their identification numbers given in a variation range (start number, end number and increment). The nodes are then searched in the current grid of the current model of the structure.
   \warning Les noeuds ajoutes doivent etre presents dans la grille courante du modele courant.
@@ -238,7 +238,7 @@ void Model::add(NodeSet *nodeSet, long startNumber, long endNumber, long increme
   }
 }
 
-//!ajoute un ensemble d'elements e un ElementSet
+//ajoute un ensemble d'elements e un ElementSet
 /*!
   Cette methode ajoute un ensemble d'elements existant e un ElementSet. Les elements sont specifies par leurs numeros d'identification donne dans un intervalle de variation (numero de debut, numero de fin et increment). Les elements sont alors recherches dans la grille courante du modele courant de la structure.
   \warning Les elements ajoutes doivent etre presents dans la grille courante du modele courant.
@@ -295,7 +295,7 @@ void Model::add(ElementSet *elementSet, long startNumber, long endNumber, long i
   }
 }
 
-//!recherche d'un noeud dans la structure en fonction de son numero
+//recherche d'un noeud dans la structure en fonction de son numero
 /*!
   Cette methode recherche un noeud dans la structure en fonction de son numero et renvoie un pointeur sur celui-ci, ou NULL si celui-ci n'existe pas dans la structure. Le noeud est recherche sur la grille courante du modele courant.
   \param nodeNumber numero du noeud e rechercher
@@ -319,7 +319,7 @@ Node *Model::getNodeByNum(long nodeNumber)
   return nodes.dichotomySearch(substractNodesNumber, nodeNumber);
 }
 
-//!recherche d'un element dans la structure en fonction de son numero
+//recherche d'un element dans la structure en fonction de son numero
 /*!
   Cette methode recherche un element dans la structure en fonction de son numero et renvoie un pointeur sur celui-ci, ou NULL si celui-ci n'existe pas dans la structure. L'element est recherche sur la grille courante du modele courant.
   \param elementNumber numero de l'element e rechercher
@@ -630,7 +630,7 @@ double Model::getTotalKineticEnergy()
   return (kineticEnergy);
 }
 
-//!Calcul du time step de minimal de la grille (Courant)
+//Calcul du time step de minimal de la grille (Courant)
 /*!
   Cette methode calcule le time step minimal de la grille e partir de la definition de la geometrie des elements et de la vitesse de propagation du son dans les elements de la structure. Cette relation est basee sur le critere de stabilite de Courant.
   La relation utilisee pour ce calcul est donnee par:
@@ -732,7 +732,7 @@ bool Model::solve(double solveUpToTime)
   return true;
 }
 
-//!Calcule le determinant du Jacobien de tous les elements de la grille
+//Calcule le determinant du Jacobien de tous les elements de la grille
 /*!
   Cette methode calcule le Jacobien de tous les elements de la grille.
   \author Olivier PANTALE
@@ -916,15 +916,17 @@ void Model::add(HistoryFile *newHistoryFile)
 }
 
 //-----------------------------------------------------------------------------
-double Model::computePowerIterationTimeStep()
+double Model::computePowerIterationTimeStep(bool underIntegration)
 //-----------------------------------------------------------------------------
 {
-  double fmax = 0.0;
   bool ok = false;
-  long iteration = 0;
   double convergence;
-  long i;
+  double fmax = 0.0;
   Element *pel;
+  long iteration = 0;
+  long localIndices[maxNumberOfNodes];
+  Vector localValues;
+  Vector powerIterationEV0;
 
   // matrices globales
   long numberOfDDL = _numberOfDimensions * nodes.getSize();
@@ -933,7 +935,7 @@ double Model::computePowerIterationTimeStep()
   while ((pel = elements.currentUp()) != NULL)
   {
     // recuperation de l'element
-    pel->computeElasticStiffnessMatrix();
+    pel->computeElasticStiffnessMatrix(underIntegration);
   }
 
   // initialisation du vecteur si besoin
@@ -941,12 +943,9 @@ double Model::computePowerIterationTimeStep()
   {
     _powerIterationEV.redim(numberOfDDL);
     _powerIterationEV(0) = 1.0;
-    for (i = 1; i < numberOfDDL; i++)
+    for (long i = 1; i < numberOfDDL; i++)
       _powerIterationEV(i) = _powerIterationEV(i - 1) - 2. / (numberOfDDL - 1);
   }
-
-  Vector localValues;
-  Vector powerIterationEV0;
 
   while (!ok)
   {
@@ -957,14 +956,11 @@ double Model::computePowerIterationTimeStep()
     {
       localValues.redim(pel->stiffnessMatrix.rows());
       localValues = 0.;
-      long loop_I = pel->nodes.getSize();
-      long *ind = new long[loop_I];
-      for (long I = 0; I < loop_I; I++)
-        ind[I] = pel->nodes(I)->internalNumber();
-      localValues.scatterFrom(powerIterationEV0, ind, _numberOfDimensions);
+      for (short I = 0; I < pel->nodes.getSize(); I++)
+        localIndices[I] = pel->nodes(I)->internalNumber();
+      localValues.scatterFrom(powerIterationEV0, localIndices, _numberOfDimensions);
       localValues = pel->stiffnessMatrix * localValues;
-      _powerIterationEV.gatherFrom(localValues, ind, _numberOfDimensions);
-      delete[] ind;
+      _powerIterationEV.gatherFrom(localValues, localIndices, _numberOfDimensions);
     }
 
     massMatrix.divideBy(_powerIterationEV);
@@ -1241,7 +1237,7 @@ void Model::starterWrite(String name)
   cout << "End of write ...\n";*/
 //}
 
-//!Cree un element et l'ajoute e la grille courante
+//Cree un element et l'ajoute e la grille courante
 /*!
   Cette methode cree un element et l'ajoute e la grille courante.
 

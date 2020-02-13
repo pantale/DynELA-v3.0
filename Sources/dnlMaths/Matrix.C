@@ -32,7 +32,7 @@
 #include <MatrixDiag.h>
 #include <Tensor2.h>
 
-//!constructeur de la classe Matrix
+//constructeur de la classe Matrix
 /*!
   Cette methode construit une matrice de rows/cols elements. Par defaut, le contenu de la matrice est mis e zero
   \param rows nombre de rows
@@ -51,7 +51,7 @@ Matrix::Matrix(const long rows, const long cols, const double value)
   setToValue(value);
 }
 
-//!constructeur par recopie d'une matrice
+//constructeur par recopie d'une matrice
 /*!
   Ce constructeur recopie les valeurs contenues dans une matrice. Selon la valeur du flag \ref MEM_funct, la copie est faite soit terme e terme (flag non defini) ou par appel e memcopy() (flag defini).
   \author Olivier PANTALE
@@ -96,7 +96,7 @@ Matrix::Matrix(int rows, int cols, double firstValue, double secondValue, ...)
   va_end(arguments);
 }
 
-//!destructeur de la classe Matrix
+//destructeur de la classe Matrix
 /*!
   \author Olivier PANTALE
   \version 0.9.4
@@ -142,7 +142,7 @@ void Matrix::desallocate()
   _dataLength = 0;
 }
 
-//!redimensionne la matrice
+//redimensionne la matrice
 /*!
   Cette methode est utilisee pour specifier une nouvelle dimension de matrice de celle donnee lors de l'initialisation par le constructeur
   \param rows nombre de rows
@@ -161,7 +161,7 @@ void Matrix::redim(const long rows, const long cols)
   allocate(rows, cols);
 }
 
-//!affichage du contenu d'une matrice
+//affichage du contenu d'une matrice
 /*!
   Cette methode est une surdefinition de << pour les flux de sortie, son utilisation est donnee comme suit
   
@@ -182,7 +182,7 @@ std::ostream &operator<<(std::ostream &os, const Matrix &mat)
   return os;
 }
 
-//!affichage du contenu d'une matrice
+//affichage du contenu d'une matrice
 /*!
   Cette methode permet d'afficher le contenu d'une matrice sur la sortie std::ostream
   \param os flux de sortie
@@ -209,7 +209,7 @@ void Matrix::print(std::ostream &os) const
   os << "}}";
 }
 
-//!affectation d'egalite
+//affectation d'egalite
 /*! 
   Cette methode est une surdefinition de la methode d'egalite permettant d'ecrire simplement le remplissage des valeurs d'une matrice par un scalaire
   
@@ -231,7 +231,7 @@ void Matrix::setToValue(double val)
     _data[i] = val;
 }
 
-//!renvoie une matrice identite e partir d'une matrice quelconque
+//renvoie une matrice identite e partir d'une matrice quelconque
 /*!
   Cette methode prend en argument une matrice quelconque et renvoie une matrice identite
   
@@ -262,7 +262,7 @@ void Matrix::setToUnity()
       _data[Ind(i, j, _rows, _cols)] = (double)(i == j);
 }
 
-//!Maximum component in a matrix
+//Maximum component in a matrix
 /*!
   This method returns the maximum component of a matrix
 */
@@ -279,7 +279,7 @@ double Matrix::maxValue() const
   return max;
 }
 
-//!Minimum component in a matrix
+//Minimum component in a matrix
 /*!
   This method returns the minimum component of a matrix
 */
@@ -296,7 +296,7 @@ double Matrix::minValue() const
   return min;
 }
 
-//!Maximum absolute component in a matrix
+//Maximum absolute component in a matrix
 /*!
   This method returns the maximum absolute component of a matrix
 */
@@ -313,7 +313,7 @@ double Matrix::maxAbsoluteValue() const
   return max;
 }
 
-//!Minimum absolute component in a matrix
+//Minimum absolute component in a matrix
 /*!
   This method returns the minimum absolute component of a matrix
 */
@@ -330,7 +330,7 @@ double Matrix::minAbsoluteValue() const
   return min;
 }
 
-//!affectation d'egalite
+//affectation d'egalite
 /*! 
   Cette methode est une surdefinition de la methode d'egalite permettant d'ecrire simplement le remplissage des valeurs d'une matrice par un scalaire
   
@@ -350,7 +350,7 @@ Matrix &Matrix::operator=(const double &val)
   return *this;
 }
 
-//!affectation d'egalite
+//affectation d'egalite
 /*! 
   Cette methode est une surdefinition de la methode d'egalite permettant d'ecrire simplement l'affectation sous la forme donnee en exemple
   
@@ -375,7 +375,7 @@ Matrix &Matrix::operator=(const Matrix &mat)
   return *this;
 }
 
-//!affectation d'egalite
+//affectation d'egalite
 /*! 
   Cette methode est une surdefinition de la methode d'egalite permettant d'ecrire simplement l'affectation sous la forme donnee en exemple
   
@@ -400,7 +400,7 @@ Matrix &Matrix::operator=(const Tensor2 &tens)
   return *this;
 }
 
-//!addition de deux matrices
+//addition de deux matrices
 /*!
   Cette methode permet de surdefinir l'operation d'addition des matrices et d'ecrire simplement la somme de deux matrices sous la forme donnee en exemple
   
@@ -437,7 +437,7 @@ Matrix Matrix::operator+(const Matrix &mat) const
   return resu;
 }
 
-//!soustraction de deux matrices
+//soustraction de deux matrices
 /*!
   Cette methode permet de surdefinir l'operation de soustraction des matrices et d'ecrire simplement la soustraction de deux matrices sous la forme donnee en exemple
   
@@ -491,7 +491,7 @@ Matrix Matrix::operator-() const
   return resu;
 }
 
-//!addition de deux matrices
+//addition de deux matrices
 /*!
   Cette methode permet de surdefinir l'operation d'addition des matrices et d'ecrire simplement la somme de deux matrices sous la forme donnee en exemple
   
@@ -522,7 +522,7 @@ void Matrix::operator+=(const Matrix &mat)
     _data[i] += mat._data[i];
 }
 
-//!soustraction de deux matrices
+//soustraction de deux matrices
 /*!
   Cette methode permet de surdefinir l'operation de soustraction des matrices et d'ecrire simplement la soustraction de deux matrices sous la forme donnee en exemple
   
@@ -553,7 +553,7 @@ void Matrix::operator-=(const Matrix &mat)
     _data[i] -= mat._data[i];
 }
 
-//!multiplication d'une matrice par un scalaire
+//multiplication d'une matrice par un scalaire
 /*!
   Cette methode permet de surdefinir l'operation de multiplication des matrices et d'ecrire simplement la multiplication d'une matrice par un scalaire sous la forme donnee en exemple
   
@@ -578,7 +578,7 @@ Matrix Matrix::operator*(const double &lambda) const
   return resu;
 }
 
-//!multiplication d'une matrice par un scalaire
+//multiplication d'une matrice par un scalaire
 /*!
   Cette methode permet de surdefinir l'operation de multiplication des matrices et d'ecrire simplement la multiplication d'une matrice par un scalaire sous la forme donnee en exemple
   
@@ -601,7 +601,7 @@ void Matrix::operator*=(const double &lambda)
     _data[i] *= lambda;
 }
 
-//!division d'une matrice par un scalaire
+//division d'une matrice par un scalaire
 /*!
   Cette methode permet de surdefinir l'operation de division des matrices et d'ecrire simplement la division d'une matrice par un scalaire sous la forme donnee en exemple
   
@@ -624,7 +624,7 @@ void Matrix::operator/=(const double &lambda)
     _data[i] /= lambda;
 }
 
-//!division d'une matrice par un scalaire
+//division d'une matrice par un scalaire
 /*!
   Cette methode permet de surdefinir l'operation de division des matrices et d'ecrire simplement la division d'une matrice par un scalaire sous la forme donnee en exemple
   
@@ -649,7 +649,7 @@ Matrix Matrix::operator/(const double &lambda) const
   return resu;
 }
 
-//!multiplication d'une matrice par un scalaire
+//multiplication d'une matrice par un scalaire
 /*!
   Cette methode permet de surdefinir l'operation de multiplication des matrices et d'ecrire simplement la multiplication d'une matrice par un scalaire sous la forme donnee en exemple. Elle est identique e la forme precedente (et commutative).
   
@@ -674,7 +674,7 @@ Matrix operator*(const double &lambda, const Matrix &mat)
   return resu;
 }
 
-//!multiplication de deux matrices
+//multiplication de deux matrices
 /*!
   Cette methode permet de surdefinir l'operation de multiplication des matrices et d'ecrire simplement la multiplication de deux matrice sous la forme donnee en exemple. Cette operation correspond e la notion de produit contracte de deux matrices.
   
@@ -752,7 +752,7 @@ Matrix Matrix::singleProduct(const Matrix mat) const
   return resu;
 }
 
-//!Double contracted product of 2 second order tensors
+//Double contracted product of 2 second order tensors
 /*!
   This method defines a double contracted product of two second order tensors. 
   The result of this operation is a scalar defined by:
@@ -776,7 +776,7 @@ double Matrix::doubleProduct() const
   return (sum);
 }
 
-//!Double contracted product of 2 second order tensors
+//Double contracted product of 2 second order tensors
 /*!
   This method defines a double contracted product of two second order tensors. 
   The result of this operation is a scalar defined by:
@@ -800,7 +800,7 @@ double Matrix::doubleProduct(const Matrix mat) const
   return (sum);
 }
 
-//!multiplication de deux matrices
+//multiplication de deux matrices
 /*!
   Cette methode permet de surdefinir l'operation de multiplication des matrices et d'ecrire simplement la multiplication de deux matrice sous la forme donnee en exemple. Cette operation correspond e la notion de produit contracte de deux matrices.
   
@@ -831,7 +831,7 @@ Matrix Matrix::operator*(const MatrixDiag &mat) const
   return resu;
 }
 
-//!multiplication d'une matrices par une matrice diagonale
+//multiplication d'une matrices par une matrice diagonale
 /*!
   Cette methode permet de surdefinir l'operation de multiplication d'une matrice par une matrice diagonale et de stocker le resultat dans la matrice sur laquelle on applique la methode. Les deux matrices doivent etre de meme dimension pour que cette methode soit utilisable.
   Exemple :
@@ -871,7 +871,7 @@ void Matrix::squareMultiplyBy(const MatrixDiag &mat)
   }
 }
 
-//!multiplication d'une matrices par l'getInverse d'une matrice diagonale
+//multiplication d'une matrices par l'getInverse d'une matrice diagonale
 /*!
   Cette methode permet de surdefinir l'operation de multiplication d'une matrice par l'getInverse d'une matrice diagonale et de stocker le resultat dans la matrice sur laquelle on applique la methode. Les deux matrices doivent etre de meme dimension pour que cette methode soit utilisable.
   Exemple :
@@ -911,7 +911,7 @@ void Matrix::squareDivideBy(const MatrixDiag &mat)
   }
 }
 
-//!multiplication d'une matrice par un vecteur
+//multiplication d'une matrice par un vecteur
 /*!
   Cette methode calcule le produit d'une matrice A de taille N-x-M par un vecteur x de taille N. ceci genere un vecteur y de taille M. Cette methode utilise une routine Blas 2 et calcule le resultat de:
   \f[ y=A^{T}.x \f]
@@ -946,7 +946,7 @@ Vector Matrix::trans_mult(const Vector &vec) const
   return resu;
 }
 
-//!multiplication d'une matrice par un vecteur
+//multiplication d'une matrice par un vecteur
 /*!
   Cette methode calcule le produit d'une matrice A de taille N-x-M par un vecteur x de taille M. ceci genere un vecteur y de taille N. Cette methode utilise une routine Blas 2 et calcule le resultat de:
   \f[ y=A^{T}.x \f]
@@ -1003,7 +1003,7 @@ void Matrix::productBy(Vector &resu) const
   cblas_dgemv(CblasRowMajor, CblasNoTrans, _rows, _cols, 1, _data, _rows, vec._data, 1, 0, resu._data, 1);
 }
 
-//!calcule la trace d'une matrice
+//calcule la trace d'une matrice
 /*!
   Cette methode calcule la trace d'une matrice carree
   \return valeur de la trace de la matrice
@@ -1029,7 +1029,7 @@ double Matrix::getTrace() const
   return trace;
 }
 
-//!calcule la moyenne de la trace d'une matrice
+//calcule la moyenne de la trace d'une matrice
 /*!
   Cette methode calcule la moyenne de la trace d'une matrice carree
   \return valeur de la moyenne de la trace de la matrice
@@ -1055,7 +1055,7 @@ double Matrix::getAverageTrace() const
   return (trace / (double)_rows);
 }
 
-//!transposee d'une matrice
+//transposee d'une matrice
 /*!
   Cette methode renvoie la transposee d'une matrice
   \return transposee de la matrice
@@ -1075,7 +1075,7 @@ Matrix Matrix::getTranspose() const
   return resu;
 }
 
-//!sommation des rows d'une matrice
+//sommation des rows d'une matrice
 /*!
   Cette methode calcule la somme des termes sur les rows d'une matrice et renvoie un vecteur correspondant
   \return vecteur contenant les sommes sur les rows
@@ -1095,7 +1095,7 @@ Vector Matrix::rowSum() const
   return resu;
 }
 
-//!sommation des cols d'une matrice
+//sommation des cols d'une matrice
 /*!
   Cette methode calcule la somme des termes sur les cols d'une matrice et renvoie un vecteur correspondant
   \return vecteur contenant les sommes sur les rows
@@ -1115,7 +1115,7 @@ Vector Matrix::columnSum() const
   return resu;
 }
 
-//!partie symetrique d'une matrice
+//partie symetrique d'une matrice
 /*!
   Cette methode extraie la partie symetrique d'une matrice et la renvoie
   \warning Cette methode n'est disponible que pour les matrices de taille 2 et 3.
@@ -1143,7 +1143,7 @@ Matrix Matrix::getSymetricPart() const
   return result;
 }
 
-//!partie anti-symetrique d'une matrice
+//partie anti-symetrique d'une matrice
 /*!
   Cette methode extraie la partie anti-symetrique d'une matrice et la renvoie
   \warning Cette methode n'est disponible que pour les matrices de taille 2 et 3.
@@ -1171,7 +1171,7 @@ Matrix Matrix::getSkewSymetricPart() const
   return result;
 }
 
-//!extraction d'une ligne d'une matrice
+//extraction d'une ligne d'une matrice
 /*!
   Cette methode extraie une ligne d'une matrice et la renvoie
   \param row numero de la ligne de la matrice (origine 0).
@@ -1193,7 +1193,7 @@ Vector Matrix::getRow(long row) const
   return resu;
 }
 
-//!extraction d'une colonne d'une matrice
+//extraction d'une colonne d'une matrice
 /*!
   Cette methode extraie une colonne d'une matrice et la renvoie
   \param col numero de la colonne de la matrice (origine 0).
@@ -1215,7 +1215,7 @@ Vector Matrix::getColumn(long col) const
   return resu;
 }
 
-//!egalite de deux matrices
+//egalite de deux matrices
 /*!
   Cette methode teste l'egalite de deux matrices
   \return true si les deux matrices sont identiques, false dans la cas contraire
@@ -1242,7 +1242,7 @@ bool Matrix::operator==(const Matrix &mat) const
   return true;
 }
 
-//!inegalite de deux matrices
+//inegalite de deux matrices
 /*!
   Cette methode teste l'inegalite de deux matrices
   \return true si les deux matrices sont differentes, false dans la cas contraire
@@ -1256,7 +1256,7 @@ bool Matrix::operator!=(const Matrix &mat) const
   return !(*this == mat);
 }
 
-//!sortie sur flux std::ofstream
+//sortie sur flux std::ofstream
 /*!
   Cette methode permet d'ecrire une matrice dans un fichier (notament) binaire
   
@@ -1279,7 +1279,7 @@ void Matrix::write(std::ofstream &ofs) const
   ofs.write((char *)_data, _dataLength * sizeof(double));
 }
 
-//!lecture sur flux std::ifstream
+//lecture sur flux std::ifstream
 /*!
   Cette methode permet de lire une matrice depuis un fichier (notament) binaire
   
@@ -1304,7 +1304,7 @@ void Matrix::read(std::ifstream &ifs)
   ifs.read((char *)_data, _dataLength * sizeof(double));
 }
 
-//!sortie sur flux std::ofstream
+//sortie sur flux std::ofstream
 /*!
   Cette methode permet d'ecrire une matrice dans un fichier (notament) binaire
   
@@ -1325,7 +1325,7 @@ std::ofstream &operator<<(std::ofstream &os, const Matrix &mat)
   return os;
 }
 
-//!lecture sur flux std::ifstream
+//lecture sur flux std::ifstream
 /*!
   Cette methode permet de lire une matrice depuis un fichier (notament) binaire
   
@@ -1384,7 +1384,7 @@ double Matrix::getDeterminant3x3() const
          _data[0] * _data[4] * _data[8];
 }
 
-//!determinant d'une matrice carree
+//determinant d'une matrice carree
 /*!
   Cette methode calcule le determinant d'une matrice carree en utilisant la routine DGETRF de la librairie Lapack. Cette routine calcule la decomposition LU d'une matrice generale A de taille M-x-N en utilisant des pivots partiels avec echange de ligne. La factorisation a la forme  A = P * L * U avec P matrice de permutations, L la partie triangulaire inferieure avec elements unitaires sur la diagonale et U la partie triangulaire superieure. On a alors 
   \f[
@@ -1505,7 +1505,7 @@ void Matrix::computeInverse3x3(double det, Matrix &inverse) const
   inverse._data[8] = (_data[0] * _data[4] - _data[1] * _data[3]) / det;
 }
 
-//!getInverse d'une matrice
+//getInverse d'une matrice
 /*!
   Cette methode calcule l'getInverse d'une matrice et le renvoie. Elle utilise les fonctions DGETRF et DGETRI de la librairie Lapack. La matrice initiale est preservee par cette methode.
   \return valeur de l'getInverse d'une matrice
@@ -1562,7 +1562,7 @@ Matrix Matrix::getInverse() const
   return inv;
 }
 
-//!resolution d'un systeme lineaire
+//resolution d'un systeme lineaire
 /*!
   Cette methode calcule la solution du systeme lineaire  \f[ A x = b \f] avec A matrice N-x-N et x et y vecteurs de taille N. Cette methode utilise les routines DGETRF et DGETRS de la librairie Lapack.
 
@@ -1611,7 +1611,7 @@ Vector Matrix::getSolve(const Vector &vect) const
   return result;
 }
 
-//!resolution d'un systeme lineaire
+//resolution d'un systeme lineaire
 /*!
   Cette methode calcule la solution du systeme lineaire  \f[ A x = b \f] avec A matrice N-x-N et x et y vecteurs de taille N. Cette methode utilise les routines DGETRF et DGETRS de la librairie Lapack.
 
@@ -1650,7 +1650,7 @@ void Matrix::solve(Vector &b)
   delete[] ipiv;
 }
 
-//!evaluation du Null Space d'une matrice
+//evaluation du Null Space d'une matrice
 /*!
   Cette methode calcule le Null Space d'une matrice \f$ \textbf{A} \f$. Le null-space de  \f$ \textbf{A}=N.S.(\textbf{A})\subset\mathcal{W} \f$  est l'ensemble des elements de \f$ \mathcal{V} \f$ tels que \f$ \textbf{A}(\overrightarrow{_data})=\overrightarrow{0} \f$. Cette methode utilise la routine DGESVD de la librairie Lapack.
 
@@ -1853,7 +1853,7 @@ Matrix Matrix::getNullSpace2(bool relative, double tol)
   return ret;
 }
 
-//!evaluation valeurs propres et des vecteurs propres e droite et e gauche
+//evaluation valeurs propres et des vecteurs propres e droite et e gauche
 /*!
   Cette methode calcule les valeurs propres et les vecteurs propres e droite et e gauche d'une matrice \f$ \textbf{A} \f$. Cette methode utilise la routine DGESVD de la librairie Lapack.
 
@@ -2034,7 +2034,7 @@ void Matrix::computeEigenVectors2(Vector &eigenValues)
   }
 }
 
-//!evaluation de la pseudo getInverse d'une matrice
+//evaluation de la pseudo getInverse d'une matrice
 /*!
   Cette methode calcule la pseudoInverse d'une matrice \f$ \textbf{A} \f$. Cette methode utilise la routine DGESVD de la librairie Lapack.
 
@@ -2078,7 +2078,7 @@ Matrix Matrix::getPseudoInverse(bool relative, double tol)
   return result;
 }
 
-//!evaluation de la pseudo getInverse d'une matrice et du Null-Space
+//evaluation de la pseudo getInverse d'une matrice et du Null-Space
 /*!
   Cette methode calcule la pseudoInverse et le Null-Space d'une matrice \f$ \textbf{A} \f$. Cette methode utilise la routine DGESVD de la librairie Lapack.
 
@@ -2150,7 +2150,7 @@ void Matrix::computePseudoInverse(Matrix &Kplus, Matrix &NS, bool relative, doub
   }
 }
 
-//!Assemblage d'une matrice dans une autre
+//Assemblage d'une matrice dans une autre
 /*!
   Cette methode effectue la phase d'assemblage d'une matrice dans une autre conformement e ce qui se fait classiquement en Elements Finis.
   
@@ -2340,7 +2340,7 @@ void Matrix::scatterFrom(const Matrix &M, long *ind0, int numberOfDim)
 #endif
 }
 
-//!affichage e l'ecran suivant format predefini
+//affichage e l'ecran suivant format predefini
 /*!
   Cette methode affiche le contenu de la matrice e l'ecran selon un format predefini. La selection du format d'affichage est faite en utilisant la methode \ref setOutType(). Le type de sortie est definit par les variable enumerees dans \ref OutMatrix.
   \author Olivier PANTALE
@@ -2391,7 +2391,7 @@ void Matrix::printOut()
   }
 }
 
-//!Saves the content of a Matrix into a NumPy file
+//Saves the content of a Matrix into a NumPy file
 /*!
   This method saves the content of a Matrix object into a NumPy file defined by its filename. If the flag initialize is true, the current file will be concatenated.
 
@@ -2411,7 +2411,7 @@ void Matrix::numpyWrite(std::string filename, bool initialize) const
   NumpyInterface::npySave(filename, &_data[0], {_rows, _cols}, mode);
 }
 
-//!Saves the content of a Matrix into a NumPyZ file
+//Saves the content of a Matrix into a NumPyZ file
 /*!
   This method saves the content of a vec3D object into a NumPyZ file defined by its filename. If the flag initialize is true, the current file will be concatenated.
 
@@ -2431,7 +2431,7 @@ void Matrix::numpyWriteZ(std::string filename, std::string name, bool initialize
   NumpyInterface::npzSave(filename, name, &_data[0], {_rows, _cols}, mode);
 }
 
-//!Read the content of a Matrix from a NumPy file
+//Read the content of a Matrix from a NumPy file
 /*!
   This method reads the content of a vec3D object from a NumPy file defined by its filename.
 
@@ -2456,7 +2456,7 @@ void Matrix::numpyRead(std::string filename)
   memcpy(_data, arr.data<double *>(), arr.num_vals * arr.word_size);
 }
 
-//!Read the content of a Matrix from a NumPyZ file
+//Read the content of a Matrix from a NumPyZ file
 /*!
   This method reads the content of a vec3D object from a NumPyZ file defined by its filename.
 

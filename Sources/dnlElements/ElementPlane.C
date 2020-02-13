@@ -96,6 +96,60 @@ bool ElementPlane::computeJacobian(bool reference)
 }
 
 //-----------------------------------------------------------------------------
+bool ElementPlane::computeUnderJacobian(bool reference)
+//-----------------------------------------------------------------------------
+{
+  Node *node;
+  const IntegrationPointData *integrationPointData;
+
+  for (short intPtId = 0; intPtId < underIntegrationPoints.getSize(); intPtId++)
+  {
+    // recuperation du point d'integration courant
+    setCurrentUnderIntegrationPoint(intPtId);
+    integrationPointData = &_elementData->integrationPoint[intPtId];
+
+    // initialisation de J
+    _underIntegrationPoint->JxW = 0.0;
+
+    // calcul de J
+    for (short nodeId = 0; nodeId < nodes.getSize(); nodeId++)
+    {
+      node = nodes(nodeId);
+      _underIntegrationPoint->JxW(0, 0) += integrationPointData->derShapeFunction(nodeId, 0) * node->coordinates(0);
+      _underIntegrationPoint->JxW(0, 1) += integrationPointData->derShapeFunction(nodeId, 1) * node->coordinates(0);
+      _underIntegrationPoint->JxW(1, 0) += integrationPointData->derShapeFunction(nodeId, 0) * node->coordinates(1);
+      _underIntegrationPoint->JxW(1, 1) += integrationPointData->derShapeFunction(nodeId, 1) * node->coordinates(1);
+    }
+
+    // determinant de J
+    _underIntegrationPoint->detJ = _underIntegrationPoint->JxW.getDeterminant2x2();
+
+    // test de positivite du Jacobien
+    if (_underIntegrationPoint->detJ < 0.0)
+    {
+      std::cerr << "Negative value of detJ encountered in element " << number << " at integration point " << intPtId + 1 << std::endl;
+      return false;
+    }
+
+    // calcul de l'inverse de J
+    _underIntegrationPoint->JxW.computeInverse2x2(_underIntegrationPoint->detJ, _underIntegrationPoint->invJxW);
+
+    // recalcul de dShapeFunction
+    _underIntegrationPoint->dShapeFunction = integrationPointData->derShapeFunction * _underIntegrationPoint->invJxW;
+
+    if (reference)
+    {
+      _underIntegrationPoint->detJ0 = _underIntegrationPoint->detJ;
+      if (getFamily() == Element::Axisymetric)
+      {
+        _underIntegrationPoint->detJ0 = _underIntegrationPoint->detJ * getRadiusAtIntegrationPoint();
+      }
+    }
+  }
+  return true;
+}
+
+//-----------------------------------------------------------------------------
 void ElementPlane::getV_atIntPoint(Vec3D &v, short time)
 //-----------------------------------------------------------------------------
 {
@@ -114,13 +168,14 @@ void ElementPlane::getV_atIntPoint(Vec3D &v, short time)
 }
 
 //-----------------------------------------------------------------------------
-void ElementPlane::computeElasticStiffnessMatrix()
+void ElementPlane::computeElasticStiffnessMatrix(bool underIntegration)
 //-----------------------------------------------------------------------------
 {
   long pt;
   double WxdJ, R;
   long i, I, j, J;
   long pts;
+  IntegrationPointBase *currentIntPoint;
 
   // initialisation
   stiffnessMatrix = 0;
@@ -136,8 +191,15 @@ void ElementPlane::computeElasticStiffnessMatrix()
   Matrix CB(C.rows(), getNumberOfDimensions() * getNumberOfNodes());
 
   // nomre de points d'integration
+  if (underIntegration)
+  {
+    computeUnderJacobian();
+    pts = underIntegrationPoints.getSize();
+  }
+  else
+  {
     pts = integrationPoints.getSize();
-  
+  }
 
   // parallelisation
   //#pragma omp parallel for private(WxdJ),shared(stiffnessMatrix)
@@ -146,34 +208,49 @@ void ElementPlane::computeElasticStiffnessMatrix()
   {
 
     // recuperation du point d'integration
-      setCurrentIntegrationPoint(pt);    
-
-    // calcul du terme d'integration numerique
-    WxdJ = _integrationPoint->integrationPointData->weight * _integrationPoint->detJ;
-    if (getFamily() == Element::Axisymetric)
+    if (underIntegration)
     {
-      R = getRadiusAtIntegrationPoint();
-      WxdJ *= 2 * PI * R;
+      currentIntPoint = getUnderIntegrationPoint(pt);
+      // calcul du terme d'integration numerique
+      WxdJ = currentIntPoint->integrationPointData->weight * currentIntPoint->detJ;
+      if (getFamily() == Element::Axisymetric)
+      {
+        setCurrentUnderIntegrationPoint(pt);
+        R = getRadiusAtUnderIntegrationPoint();
+        WxdJ *= dnl2PI * R;
+      }
+    }
+    else
+    {
+      currentIntPoint = getIntegrationPoint(pt);
+      // calcul du terme d'integration numerique
+      WxdJ = currentIntPoint->integrationPointData->weight * currentIntPoint->detJ;
+      if (getFamily() == Element::Axisymetric)
+      {
+        setCurrentIntegrationPoint(pt);
+        R = getRadiusAtIntegrationPoint();
+        WxdJ *= dnl2PI * R;
+      }
     }
 
     // calcul de C.B
     for (i = 0; i < getNumberOfNodes(); i++)
     {
       I = getNumberOfDimensions() * i;
-      CB(0, I) = (C(0, 0) * _integrationPoint->dShapeFunction(i, 0) + C(0, 2) * _integrationPoint->dShapeFunction(i, 1));
-      CB(1, I) = (C(1, 0) * _integrationPoint->dShapeFunction(i, 0) + C(1, 2) * _integrationPoint->dShapeFunction(i, 1));
-      CB(2, I) = (C(2, 0) * _integrationPoint->dShapeFunction(i, 0) + C(2, 2) * _integrationPoint->dShapeFunction(i, 1));
-      CB(0, I + 1) = (C(0, 1) * _integrationPoint->dShapeFunction(i, 1) + C(0, 2) * _integrationPoint->dShapeFunction(i, 0));
-      CB(1, I + 1) = (C(1, 1) * _integrationPoint->dShapeFunction(i, 1) + C(1, 2) * _integrationPoint->dShapeFunction(i, 0));
-      CB(2, I + 1) = (C(2, 1) * _integrationPoint->dShapeFunction(i, 1) + C(2, 2) * _integrationPoint->dShapeFunction(i, 0));
+      CB(0, I) = (C(0, 0) * currentIntPoint->dShapeFunction(i, 0) + C(0, 2) * currentIntPoint->dShapeFunction(i, 1));
+      CB(1, I) = (C(1, 0) * currentIntPoint->dShapeFunction(i, 0) + C(1, 2) * currentIntPoint->dShapeFunction(i, 1));
+      CB(2, I) = (C(2, 0) * currentIntPoint->dShapeFunction(i, 0) + C(2, 2) * currentIntPoint->dShapeFunction(i, 1));
+      CB(0, I + 1) = (C(0, 1) * currentIntPoint->dShapeFunction(i, 1) + C(0, 2) * currentIntPoint->dShapeFunction(i, 0));
+      CB(1, I + 1) = (C(1, 1) * currentIntPoint->dShapeFunction(i, 1) + C(1, 2) * currentIntPoint->dShapeFunction(i, 0));
+      CB(2, I + 1) = (C(2, 1) * currentIntPoint->dShapeFunction(i, 1) + C(2, 2) * currentIntPoint->dShapeFunction(i, 0));
       if (getFamily() == Element::Axisymetric)
       {
-        CB(3, I) = (C(3, 0) * _integrationPoint->dShapeFunction(i, 0) + C(3, 2) * _integrationPoint->dShapeFunction(i, 1));
-        CB(3, I + 1) = (C(3, 1) * _integrationPoint->dShapeFunction(i, 1) + C(3, 2) * _integrationPoint->dShapeFunction(i, 0));
-        CB(0, I) += C(0, 3) * _integrationPoint->integrationPointData->shapeFunction(i) / R;
-        CB(1, I) += C(1, 3) * _integrationPoint->integrationPointData->shapeFunction(i) / R;
-        CB(2, I) += C(2, 3) * _integrationPoint->integrationPointData->shapeFunction(i) / R;
-        CB(3, I) += C(3, 3) * _integrationPoint->integrationPointData->shapeFunction(i) / R;
+        CB(3, I) = (C(3, 0) * currentIntPoint->dShapeFunction(i, 0) + C(3, 2) * currentIntPoint->dShapeFunction(i, 1));
+        CB(3, I + 1) = (C(3, 1) * currentIntPoint->dShapeFunction(i, 1) + C(3, 2) * currentIntPoint->dShapeFunction(i, 0));
+        CB(0, I) += C(0, 3) * currentIntPoint->integrationPointData->shapeFunction(i) / R;
+        CB(1, I) += C(1, 3) * currentIntPoint->integrationPointData->shapeFunction(i) / R;
+        CB(2, I) += C(2, 3) * currentIntPoint->integrationPointData->shapeFunction(i) / R;
+        CB(3, I) += C(3, 3) * currentIntPoint->integrationPointData->shapeFunction(i) / R;
       }
     }
 
@@ -183,17 +260,35 @@ void ElementPlane::computeElasticStiffnessMatrix()
       {
         I = getNumberOfDimensions() * i;
         J = getNumberOfDimensions() * j;
-        stiffnessMatrix(I, J) += (_integrationPoint->dShapeFunction(i, 0) * CB(0, J) + _integrationPoint->dShapeFunction(i, 1) * CB(2, J)) * WxdJ;
-        stiffnessMatrix(I, J + 1) += (_integrationPoint->dShapeFunction(i, 0) * CB(0, J + 1) + _integrationPoint->dShapeFunction(i, 1) * CB(2, J + 1)) * WxdJ;
-        stiffnessMatrix(I + 1, J) += (_integrationPoint->dShapeFunction(i, 1) * CB(1, J) + _integrationPoint->dShapeFunction(i, 0) * CB(2, J)) * WxdJ;
-        stiffnessMatrix(I + 1, J + 1) += (_integrationPoint->dShapeFunction(i, 1) * CB(1, J + 1) + _integrationPoint->dShapeFunction(i, 0) * CB(2, J + 1)) * WxdJ;
+        stiffnessMatrix(I, J) += (currentIntPoint->dShapeFunction(i, 0) * CB(0, J) + currentIntPoint->dShapeFunction(i, 1) * CB(2, J)) * WxdJ;
+        stiffnessMatrix(I, J + 1) += (currentIntPoint->dShapeFunction(i, 0) * CB(0, J + 1) + currentIntPoint->dShapeFunction(i, 1) * CB(2, J + 1)) * WxdJ;
+        stiffnessMatrix(I + 1, J) += (currentIntPoint->dShapeFunction(i, 1) * CB(1, J) + currentIntPoint->dShapeFunction(i, 0) * CB(2, J)) * WxdJ;
+        stiffnessMatrix(I + 1, J + 1) += (currentIntPoint->dShapeFunction(i, 1) * CB(1, J + 1) + currentIntPoint->dShapeFunction(i, 0) * CB(2, J + 1)) * WxdJ;
         if (getFamily() == Element::Axisymetric)
         {
-          stiffnessMatrix(I, J) += CB(3, J) * _integrationPoint->integrationPointData->shapeFunction(i) / R * WxdJ;
-          stiffnessMatrix(I, J + 1) += CB(3, J + 1) * _integrationPoint->integrationPointData->shapeFunction(i) / R * WxdJ;
+          stiffnessMatrix(I, J) += CB(3, J) * currentIntPoint->integrationPointData->shapeFunction(i) / R * WxdJ;
+          stiffnessMatrix(I, J + 1) += CB(3, J + 1) * currentIntPoint->integrationPointData->shapeFunction(i) / R * WxdJ;
         }
       }
   }
+}
+
+//-----------------------------------------------------------------------------
+double ElementPlane::getRadiusAtIntegrationPoint()
+//-----------------------------------------------------------------------------
+{
+  fatalError("ElementPlane::getRadiusAtIntegrationPoint",
+             "Method is not callable\n");
+  return 0.0;
+}
+
+//-----------------------------------------------------------------------------
+double ElementPlane::getRadiusAtUnderIntegrationPoint()
+//-----------------------------------------------------------------------------
+{
+  fatalError("ElementPlane::getRadiusAtUnderIntegrationPoint",
+             "Method is not callable\n");
+  return 0.0;
 }
 
 /*

@@ -31,7 +31,7 @@
 
 #define precisionPolarDecompose 10.0E-10
 
-//!Constructor of the Tensor2 class
+//Constructor of the Tensor2 class
 /*!
   This method is the default constructor of a second order tensor. All components are initialized to zero by default.
 */
@@ -42,7 +42,7 @@ Tensor2::Tensor2()
   setToValue(0.0);
 }
 
-//!Copy constructor of the Tensor2 class
+//Copy constructor of the Tensor2 class
 //-----------------------------------------------------------------------------
 Tensor2::Tensor2(const Tensor2 &tensor)
 //-----------------------------------------------------------------------------
@@ -50,7 +50,7 @@ Tensor2::Tensor2(const Tensor2 &tensor)
   memcpy(_data, tensor._data, 9 * sizeof(double));
 }
 
-//!Constructor of the Tensor2 class
+//Constructor of the Tensor2 class
 /*!
   This method is a constructor of a second order tensor with initialization of the 9 values.
 */
@@ -69,14 +69,14 @@ Tensor2::Tensor2(double t11, double t12, double t13, double t21, double t22, dou
   _data[8] = t33;
 }
 
-//!Destructor of the Tensor2 class
+//Destructor of the Tensor2 class
 //-----------------------------------------------------------------------------
 Tensor2::~Tensor2()
 //-----------------------------------------------------------------------------
 {
 }
 
-//!Send the content of a second order tensor to the output flux for display
+//Send the content of a second order tensor to the output flux for display
 /*!
   Example
   \code
@@ -93,7 +93,7 @@ std::ostream &operator<<(std::ostream &os, const Tensor2 &tensor)
   return os;
 }
 
-//!Print the content of a second order tensor to the output flux for display
+//Print the content of a second order tensor to the output flux for display
 /*!
   \param os Output flux
 */
@@ -121,7 +121,7 @@ void Tensor2::print(std::ostream &os) const
   os << "}}";
 }
 
-//!Returns a unity tensor
+//Returns a unity tensor
 /*!
   This method transforms the current tensor to a unity tensor.
 
@@ -154,7 +154,7 @@ void Tensor2::setToZero()
   setToValue(0.0);
 }
 
-//!Fill a second order tensor with a scalar value
+//Fill a second order tensor with a scalar value
 /*!
   This method is a surdefinition of the = operator for the second order tensor class.
 
@@ -173,7 +173,7 @@ Tensor2 &Tensor2::operator=(const double &val)
   return *this;
 }
 
-//!Copy the content of a second order tensor into a new one
+//Copy the content of a second order tensor into a new one
 /*!
   This method is the so called = operator between two second order tensors. If the \ref MEM_funct is set, the \ref memcpy function is used for the copy.
 
@@ -208,7 +208,7 @@ Tensor2 &Tensor2::operator=(const SymTensor2 &tensor)
   return *this;
 }
 
-//!Addition of 2 second order tensors
+//Addition of 2 second order tensors
 /*!
   This method defines the addition of 2 second order tensors.
   The result of this operation is also a second order tensor defined by:
@@ -243,7 +243,7 @@ Tensor2 Tensor2::operator+(const Tensor2 &tensor) const
   return result;
 }
 
-//!Difference of 2 second order tensors
+//Difference of 2 second order tensors
 /*!
   This method defines the difference of 2 second order tensors.
   The result of this operation is also a second order tensor defined by:
@@ -297,7 +297,7 @@ Tensor2 Tensor2::operator-() const
   return result;
 }
 
-//!Multiplication of a second order tensor by a scalar value
+//Multiplication of a second order tensor by a scalar value
 /*!
   This method defines the multiplication of a second order tensor by a scalar value
   The result of this operation is also a second order tensor defined by:
@@ -330,7 +330,7 @@ Tensor2 Tensor2::operator*(const double lambda) const
   return result;
 }
 
-//!Division of a second order tensor by a scalar value
+//Division of a second order tensor by a scalar value
 /*!
   This method defines the division of a second order tensor by a scalar value
   The result of this operation is also a second order tensor defined by:
@@ -371,7 +371,7 @@ Tensor2 Tensor2::operator/(const double lambda) const
   return result;
 }
 
-//!Multiplication of a second order tensor by a scalar value
+//Multiplication of a second order tensor by a scalar value
 /*!
   This method defines the multiplication of a second order tensor by a scalar value
   The result of this operation is also a second order tensor defined by:
@@ -405,7 +405,7 @@ Tensor2 operator*(const double &lambda, const Tensor2 &tensor)
   return result;
 }
 
-//!Multiplication of 2 second order tensors
+//Multiplication of 2 second order tensors
 /*!
   This method defines a single contracted product of two second order tensors. 
   The result of this operation is also a second order tensor defined by:
@@ -436,7 +436,7 @@ Tensor2 Tensor2::singleProduct() const
   return result;
 }
 
-//!Multiplication of 2 second order tensors
+//Multiplication of 2 second order tensors
 /*!
   This method defines a single contracted product of two second order tensors. 
   The result of this operation is also a second order tensor defined by:
@@ -464,7 +464,7 @@ SymTensor2 Tensor2::singleProductTxN() const
   return result;
 }
 
-//!Multiplication of 2 second order tensors
+//Multiplication of 2 second order tensors
 /*!
   This method defines a single contracted product of two second order tensors. 
   The result of this operation is also a second order tensor defined by:
@@ -492,7 +492,7 @@ SymTensor2 Tensor2::singleProductNxT() const
   return result;
 }
 
-//!Multiplication of 2 second order tensors
+//Multiplication of 2 second order tensors
 /*!
   This method defines a single contracted product of two second order tensors. 
   The result of this operation is also a second order tensor defined by:
@@ -523,7 +523,7 @@ Tensor2 Tensor2::operator*(const Tensor2 &tensor) const
   return result;
 }
 
-//!Multiplication of 2 second order tensors
+//Multiplication of 2 second order tensors
 /*!
   This method defines a single contracted product of two second order tensors. 
   The result of this operation is also a second order tensor defined by:
@@ -554,7 +554,7 @@ Tensor2 Tensor2::operator*(const SymTensor2 &tensor) const
   return result;
 }
 
-//!Multiplication of a second order tensor by a vector
+//Multiplication of a second order tensor by a vector
 /*!
   This method defines the product of a second order tensor by a vector.
   The result of this operation is also a vector defined by:
@@ -581,7 +581,7 @@ Vec3D Tensor2::operator*(const Vec3D &vector) const
   return result;
 }
 
-//!Multiplication of 2 second order tensors
+//Multiplication of 2 second order tensors
 /*!
   This method defines a single contracted product of two second order tensors. 
   The result of this operation is also a second order tensor defined by:
@@ -600,7 +600,7 @@ Tensor2 Tensor2::singleProduct(const Tensor2 tensor) const
   return (*this) * tensor;
 }
 
-//!Double contracted product of 2 second order tensors
+//Double contracted product of 2 second order tensors
 /*!
   This method defines a double contracted product of two second order tensors. 
   The result of this operation is a scalar defined by:
@@ -622,7 +622,7 @@ double Tensor2::doubleProduct() const
           _data[6] * _data[2] + _data[7] * _data[5] + _data[8] * _data[8]);
 }
 
-//!Double contracted product of 2 second order tensors
+//Double contracted product of 2 second order tensors
 /*!
   This method defines a double contracted product of two second order tensors. 
   The result of this operation is a scalar defined by:
@@ -644,7 +644,7 @@ double Tensor2::doubleProduct(const Tensor2 tensor) const
           _data[6] * tensor._data[6] + _data[7] * tensor._data[7] + _data[8] * tensor._data[8]);
 }
 
-//!Deviator of a second order tensor
+//Deviator of a second order tensor
 /*!
   This method defines the getDeviator of a second second order tensor.
   The result of this operation is a second order tensor defined by:
@@ -665,7 +665,7 @@ Tensor2 Tensor2::getDeviator() const
   return result;
 }
 
-//!getTranspose of a second order tensor
+//getTranspose of a second order tensor
 /*!
   This method defines the transpose of a second second order tensor.
   The result of this operation is a second order tensor defined by:
@@ -679,7 +679,7 @@ Tensor2 Tensor2::getTranspose() const
   return Tensor2(_data[0], _data[3], _data[6], _data[1], _data[4], _data[7], _data[2], _data[5], _data[8]);
 }
 
-//!Sum of the rows of a second order tensor
+//Sum of the rows of a second order tensor
 /*!
   This method returns a vector by computing the sum of the components on all rows of a second second order tensor.
   The result of this operation is a vector defined by:
@@ -693,7 +693,7 @@ Vec3D Tensor2::rowSum() const
   return Vec3D(_data[0] + _data[1] + _data[2], _data[3] + _data[4] + _data[5], _data[6] + _data[7] + _data[8]);
 }
 
-//!Sum of the columns of a second order tensor
+//Sum of the columns of a second order tensor
 /*!
   This method returns a vector by computing the sum of the components on all columns of a second second order tensor.
   The result of this operation is a vector defined by:
@@ -707,7 +707,7 @@ Vec3D Tensor2::columnSum() const
   return Vec3D(_data[0] + _data[3] + _data[6], _data[1] + _data[4] + _data[7], _data[2] + _data[5] + _data[8]);
 }
 
-//!Symmetric part of a second order tensor
+//Symmetric part of a second order tensor
 /*!
   This method returns the symmetric part of a second second order tensor.
   The result of this operation is a second second order tensor defined by:
@@ -735,7 +735,7 @@ Tensor2 Tensor2::getSymetricPart() const
                  _data[8]);
 }
 
-//!Skew-symmetric part of a second order tensor
+//Skew-symmetric part of a second order tensor
 /*!
   This method returns the skew-symmetric part of a second second order tensor.
   The result of this operation is a second second order tensor defined by:
@@ -763,7 +763,7 @@ Tensor2 Tensor2::getSkewSymetricPart() const
                  0.0);
 }
 
-//!Extraction of a row from a second order tensor
+//Extraction of a row from a second order tensor
 /*!
   This method returns a vector as part of a second second order tensor.
   The result of this operation with the argument j is a vector defined by:
@@ -785,7 +785,7 @@ Vec3D Tensor2::getRow(int row) const
   return result;
 }
 
-//!Extraction of a column from a second order tensor
+//Extraction of a column from a second order tensor
 /*!
   This method returns a vector as part of a second second order tensor.
   The result of this operation with the argument j is a vector defined by:
@@ -807,7 +807,7 @@ Vec3D Tensor2::getColumn(int col) const
   return result;
 }
 
-//!Test the equality of two second order tensors
+//Test the equality of two second order tensors
 /*!
   This method tests the equality of two second order tensors.
   It returns \ref true if all components of the two second order tensors are equals, \ref false on other case.
@@ -828,7 +828,7 @@ bool Tensor2::operator==(const Tensor2 &tensor) const
   return true;
 }
 
-//!Test the equality of two second order tensors
+//Test the equality of two second order tensors
 /*!
   This method tests the equality of two second order tensors.
   It returns \ref false if all components of the two second order tensors are equals, \ref true on other case.
@@ -842,7 +842,7 @@ bool Tensor2::operator!=(const Tensor2 &tensor) const
   return !(*this == tensor);
 }
 
-//!Writes a second order tensor in a binary flux for storage
+//Writes a second order tensor in a binary flux for storage
 /*!
   This method is used to store the components of a second order tensor in a binary file.
 
@@ -861,7 +861,7 @@ void Tensor2::write(std::ofstream &ofs) const
   ofs.write((char *)_data, 9 * sizeof(double));
 }
 
-//!Reads a second order tensor in a binary flux from storage
+//Reads a second order tensor in a binary flux from storage
 /*!
   This method is used to read the components of a second order tensor in a binary file.
 
@@ -880,7 +880,7 @@ void Tensor2::read(std::ifstream &ifs)
   ifs.read((char *)_data, 9 * sizeof(double));
 }
 
-//!Writes a second order tensor in a binary flux for storage
+//Writes a second order tensor in a binary flux for storage
 /*!
   This method is used to store the components of a second order tensor in a binary file.
 
@@ -901,7 +901,7 @@ std::ofstream &operator<<(std::ofstream &os, const Tensor2 &tensor)
   return os;
 }
 
-//!Reads a second order tensor from a binary flux for storage
+//Reads a second order tensor from a binary flux for storage
 /*!
   This method is used to read the components of a second order tensor in a binary file.
 
@@ -922,7 +922,7 @@ std::ifstream &operator>>(std::ifstream &is, Tensor2 &tensor)
   return is;
 }
 
-//!Maximum component in a vector
+//Maximum component in a vector
 /*!
   This method returns the maximum component of a vector
 */
@@ -939,7 +939,7 @@ double Tensor2::maxValue()
   return max;
 }
 
-//!Minimum component in a vector
+//Minimum component in a vector
 /*!
   This method returns the minimum component of a vector
 */
@@ -956,7 +956,7 @@ double Tensor2::minValue()
   return min;
 }
 
-//!Maximum absolute component in a vector
+//Maximum absolute component in a vector
 /*!
   This method returns the maximum absolute component of a vector
 */
@@ -973,7 +973,7 @@ double Tensor2::maxAbsoluteValue()
   return max;
 }
 
-//!Minimum absolute component in a vector
+//Minimum absolute component in a vector
 /*!
   This method returns the minimum absolute component of a vector
 */
@@ -990,7 +990,7 @@ double Tensor2::minAbsoluteValue()
   return min;
 }
 
-//!Inverse of a second order tensor
+//Inverse of a second order tensor
 /*!
   This method returns the getInverse of a second second order tensor.
   The result of this operation is a second order tensor defined by:
@@ -1064,7 +1064,7 @@ Vec3D Tensor2::solve(const Vec3D &b) const
   return Vec3D(getInverse() * b);
 }
 
-//!Polar decomposition of a second order tensor with computation of the \f$ ln[U] \f$ and \f$ R \f$ tensors.
+//Polar decomposition of a second order tensor with computation of the \f$ ln[U] \f$ and \f$ R \f$ tensors.
 /*!
   This method computes the polar decomposition of a second order tensor with computation of the \f$ ln[U] \f$ and \f$ R \f$ tensors as the returning arguments.
   The logarithm of a symmetric tensor is givent by the following formulation:
@@ -1203,7 +1203,7 @@ void Tensor2::polarDecomposeLnU(SymTensor2 &LnU, Tensor2 &R) const
   fatalError("Tensor2::polarDecomposeLnU", "No convergence");
 }
 
-//!Polar decomposition of a second order tensor with computation of the \f$ U \f$ and \f$ R \f$ tensors.
+//Polar decomposition of a second order tensor with computation of the \f$ U \f$ and \f$ R \f$ tensors.
 /*!
   This method computes the polar decomposition of a second order tensor with computation of the \f$ U \f$ and \f$ R \f$ tensors as the returning arguments.
 
@@ -1340,7 +1340,7 @@ void Tensor2::polarDecompose(SymTensor2 &U, Tensor2 &R) const
   fatalError("Tensor2::polarDecompose", "No convergence");
 }
 
-//!Saves the content of a Tensor2 into a NumPy file
+//Saves the content of a Tensor2 into a NumPy file
 /*!
   This method saves the content of a Tensor2 object into a NumPy file defined by its filename. If the flag initialize is true, the current file will be concatenated.
 
@@ -1360,7 +1360,7 @@ void Tensor2::numpyWrite(std::string filename, bool initialize) const
   NumpyInterface::npySave(filename, &_data[0], {3, 3}, mode);
 }
 
-//!Saves the content of a Tensor2 into a NumPyZ file
+//Saves the content of a Tensor2 into a NumPyZ file
 /*!
   This method saves the content of a vec3D object into a NumPyZ file defined by its filename. If the flag initialize is true, the current file will be concatenated.
 
@@ -1380,7 +1380,7 @@ void Tensor2::numpyWriteZ(std::string filename, std::string name, bool initializ
   NumpyInterface::npzSave(filename, name, &_data[0], {3, 3}, mode);
 }
 
-//!Read the content of a Tensor2 from a NumPy file
+//Read the content of a Tensor2 from a NumPy file
 /*!
   This method reads the content of a vec3D object from a NumPy file defined by its filename.
 
@@ -1403,7 +1403,7 @@ void Tensor2::numpyRead(std::string filename)
   memcpy(_data, arr.data<double *>(), arr.num_vals * arr.word_size);
 }
 
-//!Read the content of a Tensor2 from a NumPyZ file
+//Read the content of a Tensor2 from a NumPyZ file
 /*!
   This method reads the content of a vec3D object from a NumPyZ file defined by its filename.
 

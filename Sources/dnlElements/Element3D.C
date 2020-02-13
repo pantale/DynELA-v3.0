@@ -51,6 +51,15 @@ double Element3D::getRadiusAtIntegrationPoint()
 }
 
 //-----------------------------------------------------------------------------
+double Element3D::getRadiusAtUnderIntegrationPoint()
+//-----------------------------------------------------------------------------
+{
+  fatalError("Element3D::getRadiusAtUnderIntegrationPoint",
+             "Method is not callable\n");
+  return 0.0;
+}
+
+//-----------------------------------------------------------------------------
 bool Element3D::computeJacobian(bool reference)
 //-----------------------------------------------------------------------------
 {
@@ -98,6 +107,58 @@ bool Element3D::computeJacobian(bool reference)
 
     if (reference)
       _integrationPoint->detJ0 = _integrationPoint->detJ;
+  }
+  return true;
+}
+
+//-----------------------------------------------------------------------------
+bool Element3D::computeUnderJacobian(bool reference)
+//-----------------------------------------------------------------------------
+{
+  Node *node;
+  const IntegrationPointData *integrationPointData;
+
+  for (short intPtId = 0; intPtId < underIntegrationPoints.getSize(); intPtId++)
+  {
+    // recuperation du point d'integration courant
+    setCurrentUnderIntegrationPoint(intPtId);
+    integrationPointData = &_elementData->underIntegrationPoint[intPtId];
+
+    // initialisation de J
+    _underIntegrationPoint->JxW = 0.0;
+
+    for (short nodeId = 0; nodeId < getNumberOfNodes(); nodeId++)
+    {
+      node = nodes(nodeId);
+      _underIntegrationPoint->JxW(0, 0) += integrationPointData->derShapeFunction(nodeId, 0) * node->coordinates(0);
+      _underIntegrationPoint->JxW(0, 1) += integrationPointData->derShapeFunction(nodeId, 1) * node->coordinates(0);
+      _underIntegrationPoint->JxW(0, 2) += integrationPointData->derShapeFunction(nodeId, 2) * node->coordinates(0);
+      _underIntegrationPoint->JxW(1, 0) += integrationPointData->derShapeFunction(nodeId, 0) * node->coordinates(1);
+      _underIntegrationPoint->JxW(1, 1) += integrationPointData->derShapeFunction(nodeId, 1) * node->coordinates(1);
+      _underIntegrationPoint->JxW(1, 2) += integrationPointData->derShapeFunction(nodeId, 2) * node->coordinates(1);
+      _underIntegrationPoint->JxW(2, 0) += integrationPointData->derShapeFunction(nodeId, 0) * node->coordinates(2);
+      _underIntegrationPoint->JxW(2, 1) += integrationPointData->derShapeFunction(nodeId, 1) * node->coordinates(2);
+      _underIntegrationPoint->JxW(2, 2) += integrationPointData->derShapeFunction(nodeId, 2) * node->coordinates(2);
+    }
+
+    // determinant de J
+    _underIntegrationPoint->detJ = _underIntegrationPoint->JxW.getDeterminant3x3();
+
+    // test de positivite du Jacobien
+    if (_underIntegrationPoint->detJ < 0.0)
+    {
+      std::cerr << "Negative value of detJ encountered in element " << number << " at integration point " << intPtId + 1 << std::endl;
+      return false;
+    }
+
+    // calcul de l'inverse de J
+    _underIntegrationPoint->JxW.computeInverse3x3(_underIntegrationPoint->detJ, _underIntegrationPoint->invJxW);
+
+    // recalcul de dShapeFunction
+    _underIntegrationPoint->dShapeFunction = integrationPointData->derShapeFunction * _underIntegrationPoint->invJxW;
+
+    if (reference)
+      _underIntegrationPoint->detJ0 = _underIntegrationPoint->detJ;
   }
   return true;
 }
@@ -235,13 +296,14 @@ void Element3D::getdU_atIntPoint (Tensor2 & du, short time)
 
 */
 //-----------------------------------------------------------------------------
-void Element3D::computeElasticStiffnessMatrix()
+void Element3D::computeElasticStiffnessMatrix(bool underIntegration)
 //-----------------------------------------------------------------------------
 {
   long pt;
   double WxdJ;
   long i, I, j, J;
   long pts;
+  IntegrationPointBase *currentIntPoint;
 
   // initialisation
   stiffnessMatrix = 0;
@@ -253,7 +315,16 @@ void Element3D::computeElasticStiffnessMatrix()
   Matrix CB(C.rows(), getNumberOfDimensions() * getNumberOfNodes());
 
   // nomre de points d'integration
-  pts = integrationPoints.getSize();
+  if (underIntegration)
+  {
+    computeUnderJacobian();
+    pts = underIntegrationPoints.getSize();
+  }
+  else
+  {
+    pts = integrationPoints.getSize();
+  }
+  //pts = underIntegrationPoints.getSize();
 
   // parallelisation
   //#pragma omp parallel for private(WxdJ),shared(stiffnessMatrix)
@@ -261,33 +332,40 @@ void Element3D::computeElasticStiffnessMatrix()
   for (pt = 0; pt < pts; pt++)
   {
     // recuperation du point d'integration
-    setCurrentIntegrationPoint(pt);
+    if (underIntegration)
+    {
+      currentIntPoint = getUnderIntegrationPoint(pt);
+    }
+    else
+    {
+      currentIntPoint = getIntegrationPoint(pt);
+    }
 
     // calcul du terme d'integration numerique
-    WxdJ = _integrationPoint->integrationPointData->weight * _integrationPoint->detJ;
+    WxdJ = currentIntPoint->integrationPointData->weight * currentIntPoint->detJ;
 
     // calcul de C.B
     for (i = 0; i < getNumberOfNodes(); i++)
     {
       I = getNumberOfDimensions() * i;
-      CB(0, I) = (C(0, 0) * _integrationPoint->dShapeFunction(i, 0) + C(0, 3) * _integrationPoint->dShapeFunction(i, 1) + C(0, 5) * _integrationPoint->dShapeFunction(i, 2));
-      CB(1, I) = (C(1, 0) * _integrationPoint->dShapeFunction(i, 0) + C(1, 3) * _integrationPoint->dShapeFunction(i, 1) + C(1, 5) * _integrationPoint->dShapeFunction(i, 2));
-      CB(2, I) = (C(2, 0) * _integrationPoint->dShapeFunction(i, 0) + C(2, 3) * _integrationPoint->dShapeFunction(i, 1) + C(2, 5) * _integrationPoint->dShapeFunction(i, 2));
-      CB(3, I) = (C(3, 0) * _integrationPoint->dShapeFunction(i, 0) + C(3, 3) * _integrationPoint->dShapeFunction(i, 1) + C(3, 5) * _integrationPoint->dShapeFunction(i, 2));
-      CB(4, I) = (C(4, 0) * _integrationPoint->dShapeFunction(i, 0) + C(4, 3) * _integrationPoint->dShapeFunction(i, 1) + C(4, 5) * _integrationPoint->dShapeFunction(i, 2));
-      CB(5, I) = (C(5, 0) * _integrationPoint->dShapeFunction(i, 0) + C(5, 3) * _integrationPoint->dShapeFunction(i, 1) + C(5, 5) * _integrationPoint->dShapeFunction(i, 2));
-      CB(0, I + 1) = (C(0, 1) * _integrationPoint->dShapeFunction(i, 1) + C(0, 3) * _integrationPoint->dShapeFunction(i, 0) + C(0, 4) * _integrationPoint->dShapeFunction(i, 2));
-      CB(1, I + 1) = (C(1, 1) * _integrationPoint->dShapeFunction(i, 1) + C(1, 3) * _integrationPoint->dShapeFunction(i, 0) + C(1, 4) * _integrationPoint->dShapeFunction(i, 2));
-      CB(2, I + 1) = (C(2, 1) * _integrationPoint->dShapeFunction(i, 1) + C(2, 3) * _integrationPoint->dShapeFunction(i, 0) + C(2, 4) * _integrationPoint->dShapeFunction(i, 2));
-      CB(3, I + 1) = (C(3, 1) * _integrationPoint->dShapeFunction(i, 1) + C(3, 3) * _integrationPoint->dShapeFunction(i, 0) + C(3, 4) * _integrationPoint->dShapeFunction(i, 2));
-      CB(4, I + 1) = (C(4, 1) * _integrationPoint->dShapeFunction(i, 1) + C(4, 3) * _integrationPoint->dShapeFunction(i, 0) + C(4, 4) * _integrationPoint->dShapeFunction(i, 2));
-      CB(5, I + 1) = (C(5, 1) * _integrationPoint->dShapeFunction(i, 1) + C(5, 3) * _integrationPoint->dShapeFunction(i, 0) + C(5, 4) * _integrationPoint->dShapeFunction(i, 2));
-      CB(0, I + 2) = (C(0, 2) * _integrationPoint->dShapeFunction(i, 2) + C(0, 4) * _integrationPoint->dShapeFunction(i, 1) + C(0, 5) * _integrationPoint->dShapeFunction(i, 0));
-      CB(1, I + 2) = (C(1, 2) * _integrationPoint->dShapeFunction(i, 2) + C(1, 4) * _integrationPoint->dShapeFunction(i, 1) + C(1, 5) * _integrationPoint->dShapeFunction(i, 0));
-      CB(2, I + 2) = (C(2, 2) * _integrationPoint->dShapeFunction(i, 2) + C(2, 4) * _integrationPoint->dShapeFunction(i, 1) + C(2, 5) * _integrationPoint->dShapeFunction(i, 0));
-      CB(3, I + 2) = (C(3, 2) * _integrationPoint->dShapeFunction(i, 2) + C(3, 4) * _integrationPoint->dShapeFunction(i, 1) + C(3, 5) * _integrationPoint->dShapeFunction(i, 0));
-      CB(4, I + 2) = (C(4, 2) * _integrationPoint->dShapeFunction(i, 2) + C(4, 4) * _integrationPoint->dShapeFunction(i, 1) + C(4, 5) * _integrationPoint->dShapeFunction(i, 0));
-      CB(5, I + 2) = (C(5, 2) * _integrationPoint->dShapeFunction(i, 2) + C(5, 4) * _integrationPoint->dShapeFunction(i, 1) + C(5, 5) * _integrationPoint->dShapeFunction(i, 0));
+      CB(0, I) = (C(0, 0) * currentIntPoint->dShapeFunction(i, 0) + C(0, 3) * currentIntPoint->dShapeFunction(i, 1) + C(0, 5) * currentIntPoint->dShapeFunction(i, 2));
+      CB(1, I) = (C(1, 0) * currentIntPoint->dShapeFunction(i, 0) + C(1, 3) * currentIntPoint->dShapeFunction(i, 1) + C(1, 5) * currentIntPoint->dShapeFunction(i, 2));
+      CB(2, I) = (C(2, 0) * currentIntPoint->dShapeFunction(i, 0) + C(2, 3) * currentIntPoint->dShapeFunction(i, 1) + C(2, 5) * currentIntPoint->dShapeFunction(i, 2));
+      CB(3, I) = (C(3, 0) * currentIntPoint->dShapeFunction(i, 0) + C(3, 3) * currentIntPoint->dShapeFunction(i, 1) + C(3, 5) * currentIntPoint->dShapeFunction(i, 2));
+      CB(4, I) = (C(4, 0) * currentIntPoint->dShapeFunction(i, 0) + C(4, 3) * currentIntPoint->dShapeFunction(i, 1) + C(4, 5) * currentIntPoint->dShapeFunction(i, 2));
+      CB(5, I) = (C(5, 0) * currentIntPoint->dShapeFunction(i, 0) + C(5, 3) * currentIntPoint->dShapeFunction(i, 1) + C(5, 5) * currentIntPoint->dShapeFunction(i, 2));
+      CB(0, I + 1) = (C(0, 1) * currentIntPoint->dShapeFunction(i, 1) + C(0, 3) * currentIntPoint->dShapeFunction(i, 0) + C(0, 4) * currentIntPoint->dShapeFunction(i, 2));
+      CB(1, I + 1) = (C(1, 1) * currentIntPoint->dShapeFunction(i, 1) + C(1, 3) * currentIntPoint->dShapeFunction(i, 0) + C(1, 4) * currentIntPoint->dShapeFunction(i, 2));
+      CB(2, I + 1) = (C(2, 1) * currentIntPoint->dShapeFunction(i, 1) + C(2, 3) * currentIntPoint->dShapeFunction(i, 0) + C(2, 4) * currentIntPoint->dShapeFunction(i, 2));
+      CB(3, I + 1) = (C(3, 1) * currentIntPoint->dShapeFunction(i, 1) + C(3, 3) * currentIntPoint->dShapeFunction(i, 0) + C(3, 4) * currentIntPoint->dShapeFunction(i, 2));
+      CB(4, I + 1) = (C(4, 1) * currentIntPoint->dShapeFunction(i, 1) + C(4, 3) * currentIntPoint->dShapeFunction(i, 0) + C(4, 4) * currentIntPoint->dShapeFunction(i, 2));
+      CB(5, I + 1) = (C(5, 1) * currentIntPoint->dShapeFunction(i, 1) + C(5, 3) * currentIntPoint->dShapeFunction(i, 0) + C(5, 4) * currentIntPoint->dShapeFunction(i, 2));
+      CB(0, I + 2) = (C(0, 2) * currentIntPoint->dShapeFunction(i, 2) + C(0, 4) * currentIntPoint->dShapeFunction(i, 1) + C(0, 5) * currentIntPoint->dShapeFunction(i, 0));
+      CB(1, I + 2) = (C(1, 2) * currentIntPoint->dShapeFunction(i, 2) + C(1, 4) * currentIntPoint->dShapeFunction(i, 1) + C(1, 5) * currentIntPoint->dShapeFunction(i, 0));
+      CB(2, I + 2) = (C(2, 2) * currentIntPoint->dShapeFunction(i, 2) + C(2, 4) * currentIntPoint->dShapeFunction(i, 1) + C(2, 5) * currentIntPoint->dShapeFunction(i, 0));
+      CB(3, I + 2) = (C(3, 2) * currentIntPoint->dShapeFunction(i, 2) + C(3, 4) * currentIntPoint->dShapeFunction(i, 1) + C(3, 5) * currentIntPoint->dShapeFunction(i, 0));
+      CB(4, I + 2) = (C(4, 2) * currentIntPoint->dShapeFunction(i, 2) + C(4, 4) * currentIntPoint->dShapeFunction(i, 1) + C(4, 5) * currentIntPoint->dShapeFunction(i, 0));
+      CB(5, I + 2) = (C(5, 2) * currentIntPoint->dShapeFunction(i, 2) + C(5, 4) * currentIntPoint->dShapeFunction(i, 1) + C(5, 5) * currentIntPoint->dShapeFunction(i, 0));
     }
 
     // calcul de BT [C B]
@@ -296,15 +374,15 @@ void Element3D::computeElasticStiffnessMatrix()
       {
         I = getNumberOfDimensions() * i;
         J = getNumberOfDimensions() * j;
-        stiffnessMatrix(I, J) += (_integrationPoint->dShapeFunction(i, 0) * CB(0, J) + _integrationPoint->dShapeFunction(i, 1) * CB(3, J) + _integrationPoint->dShapeFunction(i, 2) * CB(5, J)) * WxdJ;
-        stiffnessMatrix(I, J + 1) += (_integrationPoint->dShapeFunction(i, 0) * CB(0, J + 1) + _integrationPoint->dShapeFunction(i, 1) * CB(3, J + 1) + _integrationPoint->dShapeFunction(i, 2) * CB(5, J + 1)) * WxdJ;
-        stiffnessMatrix(I, J + 2) += (_integrationPoint->dShapeFunction(i, 0) * CB(0, J + 2) + _integrationPoint->dShapeFunction(i, 1) * CB(3, J + 2) + _integrationPoint->dShapeFunction(i, 2) * CB(5, J + 2)) * WxdJ;
-        stiffnessMatrix(I + 1, J) += (_integrationPoint->dShapeFunction(i, 1) * CB(1, J) + _integrationPoint->dShapeFunction(i, 0) * CB(3, J) + _integrationPoint->dShapeFunction(i, 2) * CB(4, J)) * WxdJ;
-        stiffnessMatrix(I + 1, J + 1) += (_integrationPoint->dShapeFunction(i, 1) * CB(1, J + 1) + _integrationPoint->dShapeFunction(i, 0) * CB(3, J + 1) + _integrationPoint->dShapeFunction(i, 2) * CB(4, J + 1)) * WxdJ;
-        stiffnessMatrix(I + 1, J + 2) += (_integrationPoint->dShapeFunction(i, 1) * CB(1, J + 2) + _integrationPoint->dShapeFunction(i, 0) * CB(3, J + 2) + _integrationPoint->dShapeFunction(i, 2) * CB(4, J + 2)) * WxdJ;
-        stiffnessMatrix(I + 2, J) += (_integrationPoint->dShapeFunction(i, 2) * CB(2, J) + _integrationPoint->dShapeFunction(i, 1) * CB(4, J) + _integrationPoint->dShapeFunction(i, 0) * CB(5, J)) * WxdJ;
-        stiffnessMatrix(I + 2, J + 1) += (_integrationPoint->dShapeFunction(i, 2) * CB(2, J + 1) + _integrationPoint->dShapeFunction(i, 1) * CB(4, J + 1) + _integrationPoint->dShapeFunction(i, 0) * CB(5, J + 1)) * WxdJ;
-        stiffnessMatrix(I + 2, J + 2) += (_integrationPoint->dShapeFunction(i, 2) * CB(2, J + 2) + _integrationPoint->dShapeFunction(i, 1) * CB(4, J + 2) + _integrationPoint->dShapeFunction(i, 0) * CB(5, J + 2)) * WxdJ;
+        stiffnessMatrix(I, J) += (currentIntPoint->dShapeFunction(i, 0) * CB(0, J) + currentIntPoint->dShapeFunction(i, 1) * CB(3, J) + currentIntPoint->dShapeFunction(i, 2) * CB(5, J)) * WxdJ;
+        stiffnessMatrix(I, J + 1) += (currentIntPoint->dShapeFunction(i, 0) * CB(0, J + 1) + currentIntPoint->dShapeFunction(i, 1) * CB(3, J + 1) + currentIntPoint->dShapeFunction(i, 2) * CB(5, J + 1)) * WxdJ;
+        stiffnessMatrix(I, J + 2) += (currentIntPoint->dShapeFunction(i, 0) * CB(0, J + 2) + currentIntPoint->dShapeFunction(i, 1) * CB(3, J + 2) + currentIntPoint->dShapeFunction(i, 2) * CB(5, J + 2)) * WxdJ;
+        stiffnessMatrix(I + 1, J) += (currentIntPoint->dShapeFunction(i, 1) * CB(1, J) + currentIntPoint->dShapeFunction(i, 0) * CB(3, J) + currentIntPoint->dShapeFunction(i, 2) * CB(4, J)) * WxdJ;
+        stiffnessMatrix(I + 1, J + 1) += (currentIntPoint->dShapeFunction(i, 1) * CB(1, J + 1) + currentIntPoint->dShapeFunction(i, 0) * CB(3, J + 1) + currentIntPoint->dShapeFunction(i, 2) * CB(4, J + 1)) * WxdJ;
+        stiffnessMatrix(I + 1, J + 2) += (currentIntPoint->dShapeFunction(i, 1) * CB(1, J + 2) + currentIntPoint->dShapeFunction(i, 0) * CB(3, J + 2) + currentIntPoint->dShapeFunction(i, 2) * CB(4, J + 2)) * WxdJ;
+        stiffnessMatrix(I + 2, J) += (currentIntPoint->dShapeFunction(i, 2) * CB(2, J) + currentIntPoint->dShapeFunction(i, 1) * CB(4, J) + currentIntPoint->dShapeFunction(i, 0) * CB(5, J)) * WxdJ;
+        stiffnessMatrix(I + 2, J + 1) += (currentIntPoint->dShapeFunction(i, 2) * CB(2, J + 1) + currentIntPoint->dShapeFunction(i, 1) * CB(4, J + 1) + currentIntPoint->dShapeFunction(i, 0) * CB(5, J + 1)) * WxdJ;
+        stiffnessMatrix(I + 2, J + 2) += (currentIntPoint->dShapeFunction(i, 2) * CB(2, J + 2) + currentIntPoint->dShapeFunction(i, 1) * CB(4, J + 2) + currentIntPoint->dShapeFunction(i, 0) * CB(5, J + 2)) * WxdJ;
       }
   }
 }

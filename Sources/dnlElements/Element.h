@@ -23,29 +23,14 @@ This file is the declaration file for the Element class.
 
 #include <dnlMaterials.h>
 #include <ElementData.h>
-/* #include <Vector.h>
-#include <Matrix.h>
-#include <MatrixDiag.h>
-#include <Tensor2.h>
-#include <IntegrationPoint.h> */
 
-// necessary class definition before use
-/* class Node;
-class Model;
-class IntegrationPointBase;
-class IntegrationPoint;
-class UnderIntegrationPoint;
- */
-//class IntegrationPoint;
-//class UnderIntegrationPoint;
 class Node;
 class Model;
-//class Material;
 
 class Element
 {
     friend class Node;
-    friend class ListIndex<Element *>; //! To be able to use ListIndex
+    friend class ListIndex<Element *>; // To be able to use ListIndex
     long _listIndex;                   // Local index used for the ListIndex management.
     Vec3D _nodeMin, _nodeMax;          // Bounding box of an element.
 
@@ -53,9 +38,11 @@ protected:
     Matrix _globalToLocal;
     const ElementData *_elementData;
     IntegrationPoint *_integrationPoint;
+    UnderIntegrationPoint *_underIntegrationPoint;
 
 public:
     List<IntegrationPoint *> integrationPoints;
+    List<UnderIntegrationPoint *> underIntegrationPoints;
     ListIndex<Node *> nodes;
     long number;
     Material *material;
@@ -63,7 +50,7 @@ public:
 
     enum
     {
-        Unknown = 0,
+        ElGeneric = 0,
         ElQua4N2D,
         ElTri3N2D,
         ElQua4NAx,
@@ -72,14 +59,14 @@ public:
         ElTet10N3D
     };
 
-//#ifndef SWIG
+    //#ifndef SWIG
     enum
     {
         Bidimensional = 0,
         Axisymetric,
         Threedimensional
     };
-//#endif
+    //#endif
 
 public:
     Element(long elementNumber = 1);
@@ -102,6 +89,7 @@ public:
     double getElongationWaveSpeed();
     double getIntPointValue(short field, short intPoint);
     IntegrationPoint *getIntegrationPoint(short point);
+    UnderIntegrationPoint *getUnderIntegrationPoint(short point);
     long &internalNumber();
     short getFamily() const;
     //    short getLocalIdOfNodeOnEdge(short edge, short node) const;
@@ -122,6 +110,7 @@ public:
     Vec3D getLocalNodeCoords(short node) const;
     virtual bool checkLevel2() = 0;
     virtual bool computeJacobian(bool reference = false) = 0;
+    virtual bool computeUnderJacobian(bool reference = false) = 0;
     virtual double getCharacteristicLength() = 0;
     virtual double getRadiusAtIntegrationPoint() = 0;
     virtual void computeDeformationGradient(Tensor2 &F, short time) = 0;
@@ -131,7 +120,7 @@ public:
     virtual void getV_atIntPoint(Vec3D &v, short time) = 0;
     void add(IntegrationPoint *_integrationPoint, short intPointId);
     void add(Material *newMaterial);
-    //void add(UnderIntegrationPoint *_integrationPoint, short intPointId);
+    void add(UnderIntegrationPoint *_integrationPoint, short intPointId);
     void addNode(Node *newNode);
     //void computeConstitutiveEquation();
     void computeFinalRotation();
@@ -149,12 +138,14 @@ public:
     void createIntegrationPoints();
     void initializeData();
     void setCurrentIntegrationPoint(short point);
+    void setCurrentUnderIntegrationPoint(short point);
     double getIntPointValueExtract(short field, short intPoint);
     void computeDensity();
     Node *getNodeOnFace(short face, short node);
     const ElementData *getElementData() const;
     void dumpElementData() const;
-    virtual void computeElasticStiffnessMatrix() = 0;
+    virtual void computeElasticStiffnessMatrix(bool underIntegration = false) = 0;
+    virtual double getRadiusAtUnderIntegrationPoint()=0;
 
     /*   
     void clearIntegrationPoint();
@@ -397,7 +388,7 @@ inline Vec3D Element::getLocalNodeCoords(short node) const
     return (_elementData->nodes[node].localCoords);
 }
 
-//!Internal number. This method gives a direct access to the internal number of the current node.
+//Internal number. This method gives a direct access to the internal number of the current node.
 /*!
   \return Internal number of the current node.
 */
@@ -416,10 +407,24 @@ inline IntegrationPoint *Element::getIntegrationPoint(short point)
 }
 
 //-----------------------------------------------------------------------------
+inline UnderIntegrationPoint *Element::getUnderIntegrationPoint(short point)
+//-----------------------------------------------------------------------------
+{
+    return underIntegrationPoints(point);
+}
+
+//-----------------------------------------------------------------------------
 inline void Element::setCurrentIntegrationPoint(short point)
 //-----------------------------------------------------------------------------
 {
     _integrationPoint = integrationPoints(point);
+}
+
+//-----------------------------------------------------------------------------
+inline void Element::setCurrentUnderIntegrationPoint(short point)
+//-----------------------------------------------------------------------------
+{
+    _underIntegrationPoint = underIntegrationPoints(point);
 }
 
 /*

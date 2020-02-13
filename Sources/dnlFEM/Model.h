@@ -87,7 +87,7 @@ public:
   bool initSolve();
   bool solve(double solveUpToTime = -1.0);
   double computeCourantTimeStep();
-  double computePowerIterationTimeStep();
+  double computePowerIterationTimeStep(bool underIntegration = false);
   double getEndSolveTime();
   double getTotalKineticEnergy();
   double getTotalMass();

@@ -160,7 +160,7 @@ inline bool Vector::indexOK(long i) const
   return (false);
 }
 
-//!Access to the values _data[i] of 3D vector
+//Access to the values _data[i] of 3D vector
 /*!
   \param i indice inside of the vector
   \return Value of the 3D vector _data[i]
@@ -175,7 +175,7 @@ inline double &Vector::operator()(long i)
   return _data[i];
 }
 
-//!Access to the values _data[i] of 3D vector (Read only method)
+//Access to the values _data[i] of 3D vector (Read only method)
 /*!
   \param i indice inside of the vector
   \return Value of the 3D vector _data[i]
@@ -190,7 +190,7 @@ inline double Vector::operator()(long i) const
   return _data[i];
 }
 
-//!Size of the vector
+//Size of the vector
 /*!
   This method returns the size of the vector.
   \return Size of the vector
@@ -202,7 +202,7 @@ inline long Vector::getSize() const
   return _dataLength;
 }
 
-//!Selection of the output display type
+//Selection of the output display type
 /*!
   This method allows you to select the type of display requested. The output type is defined by the variables listed in \ref OutVector.
   \param outT Type of the output

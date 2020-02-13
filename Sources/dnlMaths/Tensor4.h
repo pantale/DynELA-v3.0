@@ -134,7 +134,7 @@ public:
 
 //------inline functions-------------------------------------------------------
 
-//!teste les bornes du tenseur
+//teste les bornes du tenseur
 /*!
   Cette methode teste les bornes d'un tenseur
   \param i long 1
@@ -161,7 +161,7 @@ Tensor4::indexOK(long i, long j, long k, long l) const
   return (false);
 }
 
-//!acces aux valeurs d'un tenseur
+//acces aux valeurs d'un tenseur
 /*!
   \param i long 1
   \param j long 2
@@ -182,7 +182,7 @@ Tensor4::operator()(long i, long j, long k, long l)
   return v[dnlTensor4Ind(i, j, k, l, 3)];
 }
 
-//!acces aux valeurs d'un tenseur
+//acces aux valeurs d'un tenseur
 /*!
   \param i long 1
   \param j long 2
@@ -204,7 +204,7 @@ Tensor4::operator()(long i, long j, long k, long l)
   return v[dnlTensor4Ind(i, j, k, l, 3)];
 }
 
-//!affectation d'egalite
+//affectation d'egalite
 /*! 
   Cette methode est une surdefinition de la methode d'egalite permettant d'ecrire simplement le remplissage des valeurs d'un tenseur par un scalaire
 
@@ -224,7 +224,7 @@ inline void Tensor4::setToValue(double val)
     v[i] = val;
 }
 
-//!addition de deux tenseurs du deuxieme ordre
+//addition de deux tenseurs du deuxieme ordre
 /*!
   Cette methode permet de surdefinir l'operation d'addition des tenseurs et d'ecrire simplement la somme de deux tenseurs sous la forme donnee en exemple
 
@@ -246,7 +246,7 @@ Tensor4::operator+=(const Tensor4 &tens)
     v[i] += tens.v[i];
 }
 
-//!soustraction de deux tenseurs du deuxieme ordre
+//soustraction de deux tenseurs du deuxieme ordre
 /*!
   Cette methode permet de surdefinir l'operation de soustraction des tenseurs et d'ecrire simplement la soustraction de deux tenseurs sous la forme donnee en exemple
 
@@ -268,7 +268,7 @@ Tensor4::operator-=(const Tensor4 &tens)
     v[i] -= tens.v[i];
 }
 
-//!multiplication d'un tenseur par un scalaire
+//multiplication d'un tenseur par un scalaire
 /*!
   Cette methode permet de surdefinir l'operation de multiplication des tenseurs et d'ecrire simplement la multiplication d'un tenseur par un scalaire sous la forme donnee en exemple
 
@@ -290,7 +290,7 @@ Tensor4::operator*=(const double val)
     v[i] *= val;
 }
 
-//!division d'un tenseur par un scalaire
+//division d'un tenseur par un scalaire
 /*!
   Cette methode permet de surdefinir l'operation de division des tenseurs et d'ecrire simplement la division d'un tenseur par un scalaire sous la forme donnee en exemple
 

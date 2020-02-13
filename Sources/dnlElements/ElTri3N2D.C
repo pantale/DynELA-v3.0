@@ -66,6 +66,18 @@ const ElementData ElTri3N2D::_elementData = {
         //
     },
 
+    1, // Number of under integration points of the Element
+    {
+        // Under integration point 1
+        {
+            Vec3D(-1.0 / sqrt(3.0), -1.0 / sqrt(3.0), 0.0), // Coordinates of the under integration point
+            1,                                              // Weight associated to the under integration point
+            Vector(),                                       // Shape functions at the under integration point
+            Matrix()                                        // Derivatives of the shape functions at the under integration point
+        }
+        //
+    },
+
     1, // Number of faces of the element
     {
         // Face number 1
@@ -85,18 +97,6 @@ const ElementData ElTri3N2D::_elementData = {
             1,                                              // Weight associated to the mass integration point
             Vector(),                                       // Shape functions at the mass integration point
             Matrix()                                        // Derivatives of the shape functions at the mass integration point
-        }
-        //
-    },
-
-    1, // Number of under integration points of the Element
-    {
-        // Under integration point 1
-        {
-            Vec3D(-1.0 / sqrt(3.0), -1.0 / sqrt(3.0), 0.0), // Coordinates of the under integration point
-            1,                                              // Weight associated to the under integration point
-            Vector(),                                       // Shape functions at the under integration point
-            Matrix()                                        // Derivatives of the shape functions at the under integration point
         }
         //
     },
@@ -212,7 +212,7 @@ void ElTri3N2D::getDerShapeFunctionAtPoint(Matrix &derShapeFunctions, const Vec3
     derShapeFunctions(3, 1) = +(1.0 - ksi) / 4;
 }
 
-//!Calcul de la longueur caracteristique d'un element
+//Calcul de la longueur caracteristique d'un element
 /*!
 Cette methode calcule la longueur caracteristique d'un element e partir de la definition de la geometrie de cet element.
 La relation utilisee pour ce calcul est donnee par:

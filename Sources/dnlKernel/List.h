@@ -217,7 +217,7 @@ public:
     }
 };
 
-//!constructeur par defaut de la classe List
+//constructeur par defaut de la classe List
 /*!
   Ce constructeur alloue la memoire par defaut pour une instance de la classe List. Si la taille de la liste n'est pas precisee, la taille par defaut est prise en compte, celle ci est definie par la valeur de DEFAULT_stack_size.
   \param stack definit la taille initiale de la liste en falsembre d'objets
@@ -247,7 +247,7 @@ List<Type>::List(const long stack)
 #endif
 }
 
-//!extension de la taille d'une liste
+//extension de la taille d'une liste
 /*!
   Cette methode est utilisee pour allonger ou reduire la taille d'une liste. Si la falseuvelle taille proposee est inferieure e la taille minimale necessaire pour stocker les elements actuels de la liste, une erreur est generee. Cette methode ne doit generalement pas etre appelee par l'utilisateur (sauf s'il a une totale maitreise du truc ;-0 ). Cette methode est fortement utilisee en interne par les autres methodes de la classe. Dans le cas oe l'utilisateur n'a pas la maitrise suffisante pour ce genre d'operation, il vaut mieux laisser la classe gerer elle meme ses allocations memoire.
 
@@ -308,7 +308,7 @@ void List<Type>::redim(const long size_)
     ptr = ptr2;
 }
 
-//!ajuste la taille courante d'une liste e la taille reelle
+//ajuste la taille courante d'une liste e la taille reelle
 /*!
   Cette methode est utilisee pour ajuster la taille de la liste en fonction du falsembre d'objets reels contenus dans la liste. Cette methode permet alors de recuperer de l'espace memoire, principalement pour les petites listes.
   \author &copy; Olivier PANTALE
@@ -324,7 +324,7 @@ void List<Type>::close()
     redim(sz);
 }
 
-//!accesseur aux elements de la liste
+//accesseur aux elements de la liste
 /*!
   Cette methode est utilisee pour acceder aux elements de la liste. Cet acces est e la fois en lecture et en ecriture. Cette methode retourne l'element [i] de la liste. La base de reference est 0 (permier element d'indice 0) comme habituellement en C et C++.
   \param ind numero de l'element dans la liste
@@ -349,7 +349,7 @@ Type &List<Type>::operator()(const long ind)
     return ptr[pcurrent = ind];
 }
 
-//!accesseur aux elements de la liste
+//accesseur aux elements de la liste
 /*!
   Cette methode est utilisee pour acceder aux elements de la liste. Cet acces est en lecture seule. Cette methode retourne l'element [i] de la liste. La base de reference est 0 (permier element d'indice 0) comme habituellement en C et C++.
   \param ind numero de l'element dans la liste
@@ -375,7 +375,7 @@ Type List<Type>::operator()(const long ind)
     return ptr[ind];
 }
 
-//!renvoie l'element suivant dans la liste
+//renvoie l'element suivant dans la liste
 /*!
   Cette methode utilise un mecanisme de reperage interne dans la liste pour renvoyer l'element suivant le precedent appel dans la liste. Pour utiliser cette methode, il convient de bien cerner les bornes de la liste, et d'avoir bien reference le depart par les methodes first(), last() ou les accesseurs ().
   \return element suivant dans la liste ou NULL si celui-ci n'existe pas.
@@ -395,7 +395,7 @@ Type List<Type>::next()
     return ptr[++pcurrent];
 }
 
-//!renvoie l'element suivant dans la liste
+//renvoie l'element suivant dans la liste
 /*!
   Cette methode utilise un mecanisme de reperage interne dans la liste pour renvoyer l'element suivant le precedent appel dans la liste. Pour utiliser cette methode, il convient de bien cerner les bornes de la liste, et d'avoir bien reference le depart par les methodes first(), last() ou les accesseurs ().
   \return element suivant dans la liste ou NULL si celui-ci n'existe pas.
@@ -416,7 +416,7 @@ Type List<Type>::currentUp()
     return ptr[pcurrent++];
 }
 
-//!renvoie l'element suivant dans la liste
+//renvoie l'element suivant dans la liste
 /*!
   Cette methode utilise un mecanisme de reperage interne dans la liste pour renvoyer l'element suivant le precedent appel dans la liste. Pour utiliser cette methode, il convient de bien cerner les bornes de la liste, et d'avoir bien reference le depart par les methodes first(), last() ou les accesseurs ().
   \return element suivant dans la liste ou NULL si celui-ci n'existe pas.
@@ -437,7 +437,7 @@ Type List<Type>::currentDown()
     return ptr[pcurrent--];
 }
 
-//!renvoie le premier element de la liste
+//renvoie le premier element de la liste
 /*!
   Cette methode retourne le premier element de la liste.
   \return premier element dans la liste ou NULL si celui-ci n'existe pas.
@@ -457,7 +457,7 @@ Type List<Type>::first()
     return ptr[pcurrent = 0];
 }
 
-//!renvoie le dernier element de la liste
+//renvoie le dernier element de la liste
 /*!
   Cette methode retourne le dernier element de la liste.
   \return dernier element dans la liste ou NULL si celui-ci n'existe pas.
@@ -477,7 +477,7 @@ Type List<Type>::last()
     return ptr[pcurrent = sz - 1];
 }
 
-//!renvoie l'element precedent dans la liste
+//renvoie l'element precedent dans la liste
 /*!
   Cette methode utilise un mecanisme de reperage interne dans la liste pour renvoyer l'element precedent du "precedent appel" dans la liste. Pour utiliser cette methode, il convient de bien cerner les bornes de la liste, et d'avoir bien reference le depart par les methodes first(), last() ou les accesseurs ().
   \return element precedent dans la liste ou NULL si celui-ci n'existe pas.
@@ -497,7 +497,7 @@ Type List<Type>::previous()
     return ptr[--pcurrent];
 }
 
-//!element courant dans la liste
+//element courant dans la liste
 /*!
   Cette methode utilise un mecanisme de reperage interne dans la liste pour renvoyer l'element courant du "precedent appel" dans la liste. Pour utiliser cette methode, il convient de bien cerner les bornes de la liste, et d'avoir bien reference le depart par les methodes first(), last() ou les accesseurs ().
   \return element courant dans la liste ou NULL si celui-ci n'existe pas.
@@ -517,7 +517,7 @@ Type List<Type>::current()
     return ptr[pcurrent];
 }
 
-//!taille de la liste
+//taille de la liste
 /*!
   Cette methode retourne la taille de la liste, c'est e dire le falsembre exact d'elements dans la liste. Les indices varient dans l'intervalle [0:sz-1]
   \return taille de la liste
@@ -533,7 +533,7 @@ long List<Type>::getSize() const
     return sz;
 }
 
-//!taille de la pile
+//taille de la pile
 /*!
   Cette methode retourne la taille de la pile, c'est e dire le falsembre maxi d'elements dans la liste avant la prochaine reallocation dynamique.
   \return taille de la pile
@@ -549,7 +549,7 @@ long List<Type>::stackSize() const
     return s_size;
 }
 
-//!valeur de l'increment de pile
+//valeur de l'increment de pile
 /*!
   Cette methode est utilisee pour contreler la valeur de l'increment de pile. A la prochaine allocation memoire pour la pile, cette valeur sera utilisee pour determiner de quelle taille doit etre augmentee la pile. Une grande valeur permet d'obtenir un code plus rapide (car elle diminue la frequence des allocations memoire), mais elle est egalement plus coeteuse en terme de memoire allouee.
   \return valeur de l'increment de pile
@@ -565,7 +565,7 @@ long &List<Type>::stackIncrement()
     return s_inc;
 }
 
-//!vide la contenu de la pile
+//vide la contenu de la pile
 /*!
   Cette methode vide le contenu de la pile et ramene sa taille reelle e zero et sa taille de pile e DEFAULT_stack_size. La pile est comme neuve !!! (c'est une pile rechargeable ;-] )
   \author &copy; Olivier PANTALE
@@ -590,7 +590,7 @@ void List<Type>::flush()
 #endif
 }
 
-//!ajoute un objet e la liste
+//ajoute un objet e la liste
 /*!
   Cette methode ajoute un objet e la liste. L'objet est ajoute e la fin de la liste, et la taille de liste est automatiquement incrementee si besoin.
   \param objet e rajouter e la liste.
@@ -607,7 +607,7 @@ List<Type> List<Type>::operator<<(const Type object)
     return *this;
 }
 
-//!insere un element dans la liste
+//insere un element dans la liste
 /*!
   Cette methode ajoute un objet e la liste. L'objet est insere au milieu de la liste, et la taille de liste est automatiquement incrementee si besoin.
   \param ind definit la position de l'insertion dans la liste
@@ -640,7 +640,7 @@ void List<Type>::insert(const Type objet, long ind)
     ptr[ind] = objet;
 }
 
-//!insere un element dans la liste
+//insere un element dans la liste
 /*!
   Cette methode ajoute un objet e la liste. L'objet est insere au milieu de la liste, et la taille de liste est automatiquement incrementee si besoin.
   \param ind definit la position de l'insertion dans la liste
@@ -659,7 +659,7 @@ void ListIndex<Type>::insert(const Type objet, long ind)
     comp = false;
 }
 
-//!ajoute un objet e la liste
+//ajoute un objet e la liste
 /*!
   Cette methode ajoute un objet e la liste. L'objet est ajoute e la fin de la liste, et la taille de liste est automatiquement incrementee si besoin.
   \param objet e rajouter e la liste.
@@ -685,7 +685,7 @@ void List<Type>::add(const Type object)
     ptr[sz++] = object;
 }
 
-//!getInverse la liste
+//getInverse la liste
 /*!
   Cette methode getInverse l'ordre des elements dans la liste.
   \author &copy; Olivier PANTALE
@@ -706,7 +706,7 @@ void List<Type>::getInverse()
     }
 }
 
-//!supprime un ensemble d'elements dans la liste
+//supprime un ensemble d'elements dans la liste
 /*!
   Cette methode supprime un ensemble d'elements dans la liste. Cette methode est utilisee pour supprimer tout un segment de la liste, en definissant les indices de depart et d'arrivee du segment dans la liste. Si les parametres start et stop sont egaux, un seul element est supprime.
   \param start premier element e supprimer
@@ -739,7 +739,7 @@ void List<Type>::del(long start, long stop)
     sz -= (stop - start + 1);
 }
 
-//!supprime un element de la liste
+//supprime un element de la liste
 /*!
   Cette methode supprime un element dans la liste. Cette methode est utilisee pour supprimer un seul element de la liste, en definissant l'indice de l'element e supprimer
   \param ind element e supprimer
@@ -755,7 +755,7 @@ void List<Type>::del(long ind)
     List<Type>::del(ind, ind);
 }
 
-//!supprime les elements avant un indice donne
+//supprime les elements avant un indice donne
 /*!
   Cette methode supprime tous les elements de la liste compris entre le debut de la liste et la valeur donnee en argument de cette methode. Cette methode est equivalente e del(0,ind-1).
   \param ind definit le premier element de la liste e garder
@@ -777,7 +777,7 @@ void List<Type>::delBefore(long ind)
     List<Type>::del(0, ind - 1);
 }
 
-//!supprime les elements apres un indice donne
+//supprime les elements apres un indice donne
 /*!
   Cette methode supprime tous les elements de la liste compris entre la valeur donnee en argument de cette methode et la fin de la liste. Cette methode est equivalente e del(ind+1,last()).
   \param ind definit le dernier element de la liste e garder
@@ -799,7 +799,7 @@ void List<Type>::delAfter(long ind)
     List<Type>::del(ind + 1, sz - 1);
 }
 
-//!comparaison de deux listes
+//comparaison de deux listes
 /*!
   Cette methode est utilisee pour comparer deux listes entre elles. Elle teste l'egalite.
   \param liste de comparaison
@@ -829,7 +829,7 @@ bool List<Type>::operator==(const List<Type> &liste) const
     return (true);
 }
 
-//!comparaison de deux listes
+//comparaison de deux listes
 /*!
   Cette methode est utilisee pour comparer deux listes entre elles. Elle teste la falsen egalite.
   \param liste de comparaison
@@ -846,7 +846,7 @@ bool List<Type>::operator!=(const List<Type> &liste) const
     return !(*this == liste);
 }
 
-//!affichage des elements de la liste
+//affichage des elements de la liste
 /*!
   Cette methode affiche les elements de la liste. Elle est utilisee e des fins de debogage.
   \warning Les objets geres par la liste doivent avoir une methode \b << permettant l'affichage de leur contenu.
@@ -872,7 +872,7 @@ void List<Type>::print(std::ostream &os) const
     os << "}";
 }
 
-//!methode de recherche dans la liste
+//methode de recherche dans la liste
 /*!
   Cette methode effectue une recherche simple d'un element dans la liste et renvoie un Index indiquant la place de l'objet dans la liste. Si l'objet n'est pas trouve, elle retourne la valeur -1.
   \param objet objet e rechercher dans la liste
@@ -900,7 +900,7 @@ long List<Type>::getIndex(const Type objet) const
     return -1;
 }
 
-//!methode de recherche dans la liste
+//methode de recherche dans la liste
 /*!
   Cette methode effectue une recherche simple d'un element dans la liste et renvoie un booleen selon la presence ou falsen de cet objet dans la liste.
   \param objet objet e rechercher dans la liste
@@ -924,7 +924,7 @@ bool List<Type>::contains(const Type objet) const
     return false;
 }
 
-//!constructeur par defaut de la classe ListIndex
+//constructeur par defaut de la classe ListIndex
 /*!
   Ce constructeur alloue la memoire par defaut pour une instance de la classe List. Si la taille de la liste n'est pas precisee, la taille par defaut est prise en compte, celle ci est definie par la valeur de DEFAULT_stack_size.
   \param stack definit la taille initiale de la liste en falsembre d'objets
@@ -942,7 +942,7 @@ ListIndex<Type>::ListIndex(const long stack) : List<Type>(stack)
     comp = true;
 }
 
-//!destructeur de la classe List
+//destructeur de la classe List
 //-----------------------------------------------------------------------------
 template <class Type>
 List<Type>::~List()
@@ -951,7 +951,7 @@ List<Type>::~List()
     // vide, ici il semble que l'on ait rien a faire
 }
 
-//!destructeur de la classe ListIndex
+//destructeur de la classe ListIndex
 //-----------------------------------------------------------------------------
 template <class Type>
 ListIndex<Type>::~ListIndex()
@@ -960,7 +960,7 @@ ListIndex<Type>::~ListIndex()
     // vide, ici il semble que l'on ait rien a faire
 }
 
-//!recherche d'une element dans la liste
+//recherche d'une element dans la liste
 /*!
   Cette methode est utilisee pour rechercher un element dans la liste en utilisant un algorithme dichotomique. Cette methode retourne l'element correspondant dans la liste ou la valeur NULL si l'element n'est pas dans la liste.
   Exemple:
@@ -1027,7 +1027,7 @@ Type List<Type>::dichotomySearch(long (*funct)(const Type objet1, const long in)
     return NULL;
 }
 
-//!recherche d'une element dans la liste
+//recherche d'une element dans la liste
 /*!
   Cette methode est utilisee pour rechercher un element dans la liste. L'algorithme de recherche est base sur le parametre \b _listIndex declare dans les objets de la liste. Cette methode retourne l'element correspondant dans la liste ou la valeur NULL si l'element n'est pas dans la liste.
   \param ind index de l'element e rechercher dans la liste
@@ -1092,7 +1092,7 @@ Type ListIndex<Type>::AppN(const long ind) const
     return NULL;
 }
 
-//!recherche d'une element dans la liste
+//recherche d'une element dans la liste
 /*!
   Cette methode est utilisee pour rechercher un element dans la liste. L'algorithme de recherche est base sur le parametre \b _listIndex declare dans les objets de la liste. Cette methode retourne l'indice de l'element correspondant dans la liste ou la valeur 0 si l'element n'est pas dans la liste.
   \warning La valeur de retour 0 peut etre confondue avec la premiere valeur de la liste ??? BUG ???
@@ -1158,7 +1158,7 @@ long ListIndex<Type>::IAppN(const long ind) const
     return 0;
 }
 
-//!teste si la liste est triee
+//teste si la liste est triee
 /*!
   Cette methode teste si la liste est actuellement triee.
   \return true si la liste est triee false dans le cas contraire
@@ -1174,7 +1174,7 @@ bool ListIndex<Type>::isSorted() const
     return sorted;
 }
 
-//!teste si la liste est compactee
+//teste si la liste est compactee
 /*!
   Cette methode teste si la liste est actuellement compactee. La falsetion de compaction est liee au fait que les indices de la liste sont contigus les uns aux autres en ordre croissant sans aucun "trou".
   \return true si la liste est compactee false dans le cas contraire
@@ -1253,7 +1253,7 @@ void ListIndex<Type>::add(const Type object)
     this->ptr[this->sz++] = object;
 }
 
-//!trie la liste
+//trie la liste
 /*!
   Cette methode trie les elements de la liste en fonction de l'index \b _listIndex contenu dans chaque element de la liste. Cette methode force le tri de la pile, meme ci celle-ci semble deja triee.
   \author &copy; Olivier PANTALE
@@ -1269,7 +1269,7 @@ void ListIndex<Type>::forceSort()
     sort();
 }
 
-//!trie la liste
+//trie la liste
 /*!
   Cette methode trie les elements de la liste en fonction de l'index \b _listIndex contenu dans chaque element de la liste.
   \author &copy; Olivier PANTALE
@@ -1317,7 +1317,7 @@ void ListIndex<Type>::sort()
     sorted = true;
 }
 
-//!tri de la liste e partir d'une fonction de comparaison
+//tri de la liste e partir d'une fonction de comparaison
 /*!
   Cette methode trie les elements de la pile en utilisant une fonction de comparaison definie par l'utilisateur. Cette methode est tres performante pour trier une liste et tres souple d'utilisation. L'utilisation peut sembler complexe, mais elle est definie dans l'exemple ci-dessous.
 
@@ -1377,7 +1377,7 @@ void List<Type>::sort(bool (*funct)(const Type objet1, const Type objet2))
     }
 }
 
-//!compactage de la liste
+//compactage de la liste
 /*!
   Cette methode compacte la liste. La falsetion de compaction est liee au fait que les indices de la liste sont contigus les uns aux autres en ordre croissant sans aucun "trou".
   \author &copy; Olivier PANTALE
@@ -1399,7 +1399,7 @@ void ListIndex<Type>::compact()
     sorted = true;
 }
 
-//!supprime un ensemble d'elements dans la liste
+//supprime un ensemble d'elements dans la liste
 /*!
   Cette methode supprime un ensemble d'elements dans la liste. Cette methode est utilisee pour supprimer tout un segment de la liste, en definissant les indices de depart et d'arrivee du segment dans la liste. Si les parametres start et stop sont egaux, un seul element est supprime.
   \param start premier element e supprimer
@@ -1416,7 +1416,7 @@ void ListIndex<Type>::del(const Type start, const Type stop)
     List<Type>::del(IAppN(start->_listIndex), IAppN(stop->_listIndex));
 }
 
-//!supprime un element de la liste
+//supprime un element de la liste
 /*!
   Cette methode supprime un element dans la liste. Cette methode est utilisee pour supprimer un seul element de la liste, en definissant l'indice de l'element e supprimer
   \param ind element e supprimer
@@ -1433,7 +1433,7 @@ void ListIndex<Type>::del(const Type ind)
     List<Type>::del(i, i);
 }
 
-//!supprime les elements avant un indice donne
+//supprime les elements avant un indice donne
 /*!
   Cette methode supprime tous les elements de la liste compris entre le debut de la liste et la valeur donnee en argument de cette methode. Cette methode est equivalente e del(0,ind-1).
   \param ind definit le premier element de la liste e garder
@@ -1449,7 +1449,7 @@ void ListIndex<Type>::delBefore(const Type ind)
     List<Type>::del(0, IAppN(ind->_listIndex) - 1);
 }
 
-//!supprime les elements apres un indice donne
+//supprime les elements apres un indice donne
 /*!
   Cette methode supprime tous les elements de la liste compris entre la valeur donnee en argument de cette methode et la fin de la liste. Cette methode est equivalente e del(ind+1,last()).
   \param ind definit le dernier element de la liste e garder

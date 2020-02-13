@@ -143,7 +143,7 @@ public:
   void toGnuplot(String);
 };
 
-//! Auto sort x coordinates (default value is \b true)
+// Auto sort x coordinates (default value is \b true)
 //-----------------------------------------------------------------------------
 inline void DiscreteFunction::autoSort(bool sr)
 //-----------------------------------------------------------------------------
@@ -151,7 +151,7 @@ inline void DiscreteFunction::autoSort(bool sr)
   Sort = sr;
 }
 
-//! Returns the number of points defining the discrete function
+// Returns the number of points defining the discrete function
 //-----------------------------------------------------------------------------
 inline long DiscreteFunction::getNumberOfPoints()
 //-----------------------------------------------------------------------------
@@ -159,7 +159,7 @@ inline long DiscreteFunction::getNumberOfPoints()
   return lpoints.getSize();
 }
 
-//! Delete all the points in the current dicrete function
+// Delete all the points in the current dicrete function
 //-----------------------------------------------------------------------------
 inline void DiscreteFunction::flush()
 //-----------------------------------------------------------------------------
@@ -167,7 +167,7 @@ inline void DiscreteFunction::flush()
   lpoints.flush();
 }
 
-//! Return the X coordinate of the ith point
+// Return the X coordinate of the ith point
 //-----------------------------------------------------------------------------
 inline double DiscreteFunction::getXPoint(long i)
 //-----------------------------------------------------------------------------
@@ -175,7 +175,7 @@ inline double DiscreteFunction::getXPoint(long i)
   return lpoints(i)->x;
 }
 
-//! Return the Y coordinate of the ith point
+// Return the Y coordinate of the ith point
 //-----------------------------------------------------------------------------
 inline double DiscreteFunction::getYPoint(long i)
 //-----------------------------------------------------------------------------

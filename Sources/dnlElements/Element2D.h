@@ -32,12 +32,13 @@ public:
   ~Element2D();
 
   void getShapeFunctionAtPoint(Vector &shapeFunctions, const Vec3D &point) const = 0;
-  void getDerShapeFunctionAtPoint(Matrix &derShapeFunctions, const Vec3D &point) const  = 0;
-  double getCharacteristicLength () = 0;
-  double getRadiusAtIntegrationPoint();
-  void computeDeformationGradient (Tensor2 & F, short time);
-  bool checkLevel2 ();
-  void getdV_atIntPoint (Tensor2 & dv, short time);
+  void getDerShapeFunctionAtPoint(Matrix &derShapeFunctions, const Vec3D &point) const = 0;
+  double getCharacteristicLength() = 0;
+  //double getRadiusAtIntegrationPoint();
+  //double getRadiusAtUnderIntegrationPoint();
+  void computeDeformationGradient(Tensor2 &F, short time);
+  bool checkLevel2();
+  void getdV_atIntPoint(Tensor2 &dv, short time);
 
   /*  void getdU_atIntPoint (Tensor2 & du, short time);
   void computeDeformationGradient (Tensor2 & du, short time);

@@ -21,7 +21,7 @@
 #include <iostream>
 #include <fstream>
 
-//!Constructor of the Timer class
+//Constructor of the Timer class
 /*!
   This method is the default constructor of the Timer class. All timers are initialized to _current time by default.
 */
@@ -59,7 +59,7 @@ bool Timer::getCumulate()
     return _cumulate;
 }
 
-//!Store the _current time as the _start time
+//Store the _current time as the _start time
 /*!
   This method stores the _current time as the _start time.
 */
@@ -71,7 +71,7 @@ void Timer::start()
     _start = std::chrono::high_resolution_clock::now();
 }
 
-//!Store the _current time as the _stop time
+//Store the _current time as the _stop time
 /*!
   This method stores the _current time as the _stop time.
 */
@@ -88,7 +88,7 @@ void Timer::stop()
     _run = false;
 }
 
-//!currentField time
+//currentField time
 /*!
   This method computes the _current CPU, i.e. the _current time - _initial time.
   \return the delay between _current and _initial times
@@ -102,7 +102,7 @@ double Timer::getCurrent()
     return elapsed_seconds.count();
 }
 
-//!Delay from _start to _stop times
+//Delay from _start to _stop times
 /*!
   This method computes the delay from the _start time to the _stop time.
   \return the delay between _stop and _start times
@@ -115,7 +115,7 @@ double Timer::getDelay()
     return elapsed_seconds.count();
 }
 
-//!Cumulative _totalTime for the timer
+//Cumulative _totalTime for the timer
 /*!
   This method computes cumulative time. One has to define setCumulate(true).
   \return the cumulative time

@@ -229,6 +229,27 @@ const ElementData ElHex8N3D::_elementData = {
         //
     },
 
+    1, // Number of under integration points of the Element
+    {
+        // Under integration point 1
+        {
+            Vec3D(0.0, 0.0, 0.0),                             // Coordinates of the under integration point
+            8.0,                                              // Weight associated to the under integration point
+            Vector(8, +1.0 / 8, +1.0 / 8, +1.0 / 8, +1.0 / 8, // Shape functions at the under integration point
+                   +1.0 / 8, +1.0 / 8, +1.0 / 8, +1.0 / 8),   //
+            Matrix(8, 3,                                      // Derivatives of the shape functions at the under integration point
+                   -1.0 / 8, -1.0 / 8, -1.0 / 8,              //
+                   1.0 / 8, -1.0 / 8, -1.0 / 8,               //
+                   1.0 / 8, 1.0 / 8, -1.0 / 8,                //
+                   -1.0 / 8, 1.0 / 8, -1.0 / 8,               //
+                   -1.0 / 8, -1.0 / 8, 1.0 / 8,               //
+                   1.0 / 8, -1.0 / 8, 1.0 / 8,                //
+                   1.0 / 8, 1.0 / 8, 1.0 / 8,                 //
+                   -1.0 / 8, 1.0 / 8, 1.0 / 8)                //
+        },
+        //
+    },
+
     6, // Number of faces of the element
     {
         // Face number 1
@@ -401,27 +422,6 @@ const ElementData ElHex8N3D::_elementData = {
                    (2.0 + sqrt(3.0)) / 12, 1.0 / 12, 1.0 / 12,                                                        //
                    (-2.0 - sqrt(3.0)) / 12, (2.0 + sqrt(3.0)) / 12, (2.0 + sqrt(3.0)) / 12)                           //
         }
-        //
-    },
-
-    1, // Number of under integration points of the Element
-    {
-        // Under integration point 1
-        {
-            Vec3D(0.0, 0.0, 0.0),                             // Coordinates of the under integration point
-            8.0,                                              // Weight associated to the under integration point
-            Vector(8, +1.0 / 8, +1.0 / 8, +1.0 / 8, +1.0 / 8, // Shape functions at the under integration point
-                   +1.0 / 8, +1.0 / 8, +1.0 / 8, +1.0 / 8),   //
-            Matrix(8, 3,                                      // Derivatives of the shape functions at the under integration point
-                   -1.0 / 8, -1.0 / 8, -1.0 / 8,              //
-                   1.0 / 8, -1.0 / 8, -1.0 / 8,               //
-                   1.0 / 8, 1.0 / 8, -1.0 / 8,                //
-                   -1.0 / 8, 1.0 / 8, -1.0 / 8,               //
-                   -1.0 / 8, -1.0 / 8, 1.0 / 8,               //
-                   1.0 / 8, -1.0 / 8, 1.0 / 8,                //
-                   1.0 / 8, 1.0 / 8, 1.0 / 8,                 //
-                   -1.0 / 8, 1.0 / 8, 1.0 / 8)                //
-        },
         //
     },
 

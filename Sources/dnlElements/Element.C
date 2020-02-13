@@ -211,7 +211,7 @@ void Element::add(IntegrationPoint *field, short intPointId)
   field->integrationPointData = &(_elementData->integrationPoint[intPointId]);
 }
 
-/* //-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 void Element::add(UnderIntegrationPoint *field, short intPointId)
 //-----------------------------------------------------------------------------
 {
@@ -239,23 +239,23 @@ void Element::add(UnderIntegrationPoint *field, short intPointId)
 
   field->integrationPointData = &(_elementData->underIntegrationPoint[intPointId]);
 }
- */
+
 //-----------------------------------------------------------------------------
 void Element::createIntegrationPoints()
 //-----------------------------------------------------------------------------
 {
-  for (long intPoint = 0; intPoint < _elementData->numberOfIntegrationPoints; intPoint++)
+  for (short intPoint = 0; intPoint < _elementData->numberOfIntegrationPoints; intPoint++)
   {
     IntegrationPoint *pintPt = new IntegrationPoint(getNumberOfDimensions(), getNumberOfNodes());
     add(pintPt, intPoint);
   }
 
-/*   for (long intPoint = 0; intPoint < _elementData->numberOfUnderIntegrationPoints; intPoint++)
+  for (short intPoint = 0; intPoint < _elementData->numberOfUnderIntegrationPoints; intPoint++)
   {
     UnderIntegrationPoint *pintPt = new UnderIntegrationPoint(getNumberOfDimensions(), getNumberOfNodes());
     add(pintPt, intPoint);
   }
- */}
+}
 
 //-----------------------------------------------------------------------------
 void Element::initializeData()
@@ -335,7 +335,7 @@ void Element::computeMassMatrix(MatrixDiag &elementMassMatrix)
   }
 }
 
-//!Calcul du de la vitesse de propagation d'une onde.
+//Calcul du de la vitesse de propagation d'une onde.
 //-----------------------------------------------------------------------------
 double Element::getElongationWaveSpeed()
 //-----------------------------------------------------------------------------
@@ -1553,7 +1553,7 @@ void Element::computeMomentumEquation(MatrixDiag &M, Vector &F)
 }
 
 
-//!Ajout d'un point d'integration e l'element courant
+//Ajout d'un point d'integration e l'element courant
 
 
 //-----------------------------------------------------------------------------
@@ -1582,7 +1582,7 @@ void Element::detachMaterial ()
 //  return(Success);
 }
 
-//!Positionne le point d'integration courant
+//Positionne le point d'integration courant
 
 //-----------------------------------------------------------------------------
 void Element::getIntegrationPoint (long pt)
@@ -1601,7 +1601,7 @@ void Element::getIntegrationPoint (long pt)
 #endif
 }
 
-//!Positionne le point de sous-integration courant
+//Positionne le point de sous-integration courant
 
 //-----------------------------------------------------------------------------
 void Element::getUnderIntegrationPoint (long pt)
@@ -1652,10 +1652,10 @@ double Element::getThermalSpeed()
 //  return sqrt((E*(1-poissonRatio))/(density*(1+poissonRatio)*(1-2*poissonRatio)));
 }
 
-//!Phase d'integration de la loi de conservation de la masse
+//Phase d'integration de la loi de conservation de la masse
 
 
-//!Calcul de la matrice de masse d'un element
+//Calcul de la matrice de masse d'un element
 
 //-----------------------------------------------------------------------------
 void Element::computeMassEquation (MatrixDiag & M)
@@ -1687,18 +1687,18 @@ void Element::computeMassEquation (MatrixDiag & M)
     }
 }
 
-//!Phase d'integration de la loi de conservation de la quantite de mouvement
+//Phase d'integration de la loi de conservation de la quantite de mouvement
 
 
 
-//!Phase d'integration de la loi de comportement
+//Phase d'integration de la loi de comportement
 
 
-//!Phase d'integration de la loi d'etat
+//Phase d'integration de la loi d'etat
 
 
 
-//!Phase d'integration de la loi de conservation de l'energie
+//Phase d'integration de la loi de conservation de l'energie
 
 //-----------------------------------------------------------------------------
 void Element::computeEnergyEquation (MatrixDiag & M, Vector & F)
@@ -1819,10 +1819,10 @@ void Element::computeEnergyEquation (MatrixDiag & M, Vector & F)
 //   for (i=0;i<_elementData->numberOfNodes;i++) M(i)*=alpha;
 }
 
-//!Phase de calcul des deformations
+//Phase de calcul des deformations
 
 
-//!Calcul du gradient de temperature sur un point d'integration
+//Calcul du gradient de temperature sur un point d'integration
 
 //-----------------------------------------------------------------------------
 void Element::getdTemp_atIntPoints (Vec3D & dT)
@@ -1836,10 +1836,10 @@ void Element::getdTemp_atIntPoints (Vec3D & dT)
       dT (i) += _integrationPoint->dShapeFunction (k, i) * nodes (k)->currentField->T;
 }
 
-//!Recuperation de la densite sur un point d'integration
+//Recuperation de la densite sur un point d'integration
 
 
-//!Recuperation du vecteur des efforts externes sur un point d'integration
+//Recuperation du vecteur des efforts externes sur un point d'integration
 
 //-----------------------------------------------------------------------------
 void Element::getFe_atIntPoint (Vec3D & force)

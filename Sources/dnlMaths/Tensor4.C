@@ -54,7 +54,7 @@
   \date 1997-2004  
 */
 
-//!constructeur de la classe Tensor4
+//constructeur de la classe Tensor4
 /*!
   Cette methode construit un tenseur d'ordre 4. Par defaut, le contenu du tenseur est mis e zero
   \author Olivier PANTALE
@@ -68,14 +68,14 @@ Tensor4::Tensor4()
   setToValue(0.);
 }
 
-//!destructeur de la classe Tensor4
+//destructeur de la classe Tensor4
 //-----------------------------------------------------------------------------
 Tensor4::~Tensor4()
 //-----------------------------------------------------------------------------
 {
 }
 
-//!affichage du contenu d'un tenseur
+//affichage du contenu d'un tenseur
 /*!
   Cette methode est une surdefinition de << pour les flux de sortie, son utilisation est donnee comme suit
   
@@ -96,7 +96,7 @@ std::ostream &operator<<(std::ostream &os, const Tensor4 &t1)
   return os;
 }
 
-//!affichage du contenu d'un tenseur
+//affichage du contenu d'un tenseur
 /*!
   Cette methode permet d'afficher le contenu d'un tenseur sur la sortie std::ostream
   \param os flux de sortie
@@ -125,7 +125,7 @@ void Tensor4::print(std::ostream &os) const
   }
 }
 
-//!renvoie un tenseur identite e partir d'un tenseur quelconque
+//renvoie un tenseur identite e partir d'un tenseur quelconque
 /*!
   Cette methode prend en argument un tenseur quelconque et renvoie un tenseur identite
   
@@ -152,7 +152,7 @@ void Tensor4::setToUnity()
               2.;
 }
 
-//!affectation d'egalite
+//affectation d'egalite
 /*! 
   Cette methode est une surdefinition de la methode d'egalite permettant d'ecrire simplement le remplissage des valeurs d'un tenseur par un scalaire
   
@@ -172,7 +172,7 @@ Tensor4 &Tensor4::operator=(const double &val)
   return *this;
 }
 
-//!affectation d'egalite
+//affectation d'egalite
 /*! 
   Cette methode est une surdefinition de la methode d'egalite permettant d'ecrire simplement l'affectation sous la forme donnee en exemple
   
@@ -192,7 +192,7 @@ Tensor4 &Tensor4::operator=(const Tensor4 &t1)
   return *this;
 }
 
-//!addition de deux tenseurs du deuxieme ordre
+//addition de deux tenseurs du deuxieme ordre
 /*!
   Cette methode permet de surdefinir l'operation d'addition des tenseurs et d'ecrire simplement la somme de deux tenseurs sous la forme donnee en exemple
   
@@ -220,7 +220,7 @@ Tensor4::operator+(const Tensor4 &t1) const
   return t2;
 }
 
-//!soustraction de deux tenseurs du deuxieme ordre
+//soustraction de deux tenseurs du deuxieme ordre
 /*!
   Cette methode permet de surdefinir l'operation de soustraction des tenseurs et d'ecrire simplement la soustraction de deux tenseurs sous la forme donnee en exemple
   
@@ -248,7 +248,7 @@ Tensor4::operator-(const Tensor4 &t1) const
   return t2;
 }
 
-//!multiplication d'un tenseur par un scalaire
+//multiplication d'un tenseur par un scalaire
 /*!
   Cette methode permet de surdefinir l'operation de multiplication des tenseurs et d'ecrire simplement la multiplication d'un tenseur par un scalaire sous la forme donnee en exemple
   
@@ -274,7 +274,7 @@ Tensor4
   return t2;
 }
 
-//!division d'un tenseur par un scalaire
+//division d'un tenseur par un scalaire
 /*!
   Cette methode permet de surdefinir l'operation de division des tenseurs et d'ecrire simplement la division d'un tenseur par un scalaire sous la forme donnee en exemple
   
@@ -301,7 +301,7 @@ Tensor4::operator/(const double &lambda) const
   return t2;
 }
 
-//!multiplication d'un tenseur par un scalaire
+//multiplication d'un tenseur par un scalaire
 /*!
   Cette methode permet de surdefinir l'operation de multiplication des tenseurs et d'ecrire simplement la multiplication d'un tenseur par un scalaire sous la forme donnee en exemple. Elle est identique e la forme precedente (et commutative).
   
@@ -327,7 +327,7 @@ operator*(const double &lambda, const Tensor4 &t1)
   return t2;
 }
 
-//!multiplication d'un tenseur par un vecteur
+//multiplication d'un tenseur par un vecteur
 /*!
   Cette methode permet de surdefinir l'operation de multiplication des tenseurs et d'ecrire simplement la multiplication d'un tenseur par un vecteur sous la forme donnee en exemple. Cette operation correspond e la notion de produit contracte d'un tenseur et d'un vecteur, elle renvoie un vecteur \c Vec3D.
   
@@ -356,7 +356,7 @@ Tensor3 Tensor4::operator*(const Vec3D &v1) const
   return t3;
 }
 
-//!multiplication de deux tenseurs
+//multiplication de deux tenseurs
 /*!
   Cette methode permet de surdefinir l'operation de multiplication des tenseurs et d'ecrire simplement la multiplication de deux tenseur sous la forme donnee en exemple. Cette operation correspond e la notion de double produit contracte de deux tenseurs.
   
@@ -387,7 +387,7 @@ Tensor2
   return t3;
 }
 
-//!egalite de deux tenseurs
+//egalite de deux tenseurs
 /*!
   Cette methode teste l'egalite de deux tenseurs
   \return true si les deux tenseurs sont identiques, false dans la cas contraire
@@ -406,7 +406,7 @@ bool Tensor4::operator==(const Tensor4 &t1) const
   return true;
 }
 
-//!inegalite de deux tenseurs
+//inegalite de deux tenseurs
 /*!
   Cette methode teste l'inegalite de deux tenseurs
   \return true si les deux tenseurs sont differents, false dans la cas contraire
@@ -420,7 +420,7 @@ bool Tensor4::operator!=(const Tensor4 &t1) const
   return !(*this == t1);
 }
 
-//!sortie sur flux std::ofstream
+//sortie sur flux std::ofstream
 /*!
   Cette methode permet d'ecrire un tenseur dans un fichier (notament) binaire
   
@@ -440,7 +440,7 @@ void Tensor4::write(std::ofstream &ofs) const
   ofs.write((char *)v, 81 * sizeof(double));
 }
 
-//!lecture sur flux std::ifstream
+//lecture sur flux std::ifstream
 /*!
   Cette methode permet de lire un tenseur depuis un fichier (notament) binaire
   
@@ -460,7 +460,7 @@ void Tensor4::read(std::ifstream &ifs)
   ifs.read((char *)v, 81 * sizeof(double));
 }
 
-//!sortie sur flux std::ofstream
+//sortie sur flux std::ofstream
 /*!
   Cette methode permet d'ecrire un tenseur dans un fichier (notament) binaire
   
@@ -481,7 +481,7 @@ std::ofstream &operator<<(std::ofstream &os, const Tensor4 &t1)
   return os;
 }
 
-//!lecture sur flux std::ifstream
+//lecture sur flux std::ifstream
 /*!
   Cette methode permet de lire un tenseur depuis un fichier (notament) binaire
   
@@ -502,7 +502,7 @@ std::ifstream &operator>>(std::ifstream &is, Tensor4 &t1)
   return is;
 }
 
-//!Saves the content of a Tensor4 into a NumPy file
+//Saves the content of a Tensor4 into a NumPy file
 /*!
   This method saves the content of a Tensor4 object into a NumPy file defined by its filename. If the flag initialize is true, the current file will be concatenated.
 
@@ -522,7 +522,7 @@ void Tensor4::numpyWrite(std::string filename, bool initialize) const
   NumpyInterface::npySave(filename, &v[0], {3, 3, 3, 3}, mode);
 }
 
-//!Saves the content of a Tensor4 into a NumPyZ file
+//Saves the content of a Tensor4 into a NumPyZ file
 /*!
   This method saves the content of a vec3D object into a NumPyZ file defined by its filename. If the flag initialize is true, the current file will be concatenated.
 
@@ -542,7 +542,7 @@ void Tensor4::numpyWriteZ(std::string filename, std::string name, bool initializ
   NumpyInterface::npzSave(filename, name, &v[0], {3, 3, 3, 3}, mode);
 }
 
-//!Read the content of a Tensor4 from a NumPy file
+//Read the content of a Tensor4 from a NumPy file
 /*!
   This method reads the content of a vec3D object from a NumPy file defined by its filename.
 
@@ -564,7 +564,7 @@ void Tensor4::numpyRead(std::string filename)
   memcpy(v, arr.data<double *>(), arr.num_vals * arr.word_size);
 }
 
-//!Read the content of a Tensor4 from a NumPyZ file
+//Read the content of a Tensor4 from a NumPyZ file
 /*!
   This method reads the content of a vec3D object from a NumPyZ file defined by its filename.
 

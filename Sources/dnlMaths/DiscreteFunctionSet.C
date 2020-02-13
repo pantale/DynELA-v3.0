@@ -22,28 +22,28 @@
 #include <Defines.h>
 #include <DiscreteFunctionSet.h>
 
-//!Constructor of the DiscreteFunctionSet class
+//Constructor of the DiscreteFunctionSet class
 //-----------------------------------------------------------------------------
 DiscreteFunctionSet::DiscreteFunctionSet()
 //-----------------------------------------------------------------------------
 {
 }
 
-//!Copy constructor of the DiscreteFunctionSet class
+//Copy constructor of the DiscreteFunctionSet class
 //-----------------------------------------------------------------------------
 DiscreteFunctionSet::DiscreteFunctionSet(const DiscreteFunctionSet &X)
 //-----------------------------------------------------------------------------
 {
 }
 
-//!Destructor of the DiscreteFunctionSet class
+//Destructor of the DiscreteFunctionSet class
 //-----------------------------------------------------------------------------
 DiscreteFunctionSet::~DiscreteFunctionSet()
 //-----------------------------------------------------------------------------
 {
 }
 
-//!Reads the set of discrete functions on the disk
+//Reads the set of discrete functions on the disk
 /*!
   \param st name of the file to read from
 */
@@ -141,7 +141,7 @@ void DiscreteFunctionSet::read(String st)
     fclose(pfile);
 }
 
-//!Writes the set of discrete functions on the disk
+//Writes the set of discrete functions on the disk
 /*!
   \param filename name of the file to write
 */
@@ -168,7 +168,7 @@ void DiscreteFunctionSet::write(String filename)
     }
 }
 
-//!Get a discrete function from the set by it's name
+//Get a discrete function from the set by it's name
 /*!
   \return The corresponding discrete function from the set
 */
@@ -187,7 +187,7 @@ DiscreteFunction *DiscreteFunctionSet::get(String name)
     return NULL;
 }
 
-//!Get the ith discrete function from the set
+//Get the ith discrete function from the set
 /*!
   \return The corresponding discrete function from the set
 */
@@ -226,7 +226,7 @@ void DiscreteFunctionSet::remove(String name)
     }
 }
 
-//!Number of discrete functions in the set
+//Number of discrete functions in the set
 /*!
   \return Number of discrete functions in the set
 */

@@ -22,7 +22,7 @@
 /* #include <Node.h>
 #include <NodalField.h>
 #include <Function.h> */
-//!constructeur par defaut de la classe BoundaryForce
+//constructeur par defaut de la classe BoundaryForce
 /*!
   Cette methode est le constructeur par defaut de la classe BoundaryForce. En pratique, ici, on ne fait rien de plus que les allocations de memoire necessaires.
   \author Olivier PANTALE
@@ -41,7 +41,7 @@ BoundaryForce::BoundaryForce(const Vec3D &newForce)
   _force = newForce;
 }
 
-//!constructeur par recopie de la classe BoundaryForce
+//constructeur par recopie de la classe BoundaryForce
 /*!
   Cette methode est le constructeur par recopie de la classe BoundaryForce.
   \warning La recopie n'est pas prevue ici, cette methode genere une erreur d'execution
@@ -63,7 +63,7 @@ void BoundaryForce::applyInitial(Node *node, double currentTime, double timeStep
   //node->newField->_force=_force;
 }
 
-//!Application d'une condition limite Imposee sur un noeud
+//Application d'une condition limite Imposee sur un noeud
 /*!
 Cette methode applique des conditions aux limites imposees sur un noeud. Les conditions limites imposees sont de type vitesse, deplacement ou _force imposee.
 */
@@ -81,7 +81,7 @@ void BoundaryForce::applyConstantOnCurrentFields(Node *node, double currentTime,
              "Pas encore implemente et teste");
 }
 
-//!destructeur de la classe BoundaryForce
+//destructeur de la classe BoundaryForce
 /*!
   Cette methode est le destructeur de la classe BoundaryForce.
   \author Olivier PANTALE

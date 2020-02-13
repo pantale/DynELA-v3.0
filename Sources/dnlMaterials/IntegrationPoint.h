@@ -50,7 +50,7 @@ public:
   void baseFlush();
 };
 
-/* class UnderIntegrationPoint : public IntegrationPointBase
+class UnderIntegrationPoint : public IntegrationPointBase
 {
 
 public:
@@ -58,7 +58,7 @@ public:
   ~UnderIntegrationPoint();
   void flush();
 };
- */
+
 class IntegrationPoint : public IntegrationPointBase
 {
 

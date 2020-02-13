@@ -111,6 +111,22 @@ const ElementData ElQua4N2D::_elementData = {
         //
     },
 
+    1, // Number of under integration points of the Element
+    {
+        // Under integration point 1
+        {
+            Vec3D(0.0, 0.0, 0.0),                              // Coordinates of the under integration point
+            4.0,                                               // Weight associated to the under integration point
+            Vector(4, +1.0 / 4, +1.0 / 4, +1.0 / 4, +1.0 / 4), // Shape functions at the under integration point
+            Matrix(4, 2,                                       // Derivatives of the shape functions at the under integration point
+                   -1.0 / 4, -1.0 / 4,                         //
+                   +1.0 / 4, -1.0 / 4,                         //
+                   +1.0 / 4, +1.0 / 4,                         //
+                   -1.0 / 4, +1.0 / 4)                         //
+        }
+        //
+    },
+
     1, // Number of faces of the element
     {
         // Face number 1
@@ -166,22 +182,6 @@ const ElementData ElQua4N2D::_elementData = {
                    (+3.0 - sqrt(3.0)) / 12, (-3.0 + sqrt(3.0)) / 12,                   //
                    (+3.0 + sqrt(3.0)) / 12, (+3.0 - sqrt(3.0)) / 12,                   //
                    (-3.0 - sqrt(3.0)) / 12, (+3.0 + sqrt(3.0)) / 12)                   //
-        }
-        //
-    },
-
-    1, // Number of under integration points of the Element
-    {
-        // Under integration point 1
-        {
-            Vec3D(0.0, 0.0, 0.0),                              // Coordinates of the under integration point
-            4.0,                                               // Weight associated to the under integration point
-            Vector(4, +1.0 / 4, +1.0 / 4, +1.0 / 4, +1.0 / 4), // Shape functions at the under integration point
-            Matrix(4, 2,                                       // Derivatives of the shape functions at the under integration point
-                   -1.0 / 4, -1.0 / 4,                         //
-                   +1.0 / 4, -1.0 / 4,                         //
-                   +1.0 / 4, +1.0 / 4,                         //
-                   -1.0 / 4, +1.0 / 4)                         //
         }
         //
     },
@@ -246,7 +246,7 @@ ElQua4N2D::ElQua4N2D(long elementNumber) : Element2D(elementNumber)
 {
     _globalToLocal.redim(2, 4);
     Element::_elementData = &_elementData;
-    stiffnessMatrix.redim(8,8);
+    stiffnessMatrix.redim(8, 8);
 
     // Check the data structure
     if (_elementData.CheckElementData != 10010110)
@@ -299,7 +299,7 @@ void ElQua4N2D::getDerShapeFunctionAtPoint(Matrix &derShapeFunctions, const Vec3
 }
 
 /* 
-//!Calcul de la longueur caracteristique d'un element
+//Calcul de la longueur caracteristique d'un element
 //
 //Cette methode calcule la longueur caracteristique d'un element e partir de la definition de la geometrie de cet element.
 //La relation utilisee pour ce calcul est donnee par:

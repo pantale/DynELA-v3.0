@@ -22,7 +22,7 @@
 /* #include <Node.h>
 #include <NodalField.h> */
 
-//!constructeur par defaut de la classe BoundaryConvection
+//constructeur par defaut de la classe BoundaryConvection
 /*!
   Cette methode est le constructeur par defaut de la classe BoundaryConvection. En pratique, ici, on ne fait rien de plus que les allocations de memoire necessaires.
   \author Olivier PANTALE
@@ -50,7 +50,7 @@ BoundaryConvection::BoundaryConvection(const BoundaryConvection &X)
   exit(-1);
 }
 
-//!destructeur de la classe BoundaryConvection
+//destructeur de la classe BoundaryConvection
 /*!
   Cette methode est le destructeur de la classe BoundaryConvection.
   \author Olivier PANTALE

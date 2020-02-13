@@ -72,6 +72,17 @@ const ElementData ElTet4N3D::_elementData = {
         //
     },
 
+    1, // Number of under integration points of the Element
+    {
+        {
+            Vec3D(1.0 / 4, 1.0 / 4, 1.0 / 4),                                     // Coordinates of the under integration point
+            1.0 / 6,                                                                  // Weight associated to the under integration point
+            Vector(4, 1.0 / 4, 1.0 / 4, 1.0 / 4, 1.0 / 4),                      // Shape functions at the under integration point
+            Matrix(4, 3, -1.0, -1.0, -1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0) // Derivatives of the shape functions at the under integration point
+        },
+        //
+    },
+
     4, // Number of faces of the element
     {
         // Face number 1
@@ -129,17 +140,6 @@ const ElementData ElTet4N3D::_elementData = {
             1.0 / 24.0,                                                                                                          // Weight associated to the mass integration point
             Vector(4, (5.0 - sqrt(5.0)) / 20., (5.0 - sqrt(5.0)) / 20., (5.0 - sqrt(5.0)) / 20., (5.0 + 3.0 * sqrt(5.0)) / 20.), // Shape functions at the mass integration point
             Matrix(4, 3, -1.0, -1.0, -1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0)                                          // Derivatives of the shape functions at the mass integration point
-        },
-        //
-    },
-
-    1, // Number of under integration points of the Element
-    {
-        {
-            Vec3D(1.0 / 4, 1.0 / 4, 1.0 / 4),                                     // Coordinates of the under integration point
-            1.0 / 6,                                                                  // Weight associated to the under integration point
-            Vector(4, 1.0 / 4, 1.0 / 4, 1.0 / 4, 1.0 / 4),                      // Shape functions at the under integration point
-            Matrix(4, 3, -1.0, -1.0, -1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0) // Derivatives of the shape functions at the under integration point
         },
         //
     },

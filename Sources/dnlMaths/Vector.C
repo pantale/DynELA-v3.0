@@ -28,7 +28,7 @@
 #include <Matrix.h>
 #include <NumpyInterface.h>
 
-//!Constructor of the Vector class
+//Constructor of the Vector class
 /*!
   This method is a constructor of the Vector class with a null size.
 */
@@ -40,7 +40,7 @@ Vector::Vector()
   _data = NULL;
 }
  */
-//!Constructor of the Vector class with memory allocation
+//Constructor of the Vector class with memory allocation
 /*!
   This method is a constructor of the Vector class with a given size. If the initial value is not provided, the initial value of all components of the vector is set to zero.
   \param len Number of components of the vector
@@ -57,7 +57,7 @@ Vector::Vector(long len, double value)
     _data[i] = value;
 }
 
-//!Copy constructor of the Vector class
+//Copy constructor of the Vector class
 //-----------------------------------------------------------------------------
 Vector::Vector(const Vector &vect)
 //-----------------------------------------------------------------------------
@@ -96,7 +96,7 @@ Vector::Vector(int vectorLength, double firstValue, double secondValue, ...)
   va_end(arguments);
 }
 
-//!Destructor of the Vector class
+//Destructor of the Vector class
 //-----------------------------------------------------------------------------
 Vector::~Vector()
 //-----------------------------------------------------------------------------
@@ -123,7 +123,7 @@ void Vector::desallocate()
   _dataLength = 0;
 }
 
-//!Swap two vectors of the same size
+//Swap two vectors of the same size
 /*!
   This method swaps the storage of two vectors. The twio vectors must have the exact same size.
 */
@@ -156,7 +156,7 @@ void Vector::redim(const long newSize)
   allocate(newSize);
 }
 
-//!Resize a vector
+//Resize a vector
 /*!
   This method is used to specify a new vector dimension of the one given during initialization by the constructor. 
   This method makes a copy of the prevoius vector according to the new size, i.e. it can shrink or expand the vector.
@@ -199,7 +199,7 @@ void Vector::resizeVector(const long new_vectorLength)
   _dataLength = new_vectorLength;
 }
 
-//!Display the content of a Vector
+//Display the content of a Vector
 /*!
   This method is a surdefintion of the << operator
 
@@ -218,7 +218,7 @@ std::ostream &operator<<(std::ostream &os, const Vector &vector)
   return os;
 }
 
-//!Display the content of a Vector
+//Display the content of a Vector
 /*!
   This method is a surdefintion of the << operator
 
@@ -243,7 +243,7 @@ void Vector::print(std::ostream &os) const
   os << "}";
 }
 
-//!Displays the content of the vector on stdout
+//Displays the content of the vector on stdout
 /*!
   This method displays the content of the vector on the screen in a predefined format. The selection of the display format is made using the method \ref setOutType(). 
  The output type is defined by the variables listed in \ref OutVector.
@@ -282,7 +282,7 @@ void Vector::printOut()
   }
 }
 
-//!Fill a vector with a scalar value
+//Fill a vector with a scalar value
 /*!
   This method affect a value to a vector class.
 
@@ -301,7 +301,7 @@ void Vector::setToValue(double val)
     _data[index] = val;
 }
 
-//!Fill a vector with a scalar value
+//Fill a vector with a scalar value
 /*!
   This method is a surdefinition of the = operator for the vector class.
 
@@ -320,7 +320,7 @@ Vector &Vector::operator=(double val)
   return *this;
 }
 
-//!Fill a vector with a table of values
+//Fill a vector with a table of values
 /*!
   This method is a surdefinition of the equality operator used to setToValue a vector with a table of values.
 
@@ -339,7 +339,7 @@ Vector &Vector::operator=(const double *vals)
   return *this;
 }
 
-//!Copy the content of a vector into a new one
+//Copy the content of a vector into a new one
 /*!
   This method is the so called = operator between two vectors.
 
@@ -368,7 +368,7 @@ Vector &Vector::operator=(const Vector &vect)
   return *this;
 }
 
-//!Addition of 2 vectors
+//Addition of 2 vectors
 /*!
   This method defines the addition of 2 vectors.
   The result of this operation is also a vector defined by:
@@ -402,7 +402,7 @@ Vector Vector::operator+(const Vector &vect) const
   return resu;
 }
 
-//!Addition of 2 vectors
+//Addition of 2 vectors
 /*!
   This method defines the addition of 2 vectors.
   The result of this operation is also a vector defined by:
@@ -433,7 +433,7 @@ void Vector::operator+=(const Vector &vect)
     _data[i] += vect._data[i];
 }
 
-//!Difference of 2 vectors
+//Difference of 2 vectors
 /*!
   This method defines the difference of 2 vectors.
   The result of this operation is also a vector defined by:
@@ -466,7 +466,7 @@ Vector Vector::operator-(const Vector &vect) const
   return resu;
 }
 
-//!Difference of 2 vectors
+//Difference of 2 vectors
 /*!
   This method defines the difference of 2 vectors.
   The result of this operation is also a vector defined by:
@@ -496,7 +496,7 @@ void Vector::operator-=(const Vector &vect)
     _data[i] -= vect._data[i];
 }
 
-//!Opposite value of a vector
+//Opposite value of a vector
 /*!
   This method defines the opposite of a vector.
   The result of this operation is also a vector defined by:
@@ -519,7 +519,7 @@ Vector Vector::operator-() const
   return resu;
 }
 
-//!Multiplication of a vector by a scalar value
+//Multiplication of a vector by a scalar value
 /*!
   This method defines the multiplication of a vector by a scalar value
   
@@ -543,7 +543,7 @@ Vector Vector::operator*(const double lambda) const
   return resu;
 }
 
-//!Multiplication of a vector by a scalar value
+//Multiplication of a vector by a scalar value
 /*!
   This method defines the multiplication of a vector by a scalar value
   
@@ -564,7 +564,7 @@ void Vector::operator*=(const double lambda)
     _data[i] *= lambda;
 }
 
-//!Division of a vector by a scalar value
+//Division of a vector by a scalar value
 /*!
   This method defines the division of a vector by a scalar value
   
@@ -597,7 +597,7 @@ Vector Vector::operator/(const double lambda) const
   return resu;
 }
 
-//!Division of a vector by a scalar value
+//Division of a vector by a scalar value
 /*!
   This method defines the division of a vector by a scalar value
   
@@ -627,7 +627,7 @@ void Vector::operator/=(const double lambda)
     _data[i] *= unSurLambda;
 }
 
-//!Multiplication of a vector by a scalar value
+//Multiplication of a vector by a scalar value
 /*!
   This method defines the multiplication of a vector by a scalar value
   
@@ -651,7 +651,7 @@ Vector operator*(const double lambda, const Vector &vect)
   return resu;
 }
 
-//!Returns the norm of a vector
+//Returns the norm of a vector
 /*!
   This method returns norm of a vector defined by:
   \f[ \left\Vert \overrightarrow{_data} \right\Vert = \sqrt {v_{1}^2 + v_{2}^2 + ... + v_{n}^2} \f]
@@ -669,7 +669,7 @@ double Vector::getNorm()
   return sqrt(getNorm);
 }
 
-//!Returns the inner product of a vector by itself
+//Returns the inner product of a vector by itself
 /*!
   This method returns inner product of a vector by itself defined by: 
   \f[ \left\Vert \overrightarrow{_data} \right\Vert  = v_{1}^2 + v_{2}^2 + ... + v_{n}^2 \f]
@@ -713,7 +713,7 @@ Matrix Vector::dyadicProduct(const Vector &vec)
   return result;
 }
 
-//!Normalization of a 3D vector
+//Normalization of a 3D vector
 /*!
   This method modifies the given vector and makes its norm equal to 1.0
 */
@@ -729,7 +729,7 @@ void Vector::normalize()
     _data[i] /= norm;
 }
 
-//!Nomalized vector
+//Nomalized vector
 /*!
   This method returns an colinear vector with a unary norm.
   \return colinear vector with a norm equal to 1.
@@ -750,7 +750,7 @@ Vector Vector::getNormalized()
   return vect;
 }
 
-//!Maximum _data in a vector
+//Maximum _data in a vector
 /*!
   This method returns the maximum _data of a vector
 */
@@ -767,7 +767,7 @@ double Vector::maxValue()
   return val;
 }
 
-//!Minimum _data in a vector
+//Minimum _data in a vector
 /*!
   This method returns the minimum _data of a vector
 */
@@ -784,7 +784,7 @@ double Vector::minValue()
   return val;
 }
 
-//!Absolute maximum _data in a vector
+//Absolute maximum _data in a vector
 /*!
   This method returns the absolute maximum _data of a vector
 */
@@ -801,7 +801,7 @@ double Vector::maxAbsoluteValue()
   return val;
 }
 
-//!Absolute minimum _data in a vector
+//Absolute minimum _data in a vector
 /*!
   This method returns the absolute minimum _data of a vector
 */
@@ -818,7 +818,7 @@ double Vector::minAbsoluteValue()
   return val;
 }
 
-//!Assemblage d'un vecteur dans un autre
+//Assemblage d'un vecteur dans un autre
 /*!
   Cette methode effectue la phase d'assemblage d'ue vecteur dans un autre conformement e ce qui se fait classiquement en Elements Finis.
   
@@ -900,7 +900,7 @@ void Vector::gatherFrom(const Vector &V, long *ind0, int numberOfDimensions)
   delete[] ind;
 }
 
-//!Assemblage d'un vecteur dans un autre
+//Assemblage d'un vecteur dans un autre
 /*!
   Cette methode effectue la phase d'assemblage d'ue vecteur dans un autre conformement e ce qui se fait classiquement en Elements Finis.
   
@@ -983,7 +983,7 @@ void Vector::scatterFrom(const Vector &V, long *ind0, int numberOfDimensions)
   delete[] ind;
 }
 
-//!Test the equality of two vectors
+//Test the equality of two vectors
 /*!
   This method tests the equality of two vectors.
   It returns \ref true if all components of the two vectors are equals, \ref false on other case.
@@ -1009,7 +1009,7 @@ bool Vector::operator==(const Vector &vect) const
   return true;
 }
 
-//!Test the inequality of two vectors
+//Test the inequality of two vectors
 /*!
   This method tests the inequality of two vectors.
   It returns \ref true if all components of the two vectors are differents, \ref false on other case.
@@ -1023,7 +1023,7 @@ bool Vector::operator!=(const Vector &vec) const
   return !(*this == vec);
 }
 
-//!Distance between two vectors
+//Distance between two vectors
 /*!
   This method computes the distance between two vectors using an Euclidian getNorm.
   \param vect Second vector to use
@@ -1047,7 +1047,7 @@ double Vector::distance(const Vector &vect) const
   return x.getNorm();
 }
 
-//!Square value of the distance between two vectors
+//Square value of the distance between two vectors
 /*!
   This method computes the distance between two vectors using an Euclidian getNorm and returns the square value of this distance.
   \param vect Second vector to use
@@ -1071,7 +1071,7 @@ double Vector::squareDistance(const Vector &vect) const
   return x.innerProduct();
 }
 
-//!Dot product of two vectors
+//Dot product of two vectors
 /*!
   This method computes the dot product of two vectors defined by:
   \f[ s = \overrightarrow{a} . \overrightarrow{b} \f]
@@ -1098,7 +1098,7 @@ double Vector::dotProduct(const Vector &vect) const
   return prod;
 }
 
-//!Vectorial product of two vectors
+//Vectorial product of two vectors
 /*!
   This method computes the vectorialProduct product of two vectors defined by:
   \f[ \overrightarrow{v} = \overrightarrow{a} \land \overrightarrow{b} \f]
@@ -1132,7 +1132,7 @@ Vector Vector::vectorialProduct(const Vector &vect) const
   return resu;
 }
 
-//!Writes a vector in a binary flux for storage
+//Writes a vector in a binary flux for storage
 /*!
   This method is used to store the components of a vector in a binary file.
 
@@ -1153,7 +1153,7 @@ void Vector::write(std::ofstream &ofs) const
   ofs.write((char *)_data, _dataLength * sizeof(double));
 }
 
-//!Reads a vector from a binary flux for storage
+//Reads a vector from a binary flux for storage
 /*!
   This method is used to read the components of a vector in a binary file.
 
@@ -1197,7 +1197,7 @@ std::ofstream &operator<<(std::ofstream &os, const Vector &vect)
   return os;
 }
 
-//!Reads a vector from a binary flux for storage
+//Reads a vector from a binary flux for storage
 /*!
   This method is used to read the components of a vector in a binary file.
 
@@ -1218,7 +1218,7 @@ std::ifstream &operator>>(std::ifstream &is, Vector &vect)
   return is;
 }
 
-//!Saves the content of a Vector into a NumPy file
+//Saves the content of a Vector into a NumPy file
 /*!
   This method saves the content of a Vector object into a NumPy file defined by its filename. If the flag initialize is true, the current file will be concatenated.
 
@@ -1238,7 +1238,7 @@ void Vector::numpyWrite(std::string filename, bool initialize) const
   NumpyInterface::npySave(filename, &_data[0], {_dataLength}, mode);
 }
 
-//!Saves the content of a Vector into a NumPyZ file
+//Saves the content of a Vector into a NumPyZ file
 /*!
   This method saves the content of a Vector object into a NumPyZ file defined by its filename. If the flag initialize is true, the current file will be concatenated.
 
@@ -1258,7 +1258,7 @@ void Vector::numpyWriteZ(std::string filename, std::string name, bool initialize
   NumpyInterface::npzSave(filename, name, &_data[0], {_dataLength}, mode);
 }
 
-//!Read the content of a Vector from a NumPy file
+//Read the content of a Vector from a NumPy file
 /*!
   This method reads the content of a Vector object from a NumPy file defined by its filename.
 
@@ -1283,7 +1283,7 @@ void Vector::numpyRead(std::string filename)
   memcpy(_data, arr.data<double *>(), arr.num_vals * arr.word_size);
 }
 
-//!Read the content of a Vector from a NumPyZ file
+//Read the content of a Vector from a NumPyZ file
 /*!
   This method reads the content of a Vector object from a NumPyZ file defined by its filename.
 

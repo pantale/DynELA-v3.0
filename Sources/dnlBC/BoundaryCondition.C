@@ -22,7 +22,7 @@
 /* #include <Boundary.h>
 #include <Node.h> */
 
-//!constructeur par defaut de la classe BoundaryCondition
+//constructeur par defaut de la classe BoundaryCondition
 /*!
   Cette methode est le constructeur par defaut de la classe BoundaryCondition. En pratique, ici, on ne fait rien de plus que les allocations de memoire necessaires.
   \author Olivier PANTALE
@@ -34,7 +34,7 @@ BoundaryCondition::BoundaryCondition()
 {
 }
 
-//!constructeur par recopie de la classe BoundaryCondition
+//constructeur par recopie de la classe BoundaryCondition
 /*!
   Cette methode est le constructeur par recopie de la classe BoundaryCondition.
   \warning La recopie n'est pas prevue ici, cette methode genere une erreur d'execution
@@ -49,7 +49,7 @@ BoundaryCondition::BoundaryCondition(const BoundaryCondition &X)
   exit(-1);
 }
 
-//!destructeur de la classe BoundaryCondition
+//destructeur de la classe BoundaryCondition
 /*!
   Cette methode est le destructeur de la classe BoundaryCondition.
   \author Olivier PANTALE
@@ -147,7 +147,7 @@ bool BoundaryCondition::applyInitial(Node *node, double currentTime, double time
   return true;
 }
 
-//!Application d'une condition limite Imposee sur un noeud
+//Application d'une condition limite Imposee sur un noeud
 /*!
 Cette methode applique des conditions aux limites imposees sur un noeud. Les conditions limites imposees sont de type vitesse, deplacement ou force imposee.
 */

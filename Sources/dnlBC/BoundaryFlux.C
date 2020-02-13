@@ -22,7 +22,7 @@
 /* #include <Node.h>
 #include <NodalField.h>
  */
-//!constructeur par defaut de la classe BoundaryFlux
+//constructeur par defaut de la classe BoundaryFlux
 /*!
   Cette methode est le constructeur par defaut de la classe BoundaryFlux. En pratique, ici, on ne fait rien de plus que les allocations de memoire necessaires.
   \author Olivier PANTALE
@@ -41,7 +41,7 @@ BoundaryFlux::BoundaryFlux( double fr)
   _flux = fr;
 }
 
-//!constructeur par recopie de la classe BoundaryFlux
+//constructeur par recopie de la classe BoundaryFlux
 /*!
   Cette methode est le constructeur par recopie de la classe BoundaryFlux.
   \warning La recopie n'est pas prevue ici, cette methode genere une erreur d'execution
@@ -56,7 +56,7 @@ BoundaryFlux::BoundaryFlux(const BoundaryFlux &X)
   exit(-1);
 }
 
-//!destructeur de la classe BoundaryFlux
+//destructeur de la classe BoundaryFlux
 /*!
   Cette methode est le destructeur de la classe BoundaryFlux.
   \author Olivier PANTALE

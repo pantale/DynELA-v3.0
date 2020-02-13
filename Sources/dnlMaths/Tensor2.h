@@ -157,7 +157,7 @@ inline bool Tensor2::indexOK(int i, int j) const
     return (false);
 }
 
-//!Access to the values T[i,j] of a second order tensor
+//Access to the values T[i,j] of a second order tensor
 /*!
   \param i int for row
   \param j int for column
@@ -173,7 +173,7 @@ inline double &Tensor2::operator()(int i, int j)
     return _data[dnlTensor2Ind(i, j, 3)];
 }
 
-//!Access to the values T[i,j] of a second order tensor (Read only method)
+//Access to the values T[i,j] of a second order tensor (Read only method)
 /*!
   \param i int for row
   \param j int for column
@@ -189,7 +189,7 @@ inline double Tensor2::operator()(int i, int j) const
     return _data[dnlTensor2Ind(i, j, 3)];
 }
 
-//!Fill a second order tensor with a scalar value
+//Fill a second order tensor with a scalar value
 /*!
   This method is a surdefinition of the = operator for the second order tensor class.
 
@@ -215,7 +215,7 @@ inline void Tensor2::setToValue(const double val)
     _data[8] = val;
 }
 
-//!Addition of 2 second order tensors
+//Addition of 2 second order tensors
 /*!
   This method defines the addition of 2 second order tensors.
 
@@ -242,7 +242,7 @@ inline void Tensor2::operator+=(const Tensor2 &tensor)
     _data[8] += tensor._data[8];
 }
 
-//!Difference of 2 second order tensors
+//Difference of 2 second order tensors
 /*!
   This method defines the difference of 2 second order tensors.
 
@@ -269,7 +269,7 @@ inline void Tensor2::operator-=(const Tensor2 &tensor)
     _data[8] -= tensor._data[8];
 }
 
-//!Multiplication of a second order tensor by a scalar value
+//Multiplication of a second order tensor by a scalar value
 /*!
   This method defines the multiplication of a second order tensor by a scalar value
   
@@ -296,7 +296,7 @@ inline void Tensor2::operator*=(const double val)
     _data[8] *= val;
 }
 
-//!Division of a second order tensor by a scalar value
+//Division of a second order tensor by a scalar value
 /*!
   This method defines the division of a second order tensor by a scalar value
   
@@ -323,7 +323,7 @@ inline void Tensor2::operator/=(const double val)
     _data[8] /= val;
 }
 
-//!Returns the trace of a second order tensor
+//Returns the trace of a second order tensor
 /*!
   This method returns the trace of a second order tensor, i.e. the sum of all the terms of the diagonal:
   \f[ _data = tr[T] = T_{11}+T_{22}+T_{33} \f]
@@ -336,7 +336,7 @@ inline double Tensor2::getTrace() const
     return (_data[0] + _data[4] + _data[8]);
 }
 
-//!Returns the average value of the trace of a second order tensor
+//Returns the average value of the trace of a second order tensor
 /*!
   This method returns average value of the trace of a second order tensor, i.e. the sum of all the terms of the diagonal divided by 3:
     \f[ _data = \frac{1}{3} tr[T] =  \frac{1}{3} \left( T_{11}+T_{22}+T_{33} \right) \f]
@@ -349,7 +349,7 @@ inline double Tensor2::getThirdTrace() const
     return ((_data[0] + _data[4] + _data[8]) / 3.0);
 }
 
-//!Returns the von-Mises stress of a second order tensor
+//Returns the von-Mises stress of a second order tensor
 /*!
   This method returns the von-Mises stress of a second order tensor defined by:
   \f[ \overline{\sigma} = \frac {1}{\sqrt{2}}\sqrt{(s_{11}-s_{22})^2+(s_{22}-s_{33})^2+(s_{33}-s_{11})^2+6(s_{12}^2+s_{23}^2+s_{31}^2)}\f]
@@ -362,7 +362,7 @@ inline double Tensor2::getMisesEquivalent() const
     return (dnlVonMises(_data[0], _data[4], _data[8], _data[1], _data[2], _data[5]));
 }
 
-//!Norm of a second order tensor
+//Norm of a second order tensor
 /*!
   This method returns the norm of a second order tensor defined by:
   \f[ \left\Vert s \right\Vert  = \sqrt {s_{ij}:s_{ij}} \f]
@@ -384,7 +384,7 @@ inline double Tensor2::getNorm() const
                 dnlSquare(_data[6]) + dnlSquare(_data[7]) + dnlSquare(_data[8]));
 }
 
-//!J2 norm of a second order tensor
+//J2 norm of a second order tensor
 /*!
   This method returns the J2 norm of a second order tensor defined by:
   \f[ n = \sqrt {\frac{3}{2}} \left\Vert s \right\Vert  = \sqrt {\frac{3}{2} s_{ij}:s_{ij}} \f]
@@ -405,7 +405,7 @@ inline double Tensor2::getJ2() const
                             dnlSquare(_data[6]) + dnlSquare(_data[7]) + dnlSquare(_data[8]));
 }
 
-//!Determinant of a second order tensor
+//Determinant of a second order tensor
 /*!
   This method returns the determinant of a second second order tensor.
   The result of this operation is a scalar value defined by:

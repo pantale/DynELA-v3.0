@@ -38,7 +38,7 @@ class Element;
 */
 class Node
 {
-  friend class ListIndex<Node *>; //! To be able to use ListIndex
+  friend class ListIndex<Node *>; // To be able to use ListIndex
   long _listIndex;                // Local index used for the ListIndex management.
 
 public:
@@ -126,7 +126,7 @@ inline long Node::NoElements ()
 }
 */
 
-//!Internal number. This method gives a direct access to the internal number of the current node.
+//Internal number. This method gives a direct access to the internal number of the current node.
 /*!
   \return Internal number of the current node.
 */

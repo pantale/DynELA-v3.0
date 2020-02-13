@@ -28,7 +28,7 @@
 
 extern DynELA *dynelaData;
 
-//!constructeur par defaut de la classe Explicit
+//constructeur par defaut de la classe Explicit
 /*!
   Cette methode est le constructeur par defaut de la classe Explicit.
 En pratique, ici, on ne fait rien de plus que les allocations de memoire necessaires. On definit ici des valeurs par defaut pour ce solveur explicite, par exemple \f$\rho_b=0.8182\f$ et \f$\gamma_s=0.9\f$.
@@ -62,7 +62,7 @@ Explicit::Explicit(char *newName) : Solver(newName)
  */
 }
 
-//!constructeur par recopie de la classe Explicit
+//constructeur par recopie de la classe Explicit
 /*!
   Cette methode est le constructeur par recopie de la classe Explicit.
   \warning La recopie n'est pas prevue ici, cette methode genere une erreur d'execution
@@ -77,7 +77,7 @@ Explicit::Explicit(const Explicit &X)
   exit(-1);
 }
 
-//!destructeur de la classe Explicit
+//destructeur de la classe Explicit
 /*!
   Cette methode est le destructeur de la classe Explicit.
   \author Olivier PANTALE
@@ -89,7 +89,7 @@ Explicit::~Explicit()
 {
 }
 
-//!Calcul des parametres de l'integration de Chung-Hulbert
+//Calcul des parametres de l'integration de Chung-Hulbert
 /*!
   Cette methode calcule les valeurs des parametres \f$\alpha_M\f$, \f$\beta\f$ et \f$\gamma\f$ pour le schema d'integration de Chung-Hulbert.
   Le parametre \f$\alpha_M\f$ est defini e partir de la valeur de \f$\rho_b\f$ par la relation suivante: \f[\alpha_M=\frac{2\rho_b-1}{1+\rho_b}\f]
@@ -120,7 +120,7 @@ void Explicit::computeChungHulbertIntegrationParameters()
   }
 }
 
-//!Permet de definir l'amortissement du schema explicite
+//Permet de definir l'amortissement du schema explicite
 /*!
   Cette methode permet de definir l'ammortissement numerique introduit dans le schema d'integration numerique explicite en modifiant la valeur du rayon spectral e la frequence de bifurcation. La valeur numerique doit etre comprise dans l'intervalle: \f$\rho_{b}\in[0.0:1.0]\f$. Cette methode fait appel e la methode computeIntegrationParameters() afin de remettre e jour les parametres en fonction du nouveau rayon spectral.
   \param val valeur du rayon spectral
@@ -423,7 +423,7 @@ void Explicit::beginExplicitStep()
   currentIncrement++;
 }
 
-//!Phase de prediction des deplacements, vitesses et accelerations nodales
+//Phase de prediction des deplacements, vitesses et accelerations nodales
 /*!
   La prediction se fait au niveau des deplacements, vitesses et accelerations nodales e partir des relations suivantes:
   \f[\stackrel{\bullet\bullet}{x}_{n+1}=0\f]
@@ -480,7 +480,7 @@ void Explicit::computePredictions()
   }
 }
 
-//!Resolution explicite de l'increment
+//Resolution explicite de l'increment
 /*!
   Cette methode effectue la resolution explicite de l'increment de temps. La methode explicite etant une methode directe, aucune iteration n'est necessaire ici, les quantites peuvent etre calculees directement en utilisante les relations suivantes:
   \author Olivier PANTALE
@@ -562,7 +562,7 @@ void Explicit::computeDensity()
   }
 }
 
-//!Renvoie le parametre \f$\alpha_M\f$ de l'integration de Chung-Hulbert
+//Renvoie le parametre \f$\alpha_M\f$ de l'integration de Chung-Hulbert
 /*!
   Cette methode renvoie la valeur du parametre \f$\alpha_M\f$ pour le schema d'integration de Chung-Hulbert.
   \see computeIntegrationParameters()
@@ -577,7 +577,7 @@ double Explicit::getAlphaM()
   return alphaM;
 }
 
-//!Renvoie le parametre \f$\beta\f$ de l'integration de Chung-Hulbert
+//Renvoie le parametre \f$\beta\f$ de l'integration de Chung-Hulbert
 /*!
   Cette methode renvoie la valeur du parametre \f$\beta\f$ pour le schema d'integration de Chung-Hulbert.
   \see computeIntegrationParameters()
@@ -592,7 +592,7 @@ double Explicit::getBeta()
   return beta;
 }
 
-//!Renvoie le parametre \f$\_\f$ de l'integration de Chung-Hulbert
+//Renvoie le parametre \f$\_\f$ de l'integration de Chung-Hulbert
 /*!
   Cette methode renvoie la valeur du parametre \f$\gamma\f$ pour le schema d'integration de Chung-Hulbert.
   \see computeIntegrationParameters()

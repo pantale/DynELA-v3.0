@@ -20,7 +20,7 @@
 
 #include <Boundary.h>
 
-//!constructeur par defaut de la classe Boundary
+//constructeur par defaut de la classe Boundary
 /*!
   Cette methode est le constructeur par defaut de la classe Boundary. En pratique, ici, on ne fait rien de plus que les allocations de memoire necessaires.
   \author Olivier PANTALE
@@ -36,7 +36,7 @@ Boundary::Boundary(char *newName)
     _function = NULL;
 }
 
-//!constructeur par recopie de la classe Boundary
+//constructeur par recopie de la classe Boundary
 /*!
   Cette methode est le constructeur par recopie de la classe Boundary.
   \warning La recopie n'est pas prevue ici, cette methode genere une erreur d'execution
@@ -51,7 +51,7 @@ Boundary::Boundary(const Boundary &X)
   exit(-1);
 }
 
-//!destructeur de la classe Boundary
+//destructeur de la classe Boundary
 /*!
   Cette methode est le destructeur de la classe Boundary.
   \author Olivier PANTALE

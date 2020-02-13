@@ -110,7 +110,7 @@ public:
 
 //------inline functions-------------------------------------------------------
 
-//!teste les bornes de la matrice
+//teste les bornes de la matrice
 /*!
   Cette methode teste les bornes d'une matrice
   \param i long de ligne
@@ -133,7 +133,7 @@ inline bool MatrixDiag::indexOK(long i) const
   return (false);
 }
 
-//!acces aux valeurs d'une matrice
+//acces aux valeurs d'une matrice
 /*!
   \param i long de ligne
   \return valeur de la matrice e la ligne et colonne \c i
@@ -151,7 +151,7 @@ inline double &MatrixDiag::operator()(long i)
   return _data[i];
 }
 
-//!acces aux valeurs d'une matrice
+//acces aux valeurs d'une matrice
 /*!
   \param i long de ligne
   \return valeur de la matrice e la ligne et colonne \c i

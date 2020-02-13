@@ -54,7 +54,7 @@ void IntegrationPointBase::baseFlush()
   //detJ0 = 0.;
 }
 
-/* //-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 UnderIntegrationPoint::UnderIntegrationPoint(int dimension, int numberOfNodes) : IntegrationPointBase(dimension, numberOfNodes)
 //-----------------------------------------------------------------------------
 {
@@ -73,7 +73,7 @@ void UnderIntegrationPoint::flush()
 //-----------------------------------------------------------------------------
 {
   // initialisations
-} */
+}
 
 //-----------------------------------------------------------------------------
 IntegrationPoint::IntegrationPoint(int dimension, int numberOfNodes) : IntegrationPointBase(dimension, numberOfNodes)
@@ -109,7 +109,7 @@ void IntegrationPoint::flush()
 void IntegrationPoint::print(std::ostream &os) const
 //-----------------------------------------------------------------------------
 {
-//  os << "pressure=" << pressure << ", DeviatoricStress=" << DeviatoricStress << std::endl;
+  //  os << "pressure=" << pressure << ", DeviatoricStress=" << DeviatoricStress << std::endl;
   os << "Stress=" << Stress << std::endl;
 }
 
@@ -159,7 +159,7 @@ IntegrationPoint &IntegrationPoint::read(std::ifstream &pfile)
   pfile.read((char *)&pressure, sizeof(double));
   pfile.read((char *)&plasticStrain, sizeof(double));
 
-//  pfile >> DeviatoricStress;
+  //  pfile >> DeviatoricStress;
   pfile >> Stress;
 
   pfile >> Strain;

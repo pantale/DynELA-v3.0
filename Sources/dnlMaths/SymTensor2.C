@@ -34,7 +34,7 @@
 
 const SymTensor2Index SymTensor2::indexes = {0, 1, 2, 1, 3, 4, 2, 4, 5};
 
-//!Constructor of the SymTensor2 class
+//Constructor of the SymTensor2 class
 /*!
   This method is the default constructor of a second order tensor. All components are initialized to zero by default.
 */
@@ -45,7 +45,7 @@ SymTensor2::SymTensor2()
   setToValue(0.0);
 }
 
-//!Copy constructor of the SymTensor2 class
+//Copy constructor of the SymTensor2 class
 //-----------------------------------------------------------------------------
 SymTensor2::SymTensor2(const SymTensor2 &tensor)
 //-----------------------------------------------------------------------------
@@ -53,7 +53,7 @@ SymTensor2::SymTensor2(const SymTensor2 &tensor)
   memcpy(_data, tensor._data, 6 * sizeof(double));
 }
 
-//!Constructor of the SymTensor2 class
+//Constructor of the SymTensor2 class
 /*!
   This method is a constructor of a second order tensor with initialization of the 6 values.
 */
@@ -69,14 +69,14 @@ SymTensor2::SymTensor2(double t1, double t2, double t3, double t4, double t5, do
   _data[5] = t6;
 }
 
-//!Destructor of the SymTensor2 class
+//Destructor of the SymTensor2 class
 //-----------------------------------------------------------------------------
 SymTensor2::~SymTensor2()
 //-----------------------------------------------------------------------------
 {
 }
 
-//!Send the content of a second order tensor to the output flux for display
+//Send the content of a second order tensor to the output flux for display
 /*!
   Example
   \code
@@ -93,7 +93,7 @@ std::ostream &operator<<(std::ostream &os, const SymTensor2 &tensor1)
   return os;
 }
 
-//!Print the content of a second order tensor to the output flux for display
+//Print the content of a second order tensor to the output flux for display
 /*!
   \param os Output flux
 */
@@ -121,7 +121,7 @@ void SymTensor2::print(std::ostream &os) const
   os << "}}";
 }
 
-//!Returns a unity tensor
+//Returns a unity tensor
 /*!
   This method transforms the current tensor to a unity tensor.
 
@@ -151,7 +151,7 @@ void SymTensor2::setToZero()
   setToValue(0.0);
 }
 
-//!Fill a second order tensor with a scalar value
+//Fill a second order tensor with a scalar value
 /*!
   This method is a surdefinition of the = operator for the second order tensor class.
 
@@ -170,7 +170,7 @@ SymTensor2 &SymTensor2::operator=(const double &val)
   return *this;
 }
 
-//!Copy the content of a second order tensor into a new one
+//Copy the content of a second order tensor into a new one
 /*!
   This method is the so called = operator between two second order tensors. If the \ref MEM_funct is set, the \ref memcpy function is used for the copy.
 
@@ -189,7 +189,7 @@ SymTensor2 &SymTensor2::operator=(const SymTensor2 &tensor)
   return *this;
 }
 
-//!Addition of 2 second order tensors
+//Addition of 2 second order tensors
 /*!
   This method defines the addition of 2 second order tensors.
   The result of this operation is also a second order tensor defined by:
@@ -221,7 +221,7 @@ SymTensor2 SymTensor2::operator+(const SymTensor2 &tensor) const
   return result;
 }
 
-//!Difference of 2 second order tensors
+//Difference of 2 second order tensors
 /*!
   This method defines the difference of 2 second order tensors.
   The result of this operation is also a second order tensor defined by:
@@ -269,7 +269,7 @@ SymTensor2 SymTensor2::operator-() const
   return result;
 }
 
-//!Multiplication of a second order tensor by a scalar value
+//Multiplication of a second order tensor by a scalar value
 /*!
   This method defines the multiplication of a second order tensor by a scalar value
   The result of this operation is also a second order tensor defined by:
@@ -299,7 +299,7 @@ SymTensor2 SymTensor2::operator*(const double lambda) const
   return result;
 }
 
-//!Division of a second order tensor by a scalar value
+//Division of a second order tensor by a scalar value
 /*!
   This method defines the division of a second order tensor by a scalar value
   The result of this operation is also a second order tensor defined by:
@@ -337,7 +337,7 @@ SymTensor2 SymTensor2::operator/(const double lambda) const
   return result;
 }
 
-//!Multiplication of a second order tensor by a scalar value
+//Multiplication of a second order tensor by a scalar value
 /*!
   This method defines the multiplication of a second order tensor by a scalar value
   The result of this operation is also a second order tensor defined by:
@@ -368,7 +368,7 @@ SymTensor2 operator*(const double &lambda, const SymTensor2 &tensor)
   return result;
 }
 
-//!Multiplication of 2 second order tensors
+//Multiplication of 2 second order tensors
 /*!
   This method defines a single contracted product of two second order tensors. 
   The result of this operation is also a second order tensor defined by:
@@ -396,7 +396,7 @@ SymTensor2 SymTensor2::singleProduct() const
   return result;
 }
 
-//!Multiplication of 2 second order tensors
+//Multiplication of 2 second order tensors
 /*!
   This method defines a single contracted product of two second order tensors. 
   The result of this operation is also a second order tensor defined by:
@@ -478,7 +478,7 @@ SymTensor2 SymTensor2::productByRTxR(const Tensor2 R) const
   return result;
 }
 
-//!Multiplication of a second order tensor by a vector
+//Multiplication of a second order tensor by a vector
 /*!
   This method defines the product of a second order tensor by a vector.
   The result of this operation is also a vector defined by:
@@ -505,7 +505,7 @@ Vec3D SymTensor2::operator*(const Vec3D &vector) const
   return result;
 }
 
-//!Multiplication of 2 second order tensors
+//Multiplication of 2 second order tensors
 /*!
   This method defines a single contracted product of two second order tensors. 
   The result of this operation is also a second order tensor defined by:
@@ -524,7 +524,7 @@ Tensor2 SymTensor2::singleProduct(const SymTensor2 tensor) const
   return (*this) * tensor;
 }
 
-//!Double contracted product of 2 second order tensors
+//Double contracted product of 2 second order tensors
 /*!
   This method defines a double contracted product of two second order tensors. 
   The result of this operation is a scalar defined by:
@@ -545,7 +545,7 @@ double SymTensor2::doubleProduct(const SymTensor2 tensor) const
           2.0 * (_data[1] * tensor._data[1] + _data[2] * tensor._data[2] + _data[4] * tensor._data[4]));
 }
 
-//!Double contracted product of 2 second order tensors
+//Double contracted product of 2 second order tensors
 /*!
   This method defines a double contracted product of two second order tensors. 
   The result of this operation is a scalar defined by:
@@ -580,7 +580,7 @@ void SymTensor2::computeDeviator(SymTensor2 &deviator, double &pressure) const
   deviator._data[4] = _data[4];
 }
 
-//!Deviator of a second order tensor
+//Deviator of a second order tensor
 /*!
   This method defines the getDeviator of a second second order tensor.
   The result of this operation is a second order tensor defined by:
@@ -601,7 +601,7 @@ SymTensor2 SymTensor2::getDeviator() const
   return result;
 }
 
-//!getTranspose of a second order tensor
+//getTranspose of a second order tensor
 /*!
   This method defines the transpose of a second second order tensor.
   The result of this operation is a second order tensor defined by:
@@ -615,7 +615,7 @@ SymTensor2 SymTensor2::getTranspose() const
   return *this;
 }
 
-//!Sum of the rows of a second order tensor
+//Sum of the rows of a second order tensor
 /*!
   This method returns a vector by computing the sum of the components on all rows of a second second order tensor.
   The result of this operation is a vector defined by:
@@ -629,7 +629,7 @@ Vec3D SymTensor2::rowSum() const
   return Vec3D(_data[0] + _data[1] + _data[2], _data[1] + _data[3] + _data[4], _data[2] + _data[4] + _data[5]);
 }
 
-//!Sum of the columns of a second order tensor
+//Sum of the columns of a second order tensor
 /*!
   This method returns a vector by computing the sum of the components on all columns of a second second order tensor.
   The result of this operation is a vector defined by:
@@ -643,7 +643,7 @@ Vec3D SymTensor2::columnSum() const
   return Vec3D(_data[0] + _data[1] + _data[2], _data[1] + _data[3] + _data[4], _data[2] + _data[4] + _data[5]);
 }
 
-//!Symmetric part of a second order tensor
+//Symmetric part of a second order tensor
 /*!
   This method returns the symmetric part of a second second order tensor.
   The result of this operation is a second second order tensor defined by:
@@ -663,7 +663,7 @@ SymTensor2 SymTensor2::getSymetricPart() const
   return *this;
 }
 
-//!Skew-symmetric part of a second order tensor
+//Skew-symmetric part of a second order tensor
 /*!
   This method returns the skew-symmetric part of a second second order tensor.
   The result of this operation is a second second order tensor defined by:
@@ -683,7 +683,7 @@ SymTensor2 SymTensor2::getSkewSymetricPart() const
   return SymTensor2();
 }
 
-//!Extraction of a row from a second order tensor
+//Extraction of a row from a second order tensor
 /*!
   This method returns a vector as part of a second second order tensor.
   The result of this operation with the argument j is a vector defined by:
@@ -705,7 +705,7 @@ Vec3D SymTensor2::getRow(int row) const
   return result;
 }
 
-//!Extraction of a column from a second order tensor
+//Extraction of a column from a second order tensor
 /*!
   This method returns a vector as part of a second second order tensor.
   The result of this operation with the argument j is a vector defined by:
@@ -727,7 +727,7 @@ Vec3D SymTensor2::getColumn(int col) const
   return result;
 }
 
-//!Test the equality of two second order tensors
+//Test the equality of two second order tensors
 /*!
   This method tests the equality of two second order tensors.
   It returns \ref true if all components of the two second order tensors are equals, \ref false on other case.
@@ -748,7 +748,7 @@ bool SymTensor2::operator==(const SymTensor2 &tensor) const
   return true;
 }
 
-//!Test the equality of two second order tensors
+//Test the equality of two second order tensors
 /*!
   This method tests the equality of two second order tensors.
   It returns \ref false if all components of the two second order tensors are equals, \ref true on other case.
@@ -762,7 +762,7 @@ bool SymTensor2::operator!=(const SymTensor2 &tensor) const
   return !(*this == tensor);
 }
 
-//!Writes a second order tensor in a binary flux for storage
+//Writes a second order tensor in a binary flux for storage
 /*!
   This method is used to store the components of a second order tensor in a binary file.
 
@@ -781,7 +781,7 @@ void SymTensor2::write(std::ofstream &ofs) const
   ofs.write((char *)_data, 6 * sizeof(double));
 }
 
-//!Reads a second order tensor in a binary flux from storage
+//Reads a second order tensor in a binary flux from storage
 /*!
   This method is used to read the components of a second order tensor in a binary file.
 
@@ -800,7 +800,7 @@ void SymTensor2::read(std::ifstream &ifs)
   ifs.read((char *)_data, 6 * sizeof(double));
 }
 
-//!Writes a second order tensor in a binary flux for storage
+//Writes a second order tensor in a binary flux for storage
 /*!
   This method is used to store the components of a second order tensor in a binary file.
 
@@ -821,7 +821,7 @@ std::ofstream &operator<<(std::ofstream &os, const SymTensor2 &tensor)
   return os;
 }
 
-//!Reads a second order tensor from a binary flux for storage
+//Reads a second order tensor from a binary flux for storage
 /*!
   This method is used to read the components of a second order tensor in a binary file.
 
@@ -842,7 +842,7 @@ std::ifstream &operator>>(std::ifstream &is, SymTensor2 &tensor)
   return is;
 }
 
-//!Maximum component in a vector
+//Maximum component in a vector
 /*!
   This method returns the maximum component of a vector
 */
@@ -859,7 +859,7 @@ double SymTensor2::maxValue()
   return max;
 }
 
-//!Minimum component in a vector
+//Minimum component in a vector
 /*!
   This method returns the minimum component of a vector
 */
@@ -876,7 +876,7 @@ double SymTensor2::minValue()
   return min;
 }
 
-//!Maximum absolute component in a vector
+//Maximum absolute component in a vector
 /*!
   This method returns the maximum absolute component of a vector
 */
@@ -893,7 +893,7 @@ double SymTensor2::maxAbsoluteValue()
   return max;
 }
 
-//!Minimum absolute component in a vector
+//Minimum absolute component in a vector
 /*!
   This method returns the minimum absolute component of a vector
 */
@@ -910,7 +910,7 @@ double SymTensor2::minAbsoluteValue()
   return min;
 }
 
-//!Inverse of a second order tensor
+//Inverse of a second order tensor
 /*!
   This method returns the getInverse of a second second order tensor.
   The result of this operation is a second order tensor defined by:
@@ -975,7 +975,7 @@ Vec3D SymTensor2::solve(const Vec3D &b) const
   return Vec3D(getInverse() * b);
 }
 
-//!Polar decomposition of a second order tensor with computation of the \f$ ln[U] \f$ and \f$ R \f$ tensors.
+//Polar decomposition of a second order tensor with computation of the \f$ ln[U] \f$ and \f$ R \f$ tensors.
 /*!
   This method computes the polar decomposition of a second order tensor with computation of the \f$ ln[U] \f$ and \f$ R \f$ tensors as the returning arguments.
   The logarithm of a symmetric tensor is givent by the following formulation:
@@ -1114,7 +1114,7 @@ void SymTensor2::polarDecomposeLnU(SymTensor2 &LnU, Tensor2 &R) const
   fatalError("SymTensor2::polarDecomposeLnU", "No convergence");
 }
 
-//!Polar decomposition of a second order tensor with computation of the \f$ U \f$ and \f$ R \f$ tensors.
+//Polar decomposition of a second order tensor with computation of the \f$ U \f$ and \f$ R \f$ tensors.
 /*!
   This method computes the polar decomposition of a second order tensor with computation of the \f$ U \f$ and \f$ R \f$ tensors as the returning arguments.
 
@@ -1252,7 +1252,7 @@ void SymTensor2::polarDecompose(SymTensor2 &U, Tensor2 &R) const
   fatalError("SymTensor2::polarDecompose", "No convergence");
 }
 
-//!Saves the content of a SymTensor2 into a NumPy file
+//Saves the content of a SymTensor2 into a NumPy file
 /*!
   This method saves the content of a SymTensor2 object into a NumPy file defined by its filename. If the flag initialize is true, the current file will be concatenated.
 
@@ -1282,7 +1282,7 @@ void SymTensor2::numpyWrite(std::string filename, bool initialize) const
   NumpyInterface::npySave(filename, &nst[0], {3, 3}, mode);
 }
 
-//!Saves the content of a SymTensor2 into a NumPyZ file
+//Saves the content of a SymTensor2 into a NumPyZ file
 /*!
   This method saves the content of a vec3D object into a NumPyZ file defined by its filename. If the flag initialize is true, the current file will be concatenated.
 
@@ -1312,7 +1312,7 @@ void SymTensor2::numpyWriteZ(std::string filename, std::string name, bool initia
   NumpyInterface::npzSave(filename, name, &nst[0], {3, 3}, mode);
 }
 
-//!Read the content of a SymTensor2 from a NumPy file
+//Read the content of a SymTensor2 from a NumPy file
 /*!
   This method reads the content of a vec3D object from a NumPy file defined by its filename.
 
@@ -1341,7 +1341,7 @@ void SymTensor2::numpyRead(std::string filename)
   // memcpy(_data, arr.data<double *>(), arr.num_vals * arr.word_size);
 }
 
-//!Read the content of a SymTensor2 from a NumPyZ file
+//Read the content of a SymTensor2 from a NumPyZ file
 /*!
   This method reads the content of a vec3D object from a NumPyZ file defined by its filename.
 

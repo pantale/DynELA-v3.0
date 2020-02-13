@@ -32,9 +32,9 @@ public:
   List<Node *> nodes; // List of the nodes
 
 public:
-  NodeSet(char *newName = NULL);   //! Constructor of the NodeSet class
-  NodeSet(const NodeSet &nodeSet); //! Copy constructor of the NodeSet class
-  ~NodeSet();                      //! Destructor of the NodeSet class
+  NodeSet(char *newName = NULL);   // Constructor of the NodeSet class
+  NodeSet(const NodeSet &nodeSet); // Copy constructor of the NodeSet class
+  ~NodeSet();                      // Destructor of the NodeSet class
 
   void add(Node *node);
   void setName(char *_name);

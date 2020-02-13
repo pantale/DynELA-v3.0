@@ -22,7 +22,7 @@
 /* #include <Node.h>
 #include <NodalField.h> */
 
-//!constructeur par defaut de la classe BoundaryRestrain
+//constructeur par defaut de la classe BoundaryRestrain
 /*!
   Cette methode est le constructeur par defaut de la classe BoundaryRestrain. En pratique, ici, on ne fait rien de plus que les allocations de memoire necessaires.
   \author Olivier PANTALE
@@ -41,7 +41,7 @@ BoundaryRestrain::BoundaryRestrain(const Vec3D &newRestrain)
   _restrain = newRestrain;
 }
 
-//!constructeur par recopie de la classe BoundaryRestrain
+//constructeur par recopie de la classe BoundaryRestrain
 /*!
   Cette methode est le constructeur par recopie de la classe BoundaryRestrain.
   \warning La recopie n'est pas prevue ici, cette methode genere une erreur d'execution
@@ -62,7 +62,7 @@ void BoundaryRestrain::applyInitial(Node *node, double currentTime, double timeS
 {
 }
 
-//!Application d'une condition limite Imposee en deplacement sur un noeud
+//Application d'une condition limite Imposee en deplacement sur un noeud
 /*!
 Cette methode applique une condition aux limites imposee en vitesse sur un noeud. Dans la direction de la condition imposee, la vitesse, le deplacement et l'acceleration materielle du noeud sont imposes nuls.
 */
@@ -126,7 +126,7 @@ void BoundaryRestrain::applyConstantOnNewFields(Node *node, double currentTime, 
   }
 }
 
-//!destructeur de la classe BoundaryRestrain
+//destructeur de la classe BoundaryRestrain
 /*!
   Cette methode est le destructeur de la classe BoundaryRestrain.
   \author Olivier PANTALE

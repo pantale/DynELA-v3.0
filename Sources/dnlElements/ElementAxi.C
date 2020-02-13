@@ -58,6 +58,22 @@ double ElementAxi::getRadiusAtIntegrationPoint()
 }
 
 //-----------------------------------------------------------------------------
+double ElementAxi::getRadiusAtUnderIntegrationPoint()
+//-----------------------------------------------------------------------------
+{
+  // Initialize currentRadius to zero
+  double currentRadius = 0.0;
+
+  // Computes currentRadius
+  for (short nodeId = 0; nodeId < nodes.getSize(); nodeId++)
+  {
+    currentRadius += _underIntegrationPoint->integrationPointData->shapeFunction(nodeId) * nodes(nodeId)->coordinates(0);
+  }
+
+  return currentRadius;
+}
+
+//-----------------------------------------------------------------------------
 void ElementAxi::computeDeformationGradient(Tensor2 &F, short time)
 //-----------------------------------------------------------------------------
 {

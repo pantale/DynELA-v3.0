@@ -3,7 +3,7 @@
  *  DynELA Finite Element Code v 3.0                                       *
  *  By Olivier PANTALE                                                     *
  *                                                                         *
- *  (c) Copyright 1997-2019                                                *
+ *  (c) Copyright 1997-2020                                                *
  *                                                                         *
  **************************************************************************/
 
@@ -13,8 +13,6 @@
 
   This file defines the Mac Address class.
   \ingroup dnlKernel
-  \author &copy; Olivier PANTALE
-  \date 1997-2019
 */
 
 #ifndef __dnlKernel_Settings_h__
@@ -37,40 +35,33 @@
 class Settings
 {
     bool _isChanged;
-    std::string _filename;
-    std::map<std::string, std::string> _data;
     const std::locale _locale;
-
-    //return the string in the type of T
-    template <typename T>
-    T convertToType(const std::string &input) const;
-    //return string of type T
-    template <typename T>
-    std::string convertToStr(const T input) const;
+    std::map<std::string, std::string> _data;
+    std::string _filename;
 
     bool read();
     bool write() const;
     std::pair<std::string, std::string> parseLine(const std::string &line) const;
+    template <typename T>
+    std::string convertToStr(const T input) const;
+    template <typename T>
+    T convertToType(const std::string &input) const;
 
-  public:
+public:
     Settings();
     ~Settings();
 
+    bool isChanged() const;
     bool loadFromFile(const std::string &filename);
     bool saveToFile();
-
-    bool isChanged() const;
-
+    template <typename T>
+    void getValue(const std::string &key, std::vector<T> &value) const;
     template <typename T>
     void getValue(const std::string &key, T &value) const;
     template <typename T>
-    void getValue(const std::string &key, std::vector<T> &value) const;
-
+    void setValue(const std::string &key, const std::vector<T> value);
     template <typename T>
     void setValue(const std::string &key, const T value);
-    template <typename T>
-    void setValue(const std::string &key, const std::vector<T> value);
-
     void dump() const;
 };
 

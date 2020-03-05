@@ -3,7 +3,7 @@
  *  DynELA Finite Element Code v 3.0                                       *
  *  By Olivier PANTALE                                                     *
  *                                                                         *
- *  (c) Copyright 1997-2019                                                *
+ *  (c) Copyright 1997-2020                                                *
  *                                                                         *
  **************************************************************************/
 
@@ -21,7 +21,6 @@
   \ingroup linearAlgebra
 
   
-  \author &copy; Olivier PANTALE
   \since 1.0.4
   \date 1997-2004
 */
@@ -31,7 +30,6 @@
   \brief Classe de definition des fonctions discretes
   \ingroup linearAlgebra
 
-  \author &copy; Olivier PANTALE
   \date 1997-2004
   \since 1.0.4
 */

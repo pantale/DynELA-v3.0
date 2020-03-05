@@ -3,7 +3,7 @@
  *  DynELA Finite Element Code v 3.0                                       *
  *  By Olivier PANTALE                                                     *
  *                                                                         *
- *  (c) Copyright 1997-2019                                                *
+ *  (c) Copyright 1997-2020                                                *
  *                                                                         *
  **************************************************************************/
 
@@ -14,8 +14,6 @@
   This file is the declaration file for the Model class.
 
   \ingroup dnlFEM
-  \author &copy; Olivier PANTALE
-  \date 1997-2019
 */
 
 #ifndef __dnlFEM_Model_h__
@@ -39,7 +37,7 @@ class Material;
   \ingroup femLibrary
 
 
-  \author Olivier PANTALE
+
   \version 0.9.4
   \date 1997-2004
 */

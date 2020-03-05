@@ -12,9 +12,7 @@
   This file is the declaration file for the NumpyInterface class.
 
   \ingroup dnlMaths
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0
-  \date 1997-2019
 */
 
 #ifndef __dnlMaths_NumpyInterface_h__

@@ -3,7 +3,7 @@
  *  DynELA Finite Element Code v 3.0                                       *
  *  By Olivier PANTALE                                                     *
  *                                                                         *
- *  (c) Copyright 1997-2019                                                *
+ *  (c) Copyright 1997-2020                                                *
  *                                                                         *
  **************************************************************************/
 
@@ -14,9 +14,7 @@
   This file is the declaration file for the third order tensor class. A third order tensor has the following form:
   \f[ T = T_{ijk} \f]
   \ingroup linearAlgebra
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0
-  \date 1997-2019
 */
 
 #ifndef __dnlMaths_Tensor3_h__
@@ -37,9 +35,7 @@ class Tensor2;
   A third order tensor has the following form:
   \f[ T = T_{ijk} \f]
   \ingroup linearAlgebra
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0
-  \date 1997-2019
 */
 class Tensor3
 {

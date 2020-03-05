@@ -3,7 +3,7 @@
  *  DynELA Finite Element Code v 3.0                                       *
  *  By Olivier PANTALE                                                     *
  *                                                                         *
- *  (c) Copyright 1997-2019                                                *
+ *  (c) Copyright 1997-2020                                                *
  *                                                                         *
  **************************************************************************/
 
@@ -14,13 +14,12 @@
 /*!
   \file String.C
   \brief fichier . h de definition des chaines de caracteres
-  \ingroup basicTools
+  \ingroup dnlKernel
 
   Ce fichier regroupe la definition des chaines de caracteres pour DynELA. Les chaines de caracteres font partie d'une nouvelle classe nommee String qui permet la pluspart des manipulations sur les caracteres. L'ensemble des methodes de cette classe sont documentees.
 
   Depuis la version v. 1.0.0, cette classe herite de la classe \b std::string de Standard Template Library.
 
-  \author &copy; Olivier PANTALE
   \version 1.0.0
   \date 1997-2004
 */
@@ -33,7 +32,6 @@
   \code
   String s; // allocation memoire vide (taille indefinie)
   \endcode
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -50,7 +48,6 @@ String::String()
   \code
   String s = 'k'; // s est une chaine d'un caractere 'k'
   \endcode
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
 */
 // //-----------------------------------------------------------------------------
@@ -67,7 +64,6 @@ String::String()
   \code
   String y = "a std::string";
   \endcode
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -93,7 +89,6 @@ String::String(const String &st) // : std::string (st)
 //destructeur associe e la classe String
 /*!
   Ceci est le destructeur de la classe String.
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -110,7 +105,6 @@ String::~String()
   \code
   String y = "a std::string";
   \endcode
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -146,11 +140,10 @@ String &String::operator=(const char *st)
   \endcode
   \param val valeur numerique e convertir en un String
   \return La chaine de caracteres de retour.
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
-String &String::convert(int val, short leading)
+String &String::convert(const int val, short leading)
 //-----------------------------------------------------------------------------
 {
   char tmpStr[100];
@@ -176,11 +169,10 @@ String &String::convert(int val, short leading)
   \endcode
   \param val valeur numerique e convertir en un String
   \return La chaine de caracteres de retour.
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
-String &String::convert(long val, short leading)
+String &String::convert(const long val, short leading)
 //-----------------------------------------------------------------------------
 {
   char tmpStr[100];
@@ -207,11 +199,10 @@ String &String::convert(long val, short leading)
   \param val valeur reelle e convertir en un String
   \param st format de sortie de la chaine de caracteres. par defaut, si on ne precise rien, on utilise un format de type "%ld"
   \return chaine de caracteres de retour
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
-String &String::convert(double val, const char *st)
+String &String::convert(const double val, const char *st)
 //-----------------------------------------------------------------------------
 {
   char tmpStr[100];
@@ -226,7 +217,6 @@ String &String::convert(double val, const char *st)
   \param fromItem caractere e remplacer dans la chaine
   \param to caractere de remplacement dans la chaine
   \return nouvelle chaine de caracteres avec la substitution
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -252,7 +242,6 @@ String &String::replace(const char fromItem, const char to)
   \param fromItem sous-chaine de caracteres e remplacer dans la chaine
   \param to sous-chaine de caracteres de remplacement dans la chaine
   \return nouvelle chaine de caracteres avec la substitution
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -285,7 +274,6 @@ String &String::replace(const String &fromItem, const String &to)
   \param startpos position de depart dans la chaine de caracteres
   \param length longueur de la chaine e extraire
   \return sous chaine de caracteres extraite
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -311,7 +299,6 @@ String::subString(int startpos, int length) const
   \param startpos position de depart de recherche dans la chaine
   \param c caractere e rechercher
   \return position du caractere dans la chaine, ou valeur -1 si ce caractere n'a pu etre trouve.
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -337,7 +324,6 @@ int String::search(char c, int startpos) const
   \param startpos position de depart de recherche dans la chaine
   \param substring sous chaine e rechercher e rechercher
   \return position de la sous-chaine dans la chaine, ou valeur -1 si cette sous-chaine n'a pu etre trouve.
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -361,7 +347,6 @@ int String::search(const String &substring, int startpos) const
   \endcode
   \param startpos position de depart de la partie e supprimer
   \param length longueur de la partie e supprimer
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -382,7 +367,6 @@ void String::remove(int startpos, int length)
   \endcode
   \param y sous-chaine e supprimer
   \param startpos position de depart pour la recherche dans la chaine
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -403,7 +387,6 @@ Exemple:
   \endcode
   \param y sous-chaine e supprimer
   \param startpos position de depart pour la recherche dans la chaine
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -425,7 +408,6 @@ void String::remove(char c, int startpos)
   \param first position de depart dans la chaine de caracteres
   \param len longueur de la chaine e extraire
   \return sous chaine de caracteres extraite
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -447,7 +429,6 @@ String String::atItem(int first, int len) const
   \param first position de depart dans la chaine de caracteres
   \param len longueur de la chaine e extraire
   \return sous chaine de caracteres extraite
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -469,7 +450,6 @@ String::operator()(int first, int len) const
   \endcode
   \param pos position de fin dans la chaine de caracteres
   \return sous chaine de caracteres extraite
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -490,7 +470,6 @@ String String::beforeItem(int pos) const
   \endcode
   \param pos position de fin dans la chaine de caracteres
   \return sous chaine de caracteres extraite
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -512,7 +491,6 @@ String::throughItem(int pos) const
   \endcode
   \param pos position de depart dans la chaine de caracteres
   \return sous chaine de caracteres extraite
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -533,7 +511,6 @@ String String::afterItem(int pos) const
   \endcode
   \param pos position de depart dans la chaine de caracteres
   \return sous chaine de caracteres extraite
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -555,7 +532,6 @@ String String::fromItem(int pos) const
   \param startfirst position de depart dans la chaine de caracteres
   \param len longueur de la chaine e extraire
   \return sous chaine de caracteres extraite
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -583,7 +559,6 @@ C'est un peu idiot comme truc ca !!!
   \param startfirst position de depart dans la chaine de caracteres
   \param len longueur de la chaine e extraire
   \return sous chaine de caracteres extraite
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -607,7 +582,6 @@ String String::atItem(char c, int startpos) const
   \param y sous chaine e rechercher
   \param startpos position de debut de recherche dans la chaine de caracteres
   \return sous chaine de caracteres extraite
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -632,7 +606,6 @@ String String::beforeItem(const String &y, int startpos) const
   \param c caractere e rechercher
   \param startpos position de debut de recherche dans la chaine de caracteres
   \return sous chaine de caracteres extraite
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -655,7 +628,6 @@ String String::beforeItem(char c, int startpos) const
   \param y sous chaine e rechercher
   \param startpos position de debut de recherche dans la chaine de caracteres
   \return sous chaine de caracteres extraite
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -682,7 +654,6 @@ String String::throughItem(const String &y, int startpos) const
   \param c caractere e rechercher
   \param startpos position de debut de recherche dans la chaine de caracteres
   \return sous chaine de caracteres extraite
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -710,7 +681,6 @@ String::throughItem(char c, int startpos) const
   \param y sous chaine e rechercher
   \param startpos position de debut de recherche dans la chaine de caracteres
   \return sous chaine de caracteres extraite
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -736,7 +706,6 @@ String String::afterItem(const String &y, int startpos) const
   \endcode
   \param y sous chaine e rechercher
   \return sous chaine de caracteres extraite
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -775,7 +744,6 @@ String::beforeLast(const String &y) const
   \param c caractere e rechercher
   \param startpos position de debut de recherche dans la chaine de caracteres
   \return sous chaine de caracteres extraite
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -802,7 +770,6 @@ String String::afterItem(char c, int startpos) const
   \param y sous chaine e rechercher
   \param startpos position de debut de recherche dans la chaine de caracteres
   \return sous chaine de caracteres extraite
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -827,7 +794,6 @@ String String::fromItem(const String &y, int startpos) const
   \param c caractere e rechercher
   \param startpos position de debut de recherche dans la chaine de caracteres
   \return sous chaine de caracteres extraite
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -854,7 +820,6 @@ String String::fromItem(char c, int startpos) const
   \endcode
   \param pfile fichier e lire
   \return booleen specifiant si il reste des caracteres e lire dans le fichier.
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -879,7 +844,6 @@ bool String::scanFileLine(FILE *pfile)
   Cette methode supprime les blancs en debut et fin d'une chaine de caracteres comme indique ci dessous:
 
   "  hello " -> "hello"
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -902,7 +866,6 @@ void String::strip()
   \param substring chaine de caracteres e rechercher
   \param cas booleen permettant de specifier si on veut du sensitive search (true) ou non (false)
   \return position de la sous-chaine dans la chaine ou -1 en cas d'echec de la recherche
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -975,7 +938,6 @@ int String::containsWithCaseSub(const String &substring, bool cas) const
   \param substring chaine de caracteres e rechercher
   \param cas booleen permettant de specifier si on veut du sensitive search (true) ou non (false)
   \return booleen: true si la sous-chaine existe ou false sinon.
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -995,7 +957,6 @@ bool String::containsWithCase(const String &substring, bool cas) const
   x="chain to convert";
   printf("%s",x.chars());
   \endcode
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -1010,7 +971,6 @@ const char *String::chars() const
   Cette methode teste si une chaine de caracteres contient un caractere donne.
   \param c caractere e rechercher
   \return true si le caractere existe, false dans le cas contraire
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -1028,7 +988,6 @@ bool String::contains(char c, int startpos) const
   \param startpos position de depart pour la recherche
   \param substring sous chaine e rechercher
   \return true ou false selon le resultat de la recherche.
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -1045,7 +1004,6 @@ bool String::contains(const String &substring, int startpos) const
   Cette methode ecrit une chaine de caracteres sur le flux de donnees ostream. Si la chaine de caracteres est vide, "empty" est ecrit sur la sortie.
 
   \param s chaine de caracteres ecrite
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -1059,7 +1017,6 @@ void String::dump(const String &s) const
 /*!
   Cette methode teste si une chaine de caracteres est vide.
   \return true si la chaine de caracteres est vide false dans le cas contraire
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -1073,7 +1030,6 @@ bool String::empty() const
 /*!
   Cette methode teste si une chaine de caracteres est non vide.
   \return true si la chaine de caracteres est non vide false dans le cas contraire
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -1087,7 +1043,6 @@ bool String::ok() const
 /*!
   Cette methode retourne le premier caractere d'un std::string
   \return premier caractere du String
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -1101,7 +1056,6 @@ char String::firstchar() const
 /*!
   Cette methode retourne le dernier caractere d'un std::string
   \return dernier caractere du String
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -1114,7 +1068,6 @@ char String::lastchar() const
 //conversion des caracteres en minuscules
 /*!
   Cette methode convertit les caracteres d'une chaine en minuscules
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -1134,7 +1087,6 @@ void String::lowerCase()
 //conversion des caracteres en majuscules
 /*!
   Cette methode convertit les caracteres d'une chaine en majuscules
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -1166,7 +1118,6 @@ void String::upperCase()
   \param pos specifie que l'on souhaite extraire la ieme valeur sur la ligne
   \param sep specifie le separateur de donnees sur la ligne que l'on veut utiliser (par defaut un espace si on ne precise rien)
   \return valeur reelle de retour convertie
-  \author &copy; Olivier PANTALE
   \since DynELA 0.9.6
 */
 //-----------------------------------------------------------------------------
@@ -1203,7 +1154,6 @@ String::getRealAtPos(int pos, String sep)
   \param pos specifie que l'on souhaite extraire la ieme valeur sur la ligne
   \param sep specifie le separateur de donnees sur la ligne que l'on veut utiliser (par defaut un espace si on ne precise rien)
   \return valeur reelle de retour convertie
-  \author &copy; Olivier PANTALE
   \since DynELA 0.9.6
 */
 //-----------------------------------------------------------------------------
@@ -1245,7 +1195,6 @@ bool String::popReal(double &ret, String sep)
   \param pos specifie que l'on souhaite extraire la ieme valeur sur la ligne
   \param sep specifie le separateur de donnees sur la ligne que l'on veut utiliser (par defaut un espace si on ne precise rien)
   \return valeur reelle de retour convertie
-  \author &copy; Olivier PANTALE
   \since DynELA 0.9.6
 */
 //-----------------------------------------------------------------------------
@@ -1265,7 +1214,6 @@ bool String::popInt(long &val, String sep)
   \param ret mot extrait de la chaine de caracteres
   \param sep specifie le separateur de donnees sur la ligne que l'on veut utiliser (par defaut un espace si on ne precise rien)
   \return true si la chaine contient d'autres mots, false dans le cas contraire
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------

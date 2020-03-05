@@ -3,18 +3,16 @@
  *  DynELA Finite Element Code v 3.0                                       *
  *  By Olivier PANTALE                                                     *
  *                                                                         *
- *  (c) Copyright 1997-2019                                                *
+ *  (c) Copyright 1997-2020                                                *
  *                                                                         *
  **************************************************************************/
 
 /*!
-  \file MacAddress.C
-  \brief Definition of the Mac Address class.
+  \file LogFile.h
+  \brief Declaration of the LogFile class.
 
-  This file defines the Mac Address class.
+  This file declares the LogFile class for DynELA logs.
   \ingroup dnlKernel
-  \author &copy; Olivier PANTALE
-  \date 1997-2019
 */
 
 #ifndef __dnlKernel_LogFile_h__
@@ -24,12 +22,18 @@
 #include <fstream>
 #include <String.h>
 
+/*! 
+  \brief LogFile class used create and manage Log files.
+
+  This class is used to create and manage Log files for the DynELA Finite Element code.
+  \ingroup dnlKernel
+*/
 class LogFile
 {
-  String _fileName;
-  std::ofstream _stream;
-  int _verbosity;
-  int _level;
+  String _fileName;      //!< Filename for the log file
+  std::ofstream _stream; //!< Output stream for the file
+  int _verbosity;        //!< Level of verbosity
+  int _level;            //!< Current leve of verbosity
 
 public:
   LogFile();
@@ -49,8 +53,8 @@ public:
   void headerWrite();
   void outputString(String string);
   void separatorWrite(String separator = "");
-  void setLevel(int lev);
-  void setVerbosity(int verbosity) { _verbosity = verbosity; }
+  void setLevel(int newlevel);
+  void setVerbosity(int verbosity) { _verbosity = verbosity; } //!< Sets the level of verbosity
   void upLevel();
 };
 

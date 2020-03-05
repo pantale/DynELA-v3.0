@@ -18,8 +18,6 @@
   This type of data structure is useful for storing three-dimensional coordinates (for example nodal coordinates, vectors forces,...).
 
   \ingroup dnlMaths
-  \author &copy; Olivier PANTALE
-  \date 1997-2019
 */
 
 #ifndef __dnlMaths_Vec3D_h__
@@ -46,8 +44,6 @@ class SymTensor2;
   This type of data structure is useful for storing three-dimensional coordinates (for example nodal coordinates, vectors forces,...).
 
   \ingroup dnlMaths
-  \author &copy; Olivier PANTALE
-  \date 1997-2019
 */
 class Vec3D
 {

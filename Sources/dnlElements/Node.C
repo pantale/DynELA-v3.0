@@ -3,7 +3,7 @@
  *  DynELA Finite Element Code v 3.0                                       *
  *  By Olivier PANTALE                                                     *
  *                                                                         *
- *  (c) Copyright 1997-2019                                                *
+ *  (c) Copyright 1997-2020                                                *
  *                                                                         *
  **************************************************************************/
 
@@ -14,8 +14,6 @@
   This file is the definition file for the Node class.
 
   \ingroup dnlElements
-  \author &copy; Olivier PANTALE
-  \date 1997-2019
 */
 
 #include "Node.h"
@@ -33,7 +31,6 @@
 
   Ce fichier sert e la definition des noeuds du maillage elements finis sur DynELA.
 
-  \author &copy; Olivier PANTALE
   \since DynELA 0.9.5
   \date 1997-2004
 */

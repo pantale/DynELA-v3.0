@@ -3,7 +3,7 @@
  *  DynELA Finite Element Code v 3.0                                       *
  *  By Olivier PANTALE                                                     *
  *                                                                         *
- *  (c) Copyright 1997-2019                                                *
+ *  (c) Copyright 1997-2020                                                *
  *                                                                         *
  **************************************************************************/
 
@@ -14,8 +14,6 @@
   This file is the declaration file for the NodeSet class.
 
   \ingroup dnlFEM
-  \author &copy; Olivier PANTALE
-  \date 1997-2019
 */
 
 #include <NodeSet.h>
@@ -80,7 +78,7 @@ void NodeSet::add(NodeSet *nodesSet)
 /*!
   Cette methode renvoie le nombre de noeuds dans un NodeSet
   \return nombre de noeuds de la liste
-  \author Olivier PANTALE
+
   \version 0.9.5
 */
 //-----------------------------------------------------------------------------
@@ -95,7 +93,7 @@ long NodeSet::getSize()
   Cette methode renvoie un pointeur sur le ieme noeud d'une liste de noeuds contenue dans un NodeSet.
   \param i place du noeud dans la liste.
   \return pointeur sur le noeud
-  \author Olivier PANTALE
+
   \version 0.9.5
 */
 //-----------------------------------------------------------------------------
@@ -110,7 +108,7 @@ Node *NodeSet::getNode(long nodeNumber)
   Cette methode renvoie le numero du ieme noeud d'une liste de noeuds contenue dans un NodeSet.
   \param i place du noeud dans la liste.
   \return pointeur sur le noeud
-  \author Olivier PANTALE
+
   \version 0.9.5
 */
 //-----------------------------------------------------------------------------

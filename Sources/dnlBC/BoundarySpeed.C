@@ -3,7 +3,7 @@
  *  DynELA Finite Element Code v 3.0                                       *
  *  By Olivier PANTALE                                                     *
  *                                                                         *
- *  (c) Copyright 1997-2019                                                *
+ *  (c) Copyright 1997-2020                                                *
  *                                                                         *
  **************************************************************************/
 
@@ -14,8 +14,6 @@
   This file is the declaration file for the NodeSet class.
 
   \ingroup dnlFEM
-  \author &copy; Olivier PANTALE
-  \date 1997-2019
 */
 
 #include <BoundarySpeed.h>
@@ -26,7 +24,7 @@
 //constructeur par defaut de la classe BoundarySpeed
 /*!
   Cette methode est le constructeur par defaut de la classe BoundarySpeed. En pratique, ici, on ne fait rien de plus que les allocations de memoire necessaires.
-  \author Olivier PANTALE
+
   \since DynELA 0.9.1
 */
 //-----------------------------------------------------------------------------
@@ -47,7 +45,7 @@ BoundarySpeed::BoundarySpeed(const Vec3D &newSpeed)
 /*!
   Cette methode est le constructeur par recopie de la classe BoundarySpeed.
   \warning La recopie n'est pas prevue ici, cette methode genere une erreur d'execution
-  \author Olivier PANTALE
+
   \since DynELA 0.9.1
 */
 //-----------------------------------------------------------------------------
@@ -77,7 +75,7 @@ void BoundarySpeed::applyInitial(Node *node, double currentTime, double timeStep
   Dans le cas oe la vitesse imposee est constante dans le temps, on applique simplement dans la direction contrainte une acceleration nulle et une vitesse imposee constante egale e la vitesse de la CL.
   Dans le cas oe la CL est variable dans le temps, on utilise les relations suivantes \f[ \stackrel{\bullet }{v_{0}}=\frac{\overline{v}(t+\Delta t)-\overline{v}(t)}{\Delta t} \f] et  \f[  v_{0}=\overline{v}(t) \f] relations dans lesquelles  \f$ \overline{v}(t) \f$ represente la valeur de la vitesse imposee e l'instant t definie e partir de la fonction discrete. 
   \param node Noeud sur lequel la condition limite est appliquee
-  \author Olivier PANTALE
+
   \since DynELA 0.9.1
 */
 //-----------------------------------------------------------------------------
@@ -208,7 +206,7 @@ void BoundarySpeed::applyConstantOnNewFields(Node *node, double currentTime, dou
 //destructeur de la classe BoundarySpeed
 /*!
   Cette methode est le destructeur de la classe BoundarySpeed.
-  \author Olivier PANTALE
+
   \since DynELA 0.9.1
 */
 //-----------------------------------------------------------------------------

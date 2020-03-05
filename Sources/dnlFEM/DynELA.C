@@ -3,7 +3,7 @@
  *  DynELA Finite Element Code v 3.0                                       *
  *  By Olivier PANTALE                                                     *
  *                                                                         *
- *  (c) Copyright 1997-2019                                                *
+ *  (c) Copyright 1997-2020                                                *
  *                                                                         *
  **************************************************************************/
 
@@ -14,8 +14,6 @@
   This file is the declaration file for the NodeSet class.
 
   \ingroup dnlFEM
-  \author &copy; Olivier PANTALE
-  \date 1997-2019
 */
 
 #include <DynELA.h>
@@ -37,13 +35,13 @@ DynELA *dynelaData = NULL; // initialisation par defaut sur NULL
 
   \version 1.0.0
   \date 2002
-  \author Olivier PANTALE 
+ 
 */
 
 //constructeur par defaut de la classe DynELA
 /*!
   Cette methode est le constructeur par defaut de la classe DynELA. En pratique, ici, on ne fait rien de plus que les allocations de memoire necessaires.
-  \author Olivier PANTALE
+
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -107,7 +105,7 @@ DynELA::DynELA(char *newName)
   Cette methode est le constructeur par recopie de la classe DynELA. En pratique, ici, on ne fait rien de plus que les allocations de memoire necessaires.
   \version 1.0.0
   \date 2002
-  \author Olivier PANTALE 
+ 
 */
 //-----------------------------------------------------------------------------
 DynELA::DynELA(const DynELA &X)
@@ -119,7 +117,7 @@ DynELA::DynELA(const DynELA &X)
 /*!
   \version 1.0.0
   \date 2002
-  \author Olivier PANTALE 
+ 
 */
 //-----------------------------------------------------------------------------
 DynELA::~DynELA()
@@ -141,7 +139,7 @@ DynELA::~DynELA()
   \return pointeur sur le noeud trouve ou NULL en cas d'echec de recherche
   \version 1.0.0
   \date 2002
-  \author Olivier PANTALE 
+ 
 */
 //-----------------------------------------------------------------------------
 Node *DynELA::getNodeByNum(long nodeNumber)
@@ -165,7 +163,7 @@ Node *DynELA::getNodeByNum(long nodeNumber)
   \return pointeur sur l'element trouve ou NULL en cas d'echec de recherche
   \version 1.0.0
   \date 2002
-  \author Olivier PANTALE 
+ 
 */
 //-----------------------------------------------------------------------------
 Element *DynELA::getElementByNum(long elementNumber)
@@ -191,7 +189,7 @@ Element *DynELA::getElementByNum(long elementNumber)
   \param z coordonnee z du noeud e creer
   \version 1.0.0
   \date 2002
-  \author Olivier PANTALE 
+ 
 */
 //-----------------------------------------------------------------------------
 bool DynELA::createNode(long nodeNumber, double xCoord, double yCoord, double zCoord)
@@ -219,7 +217,7 @@ bool DynELA::createNode(long nodeNumber, double xCoord, double yCoord, double zC
   Cette methode renvoie le nombre total de noeuds de la structure
 
   \return nombre de noeuds de la structure
-  \author Olivier PANTALE
+
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -273,26 +271,34 @@ bool DynELA::createElement(long elementNumber, long nodesIndex, ...)
     pel = new ElTet10N3D(elementNumber);
     break;
   default:
-    fatalError("DynELA::createElement", "Unknown element type");
+    fatalError("DynELA::createElement(long elementNumber, long nodesIndex, ...)", "Unknown element type\nHave to implement it or wrong Python file ?\n");
   }
 
+  // Creates and assign the integration points
   pel->createIntegrationPoints();
+
+  // Get the number of nodes of the element
   nbNodes = pel->getNumberOfNodes();
 
   // A place to store the list of arguments
   va_list arguments;
 
-  //Initializing arguments to store all values
+  // Initializing arguments to store all values
   va_start(arguments, nodesIndex);
+
+  // First node from the list
   nNodes[0] = nodesIndex;
 
+  // Loop over the list of nodes
   for (long i = 1; i < nbNodes; i++)
   {
     nNodes[i] = va_arg(arguments, long);
   }
 
+  // Transfer the new element to the model level
   model.create(pel, nNodes);
 
+  // Display the information in the log file
   String str;
   logFile << "Element " << pel->getName() << " : " << str.convert(pel->number) << " [";
   for (long i = 0; i < nbNodes; i++)
@@ -305,9 +311,6 @@ bool DynELA::createElement(long elementNumber, long nodesIndex, ...)
 
   //Cleans up the list
   va_end(arguments);
-
-  /*   if (elements.getSize() % elementDisplayOnlineFrequency == 0)
-    displayOnline(); */
 
   return true;
 }
@@ -339,7 +342,7 @@ void DynELA::add(Solver *newSolver)
 
   \param material materiau e utiliser
   \param elementSet ElementSet e utiliser
-  \author Olivier PANTALE
+
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -379,7 +382,7 @@ void DynELA::add(Material *material, ElementSet *elementSet)
   Cette methode ajoute un nouveau materiau e la structure. Le nouveau materiau est initialise et renseigne de maniere externe. Cette methode est uniquement destinee e le stocker au niveau de la stucture. Il est ensuite possible d'y faire reference e partir poissonRatio nom de ce materiau. Cette methode verifie que lorsque l'on ajoute un materiau, si le nom est declare, un autre materiau portant le meme nom n'est pas deje present dans la liste des materiaux. Dans ce cas, une erreur est alors generee.
 
   \param pmat pointeur sur le nouveau materiau e ajouter e la structure
-  \author Olivier PANTALE
+
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -426,7 +429,7 @@ void DynELA::add(ElementSet *elementSet, long startNumber, long endNumber, long 
 
   \param boundary condition limite e utiliser
   \param nodeSet NodeSet e utiliser
-  \author Olivier PANTALE
+
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -466,7 +469,7 @@ void DynELA::attachInitialBC(Boundary *boundary, NodeSet *nodeSet)
 
   \param boundary condition limite e utiliser
   \param nodeSet NodeSet e utiliser
-  \author Olivier PANTALE
+
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -683,7 +686,7 @@ void DynELA::rotate(Vec3D axis, double angle, NodeSet *nodeSet)
 
   \param min coordonnee minimale
   \param max coordonnee maximale
-  \author Olivier PANTALE
+
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -740,7 +743,7 @@ void DynELA::writeVTKFile()
 /*!
   Cette methode lance la procedure de solveur general de la structure. Elle prend en compte tous les types de solveurs possible et gere aussi bien la resolution mono-modele que la resolution multi-modele. C'est le point d'entree de tout solveur.
 
-  \author Olivier PANTALE
+
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -822,7 +825,7 @@ void DynELA::getNodalValuesRange(short field, double &min, double &max)
   Cette methode est utilisee pour initialiser les structures memoire apres lecture des donnees dans le fichier source. C'est la phase de preprocessing de la structure. Un ensemble de verifications sont effectuees dans cette methode.
 
   \return true si la methode n'a genere aucune erreur
-  \author Olivier PANTALE
+
   \since DynELA 1.0.0
 
 //-----------------------------------------------------------------------------
@@ -894,7 +897,7 @@ bool DynELA::initSolve ()
 
   \param name nom du materiau e recuperer
   \return un pointeur sur ce materiau (s'il existe) ou NULL dans le cas oe le materiau n'a pu etre trouve dans la liste des materiaux de la structure.
-  \author Olivier PANTALE
+
   \since DynELA 1.0.0
 
 //-----------------------------------------------------------------------------
@@ -919,7 +922,7 @@ Material * DynELA::getMaterial (String name)
 
   \param BC condition limite e utiliser
   \param nds NodeSet e utiliser
-  \author Olivier PANTALE
+
   \since DynELA 1.0.0
 
 //-----------------------------------------------------------------------------
@@ -939,7 +942,7 @@ void DynELA::attachBCToNodes(BoundaryCondition* BC, NodeSet* nds)
   Cette methode ajoute un solveur e la structure. Le solveur est ajoute e la liste des solveurs du modele courant de la structure.
 
   \param solver solveur e utiliser
-  \author Olivier PANTALE
+
   \since DynELA 1.0.0
 
 
@@ -951,7 +954,7 @@ void DynELA::attachBCToNodes(BoundaryCondition* BC, NodeSet* nds)
   Cette methode renvoie le nombre total d'elements de la structure
 
   \return nombre d'elements de la structure
-  \author Olivier PANTALE
+
   \since DynELA 1.0.0
 
 
@@ -961,7 +964,7 @@ void DynELA::attachBCToNodes(BoundaryCondition* BC, NodeSet* nds)
 
   \param i indice du noeud
   \return ieme noeud de la structure
-  \author Olivier PANTALE
+
   \since DynELA 1.0.0
 
 //-----------------------------------------------------------------------------
@@ -977,7 +980,7 @@ Node* DynELA::getNode(long i)
 
   \param i indice de l'element
   \return ieme element de la structure
-  \author Olivier PANTALE
+
   \since DynELA 1.0.0
 
 //-----------------------------------------------------------------------------
@@ -993,7 +996,7 @@ Element* DynELA::getElement(long i)
 
   \param i Id du noeud
   \return ieme noeud de la structure
-  \author Olivier PANTALE
+
   \since DynELA 1.0.0
 
 //-----------------------------------------------------------------------------
@@ -1009,7 +1012,7 @@ Node* DynELA::getNodeById(long i)
 
   \param i Id de l'element
   \return ieme noeud de la structure
-  \author Olivier PANTALE
+
   \since DynELA 1.0.0
 
 //-----------------------------------------------------------------------------
@@ -1024,7 +1027,7 @@ Element* DynELA::getElementById(long i)
   Cette methode permet de creer un nouveau modele dans la structure ou de selectionner un autre modele pour le modele courant de la structure.
 
   \param model pointeur sur le modele e selectionner
-  \author Olivier PANTALE
+
   \since DynELA 1.0.0
 
 //-----------------------------------------------------------------------------
@@ -1048,7 +1051,7 @@ void DynELA::setModel(Model* model)
 /*!
   Cette methode affiche pendant la lecture des donnees un etat d'avancement sur la console du remplissage memoire concernant les nombres de noeuds, elements et modeles de la structure complete.
 
-  \author Olivier PANTALE
+
   \since DynELA 1.0.0
 
 //-----------------------------------------------------------------------------

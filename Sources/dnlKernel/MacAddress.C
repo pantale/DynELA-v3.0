@@ -3,7 +3,7 @@
  *  DynELA Finite Element Code v 3.0                                       *
  *  By Olivier PANTALE                                                     *
  *                                                                         *
- *  (c) Copyright 1997-2019                                                *
+ *  (c) Copyright 1997-2020                                                *
  *                                                                         *
  **************************************************************************/
 
@@ -13,8 +13,6 @@
 
   This file defines the Mac Address class.
   \ingroup dnlKernel
-  \author &copy; Olivier PANTALE
-  \date 1997-2019
 */
 
 #include <MacAddress.h>
@@ -23,6 +21,9 @@
 #include <netpacket/packet.h>
 #include <stdio.h>
 
+/*!
+  \brief default constructor of the MacAddresses class
+  */
 //-----------------------------------------------------------------------------
 MacAddresses::MacAddresses()
 //-----------------------------------------------------------------------------
@@ -57,6 +58,12 @@ MacAddresses::MacAddresses()
     freeifaddrs(ifaddr);
 }
 
+/*!
+  \brief Returns a string containing the ith MacAddress of the computer
+
+  \param num ith mac adress of the computer
+  \returns the mac adress of the computer
+  */
 //-----------------------------------------------------------------------------
 String MacAddresses::getAddress(int num)
 //-----------------------------------------------------------------------------
@@ -76,6 +83,12 @@ String MacAddresses::getAddress(int num)
     return address;
 }
 
+/*!
+  \brief Returns a string containing the ith interface of the computer
+
+  \param num ith interface of the computer
+  \returns the interface of the computer
+  */
 //-----------------------------------------------------------------------------
 String MacAddresses::getInterface(int num)
 //-----------------------------------------------------------------------------
@@ -83,4 +96,16 @@ String MacAddresses::getInterface(int num)
     if ((num < 0) || (num >= macs.getSize()))
         return "none";
     return macs(num)->interface;
+}
+
+/*!
+  \brief Returns the number of MacAddresses
+
+  \returns the number of MacAddresses
+  */
+//-----------------------------------------------------------------------------
+int MacAddresses::getNumber()
+//-----------------------------------------------------------------------------
+{
+    return macs.getSize();
 }

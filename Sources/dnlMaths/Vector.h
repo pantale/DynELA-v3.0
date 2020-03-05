@@ -18,8 +18,6 @@
   \end{array}\right] \f]
 
   \ingroup dnlMaths
-  \author &copy; Olivier PANTALE
-  \date 1997-2019
 */
 
 #ifndef __dnlMaths_Vector_h__
@@ -34,7 +32,6 @@
   \enum OutVector
   \brief enumeration de format d'affichage de vecteurs.
   Cette enumeration permet de definir le format d'affichage des vecteurs. On a ainsi le choix entre outVectorTypeNormal qui correspond e un affichage conforme e Mathematica et outVectorTypeMupad qui correspond e un affichage au format Mupad.
-  \author &copy; Olivier PANTALE
   \since 1.0.0
 */
 #ifndef SWIG
@@ -60,8 +57,6 @@ class Matrix;
   This type of data structure is useful for storing three-dimensional coordinates (for example nodal coordinates, vectors forces,...).
 
   \ingroup dnlMaths
-  \author &copy; Olivier PANTALE
-  \date 1997-2019
 */
 class Vector
 {

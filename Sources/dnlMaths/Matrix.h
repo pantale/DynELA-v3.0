@@ -18,8 +18,6 @@
   \end{array}\right] \f]
 
   \ingroup dnlMaths
-  \author &copy; Olivier PANTALE
-  \date 1997-2019
 */
 
 #ifndef __dnlMaths_Matrix_h__
@@ -38,7 +36,7 @@ class Tensor2;
 
   Cette classe est utilisee pour la gestion et la manipulation des matrices denses. Elle comporte toutes les methodes d'initialisation et de gestion memoire. Les valeurs stockees sont des double. La classe \c Matrix contient de plus un certain nombre de methodes de calcul sur les matrices comme decrit ci-dessous.
 
-  \author Olivier PANTALE
+
   \version 0.9.4
   \date 1997-2004
 */
@@ -157,7 +155,7 @@ public:
   \param i long de ligne
   \param j long de colonne
   \return true si les indices fournis sont dans les bornes, false dans le cas contraire
-  \author Olivier PANTALE
+
   \version 0.9.4
 */
 //-----------------------------------------------------------------------------
@@ -179,7 +177,7 @@ inline bool Matrix::indexOK(long i, long j) const
   \param i long de ligne
   \param j long de colonne
   \return valeur de la matrice e la ligne \c i et colonne \c j
-  \author Olivier PANTALE
+
   \version 0.9.4
 */
 //-----------------------------------------------------------------------------
@@ -197,7 +195,7 @@ inline double Matrix::operator()(long i, long j) const
   \param i long de ligne
   \param j long de colonne
   \return valeur de la matrice e la ligne \c i et colonne \c j
-  \author Olivier PANTALE
+
   \version 0.9.4
 */
 //-----------------------------------------------------------------------------
@@ -214,7 +212,7 @@ inline double &Matrix::operator()(long i, long j)
 /*!
   Cette methode calcule la somme de tous les termes d'une matrice
   \return somme de tous les termes de la matrice
-  \author Olivier PANTALE
+
   \version 0.9.4
 */
 //-----------------------------------------------------------------------------

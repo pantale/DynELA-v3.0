@@ -18,8 +18,6 @@
   \end{array}\right] \f]
 
   \ingroup dnlMaths
-  \author &copy; Olivier PANTALE
-  \date 1997-2019
 */
 
 #ifndef __dnlMaths_MatrixDiag_h__
@@ -35,7 +33,7 @@
 
   Cette classe est utilisee pour la gestion et la manipulation des matrices disgonales. Elle comporte toutes les methodes d'initialisation et de gestion memoire. Les valeurs stockees sont des double. La classe \c MatrixDiag contient de plus un certain nombre de methodes de calcul sur les matrices comme decrit ci-dessous.
 
-  \author Olivier PANTALE
+
   \version 0.9.4
   \date 1997-2004
 */
@@ -115,7 +113,7 @@ public:
   Cette methode teste les bornes d'une matrice
   \param i long de ligne
   \return true si l'long fourni est dans les bornes, false dans le cas contraire
-  \author Olivier PANTALE
+
   \version 0.9.4
 */
 //-----------------------------------------------------------------------------
@@ -137,7 +135,7 @@ inline bool MatrixDiag::indexOK(long i) const
 /*!
   \param i long de ligne
   \return valeur de la matrice e la ligne et colonne \c i
-  \author Olivier PANTALE
+
   \version 0.9.4
 */
 //-----------------------------------------------------------------------------
@@ -155,7 +153,7 @@ inline double &MatrixDiag::operator()(long i)
 /*!
   \param i long de ligne
   \return valeur de la matrice e la ligne et colonne \c i
-  \author Olivier PANTALE
+
   \version 0.9.4
 */
 //-----------------------------------------------------------------------------

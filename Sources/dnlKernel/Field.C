@@ -3,20 +3,16 @@
 *  DynELA Finite Element Code v 3.0                                       *
 *  By Olivier PANTALE                                                     *
 *                                                                         *
-*  (c) Copyright 1997-2019                                                *
+*  (c) Copyright 1997-2020                                                *
 *                                                                         *
 **************************************************************************/
 
 /*!
-\file Error.C
-\brief Definition of the errors for the DynELA FEM code
+  \file Field.C
+  \brief Definition of the Finite Elements fields.
 
-This file defines the errors and warning that are used in the DynELA FEM code.
-The functions defined in this files serves to display messages and warnings.
-\ingroup basicTools
-\author &copy; Olivier PANTALE
-\since DynELA 1.0
-\date 1997-2019
+  This file defines the Finite Elements fields.
+  \ingroup dnlKernel
 */
 
 #include <Field.h>
@@ -30,7 +26,6 @@ const char *const Field::vtkNames[] = {
     NAME_VEC3D("displacementIncrement"),
     NAME_VEC3D("initialNodeCoordinate"),
     NAME_VEC3D("nodeCoordinate"),
-    //NAME_VEC3D("normal"),
     NAME_VEC3D("speed"),
     NAME_VEC3D("speedIncrement"),
     "density",
@@ -57,6 +52,9 @@ const char *const Field::vtkNames[] = {
     NAME_TENSOR2("DeviatoricStress"),
     NAME_TENSOR2("Stress"), "ENDFIELDS"};
 
+/*! 
+  \brief Default constructor of the Field class.
+*/
 //-----------------------------------------------------------------------------
 Field::Field()
 //-----------------------------------------------------------------------------
@@ -65,12 +63,20 @@ Field::Field()
     fatalError("Field::Field", "Lists of fields doesn't contain the same number of elements");
 }
 
+/*! 
+  \brief Default destructor of the Field class.
+*/
 //-----------------------------------------------------------------------------
 Field::~Field()
 //-----------------------------------------------------------------------------
 {
 }
 
+/*! 
+  \brief Returns a string defining the VTK name of the field.
+  \param field identification number of the field.
+  \return identification name of the field
+*/
 //-----------------------------------------------------------------------------
 String Field::getVtklabel(short field)
 //-----------------------------------------------------------------------------
@@ -78,6 +84,11 @@ String Field::getVtklabel(short field)
   return vtkNames[field];
 }
 
+/*! 
+  \brief Returns the identification number of a given field specified by its name.
+  \param name identification name of the field.
+  \return identification number of the field
+*/
 //-----------------------------------------------------------------------------
 short Field::getField(String name)
 //-----------------------------------------------------------------------------
@@ -92,6 +103,11 @@ short Field::getField(String name)
   return -1;
 }
 
+/*! 
+  \brief Returns the type of a given field specified by its identification number.
+  \param field identification number of the field.
+  \return 0 if the field is a scalar, 1 if the field is a Vec3D and 2 if it's a tensor.
+*/
 //-----------------------------------------------------------------------------
 short Field::getType(short field)
 //-----------------------------------------------------------------------------
@@ -103,7 +119,6 @@ short Field::getType(short field)
   case Field::displacementIncrement:
   case Field::initialNodeCoordinate:
   case Field::nodeCoordinate:
-  //case Field::normal:
   case Field::speed:
   case Field::speedIncrement:
     return 1;
@@ -119,34 +134,6 @@ short Field::getType(short field)
     return 2;
     break;
   }
-  /*   if (field == Field::displacement)
-    return 1;
-  if (field == Field::displacementIncrement)
-    return 1;
-  if (field == Field::initialNodeCoordinate)
-    return 1;
-  if (field == Field::nodeCoordinate)
-    return 1;
-  if (field == Field::normal)
-    return 1;
-  if (field == Field::speed)
-    return 1;
-  if (field == Field::speedIncrement)
-    return 1;
-
-  // And those guys are Tensor2
-  if (field == Field::Strain)
-    return 2;
-  if (field == Field::StrainInc)
-    return 2;
-  if (field == Field::PlasticStrain)
-    return 2;
-  if (field == Field::PlasticStrainInc)
-    return 2;
-  if (field == Field::DeviatoricStress)
-    return 2;
-  if (field == Field::Stress)
-    return 2; */
 
   // Default type is a scalar
   return 0;

@@ -115,7 +115,7 @@ solver = dnl.Explicit("Solver")
 solver.setTimes(0, stopTime)
 model.add(solver)
 solver.setComputeTimeStepFrequency(1)
-#solver.setTimeStepMethod(solver.PowerIteration)
+solver.setTimeStepMethod(solver.PowerIteration)
 #solver.setTimeStepSafetyFactor(1.09)
 model.setSaveTimes(0, stopTime, stopTime/nbreSaves)
 

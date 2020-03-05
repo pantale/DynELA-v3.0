@@ -3,7 +3,7 @@
  *  DynELA Finite Element Code v 3.0                                       *
  *  By Olivier PANTALE                                                     *
  *                                                                         *
- *  (c) Copyright 1997-2019                                                *
+ *  (c) Copyright 1997-2020                                                *
  *                                                                         *
  **************************************************************************/
 
@@ -15,13 +15,12 @@
 /*!
   \file String.h
   \brief fichier . h de definition des chaines de caracteres
-  \ingroup basicTools
+  \ingroup dnlKernel
 
   Ce fichier regroupe la definition des chaines de caracteres pour DynELA. Les chaines de caracteres font partie d'une nouvelle classe nommee String qui permet la pluspart des manipulations sur les caracteres. L'ensemble des methodes de cette classe sont documentees.
 
   Depuis la version v. 1.0.0, cette classe herite de la classe \b std::string de Standard Template Library.
 
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
   \date 1997-2004
 */
@@ -29,13 +28,12 @@
 /*!
   \class String String.h
   \brief classe de definition des chaines de caracteres
-  \ingroup basicTools
+  \ingroup dnlKernel
 
   Cette classe sert e l'implementation des chaines de caracteres sur DynELA. Elle s'inspire des exemples donnes par B. Stroutrup dans son livre sur le C++. Des fonctions additionnelles on ete rajoutees par rapport e ce qui est donne dans cet ouvrage.
 
   Depuis la version v. 1.0.0, cette classe herite de la classe \b std::string de Standard Template Library.
 
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0.0
   \date 1997-2004
 */
@@ -72,9 +70,9 @@ public:
   int search(char c, int = 0) const;
   int search(const String &, int = 0) const;
   long getInt() const;
-  String &convert(double, const char * = "%lf");
-  String &convert(int, short leading = 0);
-  String &convert(long, short leading = 0);
+  String &convert(const double, const char * = "%lf");
+  String &convert(const int, short leading = 0);
+  String &convert(const long, short leading = 0);
   String &replace(const char, const char);
   String &replace(const String &, const String &);
   String afterItem(char c, int = 0) const;

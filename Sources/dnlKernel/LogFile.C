@@ -3,30 +3,26 @@
  *  DynELA Finite Element Code v 3.0                                       *
  *  By Olivier PANTALE                                                     *
  *                                                                         *
- *  (c) Copyright 1997-2019                                                *
+ *  (c) Copyright 1997-2020                                                *
  *                                                                         *
  **************************************************************************/
 
 /*!
-  \file MacAddress.C
-  \brief Definition of the Mac Address class.
+  \file LogFile.C
+  \brief Definition of the LogFile class.
 
-  This file defines the Mac Address class.
+  This file defines the LogFile class for DynELA logs.
   \ingroup dnlKernel
-  \author &copy; Olivier PANTALE
-  \date 1997-2019
 */
 
 #include <LogFile.h>
 #include <System.h>
 #include <Errors.h>
 
-//Constructeur de la classe LogFile
-/*!
-  Le constructeur ouvre le fichier e creer et ajoute automatiquement un entete standard en haut de celui-ci (voir methode headerWrite()).
-  \param str nom du fichier log e creer
-  \author Olivier PANTALE
-  \since DynELA 1.0.0
+/*! 
+  \brief Default constructor of the LogFile class.
+
+  The constructor opens the create file and automatically adds a standard header at the top of it (see headerWrite() method).
 */
 //-----------------------------------------------------------------------------
 LogFile::LogFile()
@@ -36,10 +32,10 @@ LogFile::LogFile()
   _level = 1;
 }
 
-//Destructeur de la classe LogFile
-/*!
-  \author Olivier PANTALE
-  \since DynELA 1.0.0
+/*! 
+  \brief Default destructor of the Field class.
+
+  The destructor closes the stream.
 */
 //-----------------------------------------------------------------------------
 LogFile::~LogFile()
@@ -48,6 +44,11 @@ LogFile::~LogFile()
   _stream.close();
 }
 
+/*! 
+  \brief Init the log file.
+  \param logFileName name of the logfile
+  \param verbosity requested level of verbosity
+*/
 //-----------------------------------------------------------------------------
 void LogFile::init(String logFileName, int verbosity)
 //-----------------------------------------------------------------------------
@@ -75,6 +76,9 @@ void LogFile::init(String logFileName, int verbosity)
   _level = 1;
 }
 
+/*! 
+  \brief Closes the log file.
+*/
 //-----------------------------------------------------------------------------
 void LogFile::close()
 //-----------------------------------------------------------------------------
@@ -83,6 +87,9 @@ void LogFile::close()
   _stream.close();
 }
 
+/*! 
+  \brief Writes the header of the log file
+*/
 //-----------------------------------------------------------------------------
 void LogFile::headerWrite()
 //-----------------------------------------------------------------------------
@@ -102,6 +109,9 @@ void LogFile::headerWrite()
   separatorWrite();
 }
 
+/*! 
+  \brief Writes a separator to the log file
+*/
 //-----------------------------------------------------------------------------
 void LogFile::separatorWrite(String separator)
 //-----------------------------------------------------------------------------
@@ -114,6 +124,9 @@ void LogFile::separatorWrite(String separator)
   _stream.flush();
 }
 
+/*! 
+  \brief Writes a string to the log file
+*/
 //-----------------------------------------------------------------------------
 LogFile &operator<<(LogFile &logFile, const String &string)
 //-----------------------------------------------------------------------------
@@ -125,6 +138,9 @@ LogFile &operator<<(LogFile &logFile, const String &string)
   return logFile;
 }
 
+/*! 
+  \brief Writes a long to the log file
+*/
 //-----------------------------------------------------------------------------
 LogFile &operator<<(LogFile &logFile, const long &value)
 //-----------------------------------------------------------------------------
@@ -139,6 +155,9 @@ LogFile &operator<<(LogFile &logFile, const long &value)
   return logFile;
 }
 
+/*! 
+  \brief Writes a short to the log file
+*/
 //-----------------------------------------------------------------------------
 LogFile &operator<<(LogFile &logFile, const short &value)
 //-----------------------------------------------------------------------------
@@ -153,6 +172,9 @@ LogFile &operator<<(LogFile &logFile, const short &value)
   return logFile;
 }
 
+/*! 
+  \brief Writes an int to the log file
+*/
 //-----------------------------------------------------------------------------
 LogFile &operator<<(LogFile &logFile, const int &value)
 //-----------------------------------------------------------------------------
@@ -167,6 +189,9 @@ LogFile &operator<<(LogFile &logFile, const int &value)
   return logFile;
 }
 
+/*! 
+  \brief Writes a double to the log file
+*/
 //-----------------------------------------------------------------------------
 LogFile &operator<<(LogFile &logFile, const double &value)
 //-----------------------------------------------------------------------------
@@ -181,6 +206,9 @@ LogFile &operator<<(LogFile &logFile, const double &value)
   return logFile;
 }
 
+/*! 
+  \brief Writes a string to the log file
+*/
 //-----------------------------------------------------------------------------
 void LogFile::outputString(String str)
 //-----------------------------------------------------------------------------
@@ -195,26 +223,23 @@ void LogFile::outputString(String str)
   }
 }
 
-//reglage de niveau de sortie pour les prochains messages
 /*!
-  Cette methode permet de specifier que les prochains messages achemines seront de niveau donne en argument. Tous les masseges de niveau plus eleve que celui-ci seront ignores.
-  \param lev nouveau niveau
-  \author Olivier PANTALE
-  \since DynELA 1.0.0
+  \brief Sets the output level setting for future messages
+  
+  This method allows to specify that the next messages sent will be at the level given in argument. All messages of a higher level than this one will be ignored.
+  \param newlevel new level.
 */
 //-----------------------------------------------------------------------------
-void LogFile::setLevel(int lev)
+void LogFile::setLevel(int newlevel)
 //-----------------------------------------------------------------------------
 {
-  _level = lev;
+  _level = newlevel;
 }
 
-//reglage de niveau de sortie pour les prochains messages
 /*!
-  Cette methode permet de specifier que les prochains messages achemines seront de niveau plus eleve d'une unite. Tous les masseges de niveau plus eleve que celui-ci seront ignores.
-  \param lev nouveau niveau
-  \author Olivier PANTALE
-  \since DynELA 1.0.0
+  \brief Increase the output level setting for future messages
+  
+  This method allows to specify that the next messages sent will be at the level given in argument. All messages of a higher level than this one will be ignored.
 */
 //-----------------------------------------------------------------------------
 void LogFile::upLevel()
@@ -223,12 +248,10 @@ void LogFile::upLevel()
   _level++;
 }
 
-//reglage de niveau de sortie pour les prochains messages
 /*!
-  Cette methode permet de specifier que les prochains messages achemines seront de niveau plus bas d'une unite. Tous les masseges de niveau plus eleve que celui-ci seront ignores.
-  \param lev nouveau niveau
-  \author Olivier PANTALE
-  \since DynELA 1.0.0
+  \brief Decreases the output level setting for future messages
+  
+  This method allows to specify that the next messages sent will be at the level given in argument. All messages of a higher level than this one will be ignored.
 */
 //-----------------------------------------------------------------------------
 void LogFile::downLevel()

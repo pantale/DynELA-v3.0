@@ -3,7 +3,7 @@
  *  DynELA Finite Element Code v 3.0                                       *
  *  By Olivier PANTALE                                                     *
  *                                                                         *
- *  (c) Copyright 1997-2019                                                *
+ *  (c) Copyright 1997-2020                                                *
  *                                                                         *
  **************************************************************************/
 
@@ -14,8 +14,6 @@
   This file is the declaration file for the NodeSet class.
 
   \ingroup dnlFEM
-  \author &copy; Olivier PANTALE
-  \date 1997-2019
 */
 
 #ifndef __dnlElements_ElementSet_h__
@@ -30,7 +28,6 @@
 
   Ce fichier sert e la definition des groupes de noeuds et elements de la structure.
 
-  \author &copy; Olivier PANTALE
   \version 0.9.6
   \date 1997-2004
 */
@@ -48,7 +45,6 @@
 
  Cette classe gere les groupes d'elements au niveau d'une structure sur DynELA. Elle comporte des methodes de creation de groupes d'elements (par ajout d'elements generalement), ainsi que des methodes de gestion de ces groupes d'elements.
 
-  \author &copy; Olivier PANTALE
   \version 0.9.6
   \date 1997-2004
 */

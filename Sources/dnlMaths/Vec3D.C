@@ -3,7 +3,7 @@
  *  DynELA Finite Element Code v 3.0                                       *
  *  By Olivier PANTALE                                                     *
  *                                                                         *
- *  (c) Copyright 1997-2019                                                *
+ *  (c) Copyright 1997-2020                                                *
  *                                                                         *
  **************************************************************************/
 
@@ -20,8 +20,6 @@
   This type of data structure is useful for storing three-dimensional coordinates (for example nodal coordinates, vectors forces,...).
 
   \ingroup dnlMaths
-  \author &copy; Olivier PANTALE
-  \date 1997-2019
 */
 
 #include <fstream>

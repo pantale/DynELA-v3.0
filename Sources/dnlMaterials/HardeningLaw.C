@@ -41,7 +41,6 @@
 
   Ce fichier sert e la definition la classe generique des materiaux.
 
-  \author &copy; Olivier PANTALE
   \version 0.9.6
   \date 1997-2004
 */

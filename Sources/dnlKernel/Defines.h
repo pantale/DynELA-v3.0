@@ -3,18 +3,16 @@
  *  DynELA Finite Element Code v 3.0                                       *
  *  By Olivier PANTALE                                                     *
  *                                                                         *
- *  (c) Copyright 1997-2019                                                *
+ *  (c) Copyright 1997-2020                                                *
  *                                                                         *
  **************************************************************************/
 
 /*!
   \file Defines.h
-  \brief Definition of the basic mathematical operators and constants.
+  \brief Basic definies of the DynELA Finite Element code.
 
-  This file defines all the mathematical constants, tools and basic operators.
+  This file contains a set of defines used to set the basic options of the DynELA Finite Element code.
   \ingroup dnlKernel
-  \author &copy; Olivier PANTALE
-  \date 1997-2019
 */
 
 #ifndef __dnlKernel_Defines_h__

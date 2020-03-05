@@ -3,7 +3,7 @@
  *  DynELA Finite Element Code v 3.0                                       *
  *  By Olivier PANTALE                                                     *
  *                                                                         *
- *  (c) Copyright 1997-2019                                                *
+ *  (c) Copyright 1997-2020                                                *
  *                                                                         *
  **************************************************************************/
 
@@ -20,8 +20,6 @@
   \end{array}\right] \f]
 
   \ingroup dnlMaths
-  \author &copy; Olivier PANTALE
-  \date 1997-2019
 */
 
 #include <MatrixDiag.h>
@@ -31,7 +29,7 @@
 /*!
   Cette m�thode construit une matrice de lignes/colonnes elements. Par d�faut, le contenu de la matrice est mis � z�rho
   \param numberOfTerms nombre de lignes
-  \author Olivier PANTALE
+
   \version 0.9.4
 */
 //-----------------------------------------------------------------------------
@@ -48,7 +46,7 @@ MatrixDiag::MatrixDiag(const long numberOfTerms, double value)
 //constructeur par recopie d'une matrice
 /*!
   Ce constructeur recopie les valeurs contenues dans une matrice. Selon la valeur du flag \ref MEM_funct, la copie est faite soit terme � terme (flag non d�fini) ou par appel � memcopy() (flag d�fini).
-  \author Olivier PANTALE
+
   \version 0.9.4
 */
 //-----------------------------------------------------------------------------
@@ -62,7 +60,7 @@ MatrixDiag::MatrixDiag(const MatrixDiag &mat)
 
 //destructeur de la classe MatrixDiag
 /*!
-  \author Olivier PANTALE
+
   \version 0.9.4
 */
 //-----------------------------------------------------------------------------
@@ -165,7 +163,7 @@ void MatrixDiag::desallocate()
 /*!
   Cette m�thode est utilis�e pour sp�cifier une nouvelle dimension de matrice de celle donn�e lors de l'initialisation par le constructeur
   \param newSize nombre de lignes
-  \author Olivier PANTALE
+
   \version 0.9.4
 */
 //-----------------------------------------------------------------------------
@@ -189,7 +187,7 @@ void MatrixDiag::redim(const long newSize)
   cout << t << endl;
   \endcode
   \param os flux de sortie
-  \author Olivier PANTALE
+
   \version 0.9.4
 */
 //-----------------------------------------------------------------------------
@@ -204,7 +202,7 @@ std::ostream &operator<<(std::ostream &os, const MatrixDiag &mat)
 /*!
   Cette methode permet d'afficher le contenu d'une matrice sur la sortie std::ostream
   \param os flux de sortie
-  \author Olivier PANTALE
+
   \version 0.9.4
 */
 //-----------------------------------------------------------------------------
@@ -237,7 +235,7 @@ void MatrixDiag::print(std::ostream &os) const
   MatrixDiag t1;
   t1=setToValue(1.); // affecte 1 � toutes les composantes de la matrice
   \endcode
-  \author Olivier PANTALE
+
   \version 0.9.4
 */
 //-----------------------------------------------------------------------------
@@ -259,7 +257,7 @@ void MatrixDiag::setToValue(double val)
   t1.setToUnity(); // renvoie identit�
   \endcode
   \warning Cette m�thode modifie son argument
-  \author Olivier PANTALE
+
   \version 0.9.4
 */
 //-----------------------------------------------------------------------------
@@ -280,7 +278,7 @@ void MatrixDiag::setToUnity()
   MatrixDiag t1;
   t1=1.; // affecte 1 � toutes les composantes de la matrice
   \endcode
-  \author Olivier PANTALE
+
   \version 0.9.4
 */
 //-----------------------------------------------------------------------------
@@ -300,7 +298,7 @@ MatrixDiag &MatrixDiag::operator=(const double &val)
   MatrixDiag t1,t2;
   t1=t2; // egalit� de deux matrices
   \endcode
-  \author Olivier PANTALE
+
   \version 0.9.4
 */
 //-----------------------------------------------------------------------------
@@ -325,7 +323,7 @@ MatrixDiag &MatrixDiag::operator=(const MatrixDiag &mat)
   MatrixDiag t1,t2,t3;
   t3=t1+t2; // somme de deux matrices
   \endcode
-  \author Olivier PANTALE
+
   \version 0.9.4
 */
 //-----------------------------------------------------------------------------
@@ -362,7 +360,7 @@ MatrixDiag MatrixDiag::operator+(const MatrixDiag &mat) const
   MatrixDiag t1,t2,t3;
   t3=t1-t2; // soustraction de deux matrices
   \endcode
-  \author Olivier PANTALE
+
   \version 0.9.4
 */
 //-----------------------------------------------------------------------------
@@ -413,7 +411,7 @@ MatrixDiag MatrixDiag::operator-() const
   MatrixDiag t1,t2;
   t2+=t1; // somme de deux matrices
   \endcode
-  \author Olivier PANTALE
+
   \version 0.9.4
 */
 //-----------------------------------------------------------------------------
@@ -444,7 +442,7 @@ void MatrixDiag::operator+=(const MatrixDiag &mat)
   MatrixDiag t1,t2;
   t2-=t1; // soustraction de deux matrices
   \endcode
-  \author Olivier PANTALE
+
   \version 0.9.4
 */
 //-----------------------------------------------------------------------------
@@ -475,7 +473,7 @@ void MatrixDiag::operator-=(const MatrixDiag &mat)
   double l;
   t2=t1*l; // multiplication par un scalaire
   \endcode
-  \author Olivier PANTALE
+
   \version 0.9.4
 */
 //-----------------------------------------------------------------------------
@@ -499,7 +497,7 @@ MatrixDiag MatrixDiag::operator*(const double &lambda) const
   double l;
   t1/=l; // division par un scalaire
   \endcode
-  \author Olivier PANTALE
+
   \version 0.9.4
 */
 //-----------------------------------------------------------------------------
@@ -523,7 +521,7 @@ MatrixDiag MatrixDiag::operator/(const double &lambda) const
   double l;
   t2=l*t1; // multiplication par un scalaire
   \endcode
-  \author Olivier PANTALE
+
   \version 0.9.4
 */
 //-----------------------------------------------------------------------------
@@ -546,7 +544,7 @@ MatrixDiag operator*(const double &lambda, const MatrixDiag &mat)
   MatrixDiag t1,t2,t3;
   t3=t1*t2; // produit contract�
   \endcode
-  \author Olivier PANTALE
+
   \version 0.9.4
 */
 //-----------------------------------------------------------------------------
@@ -588,7 +586,7 @@ MatrixDiag MatrixDiag::singleProduct(const MatrixDiag &mat) const
   \endcode
   \param vec vecteur du second membre
   \return vecteur r�sultant de l'op�ration de multiplication
-  \author Olivier PANTALE
+
   \version 0.9.4
 */
 //-----------------------------------------------------------------------------
@@ -654,7 +652,7 @@ void MatrixDiag::divideBy(Vector &vec) const
 /*!
   Cette m�thode calcule la trace d'une matrice carr�e
   \return valeur de la trace de la matrice
-  \author Olivier PANTALE
+
   \version 0.9.4
 */
 //-----------------------------------------------------------------------------
@@ -671,7 +669,7 @@ double MatrixDiag::getTrace()
 /*!
   Cette m�thode renvoie la transpos�e d'une matrice
   \return transpos�e de la matrice
-  \author Olivier PANTALE
+
   \version 0.9.4
 */
 //-----------------------------------------------------------------------------
@@ -687,7 +685,7 @@ MatrixDiag MatrixDiag::getTranspose()
 
   \param x vecteur du second membre
   \return vecteur solution du syst�me lin�aire
-  \author Olivier PANTALE
+
   \version 0.9.6
 */
 //-----------------------------------------------------------------------------
@@ -738,7 +736,7 @@ MatrixDiag MatrixDiag::getInverse() const
 /*!
   Cette m�thode teste l'�galit� de deux matrices
   \return true si les deux matrices sont identiques, false dans la cas contraire
-  \author Olivier PANTALE
+
   \version 0.9.4
 */
 //-----------------------------------------------------------------------------
@@ -763,7 +761,7 @@ bool MatrixDiag::operator==(const MatrixDiag &mat) const
 /*!
   Cette m�thode teste l'in�galit� de deux matrices
   \return true si les deux matrices sont differentes, false dans la cas contraire
-  \author Olivier PANTALE
+
   \version 0.9.4
 */
 //-----------------------------------------------------------------------------
@@ -784,7 +782,7 @@ bool MatrixDiag::operator!=(const MatrixDiag &mat) const
   t.write(pfile);
   t.close();
   \endcode
-  \author Olivier PANTALE
+
   \version 0.9.4
 */
 //-----------------------------------------------------------------------------
@@ -805,7 +803,7 @@ void MatrixDiag::write(std::ofstream &ofs) const
   Matrix t;
   t.read(pfile);
   \endcode
-  \author Olivier PANTALE
+
   \version 0.9.4
 */
 //-----------------------------------------------------------------------------
@@ -829,7 +827,7 @@ void MatrixDiag::read(std::ifstream &ifs)
   Matrix t;
   pfile << t;
   \endcode
-  \author Olivier PANTALE
+
   \version 0.9.4
 */
 //-----------------------------------------------------------------------------
@@ -850,7 +848,7 @@ std::ofstream &operator<<(std::ofstream &os, const MatrixDiag &mat)
   Matrix t;
   pfile >> t;
   \endcode
-  \author Olivier PANTALE
+
   \version 0.9.4
 */
 //-----------------------------------------------------------------------------
@@ -973,7 +971,7 @@ void MatrixDiag::numpyReadZ(std::string filename, std::string name)
   K.gatherFrom(Ve, ind, numberOfDimensions); 
   delete [] ind;
   \endcode
-  \author Olivier PANTALE
+
   \version 1.1.0
 */
 //-----------------------------------------------------------------------------
@@ -1055,7 +1053,7 @@ void MatrixDiag::gatherFrom(const MatrixDiag &M, long *ind0, int numberOfDimensi
   K.scatterFrom(Ve, ind, numberOfDimensions); 
   delete [] ind;
   \endcode
-  \author Olivier PANTALE
+
   \version 1.1.0
 */
 //-----------------------------------------------------------------------------

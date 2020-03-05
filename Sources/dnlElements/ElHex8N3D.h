@@ -3,7 +3,7 @@
  *  DynELA Finite Element Code v 3.0                                       *
  *  By Olivier PANTALE                                                     *
  *                                                                         *
- *  (c) Copyright 1997-2019                                                *
+ *  (c) Copyright 1997-2020                                                *
  *                                                                         *
  **************************************************************************/
 
@@ -15,7 +15,7 @@ This file is the declaration file for the ElementPlane class.
 
 \ingroup dnlElements
 \author &copy; Olivier PANTALE
-\date 1997-2019
+\date 1997-2020
 */
 
 #ifndef __dnlElements_ElHex8n3D_h__

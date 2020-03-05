@@ -3,7 +3,7 @@
  *  DynELA Finite Element Code v 3.0                                       *
  *  By Olivier PANTALE                                                     *
  *                                                                         *
- *  (c) Copyright 1997-2019                                                *
+ *  (c) Copyright 1997-2020                                                *
  *                                                                         *
  **************************************************************************/
 
@@ -14,8 +14,6 @@
   This file is the definition file for the NodalField class. A NodalField contains all Finite Element data for each node of the structure.
 
   \ingroup dnlElements
-  \author &copy; Olivier PANTALE
-  \date 1997-2019
 */
 
 #include <NodalField.h>

@@ -3,7 +3,7 @@
  *  DynELA Finite Element Code v 3.0                                       *
  *  By Olivier PANTALE                                                     *
  *                                                                         *
- *  (c) Copyright 1997-2019                                                *
+ *  (c) Copyright 1997-2020                                                *
  *                                                                         *
  **************************************************************************/
 
@@ -20,8 +20,6 @@
   \end{array}\right] \f]
 
   \ingroup dnlMaths
-  \author &copy; Olivier PANTALE
-  \date 1997-2019
 */
 
 #include <Vector.h>
@@ -833,7 +831,7 @@ double Vector::minAbsoluteValue()
   K.gatherFrom(Ve, ind, numberOfDimensions); 
   delete [] ind;
   \endcode
-  \author Olivier PANTALE
+
   \version 1.1.0
 */
 //-----------------------------------------------------------------------------
@@ -915,7 +913,7 @@ void Vector::gatherFrom(const Vector &V, long *ind0, int numberOfDimensions)
   K.scatterFrom(Ve, ind, numberOfDimensions); 
   delete [] ind;
   \endcode
-  \author Olivier PANTALE
+
   \version 1.1.0
 */
 //-----------------------------------------------------------------------------

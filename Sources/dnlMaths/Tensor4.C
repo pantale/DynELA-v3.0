@@ -49,7 +49,7 @@
 
   Ce fichier definit les methodes permettant de gerer les tenseurs d'ordre 4.
 
-  \author Olivier PANTALE
+
   \since DynELA 0.9.5
   \date 1997-2004  
 */
@@ -57,7 +57,7 @@
 //constructeur de la classe Tensor4
 /*!
   Cette methode construit un tenseur d'ordre 4. Par defaut, le contenu du tenseur est mis e zero
-  \author Olivier PANTALE
+
   \since DynELA 0.9.5
 */
 //-----------------------------------------------------------------------------
@@ -85,7 +85,7 @@ Tensor4::~Tensor4()
   std::cout << t << endl;
   \endcode
   \param os flux de sortie
-  \author Olivier PANTALE
+
   \since DynELA 0.9.5
 */
 //-----------------------------------------------------------------------------
@@ -100,7 +100,7 @@ std::ostream &operator<<(std::ostream &os, const Tensor4 &t1)
 /*!
   Cette methode permet d'afficher le contenu d'un tenseur sur la sortie std::ostream
   \param os flux de sortie
-  \author Olivier PANTALE
+
   \since DynELA 0.9.5
 */
 //-----------------------------------------------------------------------------
@@ -135,7 +135,7 @@ void Tensor4::print(std::ostream &os) const
   t1.setToUnity(); // renvoie identite
   \endcode
   \warning Cette methode modifie son argument
-  \author Olivier PANTALE
+
   \since DynELA 0.9.5
 */
 //-----------------------------------------------------------------------------
@@ -161,7 +161,7 @@ void Tensor4::setToUnity()
   Tensor4 t1;
   t1=1.; // affecte 1 e toutes les composantes du tenseur
   \endcode
-  \author Olivier PANTALE
+
   \since DynELA 0.9.5
 */
 //-----------------------------------------------------------------------------
@@ -181,7 +181,7 @@ Tensor4 &Tensor4::operator=(const double &val)
   Tensor4 t1,t2;
   t1=t2; // egalite de deux tenseurs
   \endcode
-  \author Olivier PANTALE
+
   \since DynELA 0.9.5
 */
 //-----------------------------------------------------------------------------
@@ -201,7 +201,7 @@ Tensor4 &Tensor4::operator=(const Tensor4 &t1)
   Tensor4 t1,t2,t3;
   t3=t1+t2; // somme de deux tenseurs
   \endcode
-  \author Olivier PANTALE
+
   \since DynELA 0.9.5
 */
 //-----------------------------------------------------------------------------
@@ -229,7 +229,7 @@ Tensor4::operator+(const Tensor4 &t1) const
   Tensor4 t1,t2,t3;
   t3=t1-t2; // soustraction de deux tenseurs
   \endcode
-  \author Olivier PANTALE
+
   \since DynELA 0.9.5
 */
 //-----------------------------------------------------------------------------
@@ -258,7 +258,7 @@ Tensor4::operator-(const Tensor4 &t1) const
   double l;
   t2=t1*l; // multiplication par un scalaire
   \endcode
-  \author Olivier PANTALE
+
   \since DynELA 0.9.5
 */
 //-----------------------------------------------------------------------------
@@ -285,7 +285,7 @@ Tensor4
   t2=t1/l; // division par un scalaire
   \endcode
   \warning Cette operation n'est bien sur pas commutative
-  \author Olivier PANTALE
+
   \since DynELA 0.9.5
 */
 //-----------------------------------------------------------------------------
@@ -311,7 +311,7 @@ Tensor4::operator/(const double &lambda) const
   double l;
   t2=l*t1; // multiplication par un scalaire
   \endcode
-  \author Olivier PANTALE
+
   \since DynELA 0.9.5
 */
 //-----------------------------------------------------------------------------
@@ -338,7 +338,7 @@ operator*(const double &lambda, const Tensor4 &t1)
   Tensor3 t2;
   t2=t1*v1; // produit contracte
   \endcode
-  \author Olivier PANTALE
+
   \since DynELA 0.9.5
 */
 //-----------------------------------------------------------------------------
@@ -368,7 +368,7 @@ Tensor3 Tensor4::operator*(const Vec3D &v1) const
   Tensor2 t2,t3;
   t3=t1*t2; // double produit contracte
   \endcode
-  \author Olivier PANTALE
+
   \since DynELA 0.9.5
 */
 //-----------------------------------------------------------------------------
@@ -391,7 +391,7 @@ Tensor2
 /*!
   Cette methode teste l'egalite de deux tenseurs
   \return true si les deux tenseurs sont identiques, false dans la cas contraire
-  \author Olivier PANTALE
+
   \since DynELA 0.9.5
 */
 //-----------------------------------------------------------------------------
@@ -410,7 +410,7 @@ bool Tensor4::operator==(const Tensor4 &t1) const
 /*!
   Cette methode teste l'inegalite de deux tenseurs
   \return true si les deux tenseurs sont differents, false dans la cas contraire
-  \author Olivier PANTALE
+
   \since DynELA 0.9.5
 */
 //-----------------------------------------------------------------------------
@@ -430,7 +430,7 @@ bool Tensor4::operator!=(const Tensor4 &t1) const
   Tensor4 t;
   t.write(pfile);
   \endcode
-  \author Olivier PANTALE
+
   \since DynELA 0.9.5
 */
 //-----------------------------------------------------------------------------
@@ -450,7 +450,7 @@ void Tensor4::write(std::ofstream &ofs) const
   Tensor4 t;
   t.read(pfile);
   \endcode
-  \author Olivier PANTALE
+
   \since DynELA 0.9.5
 */
 //-----------------------------------------------------------------------------
@@ -470,7 +470,7 @@ void Tensor4::read(std::ifstream &ifs)
   Tensor4 t;
   pfile << t;
   \endcode
-  \author Olivier PANTALE
+
   \since DynELA 0.9.5
 */
 //-----------------------------------------------------------------------------
@@ -491,7 +491,7 @@ std::ofstream &operator<<(std::ofstream &os, const Tensor4 &t1)
   Tensor4 t;
   pfile >> t;
   \endcode
-  \author Olivier PANTALE
+
   \since DynELA 0.9.5
 */
 //-----------------------------------------------------------------------------

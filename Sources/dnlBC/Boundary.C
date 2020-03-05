@@ -3,7 +3,7 @@
  *  DynELA Finite Element Code v 3.0                                       *
  *  By Olivier PANTALE                                                     *
  *                                                                         *
- *  (c) Copyright 1997-2019                                                *
+ *  (c) Copyright 1997-2020                                                *
  *                                                                         *
  **************************************************************************/
 
@@ -14,8 +14,6 @@
   This file is the declaration file for the NodeSet class.
 
   \ingroup dnlFEM
-  \author &copy; Olivier PANTALE
-  \date 1997-2019
 */
 
 #include <Boundary.h>
@@ -23,7 +21,7 @@
 //constructeur par defaut de la classe Boundary
 /*!
   Cette methode est le constructeur par defaut de la classe Boundary. En pratique, ici, on ne fait rien de plus que les allocations de memoire necessaires.
-  \author Olivier PANTALE
+
   \since DynELA 0.9.1
 */
 //-----------------------------------------------------------------------------
@@ -40,7 +38,7 @@ Boundary::Boundary(char *newName)
 /*!
   Cette methode est le constructeur par recopie de la classe Boundary.
   \warning La recopie n'est pas prevue ici, cette methode genere une erreur d'execution
-  \author Olivier PANTALE
+
   \since DynELA 0.9.1
 */
 //-----------------------------------------------------------------------------
@@ -54,7 +52,7 @@ Boundary::Boundary(const Boundary &X)
 //destructeur de la classe Boundary
 /*!
   Cette methode est le destructeur de la classe Boundary.
-  \author Olivier PANTALE
+
   \since DynELA 0.9.1
 */
 //-----------------------------------------------------------------------------

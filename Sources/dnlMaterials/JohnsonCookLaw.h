@@ -3,7 +3,7 @@
  *  DynELA Finite Element Code v 3.0                                       *
  *  By Olivier PANTALE                                                     *
  *                                                                         *
- *  (c) Copyright 1997-2019                                                *
+ *  (c) Copyright 1997-2020                                                *
  *                                                                         *
  **************************************************************************/
 
@@ -14,8 +14,6 @@
   This file is the declaration file for the JohnsonCookLaw class.
 
   \ingroup dnlMaterials
-  \author &copy; Olivier PANTALE
-  \date 1997-2019
 */
 
 #ifndef __dnlMaterials_JohnsonCookLaw_h__
@@ -48,9 +46,7 @@
  
   \ingroup femLibrary
   \see Material
-  \author &copy; Olivier PANTALE
   \since DynELA 3.0.0
-  \date 1997-2019
 */
 class JohnsonCookLaw : public HardeningLaw
 {

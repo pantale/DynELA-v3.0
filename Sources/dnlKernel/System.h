@@ -3,7 +3,7 @@
  *  DynELA Finite Element Code v 3.0                                       *
  *  By Olivier PANTALE                                                     *
  *                                                                         *
- *  (c) Copyright 1997-2019                                                *
+ *  (c) Copyright 1997-2020                                                *
  *                                                                         *
  **************************************************************************/
 
@@ -13,8 +13,6 @@
 
   This file defines all the OS operators in the System class.
   \ingroup dnlKernel
-  \author &copy; Olivier PANTALE
-  \date 1997-2019
 */
 
 #ifndef __dnlKernel_System_h__
@@ -25,8 +23,6 @@
 /*!
   \brief System class definition.
   \ingroup dnlKernel
-  \date 1997-2019
-  \author &copy; Olivier PANTALE
   
 This class contains a set of methods dedicated to the System working environment. 
 These methods are used to retrieve system environment variables from a program, the current date, time and some definitions of directories and program paths, all in a System environment. 
@@ -39,22 +35,21 @@ class System
 public:
   System() {}
   ~System() {}
-  int execute(const String &cmd);
-  String getEnvValue(const String &envname);
+
   bool existEnvValue(const String &envname);
-  String getLogin();
-  String getHostname();
-  String getDate(bool full = true);
-  String getTime();
+  int execute(const String &cmd);
   long getHostId();
-  String getPathName();
+  String getDate(bool full = true);
+  String getEnvValue(const String &envname);
   String getExePath();
+  String getHostname();
+  String getLogin();
+  String getPathName();
+  String getTime();
 };
 
-/* int compareIndice(const void *p1, const void *p2);
- */
 bool argumentsLineParse(char *rr, int argc, char **argv);
-long argumentsLinePosition(char *rr, int argc, char **argv);
 char *argumentsLineGet(char *rr, int argc, char **argv);
+long argumentsLinePosition(char *rr, int argc, char **argv);
 
 #endif

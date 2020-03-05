@@ -18,9 +18,7 @@
   This type of data structure is usefull for storing three-dimensional coordinates (for example nodal coordinates, vectors forces,...).
 
   \ingroup dnlMaths
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0
-  \date 1997-2019
 */
 
 #include <NumpyInterface.h>

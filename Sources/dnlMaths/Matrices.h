@@ -43,7 +43,6 @@
 
   Ce fichier set e la definition de la classe Matrice qui sert de classe de base pour toutes les matrices de DynELA. Cette classe de base sert e stocker les informations communes e tous les types de matrices tels que la taille de la matrice (nombre de lignes et de colonnes)...
 
-  \author &copy; Olivier PANTALE
   \version 0.9.6
   \date 1997-2004
 */
@@ -62,7 +61,6 @@
   \enum OutMatrix
   \brief enumeration de format d'affichage de matrices.
   Cette enumeration permet de definir le format d'affichage des matrices. On a ainsi le choix entre outMatrixTypeNormal qui correspond e un affichage conforme e Mathematica et outMatrixTypeMupad qui correspond e un affichage au format Mupad.
-  \author &copy; Olivier PANTALE
   \since 1.0.0
 */
 #ifndef SWIG
@@ -80,7 +78,6 @@ enum OutMatrix
 
   Cette classe sert e la definition definition generale des matrices, elle sert de classe de base pour toutes les matrices de DynELA. Cette classe de base sert e stocker les informations communes e tous les types de matrices tels que la taille de la matrice (nombre de lignes et de colonnes)...
 
-  \author &copy; Olivier PANTALE
   \version 0.9.5
   \date 1997-2004
 */
@@ -108,7 +105,6 @@ public:
 //constructeur par defaut
 /*!
   Cette methode est le constructeur par defaut de la classe Matrices. Ce constructeur ne fait rien d'autre que creer l'objet.
-  \author &copy; Olivier PANTALE
   \version 0.9.6
 */
 //-----------------------------------------------------------------------------
@@ -121,7 +117,6 @@ inline Matrices::Matrices()
 //constructeur par recopie
 /*!
   Cette methode est le constructeur par recopie de la classe Matrices. Ce constructeur ne fait rien d'autre que creer l'objet.
-  \author &copy; Olivier PANTALE
   \version 0.9.6
 */
 //-----------------------------------------------------------------------------
@@ -134,7 +129,6 @@ inline Matrices::Matrices(const Matrices &mat)
 //destructeur
 /*!
   Cette methode est le destructeur de la classe Matrices.
-  \author &copy; Olivier PANTALE
   \version 0.9.6
 */
 //-----------------------------------------------------------------------------
@@ -147,7 +141,6 @@ inline Matrices::~Matrices()
 /*!
   Cette methode calcule et retourne le nombre de lignes de la matrice.
   \nombre de lignes de la matrice
-  \author &copy; Olivier PANTALE
   \version 0.9.6
 */
 //-----------------------------------------------------------------------------
@@ -161,7 +154,6 @@ inline long Matrices::rows() const
 /*!
   Cette methode calcule et retourne le nombre de colonnes de la matrice.
   \nombre de colonnes de la matrice
-  \author &copy; Olivier PANTALE
   \version 0.9.6
 */
 //-----------------------------------------------------------------------------
@@ -174,7 +166,7 @@ inline long Matrices::columns() const
 //selection du type d'affichage
 /*!
   Cette methode permet de selectionner le type d'affichage demande. Le type de sortie est defini par les variables enumerees dans \ref OutMatrix.
-  \author Olivier PANTALE
+
   \since 1.0.0
 */
 //-----------------------------------------------------------------------------

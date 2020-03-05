@@ -3,7 +3,7 @@
  *  DynELA Finite Element Code v 3.0                                       *
  *  By Olivier PANTALE                                                     *
  *                                                                         *
- *  (c) Copyright 1997-2019                                                *
+ *  (c) Copyright 1997-2020                                                *
  *                                                                         *
  **************************************************************************/
 
@@ -13,8 +13,6 @@
 
   This file defines all the Timer class.
   \ingroup dnlKernel
-  \author &copy; Olivier PANTALE
-  \date 1997-2019
 */
 
 #ifndef __dnlKernel_Timer_h__
@@ -28,21 +26,22 @@
 
 class Timer
 {
-  std::chrono::time_point<std::chrono::system_clock> _initial, _start, _current, _stop;
   bool _cumulate = true;
+  bool _flag = false;
   bool _run = false;
   double _totalTime = 0;
   long _calls = 0;
   short _level = 0;
+  std::chrono::time_point<std::chrono::system_clock> _initial, _start, _current, _stop;
   String _fatherName;
   String _timerName;
-  bool _flag = false;
 
 public:
-  //  Timer();
   Timer(const char *timerName);
   ~Timer() {}
+
   bool getCumulate();
+  bool getFlag();
   bool running();
   double getCurrent();
   double getDelay();
@@ -52,12 +51,10 @@ public:
   String getFather();
   String getName();
   void setCumulate(bool);
+  void setFlag(bool flag);
   void setLevel(short level);
-  // void setName(String);
   void start();
   void stop();
-  bool getFlag();
-  void setFlag(bool flag);
 };
 
 class Timers
@@ -67,15 +64,16 @@ class Timers
 public:
   Timers(){};
   ~Timers() {}
+
   double getTotalChilds(const char *father);
   int getNumber() { return timers.getSize(); }
+  String conv(double value);
   Timer *timer(const char *timerName);
   Timer *timer(int);
   void add(Timer *);
   void saveReport(const char *filename = "");
-  void stop();
   void setFlags(bool flag);
-  String conv(double value);
+  void stop();
 };
 
 #endif

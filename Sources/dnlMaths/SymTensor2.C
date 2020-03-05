@@ -3,7 +3,7 @@
  *  DynELA Finite Element Code v 3.0                                       *
  *  By Olivier PANTALE                                                     *
  *                                                                         *
- *  (c) Copyright 1997-2019                                                *
+ *  (c) Copyright 1997-2020                                                *
  *                                                                         *
  **************************************************************************/
 
@@ -18,9 +18,7 @@
   T_{31} & T_{32} & T_{33}
   \end{array}\right] \f]
   \ingroup linearAlgebra
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0
-  \date 1997-2019
 */
 
 #include <fstream>

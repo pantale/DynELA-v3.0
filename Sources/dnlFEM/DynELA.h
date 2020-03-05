@@ -3,7 +3,7 @@
  *  DynELA Finite Element Code v 3.0                                       *
  *  By Olivier PANTALE                                                     *
  *                                                                         *
- *  (c) Copyright 1997-2019                                                *
+ *  (c) Copyright 1997-2020                                                *
  *                                                                         *
  **************************************************************************/
 
@@ -14,8 +14,6 @@
   This file is the declaration file for the DynELA class.
 
   \ingroup dnlFEM
-  \author &copy; Olivier PANTALE
-  \date 1997-2019
 */
 
 #ifndef __dnlFEM_DynELA_h__
@@ -39,7 +37,7 @@ extern DynELA *dynelaData;
 
   Ce fichier sert e la definition de la classe DynELA.
 
-  \author Olivier PANTALE
+
   \version 1.0.0
   \date 1997-2004
 */
@@ -58,7 +56,7 @@ class NodeSet;
   \ingroup femLibrary
 
 
-  \author Olivier PANTALE
+
   \version 1.0.0
   \date 1997-2004
 */

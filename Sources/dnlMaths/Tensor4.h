@@ -44,7 +44,7 @@
 
   Ce fichier definit les methodes permettant de gerer les tenseurs d'ordre 4.
 
-  \author Olivier PANTALE
+
   \since DynELA 0.9.5
   \date 1997-2004  
 */
@@ -63,7 +63,7 @@ class Tensor3;
   \class Tensor4 Tensor4.h
   \brief Classe de gestion et manipulation des tenseurs du second ordre.
   \ingroup linearAlgebra
-  \author Olivier PANTALE
+
   \version 0.9.5
   \date 1997-2004
 
@@ -142,7 +142,7 @@ public:
   \param k long 3
   \param l long 4
   \return true si les indices fournis sont dans les bornes, false dans le cas contraire
-  \author Olivier PANTALE
+
   \since DynELA 0.9.5
 */
 //-----------------------------------------------------------------------------
@@ -168,7 +168,7 @@ Tensor4::indexOK(long i, long j, long k, long l) const
   \param k long 3
   \param l long 4
   \return valeur du tenseur Tijkl
-  \author Olivier PANTALE
+
   \since DynELA 0.9.5
 */
 //-----------------------------------------------------------------------------
@@ -189,7 +189,7 @@ Tensor4::operator()(long i, long j, long k, long l)
   \param k long 3
   \param l long 4
   \return valeur du tenseur Tijkl
-  \author Olivier PANTALE
+
   \since DynELA 0.9.5
 */
 //-----------------------------------------------------------------------------
@@ -213,7 +213,7 @@ Tensor4::operator()(long i, long j, long k, long l)
   Tensor4 t1;
   t1=setToValue(1.); // affecte 1 e toutes les composantes du tenseur
   \endcode
-  \author Olivier PANTALE
+
   \since DynELA 0.9.5
 */
 //-----------------------------------------------------------------------------
@@ -233,7 +233,7 @@ inline void Tensor4::setToValue(double val)
   Tensor4 t1,t2;
   t2+=t1; // somme de deux tenseurs
   \endcode
-  \author Olivier PANTALE
+
   \since DynELA 0.9.5
 */
 //-----------------------------------------------------------------------------
@@ -255,7 +255,7 @@ Tensor4::operator+=(const Tensor4 &tens)
   Tensor4 t1,t2;
   t2-=t1; // soustraction de deux tenseurs
   \endcode
-  \author Olivier PANTALE
+
   \since DynELA 0.9.5
 */
 //-----------------------------------------------------------------------------
@@ -278,7 +278,7 @@ Tensor4::operator-=(const Tensor4 &tens)
   double l;
   t1*=l; // multiplication par un scalaire
   \endcode
-  \author Olivier PANTALE
+
   \since DynELA 0.9.5
 */
 //-----------------------------------------------------------------------------
@@ -300,7 +300,7 @@ Tensor4::operator*=(const double val)
   double l;
   t1/=l; // division par un scalaire
   \endcode
-  \author Olivier PANTALE
+
   \since DynELA 0.9.5
 */
 //-----------------------------------------------------------------------------

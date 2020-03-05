@@ -3,18 +3,17 @@
  *  DynELA Finite Element Code v 3.0                                       *
  *  By Olivier PANTALE                                                     *
  *                                                                         *
- *  (c) Copyright 1997-2019                                                *
+ *  (c) Copyright 1997-2020                                                *
  *                                                                         *
  **************************************************************************/
 
 /*!
   \file ColorMap.C
   \brief Fichier .C de definitions associees e l'OS ColorMap
-  \ingroup basicTools
+  \ingroup dnlKernel
 
   Ce fichier regroupe la definition de la classe ColorMap utilisee pour l'environnement de travail ColorMap.
 
-  \author &copy; Olivier PANTALE
   \since DynELA 0.9.5
   \date 1997-2004
 */

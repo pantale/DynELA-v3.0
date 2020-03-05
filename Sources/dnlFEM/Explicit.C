@@ -3,7 +3,7 @@
  *  DynELA Finite Element Code v 3.0                                       *
  *  By Olivier PANTALE                                                     *
  *                                                                         *
- *  (c) Copyright 1997-2019                                                *
+ *  (c) Copyright 1997-2020                                                *
  *                                                                         *
  **************************************************************************/
 
@@ -14,8 +14,6 @@
   This file is the declaration file for the NodeSet class.
 
   \ingroup dnlFEM
-  \author &copy; Olivier PANTALE
-  \date 1997-2019
 */
 
 #include <Explicit.h>
@@ -32,7 +30,7 @@ extern DynELA *dynelaData;
 /*!
   Cette methode est le constructeur par defaut de la classe Explicit.
 En pratique, ici, on ne fait rien de plus que les allocations de memoire necessaires. On definit ici des valeurs par defaut pour ce solveur explicite, par exemple \f$\rho_b=0.8182\f$ et \f$\gamma_s=0.9\f$.
-  \author Olivier PANTALE
+
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -66,7 +64,7 @@ Explicit::Explicit(char *newName) : Solver(newName)
 /*!
   Cette methode est le constructeur par recopie de la classe Explicit.
   \warning La recopie n'est pas prevue ici, cette methode genere une erreur d'execution
-  \author Olivier PANTALE
+
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -80,7 +78,7 @@ Explicit::Explicit(const Explicit &X)
 //destructeur de la classe Explicit
 /*!
   Cette methode est le destructeur de la classe Explicit.
-  \author Olivier PANTALE
+
   \since DynELA 0.9.1
 */
 //-----------------------------------------------------------------------------
@@ -96,7 +94,7 @@ Explicit::~Explicit()
   Le parametre \f$\beta\f$ est defini e partir de la valeur de \f$\rho_b\f$ par la relation suivante: \f[\beta=\frac{5-3\rho_b}{(1+\rho_b)^2(2-\rho_b)}\f]
   Le parametre \f$\gamma\f$ est defini e partir de la valeur de \f$\alpha_M\f$ par la relation suivante: \f[\gamma=\frac{3}{2}-\alpha_M\f]
   Le parametre \f$\Omega_s\f$ est defini e partir de la valeur de \f$\rho_b\f$ par la relation suivante: \f[\Omega_s=\sqrt{\frac{12(1+\rho_b)^3(2-\rho_b)}{10+15\rho_b-\rho_b^2+\rho_b^3-\rho_b^4}}\f]
-  \author Olivier PANTALE
+
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -124,7 +122,7 @@ void Explicit::computeChungHulbertIntegrationParameters()
 /*!
   Cette methode permet de definir l'ammortissement numerique introduit dans le schema d'integration numerique explicite en modifiant la valeur du rayon spectral e la frequence de bifurcation. La valeur numerique doit etre comprise dans l'intervalle: \f$\rho_{b}\in[0.0:1.0]\f$. Cette methode fait appel e la methode computeIntegrationParameters() afin de remettre e jour les parametres en fonction du nouveau rayon spectral.
   \param val valeur du rayon spectral
-  \author Olivier PANTALE
+
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -181,10 +179,10 @@ void Explicit::solve(double solveUpToTime)
 
   while (model->currentTime < _solveUpToTime)
   {
-    // Initialisation of the step
-    beginExplicitStep();
+    // Update timestep and increment
+    updateTimes();
 
-    // Display advancing of solution
+    // Display advancement of the current solution
     if ((currentIncrement % _reportFrequency == 0) || (currentIncrement == 1))
     {
       printf("%s inc=%ld time=%8.4E timeStep=%8.4E\n", model->name.chars(), currentIncrement, model->currentTime, timeStep);
@@ -408,7 +406,7 @@ void Explicit::solve(double solveUpToTime)
 }
 
 //-----------------------------------------------------------------------------
-void Explicit::beginExplicitStep()
+void Explicit::updateTimes()
 //-----------------------------------------------------------------------------
 {
   // verification de la projection du temps par rapport au temps final
@@ -430,7 +428,7 @@ void Explicit::beginExplicitStep()
   \f[\stackrel{\bullet}{x}_{n+1}=\stackrel{\bullet}{x}_{n}+\Delta t(1-\gamma)\stackrel{\bullet\bullet}{x}_{n}\f]
   \f[x_{n+1}=x_{n}+\Delta t\stackrel{\bullet}{x}_{n}+\Delta t^{2}\left(\frac{1}{2}-\beta\right)\stackrel{\bullet\bullet}{x}_{n}\f]
   On applique egalement le respect des conditions aux limites imposees au travers de la methode BoundaryCondition::applyConstantOnCurrentFields().
-  \author Olivier PANTALE
+
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -455,7 +453,7 @@ void Explicit::computePredictions()
 #endif
 
     // prediction du deplacement
-    node->newField->displacement = timeStep * node->currentField->speed + (0.5 - _beta) * timeStep * timeStep * node->currentField->acceleration;
+    node->newField->displacement = timeStep * (node->currentField->speed + (0.5 - _beta) * timeStep * node->currentField->acceleration);
     //node->newField->displacement = node->currentField->displacement + node->newField->displacement;
     /*  node->newField->displacement = node->currentField->acceleration;
     node->newField->displacement *= timeStep * (0.5 - _beta);
@@ -483,7 +481,7 @@ void Explicit::computePredictions()
 //Resolution explicite de l'increment
 /*!
   Cette methode effectue la resolution explicite de l'increment de temps. La methode explicite etant une methode directe, aucune iteration n'est necessaire ici, les quantites peuvent etre calculees directement en utilisante les relations suivantes:
-  \author Olivier PANTALE
+
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -567,7 +565,7 @@ void Explicit::computeDensity()
   Cette methode renvoie la valeur du parametre \f$\alpha_M\f$ pour le schema d'integration de Chung-Hulbert.
   \see computeIntegrationParameters()
   \return valeur numerique de \f$\alpha_M\f$
-  \author Olivier PANTALE
+
   \since DynELA 1.0.0
 
 //-----------------------------------------------------------------------------
@@ -582,7 +580,7 @@ double Explicit::getAlphaM()
   Cette methode renvoie la valeur du parametre \f$\beta\f$ pour le schema d'integration de Chung-Hulbert.
   \see computeIntegrationParameters()
   \return valeur numerique de \f$\beta\f$
-  \author Olivier PANTALE
+
   \since DynELA 1.0.0
 
 //-----------------------------------------------------------------------------
@@ -597,7 +595,7 @@ double Explicit::getBeta()
   Cette methode renvoie la valeur du parametre \f$\gamma\f$ pour le schema d'integration de Chung-Hulbert.
   \see computeIntegrationParameters()
   \return valeur numerique de \f$\gamma\f$
-  \author Olivier PANTALE
+
   \since DynELA 1.0.0
 
 //-----------------------------------------------------------------------------

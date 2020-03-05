@@ -3,7 +3,7 @@
  *  DynELA Finite Element Code v 3.0                                       *
  *  By Olivier PANTALE                                                     *
  *                                                                         *
- *  (c) Copyright 1997-2019                                                *
+ *  (c) Copyright 1997-2020                                                *
  *                                                                         *
  **************************************************************************/
 
@@ -16,12 +16,7 @@
 /*!
   \class Exception Exception.C
   \brief Class 
-  \ingroup basicTools
-  \version 1.0.0
-  \date 1997-2002
-  \author Olivier PANTALE
-
-
+  \ingroup dnlKernel
 */
 //-----------------------------------------------------------------------------
 Exception::Exception() : file(""), line(0), function(""), cond(""), exc("")

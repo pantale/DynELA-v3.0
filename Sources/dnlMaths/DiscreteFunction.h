@@ -3,7 +3,7 @@
  *  DynELA Finite Element Code v 3.0                                       *
  *  By Olivier PANTALE                                                     *
  *                                                                         *
- *  (c) Copyright 1997-2019                                                *
+ *  (c) Copyright 1997-2020                                                *
  *                                                                         *
  **************************************************************************/
 
@@ -14,9 +14,7 @@
   This file is the declaration file for the discrete function class. A discrete function is a function with the following form: \f[ y=f(x) \f] defined from a set of points.
   Linear interpolation is used to obtain data between given points.
   \ingroup linearAlgebra
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0
-  \date 1997-2019
 */
 
 #ifndef __dnlMaths_DiscreteFunction_h__
@@ -29,9 +27,7 @@
   \class coupleReal
   \brief This is a private class used in the DiscreteFunction class to define a couple of points. This one is not directly refered by the user.
   \ingroup linearAlgebra
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0
-  \date 1997-2019
 */
 class coupleReal
 {
@@ -60,9 +56,7 @@ bool compare(coupleReal *t1, coupleReal *t2);
   One can also use this function to create nonlinear behavior laws of discretely defined materials with the following form: \f[ \sigma=f(\varepsilon) \f]
   Of course it's also used in the application \b DynELA \b curves for managing digital results as curves.
   \ingroup linearAlgebra
-  \author &copy; Olivier PANTALE
   \since DynELA 1.0
-  \date 1997-2019
 */
 class DiscreteFunction : public Function
 {

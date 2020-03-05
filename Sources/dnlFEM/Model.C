@@ -3,7 +3,7 @@
  *  DynELA Finite Element Code v 3.0                                       *
  *  By Olivier PANTALE                                                     *
  *                                                                         *
- *  (c) Copyright 1997-2019                                                *
+ *  (c) Copyright 1997-2020                                                *
  *                                                                         *
  **************************************************************************/
 
@@ -14,8 +14,6 @@
   This file is the declaration file for the NodeSet class.
 
   \ingroup dnlFEM
-  \author &copy; Olivier PANTALE
-  \date 1997-2019
 */
 
 #include <DynELA.h>
@@ -82,7 +80,7 @@ Model::~Model()
   Cette methode ajoute un noeud e la grille courante. Cette methode effectue des verifications de base comme par exemple la presence d'un noeud portant le meme numero que le nouveau noeud dans la liste. En cas de doublon, cette methode stoppe le processus de construction et renvoie une erreur.
   \param newNode pointeur sur le nouveau noeud e ajouter e la grille
   \return true si l'ajout du noeud est correct
-  \author Olivier PANTALE
+
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -245,7 +243,7 @@ void Model::add(NodeSet *nodeSet, long startNumber, long endNumber, long increme
   \param startNumber numero de depart dans la liste
   \param endNumber numero de fin dans la liste
   \param increment increment sur les numeros (par defaut = 1)
-  \author Olivier PANTALE
+
   \version 0.9.5
 */
 //-----------------------------------------------------------------------------
@@ -302,7 +300,7 @@ void Model::add(ElementSet *elementSet, long startNumber, long endNumber, long i
   \return pointeur sur le noeud trouve ou NULL en cas d'echec de recherche
   \version 1.0.0
   \date 2002
-  \author Olivier PANTALE 
+ 
 */
 //-----------------------------------------------------------------------------
 Node *Model::getNodeByNum(long nodeNumber)
@@ -326,7 +324,7 @@ Node *Model::getNodeByNum(long nodeNumber)
   \return pointeur sur l'element trouve ou NULL en cas d'echec de recherche
   \version 1.0.0
   \date 2002
-  \author Olivier PANTALE 
+ 
 */
 //-----------------------------------------------------------------------------
 Element *Model::getElementByNum(long elementNumber)
@@ -636,7 +634,7 @@ double Model::getTotalKineticEnergy()
   La relation utilisee pour ce calcul est donnee par:
   \f[ \Delta t = \Delta t_{crit} \f] avec \f[ \Delta t_{crit}=\frac{l}{C_s} \f] calcule pour tous les elements de la grille dans laquelle \f$ l \f$ est la longueur caracteristique de l'element calculee par Element::getCharacteristicLength() et \f$ C_s \f$ est la vitesse de propagation d'une onde longitudinale dans l'element calculee par la methode Element::getElongationWaveSpeed().
   \return valeur numerique de la valeur du timeStep critique de la grille
-  \author Olivier PANTALE
+
   \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
@@ -735,7 +733,7 @@ bool Model::solve(double solveUpToTime)
 //Calcule le determinant du Jacobien de tous les elements de la grille
 /*!
   Cette methode calcule le Jacobien de tous les elements de la grille.
-  \author Olivier PANTALE
+
   \since DynELA 1.0.0
 */
 /*//-----------------------------------------------------------------------------
@@ -1245,7 +1243,7 @@ void Model::starterWrite(String name)
 
   \param pel pointeur sur le nouvel element que l'on vient de generer.
   \param nNodes liste des numeros de noeuds qui composent l'element
-  \author Olivier PANTALE
+
   \since DynELA 1.0.0
 
 //-----------------------------------------------------------------------------

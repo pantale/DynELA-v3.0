@@ -3,7 +3,7 @@
  *  DynELA Finite Element Code v 3.0                                       *
  *  By Olivier PANTALE                                                     *
  *                                                                         *
- *  (c) Copyright 1997-2019                                                *
+ *  (c) Copyright 1997-2020                                                *
  *                                                                         *
  **************************************************************************/
 
@@ -13,8 +13,6 @@
 
   This file defines the Mac Address class.
   \ingroup dnlKernel
-  \author &copy; Olivier PANTALE
-  \date 1997-2019
 */
 
 #ifndef __dnlKernel_MacAddress_h__
@@ -26,39 +24,35 @@
 /*!
   \brief MacAddress class definition.
   \ingroup dnlKernel
-  \date 1997-2019
-  \author &copy; Olivier PANTALE
   
 This class contains a set of methods dedicated to the MacAddress working environment. 
 */
 class MacAddress
 {
-  unsigned char mac[6];
-  String interface;
+  unsigned char mac[6]; //!< Mac address stored as 6 chars
+  String interface;     //!< Name of the interface
 
   friend class MacAddresses;
 
 public:
-  MacAddress() {}
-  ~MacAddress() {}
+  MacAddress() {}  //!< default constructor of the MacAddress class
+  ~MacAddress() {} //!< default destructor of the MacAddress class
 };
 
 /*!
-  \brief MacAddress class definition.
+  \brief MacAddresses class definition.
   \ingroup dnlKernel
-  \date 1997-2019
-  \author &copy; Olivier PANTALE
   
 This class contains a set of methods dedicated to the MacAddresses working environment. The MacAddresses class is used to manage the different Mac Address of a computer.
 */
 class MacAddresses
 {
-  List<MacAddress *> macs;
+  List<MacAddress *> macs; //!< List of mac adresses
 
 public:
   MacAddresses();
-  ~MacAddresses() {}
-  int getNumber() { return macs.getSize(); }
+  ~MacAddresses() {} //!< default destructor of the MacAddresses class
+  int getNumber();
   String getAddress(int);
   String getInterface(int);
 };

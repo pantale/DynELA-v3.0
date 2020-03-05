@@ -3,7 +3,7 @@
  *  DynELA Finite Element Code v 3.0                                       *
  *  By Olivier PANTALE                                                     *
  *                                                                         *
- *  (c) Copyright 1997-2019                                                *
+ *  (c) Copyright 1997-2020                                                *
  *                                                                         *
  **************************************************************************/
 
@@ -13,8 +13,6 @@
 
   This file defines all the Timer class.
   \ingroup dnlKernel
-  \author &copy; Olivier PANTALE
-  \date 1997-2019
 */
 
 #include <Timer.h>
@@ -226,43 +224,42 @@ void Timers::setFlags(bool flag)
 }
 
 //-----------------------------------------------------------------------------
-String Timers::conv(double value)
+String Timers::conv(const double value)
 //-----------------------------------------------------------------------------
 {
-
     // Display in µs
     if (value < 1e-6)
     {
-        String str;
-        return str.convert(value * 1e6) + " µs";
+        String str1, str2;
+        return str1.convert(value * 1e6) + " µs (" + str2.convert(value) + " s)";
     }
 
     // Display in ms
     if (value < 1e-3)
     {
-        String str;
-        return str.convert(value * 1e3) + " ms";
+        String str1, str2;
+        return str1.convert(value * 1e3) + " ms (" + str2.convert(value) + " s)";
     }
 
     // Display in H:M:S
     if (value > 3600)
     {
-        String str1, str2, str3;
+        String str1, str2, str3, str4;
         int hour, min, sec;
         hour = int(value / 3600);
         min = int((value - 3600 * hour) / 60);
         sec = int(value - 3600 * hour - 60 * min);
-        return str1.convert(hour, 2) + ":" + str2.convert(min, 2) + ":" + str3.convert(sec, 2);
+        return str1.convert(hour, 2) + ":" + str2.convert(min, 2) + ":" + str3.convert(sec, 2) + " (" + str4.convert(value) + " s)";
     }
 
     // Display in M:S
     if (value > 60)
     {
-        String str1, str2;
+        String str1, str2, str4;
         int min, sec;
         min = int(value / 60);
         sec = int(value - 60 * min);
-        return str1.convert(min, 2) + ":" + str2.convert(sec, 2);
+        return str1.convert(min, 2) + ":" + str2.convert(sec, 2) + " (" + str4.convert(value) + " s)";
     }
 
     // Default display in sec

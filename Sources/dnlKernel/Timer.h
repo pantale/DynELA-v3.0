@@ -25,7 +25,7 @@
 #include <List.h>
 
 /*! 
-  \brief Timer class used create and manage CPU time measures.
+  \brief CPU time measurements
 
   This class is used to create and manage CPU time measures for the DynELA Finite Element code.
   \ingroup dnlKernel
@@ -66,7 +66,12 @@ public:
   void stop();
 };
 
-class Timers
+/*! 
+  \brief CPU time timers
+
+  This class is used to create and manage CPU time measures for the DynELA Finite Element code. It contains a list of Timers.
+  \ingroup dnlKernel
+*/class Timers
 {
   List<Timer *> timers; //!< List of timers
 
@@ -75,7 +80,7 @@ public:
   ~Timers() {}
 
   double getTotalChilds(const char *father);
-  int getNumber() { return timers.getSize(); }
+  int getNumber() { return timers.getSize(); } //!< Get the number of timers
   String conv(double value);
   Timer *timer(const char *timerName);
   Timer *timer(int);

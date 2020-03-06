@@ -32,7 +32,6 @@
   Ce fichier sert e la definition des noeuds du maillage elements finis sur DynELA.
 
   \since DynELA 0.9.5
-  \date 1997-2004
 */
 
 //-----------------------------------------------------------------------------

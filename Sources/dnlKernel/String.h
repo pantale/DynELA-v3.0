@@ -7,37 +7,27 @@
  *                                                                         *
  **************************************************************************/
 
+/*!
+  \file String.h
+  \brief Management and manipulation of char strings
+
+  This file contains the definition of strings for DynELA. The strings are part of a new class called String which allows most of the manipulations on the characters. All the methods of this class are documented.
+  Since version v. 1.0.0, this class inherited from the \b std::string class of Standard Template Library.
+  \ingroup dnlKernel
+*/
+
 #ifndef __dnlKernel_String_h__
 #define __dnlKernel_String_h__
 
 #include <string>
 
 /*!
-  \file String.h
-  \brief fichier . h de definition des chaines de caracteres
+  \brief Management and manipulation of char strings
+
+  This class is used to implement strings on DynELA. It is inspired by the examples given by B. Stroutrup in his book on C++. Additional functions have been added to what is given in this book.
+  Since version v. 1.0.0, this class inherited from the \b std::string class of Standard Template Library.
   \ingroup dnlKernel
-
-  Ce fichier regroupe la definition des chaines de caracteres pour DynELA. Les chaines de caracteres font partie d'une nouvelle classe nommee String qui permet la pluspart des manipulations sur les caracteres. L'ensemble des methodes de cette classe sont documentees.
-
-  Depuis la version v. 1.0.0, cette classe herite de la classe \b std::string de Standard Template Library.
-
-  \since DynELA 1.0.0
-  \date 1997-2004
 */
-
-/*!
-  \class String String.h
-  \brief classe de definition des chaines de caracteres
-  \ingroup dnlKernel
-
-  Cette classe sert e l'implementation des chaines de caracteres sur DynELA. Elle s'inspire des exemples donnes par B. Stroutrup dans son livre sur le C++. Des fonctions additionnelles on ete rajoutees par rapport e ce qui est donne dans cet ouvrage.
-
-  Depuis la version v. 1.0.0, cette classe herite de la classe \b std::string de Standard Template Library.
-
-  \since DynELA 1.0.0
-  \date 1997-2004
-*/
-
 class String : public std::string
 {
 

@@ -9,9 +9,9 @@
 
 /*!
   \file Settings.h
-  \brief Definition of the Mac Address class.
+  \brief Definition of the Settings class.
 
-  This file defines the Mac Address class.
+  This file defines the Settings class.
   \ingroup dnlKernel
 */
 
@@ -24,14 +24,6 @@
 #include <sstream>
 #include <iostream>
 
-/* struct SettingsDefauts
-{
-    std::string key;
-    std::string value;
-};
- */
-/* extern const SettingsDefauts settingsDefauts[];
- */
 class Settings
 {
     bool _isChanged;

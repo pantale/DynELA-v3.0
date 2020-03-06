@@ -31,7 +31,6 @@ extern DynELA *dynelaData;
   Cette methode est le constructeur par defaut de la classe Explicit.
 En pratique, ici, on ne fait rien de plus que les allocations de memoire necessaires. On definit ici des valeurs par defaut pour ce solveur explicite, par exemple \f$\rho_b=0.8182\f$ et \f$\gamma_s=0.9\f$.
 
-  \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
 Explicit::Explicit(char *newName) : Solver(newName)
@@ -65,7 +64,6 @@ Explicit::Explicit(char *newName) : Solver(newName)
   Cette methode est le constructeur par recopie de la classe Explicit.
   \warning La recopie n'est pas prevue ici, cette methode genere une erreur d'execution
 
-  \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
 Explicit::Explicit(const Explicit &X)
@@ -95,7 +93,6 @@ Explicit::~Explicit()
   Le parametre \f$\gamma\f$ est defini e partir de la valeur de \f$\alpha_M\f$ par la relation suivante: \f[\gamma=\frac{3}{2}-\alpha_M\f]
   Le parametre \f$\Omega_s\f$ est defini e partir de la valeur de \f$\rho_b\f$ par la relation suivante: \f[\Omega_s=\sqrt{\frac{12(1+\rho_b)^3(2-\rho_b)}{10+15\rho_b-\rho_b^2+\rho_b^3-\rho_b^4}}\f]
 
-  \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
 void Explicit::computeChungHulbertIntegrationParameters()
@@ -123,7 +120,6 @@ void Explicit::computeChungHulbertIntegrationParameters()
   Cette methode permet de definir l'ammortissement numerique introduit dans le schema d'integration numerique explicite en modifiant la valeur du rayon spectral e la frequence de bifurcation. La valeur numerique doit etre comprise dans l'intervalle: \f$\rho_{b}\in[0.0:1.0]\f$. Cette methode fait appel e la methode computeIntegrationParameters() afin de remettre e jour les parametres en fonction du nouveau rayon spectral.
   \param val valeur du rayon spectral
 
-  \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
 void Explicit::setDissipation(double dissipation)
@@ -429,7 +425,6 @@ void Explicit::updateTimes()
   \f[x_{n+1}=x_{n}+\Delta t\stackrel{\bullet}{x}_{n}+\Delta t^{2}\left(\frac{1}{2}-\beta\right)\stackrel{\bullet\bullet}{x}_{n}\f]
   On applique egalement le respect des conditions aux limites imposees au travers de la methode BoundaryCondition::applyConstantOnCurrentFields().
 
-  \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
 void Explicit::computePredictions()
@@ -482,7 +477,6 @@ void Explicit::computePredictions()
 /*!
   Cette methode effectue la resolution explicite de l'increment de temps. La methode explicite etant une methode directe, aucune iteration n'est necessaire ici, les quantites peuvent etre calculees directement en utilisante les relations suivantes:
 
-  \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
 void Explicit::explicitSolve()
@@ -566,7 +560,6 @@ void Explicit::computeDensity()
   \see computeIntegrationParameters()
   \return valeur numerique de \f$\alpha_M\f$
 
-  \since DynELA 1.0.0
 
 //-----------------------------------------------------------------------------
 double Explicit::getAlphaM()
@@ -581,7 +574,6 @@ double Explicit::getAlphaM()
   \see computeIntegrationParameters()
   \return valeur numerique de \f$\beta\f$
 
-  \since DynELA 1.0.0
 
 //-----------------------------------------------------------------------------
 double Explicit::getBeta()
@@ -596,7 +588,6 @@ double Explicit::getBeta()
   \see computeIntegrationParameters()
   \return valeur numerique de \f$\gamma\f$
 
-  \since DynELA 1.0.0
 
 //-----------------------------------------------------------------------------
 double Explicit::getGamma()

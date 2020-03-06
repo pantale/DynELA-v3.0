@@ -30,7 +30,6 @@ extern DynELA *dynelaData;
   \brief Class 
   \ingroup dnlKernel
   \version 1.0.0
-  \date 1997-2004
 
 
 
@@ -157,7 +156,6 @@ bool Solver::timeAndIncrementsAreBetweenBounds()
   Cette methode permet de definir la valeur du coefficient de securite pour le calcul du pas de temps critique dans l'integration numerique explicite.
   \param safetyfactor valeur du facteur de securite
 
-  \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
 void Solver::setTimeStepSafetyFactor(double safetyfactor)
@@ -192,7 +190,6 @@ void Solver::setTimeStepMethod(short method)
   Cette methode permet de definir la frequence (en nombre d'iterations) avec laquelle on refait le calcul du pas de temps critique. Ce calcul du pas de temps critique evolue faiblement d'un currentIncrement e l'autre, et on peut donc au travers de ce parametre definir la frequence e laquelle ce calcul est effectue.
   \param frequency de la frequence de calcul du pas de temps critique
 
-  \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
 void Solver::setComputeTimeStepFrequency(int frequency)
@@ -227,7 +224,6 @@ Si critere de Courant:
   Le numero d'currentIncrement est un multiple entier de la valeur de _computeTimeStepFrequency
   La valeur de l'ancien currentIncrement de temps e ete modifiee par une routine externe
 
-  \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
 void Solver::computeTimeStep(bool forceComputation)

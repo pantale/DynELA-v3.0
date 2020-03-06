@@ -65,7 +65,6 @@ class Tensor3;
   \ingroup linearAlgebra
 
   \version 0.9.5
-  \date 1997-2004
 
 Cette classe est utilisee pour la gestion et la manipulation des tenseurs du quatrieme ordre. Elle comporte toutes les methodes d'initialisation et de gestion memoire. Les valeurs stockees sont des double. La classe \c Tensor4 contient de plus un certain nombre de methodes de calcul sur les tenseurs comme decrit ci-dessous.
 */

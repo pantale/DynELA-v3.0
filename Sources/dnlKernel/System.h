@@ -21,31 +21,31 @@
 #include <String.h>
 
 /*!
-  \brief System class definition.
-  \ingroup dnlKernel
+  \brief Unix OS management
   
-This class contains a set of methods dedicated to the System working environment. 
-These methods are used to retrieve system environment variables from a program, the current date, time and some definitions of directories and program paths, all in a System environment. 
-This class also contains methods used to launch external applications.
-\warning This class is related to the Unix system. If someone wants to port this program to a Windows environment, this has to be changed.
+  This class contains a set of methods dedicated to the System working environment. 
+  These methods are used to retrieve system environment variables from a program, the current date, time and some definitions of directories and program paths, all in a System environment. 
+  This class also contains methods used to launch external applications.
+  \ingroup dnlKernel
+  \warning This class is related to the Unix system. If someone wants to port this program to a Windows environment, this may have to be changed.
 */
 class System
 {
 
 public:
-  System() {}
-  ~System() {}
+  System() {}  //!< Default constructor
+  ~System() {} //!< Default destructor
 
-  bool existEnvValue(const String &envname);
+  bool existEnvironmentValue(const String &envname);
   int execute(const String &cmd);
   long getHostId();
   String getDate(bool full = true);
-  String getEnvValue(const String &envname);
-  String getExePath();
+  String getEnvironmentValue(const String &envname);
+  String getExecutionPath();
   String getHostname();
   String getLogin();
   String getPathName();
-  String getTime();
+  String getUnixTime();
 };
 
 bool argumentsLineParse(char *rr, int argc, char **argv);

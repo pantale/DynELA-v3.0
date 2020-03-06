@@ -7,32 +7,27 @@
  *                                                                         *
  **************************************************************************/
 
+/*!
+  \file String.C
+  \brief Management and manipulation of char strings
+
+  This file contains the definition of strings for DynELA. The strings are part of a new class called String which allows most of the manipulations on the characters. All the methods of this class are documented.
+  Since version v. 1.0.0, this class inherited from the \b std::string class of Standard Template Library.
+  \ingroup dnlKernel
+*/
+
 #include <String.h>
 #include <strings.h>
 #include <iostream>
 
+
 /*!
-  \file String.C
-  \brief fichier . h de definition des chaines de caracteres
-  \ingroup dnlKernel
+  \brief default constructor of the String class
 
-  Ce fichier regroupe la definition des chaines de caracteres pour DynELA. Les chaines de caracteres font partie d'une nouvelle classe nommee String qui permet la pluspart des manipulations sur les caracteres. L'ensemble des methodes de cette classe sont documentees.
-
-  Depuis la version v. 1.0.0, cette classe herite de la classe \b std::string de Standard Template Library.
-
-  \version 1.0.0
-  \date 1997-2004
-*/
-
-//constructeur par defaut de la classe String
-/*!
-  Allocation memoire pour une chaine de caracteres vide. Cette methode est utilisee pour creer l'allocation memoire pour une chaine de caracteres vide.
-
-  Exemple:
+  Memory allocation for an empty string. This method is used to create the memory allocation for an empty string.
   \code
   String s; // allocation memoire vide (taille indefinie)
   \endcode
-  \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
 String::String()
@@ -40,31 +35,13 @@ String::String()
 {
 }
 
-//constructeur de la classe String e partir d'un caractere unique
 /*!
-  Ce constructeur alloue l'espace memoire pour une chaine de caracteres e partir de la donnee d'un seul caractere. Cette methode peut sembler inutile car utiliser un String pour un seul caractere est bien bete, mais elle permet de faire l'addition de petits bouts de chaine de caracteres.
+  \brief constructor à from type char*
 
-  Exemple:
-  \code
-  String s = 'k'; // s est une chaine d'un caractere 'k'
-  \endcode
-  \since DynELA 1.0.0
-*/
-// //-----------------------------------------------------------------------------
-// String::String (const char c) : std::string (1, c)
-// //-----------------------------------------------------------------------------
-// {
-// }
-
-//constructeur e partir d'un type char*
-/*!
-  Ce constructeur permet d'allouer l'espace memoire pour un String et d'initialiser cette chaine de caracteres e partir d'une suite de caracteres standerd de type char*.
-  
-  Exemple:
+  This constructor allows to allocate the memory space for a String and to initialize this string from a standard char* character string.
   \code
   String y = "a std::string";
   \endcode
-  \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
 String::String(const char *s) // : std::string (s)
@@ -86,10 +63,9 @@ String::String(const String &st) // : std::string (st)
 {
   assign(st);
 }
-//destructeur associe e la classe String
+
 /*!
-  Ceci est le destructeur de la classe String.
-  \since DynELA 1.0.0
+  \brief Default destructor
 */
 //-----------------------------------------------------------------------------
 String::~String()
@@ -97,15 +73,13 @@ String::~String()
 {
 }
 
-//constructeur e partir d'un type std::string
 /*!
-  Ce constructeur permet d'allouer l'espace memoire pour un String et d'initialiser cette chaine de caracteres e partir d'une suite de caracteres standerd de type char*.
-  
-  Exemple:
+  \brief constructor from std::string type
+
+  This constructor allows to allocate the memory space for a String and to initialize this string from a standard char* character string.
   \code
   String y = "a std::string";
   \endcode
-  \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
 String &String::operator=(const char *st)
@@ -115,32 +89,18 @@ String &String::operator=(const char *st)
   return (*this);
 }
 
-// String::operator const char *() const
-// {
-//   return c_str();
-// }
-// //-----------------------------------------------------------------------------
-// String & String::operator = (const char* st)
-// //-----------------------------------------------------------------------------
-// {
-// (*this)=st;
-
-//  return (*this);
-// }
-
-//conversion d'une valeur numerique entiere en un String
 /*!
-  Cette methode permet de convertir une valeur numerique de type int en une chaine de caracteres.
+  \brief conversion of an integer numerical value into a String
 
-  Exemple:
+  This method converts a numerical value of type int into a string of characters.
+
   \code
   String toto;
   toto.convert(2);
   cout << toto << endl;
   \endcode
-  \param val valeur numerique e convertir en un String
-  \return La chaine de caracteres de retour.
-  \since DynELA 1.0.0
+  \param val numerical value to convert to a string
+  \return the character string back.
 */
 //-----------------------------------------------------------------------------
 String &String::convert(const int val, short leading)
@@ -157,19 +117,18 @@ String &String::convert(const int val, short leading)
   return *this;
 }
 
-//conversion d'une valeur numerique entiere en un String
 /*!
-  Cette methode permet de convertir une valeur numerique de type int en une chaine de caracteres.
+  \brief conversion of an integer numerical value into a String
 
-  Exemple:
+  This method converts a numerical value of type int into a string of characters.
+
   \code
   String toto;
   toto.convert(2);
   cout << toto << endl;
   \endcode
-  \param val valeur numerique e convertir en un String
-  \return La chaine de caracteres de retour.
-  \since DynELA 1.0.0
+  \param val numerical value to convert to a string
+  \return the character string back.
 */
 //-----------------------------------------------------------------------------
 String &String::convert(const long val, short leading)
@@ -186,20 +145,18 @@ String &String::convert(const long val, short leading)
   return *this;
 }
 
-//conversion d'une valeur reelle en un String
 /*!
-  Cette methode permet de convertir une valeur numerique reelle en une chaine de caracteres en specifiant le type de conversion par une chaine de caracteres de contrele.
+  \brief conversion of a real value into a String
 
-  Exemple:
+  This method allows to convert a real numerical value into a string of characters by specifying the type of conversion by a control string of characters.
   \code
   String toto;
   toto.convert(2.0,"%10.3E");
   cout << toto << endl;
   \endcode
-  \param val valeur reelle e convertir en un String
-  \param st format de sortie de la chaine de caracteres. par defaut, si on ne precise rien, on utilise un format de type "%ld"
-  \return chaine de caracteres de retour
-  \since DynELA 1.0.0
+  \param val real value to convert to a String
+  \param st if we don't specify anything, we use a format like "%ld".
+  \return string of characters return
 */
 //-----------------------------------------------------------------------------
 String &String::convert(const double val, const char *st)
@@ -211,13 +168,13 @@ String &String::convert(const double val, const char *st)
   return *this;
 }
 
-//remplacement d'un caractere dans une chaine
 /*!
-  Cette methode recherche et remplace un caractere donne par un autre dans une chaine de caracteres.
-  \param fromItem caractere e remplacer dans la chaine
-  \param to caractere de remplacement dans la chaine
-  \return nouvelle chaine de caracteres avec la substitution
-  \since DynELA 1.0.0
+  \brief replacement of a character in a string
+
+  This method searches and replaces a given character with another in a character string.
+  \param fromItem character to be replaced in the string
+  \param to spare character in the chain
+  \return to a new string with the substitution
 */
 //-----------------------------------------------------------------------------
 String &String::replace(const char fromItem, const char to)
@@ -236,13 +193,13 @@ String &String::replace(const char fromItem, const char to)
   return (*this);
 }
 
-//remplacement d'une sous chaine de caracteres dans une chaine
 /*!
-  Cette methode recherche et remplace une sous-chaine de caracteres donnee par une autre dans une chaine de caracteres.
-  \param fromItem sous-chaine de caracteres e remplacer dans la chaine
-  \param to sous-chaine de caracteres de remplacement dans la chaine
-  \return nouvelle chaine de caracteres avec la substitution
-  \since DynELA 1.0.0
+  \brief replacement of a substring in a string
+
+  This method searches and replaces a given substring with another in a character string.
+  \param fromItem sub-character string to be replaced in the string
+  \param to sub-chain of wildcard characters in the chain.
+  \return to a new string with the substitution
 */
 //-----------------------------------------------------------------------------
 String &String::replace(const String &fromItem, const String &to)
@@ -262,19 +219,17 @@ String &String::replace(const String &fromItem, const String &to)
   return (*this);
 }
 
-//extraction d'une sous-chaine de caracteres d'une chaine de caracteres
 /*!
-  Cette methode extrait une sous-chaine de caracteres dans une chaine de caracteres. La position de la sous-chaine est donnee par la valeur de l'long de depart et la longueur de la sous-chaine. La chaine d'origine est inchangee.
+  \brief extraction of a substring of a character string
 
-  Exemple:
+  This method extracts a character substring from a character string. The position of the sub-chain is given by the value of the start length and the length of the sub-chain. The original string is not changed.
   \code
   String a = "ma chaine de caracteres";
   String b= a.subString(4,5); // b="haine"
   \endcode
-  \param startpos position de depart dans la chaine de caracteres
-  \param length longueur de la chaine e extraire
-  \return sous chaine de caracteres extraite
-  \since DynELA 1.0.0
+  \param startpos starting position in the character string
+  \param length length of chain to be extracted
+  \return under extracted character string
 */
 //-----------------------------------------------------------------------------
 String
@@ -286,20 +241,18 @@ String::subString(int startpos, int length) const
   return ret;
 }
 
-//recherche d'un caractere dans une chaine
 /*!
-  Cette methode cherche un caractere dans une chaine de caracteres e partir d'une position donnee dans la chaine.
+  \brief search for a character in a string
 
-  Exemple:
+  This method looks for a character in a character string from a given position in the string.
   \code
   String a = "ma chaine de caracteres";
-  printf("%d\n",a.search('e',1); // renvoie 19 ('e' e la 19 eme position)
+  printf("%d\n",a.search('e',1); // renvoie 19 ('e' à la 19 eme position)
   printf("%d\n",a.search('e',20); // renvoie -1 (non trouve)
   \endcode
-  \param startpos position de depart de recherche dans la chaine
-  \param c caractere e rechercher
-  \return position du caractere dans la chaine, ou valeur -1 si ce caractere n'a pu etre trouve.
-  \since DynELA 1.0.0
+  \param startpos search start position in the chain
+  \param c character to look for
+  \return the position of the character in the string, or value -1 if the character could not be found.
 */
 //-----------------------------------------------------------------------------
 int String::search(char c, int startpos) const
@@ -311,20 +264,18 @@ int String::search(char c, int startpos) const
   return pos;
 }
 
-//recherche d'une sous chaine de caracteres dans une chaine
 /*!
-  Cette methode cherche une sous chaine de caracteres dans une chaine de caracteres e partir d'une position donnee dans la chaine.
+  \brief search for a sub-string in a string
 
-  Exemple:
+  This method looks for a substring in a character string from a given position in the string.
   \code
   String a = "ma chaine de caracteres";
   printf("%d\n",a.search("de",20); // renvoie 10 (position dans la chaine)
   printf("%d\n",a.search("remove",20); // renvoie -1 (non trouve)
   \endcode
-  \param startpos position de depart de recherche dans la chaine
-  \param substring sous chaine e rechercher e rechercher
-  \return position de la sous-chaine dans la chaine, ou valeur -1 si cette sous-chaine n'a pu etre trouve.
-  \since DynELA 1.0.0
+  \param startpos search start position in the chain
+  \param substring substring to search to search to search
+  \return the position of the sub-chain in the chain, or value -1 if that sub-chain could not be found.
 */
 //-----------------------------------------------------------------------------
 int String::search(const String &substring, int startpos) const
@@ -336,18 +287,16 @@ int String::search(const String &substring, int startpos) const
   return pos;
 }
 
-//suppression d'une partie d'une chaine de caracteres
 /*!
-  Cette methode supprime une partie d'une chaine de caracteres e partir d'une position donnee et sur une longueur donnee. La chaine donnees est modifiee
+  \brief deletion of part of a character string
 
-  Exemple:
+  This method deletes a part of a character string from a given position and over a given length. The given string is modified
   \code
   String a = "ma chaine de caracteres";
   a.remove(4,5); // a="ma c de caracteres"
   \endcode
-  \param startpos position de depart de la partie e supprimer
-  \param length longueur de la partie e supprimer
-  \since DynELA 1.0.0
+  \param startpos starting position of the game to be deleted
+  \param length length of the part to be deleted
 */
 //-----------------------------------------------------------------------------
 void String::remove(int startpos, int length)
@@ -356,18 +305,16 @@ void String::remove(int startpos, int length)
   std::string::replace(startpos, length, "");
 }
 
-//suppression d'une partie d'une chaine de caracteres
 /*!
-  Cette methode supprime une partie d'une chaine de caracteres specifiee dans une autre chaine e partir d'une position de depart donnee. La chaine donnees est modifiee
+  \brief deletion of part of a character string
 
-  Exemple:
+  This method deletes a part of a specified character string in another string from a given starting position. The given string is modified
   \code
   String a = "ma chaine de caracteres";
   a.remove("chaine",0); // a="ma  de caracteres"
   \endcode
-  \param y sous-chaine e supprimer
-  \param startpos position de depart pour la recherche dans la chaine
-  \since DynELA 1.0.0
+  \param y sub-chain to be deleted
+  \param startpos starting position for the search in the channel
 */
 //-----------------------------------------------------------------------------
 void String::remove(const String &y, int startpos)
@@ -376,18 +323,16 @@ void String::remove(const String &y, int startpos)
   std::string::replace(find(y, startpos), y.length(), "");
 }
 
-//suppression d'un caractere dans une chaine
 /*!
-  Cette methode supprime un caractere specifie dans une autre chaine e partir d'une position de depart donnee. La chaine donnees est modifiee
+  \brief deletion of a character in a string
 
-Exemple:
+  This method deletes a specified character in another string from a given start position. The given string is modified
   \code
   String a = "ma chaine de caracteres";
   a.remove('c',0); // a="ma haine de caracteres"
   \endcode
-  \param y sous-chaine e supprimer
-  \param startpos position de depart pour la recherche dans la chaine
-  \since DynELA 1.0.0
+  \param y sub-chain to be deleted
+  \param startpos starting position for the search in the channel
 */
 //-----------------------------------------------------------------------------
 void String::remove(char c, int startpos)
@@ -396,19 +341,17 @@ void String::remove(char c, int startpos)
   std::string::replace(find(c, startpos), 1, "");
 }
 
-//extraction d'une sous-chaine de caracteres d'une chaine de caracteres
 /*!
-  Cette methode extrait une sous-chaine de caracteres dans une chaine de caracteres. La position de la sous-chaine est donnee par la valeur de l'long de depart et la longueur de la sous-chaine.
+  \brief extraction of a substring of a character string
 
-  Exemple:
+  This method extracts a character substring from a character string. The position of the sub-chain is given by the value of the start index and the length of the sub-chain.
   \code
   String a = "ma chaine de caracteres";
   String b= a.atItem(4,5); // b="haine"
   \endcode
-  \param first position de depart dans la chaine de caracteres
-  \param len longueur de la chaine e extraire
-  \return sous chaine de caracteres extraite
-  \since DynELA 1.0.0
+  \param first start position in the character string
+  \param len of chain to be extracted
+  \return under extracted character string
 */
 //-----------------------------------------------------------------------------
 String String::atItem(int first, int len) const
@@ -417,19 +360,17 @@ String String::atItem(int first, int len) const
   return subString(first, len);
 }
 
-//extraction d'une sous-chaine de caracteres d'une chaine de caracteres
 /*!
-  Cette methode extrait une sous-chaine de caracteres dans une chaine de caracteres. La position de la sous-chaine est donnee par la valeur de l'long de depart et la longueur de la sous-chaine.
-
-  Exemple:
+  \brief extraction of a substring of a character string
+  
+  This method extracts a character substring from a character string. The position of the sub-chain is given by the value of the start index and the length of the sub-chain.
   \code
   String a = "ma chaine de caracteres";
   String b= a(4,5); // b="haine"
   \endcode
-  \param first position de depart dans la chaine de caracteres
-  \param len longueur de la chaine e extraire
-  \return sous chaine de caracteres extraite
-  \since DynELA 1.0.0
+  \param first start position in the character string
+  \param len of chain to be extracted
+  \return under extracted character string
 */
 //-----------------------------------------------------------------------------
 String
@@ -439,18 +380,16 @@ String::operator()(int first, int len) const
   return subString(first, len);
 }
 
-//extraction d'une sous-chaine de caracteres d'une chaine de caracteres
 /*!
-  Cette methode extrait une sous-chaine de caracteres dans une chaine de caracteres avant une position donnee.
+  \brief extraction of a substring of a character string
 
-  Exemple:
+  This method extracts a sub-character string in a character string before a given position.
   \code
   String a = "ma chaine de caracteres";
   String b= a.beforeItem(4); // b="ma c"
   \endcode
-  \param pos position de fin dans la chaine de caracteres
-  \return sous chaine de caracteres extraite
-  \since DynELA 1.0.0
+  \param pos end position in the character string
+  \return under extracted character string
 */
 //-----------------------------------------------------------------------------
 String String::beforeItem(int pos) const
@@ -459,18 +398,16 @@ String String::beforeItem(int pos) const
   return subString(0, pos);
 }
 
-//extraction d'une sous-chaine de caracteres d'une chaine de caracteres
 /*!
-  Cette methode extrait une sous-chaine de caracteres dans une chaine de caracteres avant une position donnee (caractere compris).
+  \brief extraction of a substring of a character string
 
-  Exemple:
+  This method extracts a sub-character string in a character string before a given position (including the character).
   \code
   String a = "ma chaine de caracteres";
   String b= a.throughItem(4); // b="ma ch"
   \endcode
-  \param pos position de fin dans la chaine de caracteres
-  \return sous chaine de caracteres extraite
-  \since DynELA 1.0.0
+  \param pos end position in the character string
+  \return under extracted character string
 */
 //-----------------------------------------------------------------------------
 String
@@ -480,18 +417,16 @@ String::throughItem(int pos) const
   return subString(0, pos + 1);
 }
 
-//extraction d'une sous-chaine de caracteres d'une chaine de caracteres
 /*!
-  Cette methode extrait une sous-chaine de caracteres dans une chaine de caracteres apres une position donnee.
+  \brief extraction of a substring of a character string
 
-  Exemple:
+  This method extracts a sub-character string in a character string after a given position.
   \code
   String a = "ma chaine de caracteres";
   String b= a.afterItem(4); // b="haine de caracteres"
   \endcode
-  \param pos position de depart dans la chaine de caracteres
-  \return sous chaine de caracteres extraite
-  \since DynELA 1.0.0
+  \param pos starting position in the character string
+  \return under extracted character string
 */
 //-----------------------------------------------------------------------------
 String String::afterItem(int pos) const
@@ -500,18 +435,16 @@ String String::afterItem(int pos) const
   return subString(pos + 1, length() - (pos + 1));
 }
 
-//extraction d'une sous-chaine de caracteres d'une chaine de caracteres
 /*!
-  Cette methode extrait une sous-chaine de caracteres dans une chaine de caracteres apres une position donnee (caractere compris).
+  \brief extraction of a substring of a character string
 
-  Exemple:
+  This method extracts a sub-character string in a character string after a given position (including the character).
   \code
   String a = "ma chaine de caracteres";
   String b= a.fromItem(4); // b="chaine de caracteres"
   \endcode
-  \param pos position de depart dans la chaine de caracteres
-  \return sous chaine de caracteres extraite
-  \since DynELA 1.0.0
+  \param pos starting position in the character string
+  \return under extracted character string
 */
 //-----------------------------------------------------------------------------
 String String::fromItem(int pos) const
@@ -519,20 +452,19 @@ String String::fromItem(int pos) const
 {
   return subString(pos, length() - pos);
 }
-//extraction d'une sous-chaine de caracteres d'une chaine de caracteres
-/*!
-  Cette methode extrait une sous-chaine de caracteres dans une chaine de caracteres. La position de la sous-chaine est donnee par la premiere occurence d'une chaine donnee en parametres e partir d'une position donnee.
 
-  Exemple:
+/*!
+  \brief extraction of a substring of a character string
+
+  This method extracts a character substring from a character string. The position of the sub-chain is given by the first occurrence of a given string in parameters from a given position.
   \code
   String a = "ma chaine de caracteres";
   String b= a.atItem("haine",2); // b="haine"
   \endcode
-  \param y sous-chaine de caracteres e rechercher
-  \param startfirst position de depart dans la chaine de caracteres
-  \param len longueur de la chaine e extraire
-  \return sous chaine de caracteres extraite
-  \since DynELA 1.0.0
+  \param y substring of characters to search for
+  \param startfirst starting position in the character string
+  \param len of chain to be extracted
+  \return under extracted character string
 */
 //-----------------------------------------------------------------------------
 String String::atItem(const String &y, int startpos) const
@@ -544,22 +476,19 @@ String String::atItem(const String &y, int startpos) const
   return subString(first, y.length());
 }
 
-//extraction d'un caractere d'une chaine de caracteres
 /*!
-  Cette methode extrait un caractere dans une chaine de caracteres. La position du caractere est donnee par la premiere occurence dde ce caractere donne en parametre e partir d'une position donnee. 
+  \brief extraction of a character from a string of characters
 
-C'est un peu idiot comme truc ca !!!
-
-  Exemple:
+  This method extracts a character from a character string. The position of the character is given by the first occurrence of this character given as a parameter from a given position. 
+  It's a bit silly like that !!!
   \code
   String a = "ma chaine de caracteres";
   String b= a.atItem('h',2); // b="h"
   \endcode
-  \param y sous-chaine de caracteres e rechercher
-  \param startfirst position de depart dans la chaine de caracteres
-  \param len longueur de la chaine e extraire
-  \return sous chaine de caracteres extraite
-  \since DynELA 1.0.0
+  \param y substring of characters to search for
+  \param startfirst starting position in the character string
+  \param len of chain to be extracted
+  \return under extracted character string
 */
 //-----------------------------------------------------------------------------
 String String::atItem(char c, int startpos) const
@@ -570,19 +499,17 @@ String String::atItem(char c, int startpos) const
     return "";
   return subString(first, 1);
 }
-//extraction d'une sous-chaine de caracteres d'une chaine de caracteres
 /*!
-  Cette methode extrait une sous-chaine de caracteres dans une chaine de caracteres avant une position donnee par la premiere occurence d'une chaine donnee en parametre de cette methode.
+  \brief extraction of a substring of a character string
 
-  Exemple:
+  This method extracts a sub-character string in a character string before a position given by the first occurrence of a given string in the parameter of this method.
   \code
   String a = "ma chaine de caracteres";
   String b= a.beforeItem("chaine",2); // b="ma "
   \endcode
-  \param y sous chaine e rechercher
-  \param startpos position de debut de recherche dans la chaine de caracteres
-  \return sous chaine de caracteres extraite
-  \since DynELA 1.0.0
+  \param y subchain to search for
+  \param startpos start position of search in the character string
+  \return under extracted character string
 */
 //-----------------------------------------------------------------------------
 String String::beforeItem(const String &y, int startpos) const
@@ -594,19 +521,17 @@ String String::beforeItem(const String &y, int startpos) const
   return subString(0, last);
 }
 
-//extraction d'une sous-chaine de caracteres d'une chaine de caracteres
 /*!
-  Cette methode extrait une sous-chaine de caracteres dans une chaine de caracteres avant une position donnee par la premiere occurence d'un caractere donne en parametre de cette methode.
-
-  Exemple:
+  \brief extraction of a substring of a character string
+  
+  This method extracts a character sub-chain in a character string before a position given by the first occurrence of a given character in the parameter of this method.
   \code
   String a = "ma chaine de caracteres";
   String b= a.beforeItem('c',2); // b="ma "
   \endcode
-  \param c caractere e rechercher
-  \param startpos position de debut de recherche dans la chaine de caracteres
-  \return sous chaine de caracteres extraite
-  \since DynELA 1.0.0
+  \param c character to look for
+  \param startpos start position of search in the character string
+  \return under extracted character string
 */
 //-----------------------------------------------------------------------------
 String String::beforeItem(char c, int startpos) const
@@ -616,19 +541,17 @@ String String::beforeItem(char c, int startpos) const
   return subString(0, last);
 }
 
-//extraction d'une sous-chaine de caracteres d'une chaine de caracteres
 /*!
-  Cette methode extrait une sous-chaine de caracteres dans une chaine de caracteres avant une position donnee par la premiere occurence d'une chaine donnee en parametre de cette methode. La sous chaine recherchee est incluse.
+  \brief extraction of a substring of a character string
 
-  Exemple:
+  This method extracts a sub-character string in a character string before a position given by the first occurrence of a given string in the parameter of this method. The searched substring is included.
   \code
   String a = "ma chaine de caracteres";
   String b= a.throughItem("chaine",2); // b="ma chaine"
   \endcode
-  \param y sous chaine e rechercher
-  \param startpos position de debut de recherche dans la chaine de caracteres
-  \return sous chaine de caracteres extraite
-  \since DynELA 1.0.0
+  \param y subchain to search for
+  \param startpos start position of search in the character string
+  \return under extracted character string
 */
 //-----------------------------------------------------------------------------
 String String::throughItem(const String &y, int startpos) const
@@ -642,19 +565,17 @@ String String::throughItem(const String &y, int startpos) const
   return subString(0, last);
 }
 
-//extraction d'une sous-chaine de caracteres d'une chaine de caracteres
 /*!
-  Cette methode extrait une sous-chaine de caracteres dans une chaine de caracteres avant une position donnee par la premiere occurence d'un caractere donne en parametre de cette methode. Le caractere recherche est inclus.
+  \brief extraction of a substring of a character string
 
-  Exemple:
+  This method extracts a character sub-chain in a character string before a position given by the first occurrence of a given character in the parameter of this method. The search character is included.
   \code
   String a = "ma chaine de caracteres";
   String b= a.throughItem('c',2); // b="ma c"
   \endcode
-  \param c caractere e rechercher
-  \param startpos position de debut de recherche dans la chaine de caracteres
-  \return sous chaine de caracteres extraite
-  \since DynELA 1.0.0
+  \param c character to look for
+  \param startpos start position of search in the character string
+  \return under extracted character string
 */
 //-----------------------------------------------------------------------------
 String
@@ -669,19 +590,17 @@ String::throughItem(char c, int startpos) const
   return subString(0, last);
 }
 
-//extraction d'une sous-chaine de caracteres d'une chaine de caracteres
 /*!
-  Cette methode extrait une sous-chaine de caracteres dans une chaine de caracteres apres une position donnee par la premiere occurence d'une chaine donnee en parametre de cette methode.
+  \brief extraction of a substring of a character string
 
-  Exemple:
+  This method extracts a character sub-chain in a character string after a position given by the first occurrence of a given string in the parameter of this method.
   \code
   String a = "ma chaine de caracteres";
   String b= a.afterItem("chaine",2); // b=" de caracteres"
   \endcode
-  \param y sous chaine e rechercher
-  \param startpos position de debut de recherche dans la chaine de caracteres
-  \return sous chaine de caracteres extraite
-  \since DynELA 1.0.0
+  \param y subchain to search for
+  \param startpos start position of search in the character string
+  \return under extracted character string
 */
 //-----------------------------------------------------------------------------
 String String::afterItem(const String &y, int startpos) const
@@ -695,18 +614,16 @@ String String::afterItem(const String &y, int startpos) const
   return subString(first, length() - first);
 }
 
-//extraction d'une sous-chaine de caracteres d'une chaine de caracteres
 /*!
-  Cette methode extrait une sous-chaine de caracteres dans une chaine de caracteres apres une position donnee par la derniere occurence d'une chaine donnee en parametre de cette methode.
+  \brief extraction of a substring of a character string
 
-  Exemple:
+  This method extracts a sub-character string in a character string after a position given by the last occurrence of a given string in the parameter of this method.
   \code
   String a = "ma chaine de caracteres de truc";
   String b= a.afterItem("de"); // b=" truc"
   \endcode
-  \param y sous chaine e rechercher
-  \return sous chaine de caracteres extraite
-  \since DynELA 1.0.0
+  \param y subchain to search for
+  \return under extracted character string
 */
 //-----------------------------------------------------------------------------
 String
@@ -732,19 +649,17 @@ String::beforeLast(const String &y) const
   return atItem(0, pos - 1);
 }
 
-//extraction d'une sous-chaine de caracteres d'une chaine de caracteres
 /*!
-  Cette methode extrait une sous-chaine de caracteres dans une chaine de caracteres apres une position donnee par la premiere occurence d'un caractere donne en parametre de cette methode.
+  \brief extraction of a substring of a character string
 
-  Exemple:
+  This method extracts a character sub-chain in a character string after a position given by the first occurrence of a given character in a parameter of this method.
   \code
   String a = "ma chaine de caracteres";
   String b= a.afterItem('c',2); // b="haine de caracteres"
   \endcode
-  \param c caractere e rechercher
-  \param startpos position de debut de recherche dans la chaine de caracteres
-  \return sous chaine de caracteres extraite
-  \since DynELA 1.0.0
+  \param c character to look for
+  \param startpos start position of search in the character string
+  \return under extracted character string
 */
 //-----------------------------------------------------------------------------
 String String::afterItem(char c, int startpos) const
@@ -758,19 +673,17 @@ String String::afterItem(char c, int startpos) const
   return subString(first, length() - first);
 }
 
-//extraction d'une sous-chaine de caracteres d'une chaine de caracteres
 /*!
-  Cette methode extrait une sous-chaine de caracteres dans une chaine de caracteres apres une position donnee par la premiere occurence d'une chaine donnee en parametre de cette methode. La sous-chaine est incluse.
+  \brief extraction of a substring of a character string
 
-  Exemple:
+  This method extracts a sub-character string in a character string after a position given by the first occurrence of a given string in the parameter of this method. The substring is included.
   \code
   String a = "ma chaine de caracteres";
   String b= a.fromItem("chaine",1); // b="chaine de caracteres"
   \endcode
-  \param y sous chaine e rechercher
-  \param startpos position de debut de recherche dans la chaine de caracteres
-  \return sous chaine de caracteres extraite
-  \since DynELA 1.0.0
+  \param y subchain to search for
+  \param startpos start position of search in the character string
+  \return under extracted character string
 */
 //-----------------------------------------------------------------------------
 String String::fromItem(const String &y, int startpos) const
@@ -782,19 +695,17 @@ String String::fromItem(const String &y, int startpos) const
   return subString(first, length() - first);
 }
 
-//extraction d'une sous-chaine de caracteres d'une chaine de caracteres
 /*!
-  Cette methode extrait une sous-chaine de caracteres dans une chaine de caracteres apres une position donnee par la premiere occurence d'un caractere donne en parametre de cette methode.
-
-  Exemple:
+  \brief extraction of a substring of a character string
+  
+  This method extracts a character sub-chain in a character string after a position given by the first occurrence of a given character in a parameter of this method.
   \code
   String a = "ma chaine de caracteres";
   String b= a.fromItem('c',2); // b="chaine de caracteres"
   \endcode
-  \param c caractere e rechercher
-  \param startpos position de debut de recherche dans la chaine de caracteres
-  \return sous chaine de caracteres extraite
-  \since DynELA 1.0.0
+  \param c character to look for
+  \param startpos start position of search in the character string
+  \return under extracted character string
 */
 //-----------------------------------------------------------------------------
 String String::fromItem(char c, int startpos) const
@@ -806,11 +717,11 @@ String String::fromItem(char c, int startpos) const
   return subString(first, length() - first);
 }
 
-//remplit une chaine de caractere e partir d'un fichier
+//
 /*!
-  Cette methode list une chaine de caracteres sur un fichier et retourne un String contenant cette chaine de caracteres. Les caracteres sont lus dans le fichier jusqu'au caractere de fin de ligne '\n'. Si la fin de fichier est atteinte, cette methode renvoie 0, sinon elle renvoie 1.Cette methode se trouve donc bien nommee.
+  \brief fills in a string from a file
 
-  Exemple:
+  This method lists a string on a file and returns a String containing that string. Characters are read from the file up to the end-of-line character '\n'. If the end of the file is reached, this method returns 0, otherwise it returns 1, so this method is well named.
   \code
   FILE* pfile;
   String s;
@@ -818,9 +729,8 @@ String String::fromItem(char c, int startpos) const
   while (s.scanFileLine(pfile)) cout << s << "\n";
   fclose(pfile);
   \endcode
-  \param pfile fichier e lire
-  \return booleen specifiant si il reste des caracteres e lire dans le fichier.
-  \since DynELA 1.0.0
+  \param pfile file to read
+  \return boolean specifying if there are any characters left to read in the file.
 */
 //-----------------------------------------------------------------------------
 bool String::scanFileLine(FILE *pfile)
@@ -839,12 +749,12 @@ bool String::scanFileLine(FILE *pfile)
   return 1;
 }
 
-//suppression des blancs inutiles
+//
 /*!
-  Cette methode supprime les blancs en debut et fin d'une chaine de caracteres comme indique ci dessous:
+  \brief whiteout
 
-  "  hello " -> "hello"
-  \since DynELA 1.0.0
+  This method removes the blanks at the beginning and end of a string as shown below:
+  "hello" -> "hello"
 */
 //-----------------------------------------------------------------------------
 void String::strip()
@@ -860,13 +770,14 @@ void String::strip()
   *this = subString(start, stop - start + 1);
 }
 
-//teste la presence d'une chaine dans une autre et renvoie la position
+//
 /*!
-  Cette methode recherche une chaine de caracteres dans une autre en tenant compte ou non de la difference majuscules/minuscules. Cette methode e ete developpee pour bibView.
-  \param substring chaine de caracteres e rechercher
-  \param cas booleen permettant de specifier si on veut du sensitive search (true) ou non (false)
-  \return position de la sous-chaine dans la chaine ou -1 en cas d'echec de la recherche
-  \since DynELA 1.0.0
+  \brief tests the presence of one chain in another and returns the position
+  
+  This method looks for a string of characters in another one, taking into account or not the difference between upper and lower case letters. This method has been developed for bibView.
+  \param substring string to search for
+  \param cas boolean allowing to specify if we want sensitive search (true) or not (false)
+  \return the position of the sub-chain in the chain or -1 in case of a search failure.
 */
 //-----------------------------------------------------------------------------
 int String::containsWithCaseSub(const String &substring, bool cas) const
@@ -934,11 +845,12 @@ int String::containsWithCaseSub(const String &substring, bool cas) const
 
 //teste la presence d'une chaine dans une autre
 /*!
-  Cette methode recherche une chaine de caracteres dans une autre en tenant compte ou non de la difference majuscules/minuscules. Cette methode e ete developpee pour bibView.
-  \param substring chaine de caracteres e rechercher
-  \param cas booleen permettant de specifier si on veut du sensitive search (true) ou non (false)
-  \return booleen: true si la sous-chaine existe ou false sinon.
-  \since DynELA 1.0.0
+  \brief tests the presence of a chain in another chain.
+  
+  This method looks for a string of characters in another one, taking into account or not the difference between upper and lower case letters. This method has been developed for bibView.
+  \param substring string to search for
+  \param case boolean allowing to specify if we want sensitive search (true) or not (false)
+  \return booleen: true if the subchain exists or false if not.
 */
 //-----------------------------------------------------------------------------
 bool String::containsWithCase(const String &substring, bool cas) const
@@ -947,17 +859,16 @@ bool String::containsWithCase(const String &substring, bool cas) const
   return (containsWithCaseSub(substring, cas) >= 0);
 }
 
-//convertit une chaine de caracteres en un type char*
+//
 /*!
-  Cette methode convertit une chaine de caracteres en un type char*.
+  \brief converts a string of characters into a char* type.
 
-  Exemple:
+  This method converts a character string into a char* type.
   \code
   String x;
   x="chain to convert";
   printf("%s",x.chars());
   \endcode
-  \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
 const char *String::chars() const
@@ -966,12 +877,13 @@ const char *String::chars() const
   return c_str();
 }
 
-//teste la presence d'un caractere dans une chaine
+//
 /*!
-  Cette methode teste si une chaine de caracteres contient un caractere donne.
-  \param c caractere e rechercher
-  \return true si le caractere existe, false dans le cas contraire
-  \since DynELA 1.0.0
+  \brief tests the presence of a character in a chain
+  
+  This method tests whether a string contains a given character.
+  \param c character to be searched
+  \return true if the character exists, false if it doesn't...
 */
 //-----------------------------------------------------------------------------
 bool String::contains(char c, int startpos) const
@@ -982,13 +894,14 @@ bool String::contains(char c, int startpos) const
   return false;
 }
 
-//recherche d'un caractere dans une chaine
+//
 /*!
-  Cette methode cherche une sous-chaine de caracteres dans une chaine existante et retourne true, ou la valeur false si cette chaine n'existe pas.
-  \param startpos position de depart pour la recherche
-  \param substring sous chaine e rechercher
-  \return true ou false selon le resultat de la recherche.
-  \since DynELA 1.0.0
+  \brief search for a character in a string
+  
+  This method looks for a substring of characters in an existing string and returns true, or the value false if the string does not exist.
+  \param startpos starting position for the search.
+  \param substring substring to search for
+  \return true or false depending on the search result.
 */
 //-----------------------------------------------------------------------------
 bool String::contains(const String &substring, int startpos) const
@@ -999,12 +912,12 @@ bool String::contains(const String &substring, int startpos) const
   return false;
 }
 
-//ecrit une chaine de caracteres sur le flux de sortie
+//
 /*!
-  Cette methode ecrit une chaine de caracteres sur le flux de donnees ostream. Si la chaine de caracteres est vide, "empty" est ecrit sur la sortie.
+  \brief writes a string of characters on the output stream
+  This method writes a string of characters to the ostream data stream. If the string is empty, "empty" is written to the output.
 
-  \param s chaine de caracteres ecrite
-  \since DynELA 1.0.0
+  \param s written string
 */
 //-----------------------------------------------------------------------------
 void String::dump(const String &s) const
@@ -1013,11 +926,12 @@ void String::dump(const String &s) const
   std::cout << *this << std::endl;
 }
 
-//teste si une chaine de caracteres est vide
+//
 /*!
-  Cette methode teste si une chaine de caracteres est vide.
-  \return true si la chaine de caracteres est vide false dans le cas contraire
-  \since DynELA 1.0.0
+  \brief test if a string is empty
+  
+  This method tests if a string is empty.
+  \return true if the string is empty false if not.
 */
 //-----------------------------------------------------------------------------
 bool String::empty() const
@@ -1026,11 +940,12 @@ bool String::empty() const
   return ((*this) == "");
 }
 
-//teste si une chaine de caracteres est non vide
+//
 /*!
-  Cette methode teste si une chaine de caracteres est non vide.
-  \return true si la chaine de caracteres est non vide false dans le cas contraire
-  \since DynELA 1.0.0
+  \brief test if a string is not empty
+  
+  This method tests whether a string is not empty.
+  \return true if the string is non-empty false if not.
 */
 //-----------------------------------------------------------------------------
 bool String::ok() const
@@ -1039,11 +954,12 @@ bool String::ok() const
   return !(empty());
 }
 
-//renvoie le premier caractere d'un String
+//
 /*!
-  Cette methode retourne le premier caractere d'un std::string
-  \return premier caractere du String
-  \since DynELA 1.0.0
+  \brief returns the first character of a String
+  
+  This method returns the first character of a std::string
+  \return first character of the G-string
 */
 //-----------------------------------------------------------------------------
 char String::firstchar() const
@@ -1052,11 +968,12 @@ char String::firstchar() const
   return std::string::at(0);
 }
 
-//renvoie le dernier caractere d'un String
+//
 /*!
-  Cette methode retourne le dernier caractere d'un std::string
-  \return dernier caractere du String
-  \since DynELA 1.0.0
+  \brief returns the last character of a String
+  
+  This method returns the last character of a std::string
+  \return last character of the G-string
 */
 //-----------------------------------------------------------------------------
 char String::lastchar() const
@@ -1065,10 +982,11 @@ char String::lastchar() const
   return std::string::at(length() - 1);
 }
 
-//conversion des caracteres en minuscules
+//
 /*!
-  Cette methode convertit les caracteres d'une chaine en minuscules
-  \since DynELA 1.0.0
+  \brief character conversion to lowercase
+  
+  This method converts the characters of a string into lowercase letters.
 */
 //-----------------------------------------------------------------------------
 void String::lowerCase()
@@ -1084,10 +1002,11 @@ void String::lowerCase()
   }
 }
 
-//conversion des caracteres en majuscules
+//
 /*!
-  Cette methode convertit les caracteres d'une chaine en majuscules
-  \since DynELA 1.0.0
+  \brief character conversion in capital letters
+  
+  This method converts the characters of a string into uppercase letters.
 */
 //-----------------------------------------------------------------------------
 void String::upperCase()
@@ -1103,11 +1022,11 @@ void String::upperCase()
   }
 }
 
-//convertit un String en un reel
+//
 /*!
-  Cette methode extrait d'un String une valeur reelle e une colonne donnee.
+  \brief converts a String into a real
 
-  Exemple:
+  This method extracts from a String a real value at a given column.
   \code
   String s="5.0 8.4 12.7e-6";
   double a,b,c;
@@ -1115,10 +1034,9 @@ void String::upperCase()
   b=s.getRealAtPos(1); // b=8.4
   c=s.getRealAtPos(2); // c=12.7e-6
   \endcode
-  \param pos specifie que l'on souhaite extraire la ieme valeur sur la ligne
-  \param sep specifie le separateur de donnees sur la ligne que l'on veut utiliser (par defaut un espace si on ne precise rien)
-  \return valeur reelle de retour convertie
-  \since DynELA 0.9.6
+  \param pos specifies that you wish to extract the i-th value on the line
+  \param sep specifies the data separator on the line you want to use (default is a space if you don't specify anything).
+  \return actual return value converted
 */
 //-----------------------------------------------------------------------------
 double
@@ -1138,11 +1056,11 @@ String::getRealAtPos(int pos, String sep)
   return val;
 }
 
-//extrait une valeur reelle d'un std::string
+//
 /*!
-  Cette methode extrait d'un String une valeur reelle et reduit cette chaine de caracteres. Si elle ne contient plus de valeurs e extraire, cette methode renvoie false au moment de l'extraction de la derniere valeur de la ligne.
+  \brief extract a real value from a std::string
 
-  Exemple:
+  This method extracts a real value from a String and reduces this string. If there are no more values to extract, this method returns false at the time of extraction of the last value of the line.
   \code
   String s="5.0 8.4 12.7e-6";
   double a,b,c;
@@ -1151,10 +1069,9 @@ String::getRealAtPos(int pos, String sep)
   r=s.popReal(b); // b=8.4, r=true
   r=s.popReal(c); // c=12.7e-6, r=false
   \endcode
-  \param pos specifie que l'on souhaite extraire la ieme valeur sur la ligne
-  \param sep specifie le separateur de donnees sur la ligne que l'on veut utiliser (par defaut un espace si on ne precise rien)
-  \return valeur reelle de retour convertie
-  \since DynELA 0.9.6
+  \param pos specifies that you wish to extract the i-th value on the line
+  \param sep specifies the data separator on the line you want to use (default is a space if you don't specify anything).
+  \return actual return value converted
 */
 //-----------------------------------------------------------------------------
 bool String::popReal(double &ret, String sep)
@@ -1179,11 +1096,11 @@ bool String::popReal(double &ret, String sep)
   return false;
 }
 
-//extrait une valeur entiere d'un std::string
+//
 /*!
-  Cette methode extrait d'un String une valeur entiere et reduit cette chaine de caracteres. Si elle ne contient plus de valeurs e extraire, cette methode renvoie false au moment de l'extraction de la derniere valeur de la ligne.
+  \brief extracts an integer value from a std::string
 
-  Exemple:
+  This method extracts an integer value from a String and reduces this string. If there are no more values to extract, this method returns false at the time of extraction of the last value of the line.
   \code
   String s="5 8 12";
   int a,b,c;
@@ -1192,10 +1109,9 @@ bool String::popReal(double &ret, String sep)
   r=s.popInt(b); // b=8, r=true
   r=s.popInt(c); // c=12, r=false
   \endcode
-  \param pos specifie que l'on souhaite extraire la ieme valeur sur la ligne
-  \param sep specifie le separateur de donnees sur la ligne que l'on veut utiliser (par defaut un espace si on ne precise rien)
-  \return valeur reelle de retour convertie
-  \since DynELA 0.9.6
+  \param pos specifies that you wish to extract the i-th value on the line
+  \param sep specifies the data separator on the line you want to use (default is a space if you don't specify anything).
+  \return actual return value converted
 */
 //-----------------------------------------------------------------------------
 bool String::popInt(long &val, String sep)
@@ -1208,13 +1124,14 @@ bool String::popInt(long &val, String sep)
   return ret;
 }
 
-//extrait un mot d'une chaine de caracteres
+//
 /*!
-  Cette methode extrait un mot d'une chaine de caracteres. Cette methode retourne la valeur true s'il reste des mosts dans la chaine, false dans le cas contraire.
-  \param ret mot extrait de la chaine de caracteres
-  \param sep specifie le separateur de donnees sur la ligne que l'on veut utiliser (par defaut un espace si on ne precise rien)
-  \return true si la chaine contient d'autres mots, false dans le cas contraire
-  \since DynELA 1.0.0
+  \brief extract a word from a string of characters
+  
+  This method extracts a word from a string of characters. This method returns the value true if there are mosts left in the string, false otherwise.
+  \param ret word retrieved from the string
+  \param sep specifies the data separator on the line you want to use (default is a space if you don't specify anything).
+  \return true if the string contains other words, false if not...
 */
 //-----------------------------------------------------------------------------
 bool String::popString(String &ret, String sep)
@@ -1239,7 +1156,7 @@ bool String::popString(String &ret, String sep)
   return false;
 }
 
-//conversion d'un String en un entier
+//conversion of a String into an integer
 //-----------------------------------------------------------------------------
 long String::getInt() const
 //-----------------------------------------------------------------------------
@@ -1247,7 +1164,7 @@ long String::getInt() const
   return atoi(c_str());
 }
 
-//conversion d'un String en un reel
+//conversion of a String into a reel
 //-----------------------------------------------------------------------------
 double String::getReal() const
 //-----------------------------------------------------------------------------
@@ -1255,7 +1172,7 @@ double String::getReal() const
   return atof(c_str());
 }
 
-//ajout d'une extension si elle n'est pas presente
+//addition of an extension if it is not present
 //-----------------------------------------------------------------------------
 void String::addExtension(String ext)
 //-----------------------------------------------------------------------------

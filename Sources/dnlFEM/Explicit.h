@@ -36,7 +36,6 @@ class Model;
 
 
   \version 1.0.0
-  \date 1997-2004
 */
 
 #define defaultSpectralRadius 0.8182
@@ -50,7 +49,6 @@ class Model;
 
 
   \version 1.0.0
-  \date 1997-2004
 */
 class Explicit : public Solver
 {

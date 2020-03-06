@@ -23,7 +23,7 @@
 #include <String.h>
 
 /*! 
-  \brief LogFile class used create and manage Log files.
+  \brief creation and management of Log files.
 
   This class is used to create and manage Log files for the DynELA Finite Element code.
   \ingroup dnlKernel

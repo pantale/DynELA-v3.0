@@ -42,7 +42,6 @@
   Ce fichier sert e la definition la classe generique des materiaux.
 
   \version 0.9.6
-  \date 1997-2004
 */
 
 #include <HardeningLaw.h>

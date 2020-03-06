@@ -42,7 +42,6 @@ DynELA *dynelaData = NULL; // initialisation par defaut sur NULL
 /*!
   Cette methode est le constructeur par defaut de la classe DynELA. En pratique, ici, on ne fait rien de plus que les allocations de memoire necessaires.
 
-  \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
 DynELA::DynELA(char *newName)
@@ -218,7 +217,6 @@ bool DynELA::createNode(long nodeNumber, double xCoord, double yCoord, double zC
 
   \return nombre de noeuds de la structure
 
-  \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
 long DynELA::getNodesNumber()
@@ -343,7 +341,6 @@ void DynELA::add(Solver *newSolver)
   \param material materiau e utiliser
   \param elementSet ElementSet e utiliser
 
-  \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
 void DynELA::add(Material *material, ElementSet *elementSet)
@@ -383,7 +380,6 @@ void DynELA::add(Material *material, ElementSet *elementSet)
 
   \param pmat pointeur sur le nouveau materiau e ajouter e la structure
 
-  \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
 void DynELA::addMaterial(Material *pmat)
@@ -430,7 +426,6 @@ void DynELA::add(ElementSet *elementSet, long startNumber, long endNumber, long 
   \param boundary condition limite e utiliser
   \param nodeSet NodeSet e utiliser
 
-  \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
 void DynELA::attachInitialBC(Boundary *boundary, NodeSet *nodeSet)
@@ -470,7 +465,6 @@ void DynELA::attachInitialBC(Boundary *boundary, NodeSet *nodeSet)
   \param boundary condition limite e utiliser
   \param nodeSet NodeSet e utiliser
 
-  \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
 void DynELA::attachConstantBC(Boundary *boundary, NodeSet *nodeSet)
@@ -687,7 +681,6 @@ void DynELA::rotate(Vec3D axis, double angle, NodeSet *nodeSet)
   \param min coordonnee minimale
   \param max coordonnee maximale
 
-  \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
 void DynELA::getGlobalBox(Vec3D &minPoint, Vec3D &maxPoint)
@@ -744,7 +737,6 @@ void DynELA::writeVTKFile()
   Cette methode lance la procedure de solveur general de la structure. Elle prend en compte tous les types de solveurs possible et gere aussi bien la resolution mono-modele que la resolution multi-modele. C'est le point d'entree de tout solveur.
 
 
-  \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
 void DynELA::solve()
@@ -826,7 +818,6 @@ void DynELA::getNodalValuesRange(short field, double &min, double &max)
 
   \return true si la methode n'a genere aucune erreur
 
-  \since DynELA 1.0.0
 
 //-----------------------------------------------------------------------------
 bool DynELA::initSolve ()
@@ -898,7 +889,6 @@ bool DynELA::initSolve ()
   \param name nom du materiau e recuperer
   \return un pointeur sur ce materiau (s'il existe) ou NULL dans le cas oe le materiau n'a pu etre trouve dans la liste des materiaux de la structure.
 
-  \since DynELA 1.0.0
 
 //-----------------------------------------------------------------------------
 Material * DynELA::getMaterial (String name)
@@ -923,7 +913,6 @@ Material * DynELA::getMaterial (String name)
   \param BC condition limite e utiliser
   \param nds NodeSet e utiliser
 
-  \since DynELA 1.0.0
 
 //-----------------------------------------------------------------------------
 void DynELA::attachBCToNodes(BoundaryCondition* BC, NodeSet* nds)
@@ -943,7 +932,6 @@ void DynELA::attachBCToNodes(BoundaryCondition* BC, NodeSet* nds)
 
   \param solver solveur e utiliser
 
-  \since DynELA 1.0.0
 
 
 
@@ -955,7 +943,6 @@ void DynELA::attachBCToNodes(BoundaryCondition* BC, NodeSet* nds)
 
   \return nombre d'elements de la structure
 
-  \since DynELA 1.0.0
 
 
 //renvoie le ieme noeud de la structure
@@ -965,7 +952,6 @@ void DynELA::attachBCToNodes(BoundaryCondition* BC, NodeSet* nds)
   \param i indice du noeud
   \return ieme noeud de la structure
 
-  \since DynELA 1.0.0
 
 //-----------------------------------------------------------------------------
 Node* DynELA::getNode(long i)
@@ -981,7 +967,6 @@ Node* DynELA::getNode(long i)
   \param i indice de l'element
   \return ieme element de la structure
 
-  \since DynELA 1.0.0
 
 //-----------------------------------------------------------------------------
 Element* DynELA::getElement(long i)
@@ -997,7 +982,6 @@ Element* DynELA::getElement(long i)
   \param i Id du noeud
   \return ieme noeud de la structure
 
-  \since DynELA 1.0.0
 
 //-----------------------------------------------------------------------------
 Node* DynELA::getNodeById(long i)
@@ -1013,7 +997,6 @@ Node* DynELA::getNodeById(long i)
   \param i Id de l'element
   \return ieme noeud de la structure
 
-  \since DynELA 1.0.0
 
 //-----------------------------------------------------------------------------
 Element* DynELA::getElementById(long i)
@@ -1028,7 +1011,6 @@ Element* DynELA::getElementById(long i)
 
   \param model pointeur sur le modele e selectionner
 
-  \since DynELA 1.0.0
 
 //-----------------------------------------------------------------------------
 void DynELA::setModel(Model* model)
@@ -1052,7 +1034,6 @@ void DynELA::setModel(Model* model)
   Cette methode affiche pendant la lecture des donnees un etat d'avancement sur la console du remplissage memoire concernant les nombres de noeuds, elements et modeles de la structure complete.
 
 
-  \since DynELA 1.0.0
 
 //-----------------------------------------------------------------------------
 void DynELA::displayOnline()

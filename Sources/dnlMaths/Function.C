@@ -17,7 +17,6 @@
 
   
   \since 1.0.4
-  \date 1997-2004
 */
 
 #include <Function.h>

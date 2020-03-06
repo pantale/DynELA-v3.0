@@ -9,9 +9,9 @@
 
 /*!
   \file Settings.C
-  \brief Definition of the Mac Address class.
+  \brief Definition of the Settings class.
 
-  This file defines the Mac Address class.
+  This file defines the Settings class.
   \ingroup dnlKernel
 */
 
@@ -25,7 +25,7 @@ Settings::Settings() : _isChanged(false)
 {
     // Get the path value
     System sys = System();
-    String path = sys.getEnvValue("DYNELA_BIN");
+    String path = sys.getEnvironmentValue("DYNELA_BIN");
 
     // Loads the settings from configuration file
     if (path != "")

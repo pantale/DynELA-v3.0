@@ -31,7 +31,6 @@ class ElementSet;
   Ce fichier sert e la definition la classe generique des materiaux.
 
   \version 0.9.6
-  \date 1997-2004
 */
 
 class IntegrationPoint;
@@ -45,7 +44,6 @@ class Material;
   Classe virtuelle de gestion des materiaux pour DynELA. Cette classe regroupe les parametres de base communs e tous les types de materiaux sur DynELA, comme le module de Young, le coefficient de Poisson, ou la densite d'un materiau. Pour pouvoir utiliser un materiau sur DynELA, on utilise alors une des classes derivees de celle-ci, ce qui permet alors de definir un comportement elastique, elasto-plastique, ou tout autre type de comportement.
 
   \version 0.9.6
-  \date 1997-2004
 */
 class HardeningLaw
 {

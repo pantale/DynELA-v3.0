@@ -29,7 +29,6 @@
   Ce fichier sert e la definition des groupes de noeuds et elements de la structure.
 
   \version 0.9.6
-  \date 1997-2004
 */
 
 /* #include <upFemSolver.h> */
@@ -46,7 +45,6 @@
  Cette classe gere les groupes d'elements au niveau d'une structure sur DynELA. Elle comporte des methodes de creation de groupes d'elements (par ajout d'elements generalement), ainsi que des methodes de gestion de ces groupes d'elements.
 
   \version 0.9.6
-  \date 1997-2004
 */
 class ElementSet
 {

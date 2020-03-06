@@ -7,17 +7,23 @@
  *                                                                         *
  **************************************************************************/
 
+/*!
+  \file Exception.h
+  \brief Definition of the Exception class.
+
+  This file defines all the Exception class.
+  \ingroup dnlKernel
+*/
+
 #ifndef __dnlKernel_Exception_h__
 #define __dnlKernel_Exception_h__
 
 #include <iostream>
 
-/*!
-  \class Exception Exception.h
-  \brief Class 
+/*! 
+  \brief Treatment of C++ exceptions
   \ingroup dnlKernel
 */
-
 class Exception
 {
 

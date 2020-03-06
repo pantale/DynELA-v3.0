@@ -7,17 +7,16 @@
  *                                                                         *
  **************************************************************************/
 
-/*
-	Class Exception implementation
+/*!
+  \file Exception.C
+  \brief Definition of the Exception class.
+
+  This file defines all the Exception class.
+  \ingroup dnlKernel
 */
 
 #include <Exception.h>
 
-/*!
-  \class Exception Exception.C
-  \brief Class 
-  \ingroup dnlKernel
-*/
 //-----------------------------------------------------------------------------
 Exception::Exception() : file(""), line(0), function(""), cond(""), exc("")
 //-----------------------------------------------------------------------------

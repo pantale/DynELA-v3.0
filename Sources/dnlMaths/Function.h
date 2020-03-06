@@ -22,7 +22,6 @@
 
   
   \since 1.0.4
-  \date 1997-2004
 */
 
 /*!
@@ -30,7 +29,6 @@
   \brief Classe de definition des fonctions discretes
   \ingroup linearAlgebra
 
-  \date 1997-2004
   \since 1.0.4
 */
 class Function

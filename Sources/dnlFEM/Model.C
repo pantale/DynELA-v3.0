@@ -81,7 +81,6 @@ Model::~Model()
   \param newNode pointeur sur le nouveau noeud e ajouter e la grille
   \return true si l'ajout du noeud est correct
 
-  \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
 bool Model::add(Node *newNode)
@@ -635,7 +634,6 @@ double Model::getTotalKineticEnergy()
   \f[ \Delta t = \Delta t_{crit} \f] avec \f[ \Delta t_{crit}=\frac{l}{C_s} \f] calcule pour tous les elements de la grille dans laquelle \f$ l \f$ est la longueur caracteristique de l'element calculee par Element::getCharacteristicLength() et \f$ C_s \f$ est la vitesse de propagation d'une onde longitudinale dans l'element calculee par la methode Element::getElongationWaveSpeed().
   \return valeur numerique de la valeur du timeStep critique de la grille
 
-  \since DynELA 1.0.0
 */
 //-----------------------------------------------------------------------------
 double Model::computeCourantTimeStep()
@@ -734,7 +732,6 @@ bool Model::solve(double solveUpToTime)
 /*!
   Cette methode calcule le Jacobien de tous les elements de la grille.
 
-  \since DynELA 1.0.0
 */
 /*//-----------------------------------------------------------------------------
 void Model::computeJacobian()
@@ -1244,7 +1241,6 @@ void Model::starterWrite(String name)
   \param pel pointeur sur le nouvel element que l'on vient de generer.
   \param nNodes liste des numeros de noeuds qui composent l'element
 
-  \since DynELA 1.0.0
 
 //-----------------------------------------------------------------------------
 void Model::createElement(Element *pel, long *nNodes)

@@ -30,7 +30,7 @@ class ListIndex;
 
 /*!
   \class List
-  \brief List class of the DynELA Finite Element code 
+  \brief Management of objects as list 
   
   This class is used to store all type of object and manupulate them as a list (for example: list of Nodes, Elements, Boundary conditions,...) \n
   This List is a dynamic one, the initialization is performed with a default stack size defined by \ref DEFAULT_stack_size, as soon as there is no more space left to store a new object, 
@@ -96,7 +96,7 @@ public:
 
 /*!
   \class ListIndex
-  \brief ListIndex class of the DynELA Finite Element code 
+  \brief Management of objects as list with indexes
   
   This class is used to store all type of object and manupulate them as a list (for example: list of Nodes, Elements, Boundary conditions,...) \n
   This ListIndex is a dynamic one, the initialization is performed with a default stack size defined by \ref DEFAULT_stack_size, as soon as there is no more space left to store a new object, 

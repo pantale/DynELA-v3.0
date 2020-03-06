@@ -44,7 +44,6 @@
   Ce fichier set e la definition de la classe Matrice qui sert de classe de base pour toutes les matrices de DynELA. Cette classe de base sert e stocker les informations communes e tous les types de matrices tels que la taille de la matrice (nombre de lignes et de colonnes)...
 
   \version 0.9.6
-  \date 1997-2004
 */
 
 #include <ostream>
@@ -79,7 +78,6 @@ enum OutMatrix
   Cette classe sert e la definition definition generale des matrices, elle sert de classe de base pour toutes les matrices de DynELA. Cette classe de base sert e stocker les informations communes e tous les types de matrices tels que la taille de la matrice (nombre de lignes et de colonnes)...
 
   \version 0.9.5
-  \date 1997-2004
 */
 class Matrices
 {

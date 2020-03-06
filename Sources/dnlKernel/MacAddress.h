@@ -8,10 +8,10 @@
  **************************************************************************/
 
 /*!
-  \file MacAddress.C
-  \brief Definition of the Mac Address class.
+  \file MacAddress.h
+  \brief Declaration of the Mac Address class.
 
-  This file defines the Mac Address class.
+  This file declares the Mac Address class.
   \ingroup dnlKernel
 */
 
@@ -22,10 +22,10 @@
 #include <List.h>
 
 /*!
-  \brief MacAddress class definition.
-  \ingroup dnlKernel
+  \brief Storage of mac address
   
-This class contains a set of methods dedicated to the MacAddress working environment. 
+  This class contains a set of methods dedicated to the MacAddress working environment. 
+  \ingroup dnlKernel
 */
 class MacAddress
 {
@@ -40,10 +40,10 @@ public:
 };
 
 /*!
-  \brief MacAddresses class definition.
-  \ingroup dnlKernel
+  \brief Managment of mac addresses of computer
   
-This class contains a set of methods dedicated to the MacAddresses working environment. The MacAddresses class is used to manage the different Mac Address of a computer.
+  This class contains a set of methods dedicated to the MacAddresses working environment. The MacAddresses class is used to manage the different Mac Address of a computer.
+  \ingroup dnlKernel
 */
 class MacAddresses
 {

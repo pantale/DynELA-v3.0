@@ -39,7 +39,6 @@ class Material;
 
 
   \version 0.9.4
-  \date 1997-2004
 */
 class Model
 {

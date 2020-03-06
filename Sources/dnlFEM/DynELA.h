@@ -39,7 +39,6 @@ extern DynELA *dynelaData;
 
 
   \version 1.0.0
-  \date 1997-2004
 */
 
 class VtkInterface;
@@ -58,7 +57,6 @@ class NodeSet;
 
 
   \version 1.0.0
-  \date 1997-2004
 */
 class DynELA
 {

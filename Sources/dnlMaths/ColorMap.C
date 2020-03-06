@@ -15,7 +15,6 @@
   Ce fichier regroupe la definition de la classe ColorMap utilisee pour l'environnement de travail ColorMap.
 
   \since DynELA 0.9.5
-  \date 1997-2004
 */
 
 #include <ColorMap.h>

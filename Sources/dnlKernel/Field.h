@@ -24,7 +24,7 @@
 #define FIELD_TENSOR2(NAME) NAME, NAME##XX, NAME##XY, NAME##XZ, NAME##YX, NAME##YY, NAME##YZ, NAME##ZX, NAME##ZY, NAME##ZZ
 
 /*! 
-  \brief Field class used to store information about nodal and element fields.
+  \brief Informations about nodal and element fields
 
 This class is used to store and manipulate information about nodal and element fields for the DynELA Finite Element code.
   \ingroup dnlKernel

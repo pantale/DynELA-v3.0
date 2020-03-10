@@ -6,6 +6,7 @@
  *  (c) Copyright 1997-2020                                                *
  *                                                                         *
  **************************************************************************/
+// TODOCXYFILE
 
 /*!
 \file ElTet4N3D.h
@@ -14,8 +15,6 @@
 This file is the declaration file for the ElTet4N3D class.
 
 \ingroup dnlElements
-\author &copy; Olivier PANTALE
-\date 1997-2020
 */
 
 #ifndef __dnlElements_ElTet4n3D_h__

@@ -6,6 +6,7 @@
  *  (c) Copyright 1997-2020                                                *
  *                                                                         *
  **************************************************************************/
+// TODOCXYFILE
 
 /*!
 \file Element3D.h
@@ -14,8 +15,6 @@
 This file is the declaration file for the Element3D class.
 
 \ingroup dnlElements
-\author &copy; Olivier PANTALE
-\date 1997-2020
 */
 
 #ifndef __dnlElements_Element3D_h__

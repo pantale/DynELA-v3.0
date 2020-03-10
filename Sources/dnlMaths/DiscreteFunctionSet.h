@@ -11,8 +11,7 @@
   \file DiscreteFunctionSet.h
   \brief Declaration file for the discrete function class
 
-  This file is the declaration file for the discrete function class. A discrete function is a function with the following form: \f[ y=f(x) \f] defined from a set of points.
-  Linear interpolation is used to obtain data between given points.
+  This file is the declaration file for the discrete function set class.
   \ingroup dnlMaths
 */
 
@@ -24,7 +23,7 @@
 /*!
   \brief This is a set of discrete functions.
   
-  This class is used to manage sets of discrete functions and group them. This is a usefull class for the \b DynELA \b curves application.
+  This class is used to manage sets of discrete function set and group them. This is a usefull class for the \b DynELA \b curves application.
   \ingroup dnlMaths
 */
 class DiscreteFunctionSet

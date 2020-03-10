@@ -19,7 +19,6 @@
 #define __dnlMaths_h__
 
 #include <ColorMap.h>
-#include <CrackFunction.h>
 #include <DiscreteFunction.h>
 #include <DiscreteFunctionSet.h>
 #include <Function.h>

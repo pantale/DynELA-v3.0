@@ -33,9 +33,9 @@ class coupleReal
 {
   friend class List<coupleReal *>;
   friend class DiscreteFunction;
-  friend class CrackFunction;
   friend bool compare(coupleReal *t1, coupleReal *t2);
-  double x, y; //!< Coordinates of the point
+  double x; //!< Coordinate X of the point
+  double y; //!< Coordinate Y of the point
 
   coupleReal();
   coupleReal(double x, double y);

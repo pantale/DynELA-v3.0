@@ -6,6 +6,7 @@
  *  (c) Copyright 1997-2020                                                *
  *                                                                         *
  **************************************************************************/
+// TODOCXYFILE
 
 /*!
 \file ElQua4NAx.h
@@ -14,8 +15,6 @@
 This file is the declaration file for the ElQua4NAx class.
 
 \ingroup dnlElements
-\author &copy; Olivier PANTALE
-\date 1997-2020
 */
 
 #ifndef __dnlElements_ElQua4nAx_h__

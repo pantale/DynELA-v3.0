@@ -1,9 +1,12 @@
 /***************************************************************************
  *                                                                         *
  *  DynELA Finite Element Code v 3.0                                       *
- *  (c) Copyright by Olivier PANTALE                                       *
+ *  By Olivier PANTALE                                                     *
+ *                                                                         *
+ *  (c) Copyright 1997-2020                                                *
  *                                                                         *
  **************************************************************************/
+// TODOCXYFILE
 
 /*!
   \file NumpyInterface.h

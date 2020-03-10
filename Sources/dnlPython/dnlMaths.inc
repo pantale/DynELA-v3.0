@@ -272,15 +272,9 @@
 }
 
 %include "Function.h"
-
 %include "DiscreteFunction.h"
-
 %include "DiscreteFunctionSet.h"
-
 %include "RampFunction.h"
-
 %include "PolynomialFunction.h"
-
 %include "SinusFunction.h"
-
 %include "ColorMap.h"

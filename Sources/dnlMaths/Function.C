@@ -8,7 +8,7 @@
  **************************************************************************/
 
 /*!
-  \file Function.h
+  \file Function.C
   \brief Defines of the Function class.
 
   This file defines the Function class.

@@ -32,10 +32,8 @@ extern String parsedFileName;
   \brief fichier .h de definition des solveurs elements finis
   \ingroup femSolver
 
-  Ce fichier sert e la definition de la classe Solver.
+  Ce fichier sert à la definition de la classe Solver.
 
-
-  \version 1.0.0
 */
 
 /*!
@@ -43,10 +41,8 @@ extern String parsedFileName;
   \brief Classe de definition et de manipulation des solveurs elements finis.
   \ingroup femSolver
 
-  Cette classe sert e definir et e manipuler les solveurs disponibles au niveau d'un modele. Elle contient toutes les definitions de base concernant la gestion des temps de simulation (increment de temps, temps de debut, de fin ...) ainsi que la gestion complete des increments.
+  Cette classe sert à definir et à manipuler les solveurs disponibles au niveau d'un modele. Elle contient toutes les definitions de base concernant la gestion des temps de simulation (increment de temps, temps de debut, de fin ...) ainsi que la gestion complete des increments.
 
-
-  \version 1.0.0
 */
 class Solver
 {

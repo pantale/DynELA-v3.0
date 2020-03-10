@@ -29,14 +29,9 @@ extern DynELA *dynelaData;
   \class Solver Solver.C
   \brief Class 
   \ingroup dnlKernel
-  \version 1.0.0
-
-
-
 */
 //default constructor of the class Solver
 /*!
-
 */
 //-----------------------------------------------------------------------------
 Solver::Solver(char *newName)
@@ -67,7 +62,6 @@ Solver::Solver(char *newName)
 
 //copy constructor of the class Solver
 /*!
-
 */
 //-----------------------------------------------------------------------------
 Solver::Solver(const Solver &X)
@@ -77,7 +71,6 @@ Solver::Solver(const Solver &X)
 
 //destructor of the class Solver
 /*!
-
 */
 //-----------------------------------------------------------------------------
 Solver::~Solver()
@@ -103,11 +96,11 @@ void Solver::setModel(Model *newModel)
   model = newModel;
 }
 
-// teste que le temps actuel est inferieur e une valeur limite
+// teste que le temps actuel est inferieur à une valeur limite
 /*!
 Cette methode teste que le temps actuel est tel que:
 - le temps actuel est inferieur au temps maximum autorise
-- l'currentIncrement actuel est inferieur e l'currentIncrement maximal autorise (si cet currentIncrement maximal est different de zero)
+- l'currentIncrement actuel est inferieur à l'currentIncrement maximal autorise (si cet currentIncrement maximal est different de zero)
 \return true si on est entre les bornes
 */
 //-----------------------------------------------------------------------------
@@ -155,7 +148,6 @@ bool Solver::timeAndIncrementsAreBetweenBounds()
 /*!
   Cette methode permet de definir la valeur du coefficient de securite pour le calcul du pas de temps critique dans l'integration numerique explicite.
   \param safetyfactor valeur du facteur de securite
-
 */
 //-----------------------------------------------------------------------------
 void Solver::setTimeStepSafetyFactor(double safetyfactor)
@@ -187,9 +179,8 @@ void Solver::setTimeStepMethod(short method)
 
 //Permet de definit la frequence (en nombre d'iterations) avec laquelle on refait le calcul du pas de temps critique
 /*!
-  Cette methode permet de definir la frequence (en nombre d'iterations) avec laquelle on refait le calcul du pas de temps critique. Ce calcul du pas de temps critique evolue faiblement d'un currentIncrement e l'autre, et on peut donc au travers de ce parametre definir la frequence e laquelle ce calcul est effectue.
+  Cette methode permet de definir la frequence (en nombre d'iterations) avec laquelle on refait le calcul du pas de temps critique. Ce calcul du pas de temps critique evolue faiblement d'un currentIncrement à l'autre, et on peut donc au travers de ce parametre definir la frequence à laquelle ce calcul est effectue.
   \param frequency de la frequence de calcul du pas de temps critique
-
 */
 //-----------------------------------------------------------------------------
 void Solver::setComputeTimeStepFrequency(int frequency)
@@ -213,7 +204,7 @@ void Solver::setIncrements(long start, long stop)
 
 //Calcul du time step de minimal du modele
 /*!
-  Cette methode calcule le time step minimal du modele en fonction de la grille courante. Cette methode fait appel e la methode Model::computePowerIterationTimeStep() pour l'evaluation numerique de la valeur du time step minimal. La relation utilisee pour ce calcul est donc donnee par l'une des equations ci-dessous selon la valeur definie par la methode setTimeStepMethod():
+  Cette methode calcule le time step minimal du modele en fonction de la grille courante. Cette methode fait appel à la methode Model::computePowerIterationTimeStep() pour l'evaluation numerique de la valeur du time step minimal. La relation utilisee pour ce calcul est donc donnee par l'une des equations ci-dessous selon la valeur definie par la methode setTimeStepMethod():
 Si methode pulsation maxi
   \f[ \Delta t = \gamma_s \frac{\Omega_s}{f_{max}} \f]
 Si critere de Courant:
@@ -222,8 +213,7 @@ Si critere de Courant:
   La valeur du timeStep n'est recalculee que si l'une des conditions ci-dessous est vraie:
   Le parametre forceComputation est true
   Le numero d'currentIncrement est un multiple entier de la valeur de _computeTimeStepFrequency
-  La valeur de l'ancien currentIncrement de temps e ete modifiee par une routine externe
-
+  La valeur de l'ancien currentIncrement de temps à ete modifiee par une routine externe
 */
 //-----------------------------------------------------------------------------
 void Solver::computeTimeStep(bool forceComputation)
@@ -316,6 +306,4 @@ void Solver::progressWrite()
 
   fclose (fprogress);
 }
-
-
 */

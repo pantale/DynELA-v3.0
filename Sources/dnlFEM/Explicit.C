@@ -8,11 +8,10 @@
  **************************************************************************/
 
 /*!
-  \file NodeSet.h
-  \brief Declaration file for the NodeSet class
+  \file Explicit.C
+  \brief Declaration file for the Explicit class
 
-  This file is the declaration file for the NodeSet class.
-
+  This file is the declaration file for the Explicit class.
   \ingroup dnlFEM
 */
 
@@ -26,11 +25,11 @@
 
 extern DynELA *dynelaData;
 
-//constructeur par defaut de la classe Explicit
 /*!
-  Cette methode est le constructeur par defaut de la classe Explicit.
-En pratique, ici, on ne fait rien de plus que les allocations de memoire necessaires. On definit ici des valeurs par defaut pour ce solveur explicite, par exemple \f$\rho_b=0.8182\f$ et \f$\gamma_s=0.9\f$.
+  \brief Default constructor of the Explicit class
 
+  This method is the default constructor of the Explicit class.
+  In practice, here we do nothing more than the necessary memory allocations. We define here default values for this explicit solver, for example \f$\rho_b=0.8182\f$ and \f$\gamma_s=0.9\f$.
 */
 //-----------------------------------------------------------------------------
 Explicit::Explicit(char *newName) : Solver(newName)
@@ -59,11 +58,10 @@ Explicit::Explicit(char *newName) : Solver(newName)
  */
 }
 
-//constructeur par recopie de la classe Explicit
 /*!
-  Cette methode est le constructeur par recopie de la classe Explicit.
-  \warning La recopie n'est pas prevue ici, cette methode genere une erreur d'execution
+  \brief Copy constructor of the Explicit class
 
+  \warning Copying is not provided for here, this method generates an execution error.
 */
 //-----------------------------------------------------------------------------
 Explicit::Explicit(const Explicit &X)
@@ -73,11 +71,8 @@ Explicit::Explicit(const Explicit &X)
   exit(-1);
 }
 
-//destructeur de la classe Explicit
 /*!
-  Cette methode est le destructeur de la classe Explicit.
-
-  \since DynELA 0.9.1
+  \brief Default destructor of the Explicit class
 */
 //-----------------------------------------------------------------------------
 Explicit::~Explicit()
@@ -85,14 +80,14 @@ Explicit::~Explicit()
 {
 }
 
-//Calcul des parametres de l'integration de Chung-Hulbert
 /*!
-  Cette methode calcule les valeurs des parametres \f$\alpha_M\f$, \f$\beta\f$ et \f$\gamma\f$ pour le schema d'integration de Chung-Hulbert.
-  Le parametre \f$\alpha_M\f$ est defini e partir de la valeur de \f$\rho_b\f$ par la relation suivante: \f[\alpha_M=\frac{2\rho_b-1}{1+\rho_b}\f]
-  Le parametre \f$\beta\f$ est defini e partir de la valeur de \f$\rho_b\f$ par la relation suivante: \f[\beta=\frac{5-3\rho_b}{(1+\rho_b)^2(2-\rho_b)}\f]
-  Le parametre \f$\gamma\f$ est defini e partir de la valeur de \f$\alpha_M\f$ par la relation suivante: \f[\gamma=\frac{3}{2}-\alpha_M\f]
-  Le parametre \f$\Omega_s\f$ est defini e partir de la valeur de \f$\rho_b\f$ par la relation suivante: \f[\Omega_s=\sqrt{\frac{12(1+\rho_b)^3(2-\rho_b)}{10+15\rho_b-\rho_b^2+\rho_b^3-\rho_b^4}}\f]
-
+  \brief Calculation of the parameters of the Chung-Hulbert integration
+  
+  This method computes the values of the Chung-Hulbert integration scheme parameters \f$\alpha_M\f$, \f$\beta\f$ and \f$\gamma\f$.
+  The parameter \f$\alpha_M\f$ is defined from the value of \f$\rho_b\f$ by the following relationship: \f[\alpha_M=\frac{2\rho_b-1}{1+\rho_b}\f]
+  The parameter \f$\beta\f$ is defined from the value of \f$\rho_b\f$ by the following relationship: \f[\beta=\frac{5-3\rho_b}{(1+\rho_b)^2(2-\rho_b)}\f]
+  The parameter \f$\gamma\f$ is defined from the value of \f$\alpha_M\f$ by the following relationship: \f[\gamma=\frac{3}{2}-\alpha_M\f]
+  The parameter \f$\Omega_s\f$ is defined from the value of \f$\rho_b\f$ by the following relationship: \f[\Omega_s=\sqrt{\frac{12(1+\rho_b)^3(2-\rho_b)}{10+15\rho_b-\rho_b^2+\rho_b^3-\rho_b^4}}\f]
 */
 //-----------------------------------------------------------------------------
 void Explicit::computeChungHulbertIntegrationParameters()
@@ -117,9 +112,8 @@ void Explicit::computeChungHulbertIntegrationParameters()
 
 //Permet de definir l'amortissement du schema explicite
 /*!
-  Cette methode permet de definir l'ammortissement numerique introduit dans le schema d'integration numerique explicite en modifiant la valeur du rayon spectral e la frequence de bifurcation. La valeur numerique doit etre comprise dans l'intervalle: \f$\rho_{b}\in[0.0:1.0]\f$. Cette methode fait appel e la methode computeIntegrationParameters() afin de remettre e jour les parametres en fonction du nouveau rayon spectral.
+  Cette methode permet de definir l'ammortissement numerique introduit dans le schema d'integration numerique explicite en modifiant la valeur du rayon spectral à la frequence de bifurcation. La valeur numerique doit etre comprise dans l'intervalle: \f$\rho_{b}\in[0.0:1.0]\f$. Cette methode fait appel à la methode computeIntegrationParameters() afin de remettre à jour les parametres en fonction du nouveau rayon spectral.
   \param val valeur du rayon spectral
-
 */
 //-----------------------------------------------------------------------------
 void Explicit::setDissipation(double dissipation)
@@ -328,7 +322,7 @@ void Explicit::solve(double solveUpToTime)
 #endif
 
       // prediction des quantites
-      // phase dite de prediction correspondant e l'algorithme explicite
+      // phase dite de prediction correspondant à l'algorithme explicite
 #ifdef computeCpuTimes
       recordTimes.start("Predictions");
 #endif
@@ -419,12 +413,11 @@ void Explicit::updateTimes()
 
 //Phase de prediction des deplacements, vitesses et accelerations nodales
 /*!
-  La prediction se fait au niveau des deplacements, vitesses et accelerations nodales e partir des relations suivantes:
+  La prediction se fait au niveau des deplacements, vitesses et accelerations nodales à partir des relations suivantes:
   \f[\stackrel{\bullet\bullet}{x}_{n+1}=0\f]
   \f[\stackrel{\bullet}{x}_{n+1}=\stackrel{\bullet}{x}_{n}+\Delta t(1-\gamma)\stackrel{\bullet\bullet}{x}_{n}\f]
   \f[x_{n+1}=x_{n}+\Delta t\stackrel{\bullet}{x}_{n}+\Delta t^{2}\left(\frac{1}{2}-\beta\right)\stackrel{\bullet\bullet}{x}_{n}\f]
   On applique egalement le respect des conditions aux limites imposees au travers de la methode BoundaryCondition::applyConstantOnCurrentFields().
-
 */
 //-----------------------------------------------------------------------------
 void Explicit::computePredictions()
@@ -476,7 +469,6 @@ void Explicit::computePredictions()
 //Resolution explicite de l'increment
 /*!
   Cette methode effectue la resolution explicite de l'increment de temps. La methode explicite etant une methode directe, aucune iteration n'est necessaire ici, les quantites peuvent etre calculees directement en utilisante les relations suivantes:
-
 */
 //-----------------------------------------------------------------------------
 void Explicit::explicitSolve()
@@ -504,14 +496,14 @@ void Explicit::explicitSolve()
     for (int dim = 0; dim < numberOfDimensions; dim++)
       node->newField->acceleration(dim) = model->internalForces(nodeId * numberOfDimensions + dim);
 
-    // mise e jour de l'acceleration materielle
+    // mise à jour de l'acceleration materielle
     node->newField->acceleration -= _alphaM * node->currentField->acceleration;
     node->newField->acceleration /= (1.0 - _alphaM);
 
-    // mise e jour de la vitesse materielle
+    // mise à jour de la vitesse materielle
     node->newField->speed += _gamma * timeStep * node->newField->acceleration;
 
-    // mise e jour du deplacement
+    // mise à jour du deplacement
     node->newField->displacement += _beta * dnlSquare(timeStep) * node->newField->acceleration;
 
     // application des conditions aux limites imposees

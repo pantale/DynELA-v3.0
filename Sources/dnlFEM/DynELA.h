@@ -35,10 +35,8 @@ extern DynELA *dynelaData;
   \brief fichier .h de definition des grilles elements finis
   \ingroup femSolver
 
-  Ce fichier sert e la definition de la classe DynELA.
+  Ce fichier sert à la definition de la classe DynELA.
 
-
-  \version 1.0.0
 */
 
 class VtkInterface;
@@ -55,8 +53,6 @@ class NodeSet;
   \ingroup femLibrary
 
 
-
-  \version 1.0.0
 */
 class DynELA
 {

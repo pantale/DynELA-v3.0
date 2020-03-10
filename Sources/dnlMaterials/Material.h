@@ -31,16 +31,14 @@ class HardeningLaw;
 
   Ce fichier sert à la definition la classe generique des materiaux.
 
-  \version 0.9.6
 */
 
 /*!
   \brief Classe virtuelle de gestion des materiaux
   \ingroup femLibrary
 
-  Classe virtuelle de gestion des materiaux pour DynELA. Cette classe regroupe les parametres de base communs e tous les types de materiaux sur DynELA, comme le module de Young, le coefficient de Poisson, ou la densite d'un materiau. Pour pouvoir utiliser un materiau sur DynELA, on utilise alors une des classes derivees de celle-ci, ce qui permet alors de definir un comportement elastique, elasto-plastique, ou tout autre type de comportement.
+  Classe virtuelle de gestion des materiaux pour DynELA. Cette classe regroupe les parametres de base communs à tous les types de materiaux sur DynELA, comme le module de Young, le coefficient de Poisson, ou la densite d'un materiau. Pour pouvoir utiliser un materiau sur DynELA, on utilise alors une des classes derivees de celle-ci, ce qui permet alors de definir un comportement elastique, elasto-plastique, ou tout autre type de comportement.
 
-  \version 0.9.6
 */
 class Material
 {

@@ -291,7 +291,6 @@ void Element3D::getdU_atIntPoint (Tensor2 & du, short time)
       du (2, 2) += _integrationPoint->dShapeFunction (k, 2) * field->displacement (2);
     }
 }
-
 */
 //-----------------------------------------------------------------------------
 void Element3D::computeElasticStiffnessMatrix(bool underIntegration)

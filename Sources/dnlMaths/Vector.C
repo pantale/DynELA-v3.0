@@ -818,9 +818,9 @@ double Vector::minAbsoluteValue()
 
 //Assemblage d'un vecteur dans un autre
 /*!
-  Cette methode effectue la phase d'assemblage d'ue vecteur dans un autre conformement e ce qui se fait classiquement en Elements Finis.
+  Cette methode effectue la phase d'assemblage d'ue vecteur dans un autre conformement à ce qui se fait classiquement en Elements Finis.
   
-  \param V Vecteur elementaire e assembler dans le grand vecteur
+  \param V Vecteur elementaire à assembler dans le grand vecteur
   \param int tableau d'long correspondant au nombre de NOEUDS de l'element et contenant les Id des noeuds que l'on utilise
   \param numberOfDimensions nombre de dimensions du probleme
   \code
@@ -900,9 +900,9 @@ void Vector::gatherFrom(const Vector &V, long *ind0, int numberOfDimensions)
 
 //Assemblage d'un vecteur dans un autre
 /*!
-  Cette methode effectue la phase d'assemblage d'ue vecteur dans un autre conformement e ce qui se fait classiquement en Elements Finis.
+  Cette methode effectue la phase d'assemblage d'ue vecteur dans un autre conformement à ce qui se fait classiquement en Elements Finis.
   
-  \param V Vecteur elementaire e assembler dans le grand vecteur
+  \param V Vecteur elementaire à assembler dans le grand vecteur
   \param int tableau d'long correspondant au nombre de NOEUDS de l'element et contenant les Id des noeuds que l'on utilise
   \param numberOfDimensions nombre de dimensions du probleme
   \code

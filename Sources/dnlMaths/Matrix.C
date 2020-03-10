@@ -32,11 +32,9 @@
 
 //constructeur de la classe Matrix
 /*!
-  Cette methode construit une matrice de rows/cols elements. Par defaut, le contenu de la matrice est mis e zero
+  Cette methode construit une matrice de rows/cols elements. Par defaut, le contenu de la matrice est mis à zero
   \param rows nombre de rows
   \param cols nombre de cols 
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 Matrix::Matrix(const long rows, const long cols, const double value)
@@ -51,9 +49,7 @@ Matrix::Matrix(const long rows, const long cols, const double value)
 
 //constructeur par recopie d'une matrice
 /*!
-  Ce constructeur recopie les valeurs contenues dans une matrice. Selon la valeur du flag \ref MEM_funct, la copie est faite soit terme e terme (flag non defini) ou par appel e memcopy() (flag defini).
-
-  \version 0.9.4
+  Ce constructeur recopie les valeurs contenues dans une matrice. Selon la valeur du flag \ref MEM_funct, la copie est faite soit terme à terme (flag non defini) ou par appel à memcopy() (flag defini).
 */
 //-----------------------------------------------------------------------------
 Matrix::Matrix(const Matrix &mat)
@@ -96,8 +92,6 @@ Matrix::Matrix(int rows, int cols, double firstValue, double secondValue, ...)
 
 //destructeur de la classe Matrix
 /*!
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 Matrix::~Matrix()
@@ -145,8 +139,6 @@ void Matrix::desallocate()
   Cette methode est utilisee pour specifier une nouvelle dimension de matrice de celle donnee lors de l'initialisation par le constructeur
   \param rows nombre de rows
   \param cols nombre de cols 
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 void Matrix::redim(const long rows, const long cols)
@@ -169,8 +161,6 @@ void Matrix::redim(const long rows, const long cols)
   std::cout << t << endl;
   \endcode
   \param os flux de sortie
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 std::ostream &operator<<(std::ostream &os, const Matrix &mat)
@@ -184,8 +174,6 @@ std::ostream &operator<<(std::ostream &os, const Matrix &mat)
 /*!
   Cette methode permet d'afficher le contenu d'une matrice sur la sortie std::ostream
   \param os flux de sortie
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 void Matrix::print(std::ostream &os) const
@@ -214,10 +202,8 @@ void Matrix::print(std::ostream &os) const
   Exemple :
   \code
   Matrix t1;
-  t1=setToValue(1.); // affecte 1 e toutes les composantes de la matrice
+  t1=setToValue(1.); // affecte 1 à toutes les composantes de la matrice
   \endcode
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 void Matrix::setToValue(double val)
@@ -229,7 +215,7 @@ void Matrix::setToValue(double val)
     _data[i] = val;
 }
 
-//renvoie une matrice identite e partir d'une matrice quelconque
+//renvoie une matrice identite à partir d'une matrice quelconque
 /*!
   Cette methode prend en argument une matrice quelconque et renvoie une matrice identite
   
@@ -239,8 +225,6 @@ void Matrix::setToValue(double val)
   t1.setToUnity(); // renvoie identite
   \endcode
   \warning Cette methode modifie son argument
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 void Matrix::setToUnity()
@@ -335,10 +319,8 @@ double Matrix::minAbsoluteValue() const
   Exemple :
   \code
   Matrix t1;
-  t1=1.; // affecte 1 e toutes les composantes de la matrice
+  t1=1.; // affecte 1 à toutes les composantes de la matrice
   \endcode
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 Matrix &Matrix::operator=(const double &val)
@@ -357,8 +339,6 @@ Matrix &Matrix::operator=(const double &val)
   Matrix t1,t2;
   t1=t2; // egalite de deux matrices
   \endcode
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 Matrix &Matrix::operator=(const Matrix &mat)
@@ -382,8 +362,6 @@ Matrix &Matrix::operator=(const Matrix &mat)
   Matrix t1,t2;
   t1=t2; // egalite de deux matrices
   \endcode
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 Matrix &Matrix::operator=(const Tensor2 &tens)
@@ -407,8 +385,6 @@ Matrix &Matrix::operator=(const Tensor2 &tens)
   Matrix t1,t2,t3;
   t3=t1+t2; // somme de deux matrices
   \endcode
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 Matrix Matrix::operator+(const Matrix &mat) const
@@ -444,8 +420,6 @@ Matrix Matrix::operator+(const Matrix &mat) const
   Matrix t1,t2,t3;
   t3=t1-t2; // soustraction de deux matrices
   \endcode
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 Matrix Matrix::operator-(const Matrix &mat) const
@@ -498,8 +472,6 @@ Matrix Matrix::operator-() const
   Matrix t1,t2;
   t2+=t1; // somme de deux matrices
   \endcode
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 void Matrix::operator+=(const Matrix &mat)
@@ -529,8 +501,6 @@ void Matrix::operator+=(const Matrix &mat)
   Matrix t1,t2;
   t2-=t1; // soustraction de deux matrices
   \endcode
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 void Matrix::operator-=(const Matrix &mat)
@@ -561,8 +531,6 @@ void Matrix::operator-=(const Matrix &mat)
   double l;
   t2=t1*l; // multiplication par un scalaire
   \endcode
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 Matrix Matrix::operator*(const double &lambda) const
@@ -586,8 +554,6 @@ Matrix Matrix::operator*(const double &lambda) const
   double l;
   t1*=l; // multiplication par un scalaire
   \endcode
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 void Matrix::operator*=(const double &lambda)
@@ -609,8 +575,6 @@ void Matrix::operator*=(const double &lambda)
   double l;
   t1/=l; // division par un scalaire
   \endcode
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 void Matrix::operator/=(const double &lambda)
@@ -632,8 +596,6 @@ void Matrix::operator/=(const double &lambda)
   double l;
   t2=t1/l; // division par un scalaire
   \endcode
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 Matrix Matrix::operator/(const double &lambda) const
@@ -649,7 +611,7 @@ Matrix Matrix::operator/(const double &lambda) const
 
 //multiplication d'une matrice par un scalaire
 /*!
-  Cette methode permet de surdefinir l'operation de multiplication des matrices et d'ecrire simplement la multiplication d'une matrice par un scalaire sous la forme donnee en exemple. Elle est identique e la forme precedente (et commutative).
+  Cette methode permet de surdefinir l'operation de multiplication des matrices et d'ecrire simplement la multiplication d'une matrice par un scalaire sous la forme donnee en exemple. Elle est identique à la forme precedente (et commutative).
   
   Exemple :
   \code
@@ -657,8 +619,6 @@ Matrix Matrix::operator/(const double &lambda) const
   double l;
   t2=l*t1; // multiplication par un scalaire
   \endcode
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 Matrix operator*(const double &lambda, const Matrix &mat)
@@ -674,15 +634,13 @@ Matrix operator*(const double &lambda, const Matrix &mat)
 
 //multiplication de deux matrices
 /*!
-  Cette methode permet de surdefinir l'operation de multiplication des matrices et d'ecrire simplement la multiplication de deux matrice sous la forme donnee en exemple. Cette operation correspond e la notion de produit contracte de deux matrices.
+  Cette methode permet de surdefinir l'operation de multiplication des matrices et d'ecrire simplement la multiplication de deux matrice sous la forme donnee en exemple. Cette operation correspond à la notion de produit contracte de deux matrices.
   
   Exemple :
   \code
   Matrix t1,t2,t3;
   t3=t1*t2; // produit contracte
   \endcode
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 Matrix Matrix::operator*(const Matrix &mat) const
@@ -800,15 +758,13 @@ double Matrix::doubleProduct(const Matrix mat) const
 
 //multiplication de deux matrices
 /*!
-  Cette methode permet de surdefinir l'operation de multiplication des matrices et d'ecrire simplement la multiplication de deux matrice sous la forme donnee en exemple. Cette operation correspond e la notion de produit contracte de deux matrices.
+  Cette methode permet de surdefinir l'operation de multiplication des matrices et d'ecrire simplement la multiplication de deux matrice sous la forme donnee en exemple. Cette operation correspond à la notion de produit contracte de deux matrices.
   
   Exemple :
   \code
   Matrix t1,t2,t3;
   t3=t1*t2; // produit contracte
   \endcode
-
-  \version 1.0.0
 */
 //-----------------------------------------------------------------------------
 Matrix Matrix::operator*(const MatrixDiag &mat) const
@@ -838,8 +794,6 @@ Matrix Matrix::operator*(const MatrixDiag &mat) const
   MatrixDiag t2;
   t1.squareMultiplyBy(t2); // produit 
   \endcode
-
-  \version 1.0.0
 */
 //-----------------------------------------------------------------------------
 void Matrix::squareMultiplyBy(const MatrixDiag &mat)
@@ -878,8 +832,6 @@ void Matrix::squareMultiplyBy(const MatrixDiag &mat)
   MatrixDiag t2;
   t1.squareDivideBy(t2); // produit 
   \endcode
-
-  \version 1.0.0
 */
 //-----------------------------------------------------------------------------
 void Matrix::squareDivideBy(const MatrixDiag &mat)
@@ -922,8 +874,6 @@ void Matrix::squareDivideBy(const MatrixDiag &mat)
   \endcode
   \param vec vecteur du second membre
   \return vecteur resultant de l'operation de multiplication
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 Vector Matrix::trans_mult(const Vector &vec) const
@@ -957,8 +907,6 @@ Vector Matrix::trans_mult(const Vector &vec) const
   \endcode
   \param vec vecteur du second membre
   \return vecteur resultant de l'operation de multiplication
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 Vector Matrix::operator*(const Vector &vec) const
@@ -1005,8 +953,6 @@ void Matrix::productBy(Vector &resu) const
 /*!
   Cette methode calcule la trace d'une matrice carree
   \return valeur de la trace de la matrice
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 double Matrix::getTrace() const
@@ -1031,8 +977,6 @@ double Matrix::getTrace() const
 /*!
   Cette methode calcule la moyenne de la trace d'une matrice carree
   \return valeur de la moyenne de la trace de la matrice
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 double Matrix::getAverageTrace() const
@@ -1057,8 +1001,6 @@ double Matrix::getAverageTrace() const
 /*!
   Cette methode renvoie la transposee d'une matrice
   \return transposee de la matrice
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 Matrix Matrix::getTranspose() const
@@ -1077,8 +1019,6 @@ Matrix Matrix::getTranspose() const
 /*!
   Cette methode calcule la somme des termes sur les rows d'une matrice et renvoie un vecteur correspondant
   \return vecteur contenant les sommes sur les rows
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 Vector Matrix::rowSum() const
@@ -1097,8 +1037,6 @@ Vector Matrix::rowSum() const
 /*!
   Cette methode calcule la somme des termes sur les cols d'une matrice et renvoie un vecteur correspondant
   \return vecteur contenant les sommes sur les rows
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 Vector Matrix::columnSum() const
@@ -1118,8 +1056,6 @@ Vector Matrix::columnSum() const
   Cette methode extraie la partie symetrique d'une matrice et la renvoie
   \warning Cette methode n'est disponible que pour les matrices de taille 2 et 3.
   \return partie symetrique de la matrice
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 Matrix Matrix::getSymetricPart() const
@@ -1146,8 +1082,6 @@ Matrix Matrix::getSymetricPart() const
   Cette methode extraie la partie anti-symetrique d'une matrice et la renvoie
   \warning Cette methode n'est disponible que pour les matrices de taille 2 et 3.
   \return partie anti-symetrique de la matrice
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 Matrix Matrix::getSkewSymetricPart() const
@@ -1174,8 +1108,6 @@ Matrix Matrix::getSkewSymetricPart() const
   Cette methode extraie une ligne d'une matrice et la renvoie
   \param row numero de la ligne de la matrice (origine 0).
   \return vecteur contenant la ligne \c row de la matrice
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 Vector Matrix::getRow(long row) const
@@ -1196,8 +1128,6 @@ Vector Matrix::getRow(long row) const
   Cette methode extraie une colonne d'une matrice et la renvoie
   \param col numero de la colonne de la matrice (origine 0).
   \return vecteur contenant la colonne \c col de la matrice
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 Vector Matrix::getColumn(long col) const
@@ -1217,8 +1147,6 @@ Vector Matrix::getColumn(long col) const
 /*!
   Cette methode teste l'egalite de deux matrices
   \return true si les deux matrices sont identiques, false dans la cas contraire
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 bool Matrix::operator==(const Matrix &mat) const
@@ -1244,8 +1172,6 @@ bool Matrix::operator==(const Matrix &mat) const
 /*!
   Cette methode teste l'inegalite de deux matrices
   \return true si les deux matrices sont differentes, false dans la cas contraire
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 bool Matrix::operator!=(const Matrix &mat) const
@@ -1265,8 +1191,6 @@ bool Matrix::operator!=(const Matrix &mat) const
   t.write(pfile);
   t.close();
   \endcode
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 void Matrix::write(std::ofstream &ofs) const
@@ -1287,8 +1211,6 @@ void Matrix::write(std::ofstream &ofs) const
   Matrix t;
   t.read(pfile);
   \endcode
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 void Matrix::read(std::ifstream &ifs)
@@ -1312,8 +1234,6 @@ void Matrix::read(std::ifstream &ifs)
   Matrix t;
   pfile << t;
   \endcode
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 std::ofstream &operator<<(std::ofstream &os, const Matrix &mat)
@@ -1333,8 +1253,6 @@ std::ofstream &operator<<(std::ofstream &os, const Matrix &mat)
   Matrix t;
   pfile >> t;
   \endcode
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 std::ifstream &operator>>(std::ifstream &is, Matrix &mat)
@@ -1389,8 +1307,6 @@ double Matrix::getDeterminant3x3() const
   getDeterminant A = tr [U]
   \f]
   \return valeur du determinant
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 double Matrix::getDeterminant() const
@@ -1507,8 +1423,6 @@ void Matrix::computeInverse3x3(double det, Matrix &inverse) const
 /*!
   Cette methode calcule l'getInverse d'une matrice et le renvoie. Elle utilise les fonctions DGETRF et DGETRI de la librairie Lapack. La matrice initiale est preservee par cette methode.
   \return valeur de l'getInverse d'une matrice
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 Matrix Matrix::getInverse() const
@@ -1568,7 +1482,6 @@ Matrix Matrix::getInverse() const
   \param x vecteur du second membre
   \return vecteur solution du systeme lineaire
 
-  \version 0.9.6
 */
 //-----------------------------------------------------------------------------
 Vector Matrix::getSolve(const Vector &vect) const
@@ -1617,7 +1530,6 @@ Vector Matrix::getSolve(const Vector &vect) const
   \param x vecteur du second membre
   \return vecteur solution du systeme lineaire
 
-  \version 0.9.6
 */
 //-----------------------------------------------------------------------------
 void Matrix::solve(Vector &b)
@@ -1653,11 +1565,9 @@ void Matrix::solve(Vector &b)
   Cette methode calcule le Null Space d'une matrice \f$ \textbf{A} \f$. Le null-space de  \f$ \textbf{A}=N.S.(\textbf{A})\subset\mathcal{W} \f$  est l'ensemble des elements de \f$ \mathcal{V} \f$ tels que \f$ \textbf{A}(\overrightarrow{_data})=\overrightarrow{0} \f$. Cette methode utilise la routine DGESVD de la librairie Lapack.
 
   Cette methode utilise des copies de vecteurs et matrices donnes en argument et ne modifie pas les valeurs contenues dans ceux-ci au cours de l'appel.
-  \param relative Parametre booleen indiquant si la tolerance de recherche est relative ou non. Dans le cas d'une tolerance relative, la tolerance de recherche de la plus patite valeur preopres est recalculee par rapport e la plus grande valeur propre.
+  \param relative Parametre booleen indiquant si la tolerance de recherche est relative ou non. Dans le cas d'une tolerance relative, la tolerance de recherche de la plus patite valeur preopres est recalculee par rapport à la plus grande valeur propre.
   \param tol tolerance de recherche du Null-Space par defaut 1e-10.
   \return matrice contenant les vecteurs du Null-Space en cols (taille N x nNs) avce nNs nombre de "modes rigides"
-
-  \version 1.0.0
 */
 //-----------------------------------------------------------------------------
 Matrix Matrix::getNullSpace(bool relative, double tol)
@@ -1851,17 +1761,15 @@ Matrix Matrix::getNullSpace2(bool relative, double tol)
   return ret;
 }
 
-//evaluation valeurs propres et des vecteurs propres e droite et e gauche
+//evaluation valeurs propres et des vecteurs propres à droite et à gauche
 /*!
-  Cette methode calcule les valeurs propres et les vecteurs propres e droite et e gauche d'une matrice \f$ \textbf{A} \f$. Cette methode utilise la routine DGESVD de la librairie Lapack.
+  Cette methode calcule les valeurs propres et les vecteurs propres à droite et à gauche d'une matrice \f$ \textbf{A} \f$. Cette methode utilise la routine DGESVD de la librairie Lapack.
 
-  Cette methode utilise des copies de vecteurs et matrices donnes en argument et ne modifie pas les valeurs contenues dans ceux-ci au cours de l'appel. De plus, les matrices et vecteurs de retour donnes en argument n'on pas besoin d'etre dimensionnes e un taille correcte avant appel (ceci est fait en interne dans la routine).
+  Cette methode utilise des copies de vecteurs et matrices donnes en argument et ne modifie pas les valeurs contenues dans ceux-ci au cours de l'appel. De plus, les matrices et vecteurs de retour donnes en argument n'on pas besoin d'etre dimensionnes à un taille correcte avant appel (ceci est fait en interne dans la routine).
   \warning la matrice rightEigenVectors contient les vecteurs propres de la matrice sous une forme TRANSPOSEE.
   \param eigenValues vecteur contenant en retour les valeurs propres de la matrice
-  \param leftEigenVectors Matrice contenant en retour les vecteurs propres e gauche de la matrice (TRANSPOSES)
-  \param rightEigenVectors Matrice contenant en retour les vecteurs propres e droite de la matrice
-
-  \version 1.0.0
+  \param leftEigenVectors Matrice contenant en retour les vecteurs propres à gauche de la matrice (TRANSPOSES)
+  \param rightEigenVectors Matrice contenant en retour les vecteurs propres à droite de la matrice
 */
 //-----------------------------------------------------------------------------
 void Matrix::computeSVD(Vector &eigenValues, Matrix &leftEigenVectors, Matrix &rightEigenVectors)
@@ -2038,13 +1946,11 @@ void Matrix::computeEigenVectors2(Vector &eigenValues)
 
   La pseudo getInverse d'une matrice, egalement appelee getInverse de Moore-Penrose est generalement notee par \f$ A^{+} \f$ 
 
-  Cette methode utilise des copies de vecteurs et matrices donnes en argument et ne modifie pas les valeurs contenues dans ceux-ci au cours de l'appel. De plus, les matrices et vecteurs de retour donnes en argument n'on pas besoin d'etre dimensionnes e un taille correcte avant appel (ceci est fait en interne dans la routine).
+  Cette methode utilise des copies de vecteurs et matrices donnes en argument et ne modifie pas les valeurs contenues dans ceux-ci au cours de l'appel. De plus, les matrices et vecteurs de retour donnes en argument n'on pas besoin d'etre dimensionnes à un taille correcte avant appel (ceci est fait en interne dans la routine).
   \warning Pour plus d'efficacite, cette methode est (Me semble-t-il !!!) restreinte au calcul des matrices carrees symetriques uniquement. Dans le cas d'une matrice non symetrique, il conviendra de verifier le comportement.
-  \param relative Parametre booleen indiquant si la tolerance de recherche est relative ou non. Dans le cas d'une tolerance relative, la tolerance de recherche de la plus patite valeur preopres est recalculee par rapport e la plus grande valeur propre.
+  \param relative Parametre booleen indiquant si la tolerance de recherche est relative ou non. Dans le cas d'une tolerance relative, la tolerance de recherche de la plus patite valeur preopres est recalculee par rapport à la plus grande valeur propre.
   \param tol tolerance de recherche du Null-Space par defaut 1e-10.
   \return pseudo getInverse de la matrice donnee en argument
-
-  \version 1.0.0
 */
 //-----------------------------------------------------------------------------
 Matrix Matrix::getPseudoInverse(bool relative, double tol)
@@ -2082,14 +1988,12 @@ Matrix Matrix::getPseudoInverse(bool relative, double tol)
 
   La pseudo getInverse d'une matrice, egalement appelee getInverse de Moore-Penrose est generalement notee par \f$ A^{+} \f$.
 
-  Cette methode utilise des copies de vecteurs et matrices donnes en argument et ne modifie pas les valeurs contenues dans ceux-ci au cours de l'appel. De plus, les matrices et vecteurs de retour donnes en argument n'on pas besoin d'etre dimensionnes e un taille correcte avant appel (ceci est fait en interne dans la routine).
+  Cette methode utilise des copies de vecteurs et matrices donnes en argument et ne modifie pas les valeurs contenues dans ceux-ci au cours de l'appel. De plus, les matrices et vecteurs de retour donnes en argument n'on pas besoin d'etre dimensionnes à un taille correcte avant appel (ceci est fait en interne dans la routine).
   \warning Pour plus d'efficacite, cette methode est (Me semble-t-il !!!) restreinte au calcul des matrices carrees symetriques uniquement. Dans le cas d'une matrice non symetrique, il conviendra de verifier le comportement.
   \param Kplus Matrice de retour pour la pseudo-getInverse de la matrice donnee en argument
   \param NS Matrice de retour pour le Null-Space de la matrice donnee en argument
-  \param relative Parametre booleen indiquant si la tolerance de recherche est relative ou non. Dans le cas d'une tolerance relative, la tolerance de recherche de la plus patite valeur preopres est recalculee par rapport e la plus grande valeur propre.
+  \param relative Parametre booleen indiquant si la tolerance de recherche est relative ou non. Dans le cas d'une tolerance relative, la tolerance de recherche de la plus patite valeur preopres est recalculee par rapport à la plus grande valeur propre.
   \param tol tolerance de recherche du Null-Space par defaut 1e-10.
-
-  \version 1.0.0
 */
 //-----------------------------------------------------------------------------
 void Matrix::computePseudoInverse(Matrix &Kplus, Matrix &NS, bool relative, double tol)
@@ -2150,9 +2054,9 @@ void Matrix::computePseudoInverse(Matrix &Kplus, Matrix &NS, bool relative, doub
 
 //Assemblage d'une matrice dans une autre
 /*!
-  Cette methode effectue la phase d'assemblage d'une matrice dans une autre conformement e ce qui se fait classiquement en Elements Finis.
+  Cette methode effectue la phase d'assemblage d'une matrice dans une autre conformement à ce qui se fait classiquement en Elements Finis.
   
-  \param M Matrice elementaire e assembler dans la grande matrice
+  \param M Matrice elementaire à assembler dans la grande matrice
   \param int tableau d'long correspondant au nombre de NOEUDS de l'element et contenant les Id des noeuds que l'on utilise
   \param numberOfDim nombre de dimensions du probleme
   \code
@@ -2338,11 +2242,9 @@ void Matrix::scatterFrom(const Matrix &M, long *ind0, int numberOfDim)
 #endif
 }
 
-//affichage e l'ecran suivant format predefini
+//affichage à l'ecran suivant format predefini
 /*!
-  Cette methode affiche le contenu de la matrice e l'ecran selon un format predefini. La selection du format d'affichage est faite en utilisant la methode \ref setOutType(). Le type de sortie est definit par les variable enumerees dans \ref OutMatrix.
-
-  \version 1.0.0
+  Cette methode affiche le contenu de la matrice à l'ecran selon un format predefini. La selection du format d'affichage est faite en utilisant la methode \ref setOutType(). Le type de sortie est definit par les variable enumerees dans \ref OutMatrix.
 */
 //-----------------------------------------------------------------------------
 void Matrix::printOut()

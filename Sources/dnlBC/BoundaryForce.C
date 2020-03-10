@@ -69,7 +69,7 @@ Cette methode applique des conditions aux limites imposees sur un noeud. Les con
 void BoundaryForce::applyConstantOnCurrentFields(Node *node, double currentTime, double timeStep)
 //-----------------------------------------------------------------------------
 {
- /*  // l'idee est la, mais reste e le faire
+ /*  // l'idee est la, mais reste à le faire
   double facteur =
       1.2 * dynelaData->models.current()->currentTime / dynelaData->models.current()->solver->getEndTime();
   if (facteur > 1.0)

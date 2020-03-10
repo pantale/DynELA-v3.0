@@ -806,7 +806,7 @@ long List<Type>::getIndex(const Type objet) const
   \brief Search if an object is in the List
 
   This method performs a simple search for an item in the list and returns a boolean according to the presence or or not of this object in the list.
-  \param objet objet e rechercher dans la liste
+  \param objet object to search in the list
   \return true if the requested object is in the list, false if not
 */
 //-----------------------------------------------------------------------------

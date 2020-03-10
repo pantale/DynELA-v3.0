@@ -31,8 +31,7 @@
 /*
   \enum OutVector
   \brief enumeration de format d'affichage de vecteurs.
-  Cette enumeration permet de definir le format d'affichage des vecteurs. On a ainsi le choix entre outVectorTypeNormal qui correspond e un affichage conforme e Mathematica et outVectorTypeMupad qui correspond e un affichage au format Mupad.
-  \since 1.0.0
+  Cette enumeration permet de definir le format d'affichage des vecteurs. On a ainsi le choix entre outVectorTypeNormal qui correspond à un affichage conforme à Mathematica et outVectorTypeMupad qui correspond à un affichage au format Mupad.
 */
 #ifndef SWIG
 enum OutVector

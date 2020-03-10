@@ -8,13 +8,12 @@
  **************************************************************************/
 
 /*!
-  \file DiscreteFunction.C
-  \brief Definition file for the discrete function class
+  \file CrackFunction.C
+  \brief Definition file for the crack function class
 
-  This file is the definition file for the discrete function class. A discrete function is a function with the following form: \f[ y=f(x) \f] defined from a set of points.
+  This file is the definition file for the crack function class. A crack function is a function with the following form: \f[ y=f(x) \f] defined from a set of points.
   Linear interpolation is used to obtain data between given points.
-  \ingroup linearAlgebra
-  \since DynELA 1.0
+  \ingroup dnlMaths
 */
 
 #include <Macros.h>

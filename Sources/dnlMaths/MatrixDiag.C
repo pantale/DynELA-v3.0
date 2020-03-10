@@ -27,10 +27,8 @@
 
 //constructeur de la classe MatrixDiag
 /*!
-  Cette m�thode construit une matrice de lignes/colonnes elements. Par d�faut, le contenu de la matrice est mis � z�rho
+  Cette methode construit une matrice de lignes/colonnes elements. Par defaut, le contenu de la matrice est misàzerho
   \param numberOfTerms nombre de lignes
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 MatrixDiag::MatrixDiag(const long numberOfTerms, double value)
@@ -45,9 +43,7 @@ MatrixDiag::MatrixDiag(const long numberOfTerms, double value)
 
 //constructeur par recopie d'une matrice
 /*!
-  Ce constructeur recopie les valeurs contenues dans une matrice. Selon la valeur du flag \ref MEM_funct, la copie est faite soit terme � terme (flag non d�fini) ou par appel � memcopy() (flag d�fini).
-
-  \version 0.9.4
+  Ce constructeur recopie les valeurs contenues dans une matrice. Selon la valeur du flag \ref MEM_funct, la copie est faite soit termeàterme (flag non defini) ou par appelàmemcopy() (flag defini).
 */
 //-----------------------------------------------------------------------------
 MatrixDiag::MatrixDiag(const MatrixDiag &mat)
@@ -60,8 +56,6 @@ MatrixDiag::MatrixDiag(const MatrixDiag &mat)
 
 //destructeur de la classe MatrixDiag
 /*!
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 MatrixDiag::~MatrixDiag()
@@ -161,10 +155,8 @@ void MatrixDiag::desallocate()
 
 //redimensionne la matrice
 /*!
-  Cette m�thode est utilis�e pour sp�cifier une nouvelle dimension de matrice de celle donn�e lors de l'initialisation par le constructeur
+  Cette methode est utilisee pour specifier une nouvelle dimension de matrice de celle donnee lors de l'initialisation par le constructeur
   \param newSize nombre de lignes
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 void MatrixDiag::redim(const long newSize)
@@ -179,7 +171,7 @@ void MatrixDiag::redim(const long newSize)
 
 //affichage du contenu d'une matrice
 /*!
-  Cette m�thode est une surd�finition de << pour les flux de sortie, son utilisation est donn�e comme suit
+  Cette methode est une surdefinition de << pour les flux de sortie, son utilisation est donnee comme suit
   
   Exemple
   \code
@@ -187,8 +179,6 @@ void MatrixDiag::redim(const long newSize)
   cout << t << endl;
   \endcode
   \param os flux de sortie
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 std::ostream &operator<<(std::ostream &os, const MatrixDiag &mat)
@@ -202,8 +192,6 @@ std::ostream &operator<<(std::ostream &os, const MatrixDiag &mat)
 /*!
   Cette methode permet d'afficher le contenu d'une matrice sur la sortie std::ostream
   \param os flux de sortie
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 void MatrixDiag::print(std::ostream &os) const
@@ -226,17 +214,15 @@ void MatrixDiag::print(std::ostream &os) const
   os << "}}";
 }
 
-//affectation d'�galit�
+//affectation d'egalite
 /*! 
-  Cette m�thode est une surd�finition de la methode d'�galit� permettant d'�crire simplement le remplissage des valeurs d'une matrice par un scalaire
+  Cette methode est une surdefinition de la methode d'egalite permettant d'ecrire simplement le remplissage des valeurs d'une matrice par un scalaire
   
   Exemple :
   \code
   MatrixDiag t1;
-  t1=setToValue(1.); // affecte 1 � toutes les composantes de la matrice
+  t1=setToValue(1.); // affecte 1àtoutes les composantes de la matrice
   \endcode
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 void MatrixDiag::setToValue(double val)
@@ -247,18 +233,16 @@ void MatrixDiag::setToValue(double val)
     _data[i] = val;
 }
 
-//renvoie une matrice identit� � partir d'une matrice quelconque
+//renvoie une matrice identiteàpartir d'une matrice quelconque
 /*!
-  Cette m�thode prend en argument une matrice quelconque et renvoie une matrice identit�. Par d�finition une matrice diagonale identit� est enti�rement remplie de 1.
+  Cette methode prend en argument une matrice quelconque et renvoie une matrice identite. Par definition une matrice diagonale identite est entierement remplie de 1.
   
   Exemple :
   \code
   MatrixDiag t1;
-  t1.setToUnity(); // renvoie identit�
+  t1.setToUnity(); // renvoie identite
   \endcode
-  \warning Cette m�thode modifie son argument
-
-  \version 0.9.4
+  \warning Cette methode modifie son argument
 */
 //-----------------------------------------------------------------------------
 void MatrixDiag::setToUnity()
@@ -269,17 +253,15 @@ void MatrixDiag::setToUnity()
     _data[i] = 1.0;
 }
 
-//affectation d'�galit�
+//affectation d'egalite
 /*! 
-  Cette m�thode est une surd�finition de la methode d'�galit� permettant d'�crire simplement le remplissage des valeurs d'une matrice par un scalaire
+  Cette methode est une surdefinition de la methode d'egalite permettant d'ecrire simplement le remplissage des valeurs d'une matrice par un scalaire
   
   Exemple :
   \code
   MatrixDiag t1;
-  t1=1.; // affecte 1 � toutes les composantes de la matrice
+  t1=1.; // affecte 1àtoutes les composantes de la matrice
   \endcode
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 MatrixDiag &MatrixDiag::operator=(const double &val)
@@ -289,17 +271,15 @@ MatrixDiag &MatrixDiag::operator=(const double &val)
   return *this;
 }
 
-//affectation d'�galit�
+//affectation d'egalite
 /*! 
-  Cette m�thode est une surd�finition de la methode d'�galit� permettant d'�crire simplement l'affectation sous la forme donn�e en exemple
+  Cette methode est une surdefinition de la methode d'egalite permettant d'ecrire simplement l'affectation sous la forme donnee en exemple
   
   Exemple :
   \code
   MatrixDiag t1,t2;
-  t1=t2; // egalit� de deux matrices
+  t1=t2; // egalite de deux matrices
   \endcode
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 MatrixDiag &MatrixDiag::operator=(const MatrixDiag &mat)
@@ -316,15 +296,13 @@ MatrixDiag &MatrixDiag::operator=(const MatrixDiag &mat)
 
 //addition de deux matrices
 /*!
-  Cette methode permet de surd�finir l'op�ration d'addition des matrices et d'�crire simplement la somme de deux matrices sous la forme donn�e en exemple
+  Cette methode permet de surdefinir l'operation d'addition des matrices et d'ecrire simplement la somme de deux matrices sous la forme donnee en exemple
   
   Exemple :
   \code
   MatrixDiag t1,t2,t3;
   t3=t1+t2; // somme de deux matrices
   \endcode
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 MatrixDiag MatrixDiag::operator+(const MatrixDiag &mat) const
@@ -353,15 +331,13 @@ MatrixDiag MatrixDiag::operator+(const MatrixDiag &mat) const
 
 //soustraction de deux matrices
 /*!
-  Cette methode permet de surd�finir l'op�ration de soustraction des matrices et d'�crire simplement la soustraction de deux matrices sous la forme donn�e en exemple
+  Cette methode permet de surdefinir l'operation de soustraction des matrices et d'ecrire simplement la soustraction de deux matrices sous la forme donnee en exemple
   
   Exemple :
   \code
   MatrixDiag t1,t2,t3;
   t3=t1-t2; // soustraction de deux matrices
   \endcode
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 MatrixDiag MatrixDiag::operator-(const MatrixDiag &mat) const
@@ -404,15 +380,13 @@ MatrixDiag MatrixDiag::operator-() const
 
 //addition de deux matrices
 /*!
-  Cette methode permet de surd�finir l'op�ration d'addition des matrices et d'�crire simplement la somme de deux matrices sous la forme donn�e en exemple
+  Cette methode permet de surdefinir l'operation d'addition des matrices et d'ecrire simplement la somme de deux matrices sous la forme donnee en exemple
   
   Exemple :
   \code
   MatrixDiag t1,t2;
   t2+=t1; // somme de deux matrices
   \endcode
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 void MatrixDiag::operator+=(const MatrixDiag &mat)
@@ -435,15 +409,13 @@ void MatrixDiag::operator+=(const MatrixDiag &mat)
 
 //soustraction de deux matrices
 /*!
-  Cette methode permet de surd�finir l'op�ration de soustraction des matrices et d'�crire simplement la soustraction de deux matrices sous la forme donn�e en exemple
+  Cette methode permet de surdefinir l'operation de soustraction des matrices et d'ecrire simplement la soustraction de deux matrices sous la forme donnee en exemple
   
   Exemple :
   \code
   MatrixDiag t1,t2;
   t2-=t1; // soustraction de deux matrices
   \endcode
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 void MatrixDiag::operator-=(const MatrixDiag &mat)
@@ -465,7 +437,7 @@ void MatrixDiag::operator-=(const MatrixDiag &mat)
 
 //multiplication d'une matrice par un scalaire
 /*!
-  Cette methode permet de surd�finir l'op�ration de multiplication des matrices et d'�crire simplement la multiplication d'une matrice par un scalaire sous la forme donn�e en exemple
+  Cette methode permet de surdefinir l'operation de multiplication des matrices et d'ecrire simplement la multiplication d'une matrice par un scalaire sous la forme donnee en exemple
   
   Exemple :
   \code
@@ -473,8 +445,6 @@ void MatrixDiag::operator-=(const MatrixDiag &mat)
   double l;
   t2=t1*l; // multiplication par un scalaire
   \endcode
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 MatrixDiag MatrixDiag::operator*(const double &lambda) const
@@ -489,7 +459,7 @@ MatrixDiag MatrixDiag::operator*(const double &lambda) const
 
 //division d'une matrice par un scalaire
 /*!
-  Cette methode permet de surd�finir l'op�ration de division des matrices et d'�crire simplement la division d'une matrice par un scalaire sous la forme donn�e en exemple
+  Cette methode permet de surdefinir l'operation de division des matrices et d'ecrire simplement la division d'une matrice par un scalaire sous la forme donnee en exemple
   
   Exemple :
   \code
@@ -497,8 +467,6 @@ MatrixDiag MatrixDiag::operator*(const double &lambda) const
   double l;
   t1/=l; // division par un scalaire
   \endcode
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 MatrixDiag MatrixDiag::operator/(const double &lambda) const
@@ -513,7 +481,7 @@ MatrixDiag MatrixDiag::operator/(const double &lambda) const
 
 //multiplication d'une matrice par un scalaire
 /*!
-  Cette methode permet de surd�finir l'op�ration de multiplication des matrices et d'�crire simplement la multiplication d'une matrice par un scalaire sous la forme donn�e en exemple. Elle est identique � la forme pr�c�dente (et commutative).
+  Cette methode permet de surdefinir l'operation de multiplication des matrices et d'ecrire simplement la multiplication d'une matrice par un scalaire sous la forme donnee en exemple. Elle est identiqueàla forme precedente (et commutative).
   
   Exemple :
   \code
@@ -521,8 +489,6 @@ MatrixDiag MatrixDiag::operator/(const double &lambda) const
   double l;
   t2=l*t1; // multiplication par un scalaire
   \endcode
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 MatrixDiag operator*(const double &lambda, const MatrixDiag &mat)
@@ -537,15 +503,13 @@ MatrixDiag operator*(const double &lambda, const MatrixDiag &mat)
 
 //multiplication de deux matrices
 /*!
-  Cette methode permet de surd�finir l'op�ration de multiplication des matrices et d'�crire simplement la multiplication de deux matrice sous la forme donn�e en exemple. Cette op�ration correspond � la notion de produit contract� de deux matrices.
+  Cette methode permet de surdefinir l'operation de multiplication des matrices et d'ecrire simplement la multiplication de deux matrice sous la forme donnee en exemple. Cette operation correspondàla notion de produit contracte de deux matrices.
   
   Exemple :
   \code
   MatrixDiag t1,t2,t3;
-  t3=t1*t2; // produit contract�
+  t3=t1*t2; // produit contracte
   \endcode
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 MatrixDiag MatrixDiag::operator*(const MatrixDiag &mat) const
@@ -576,8 +540,8 @@ MatrixDiag MatrixDiag::singleProduct(const MatrixDiag &mat) const
 
 //multiplication d'une matrice par un vecteur
 /*!
-  Cette m�thode calcule le produit d'une matrice A de taille N-x-N par un vecteur x de taille N. ceci g�n�re un vecteur y de taille N.
-  Cette m�thode retourne un vecteur
+  Cette methode calcule le produit d'une matrice A de taille N-x-N par un vecteur x de taille N. ceci genere un vecteur y de taille N.
+  Cette methode retourne un vecteur
   Exemple :
   \code
   MatrixDiag t1;
@@ -585,9 +549,7 @@ MatrixDiag MatrixDiag::singleProduct(const MatrixDiag &mat) const
   v2=t1*v1; // produit
   \endcode
   \param vec vecteur du second membre
-  \return vecteur r�sultant de l'op�ration de multiplication
-
-  \version 0.9.4
+  \return vecteur resultant de l'operation de multiplication
 */
 //-----------------------------------------------------------------------------
 Vector MatrixDiag::operator*(const Vector &vec) const
@@ -650,10 +612,8 @@ void MatrixDiag::divideBy(Vector &vec) const
 
 //calcule la trace d'une matrice
 /*!
-  Cette m�thode calcule la trace d'une matrice carr�e
+  Cette methode calcule la trace d'une matrice carree
   \return valeur de la trace de la matrice
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 double MatrixDiag::getTrace()
@@ -665,12 +625,10 @@ double MatrixDiag::getTrace()
   return trace;
 }
 
-//transpos�e d'une matrice
+//transposee d'une matrice
 /*!
-  Cette m�thode renvoie la transpos�e d'une matrice
-  \return transpos�e de la matrice
-
-  \version 0.9.4
+  Cette methode renvoie la transposee d'une matrice
+  \return transposee de la matrice
 */
 //-----------------------------------------------------------------------------
 MatrixDiag MatrixDiag::getTranspose()
@@ -679,14 +637,13 @@ MatrixDiag MatrixDiag::getTranspose()
   return *this;
 }
 
-//r�solution d'un syst�me lin�aire
+//resolution d'un systeme lineaire
 /*!
-  Cette m�thode calcule la solution du syst�me lin�aire  \f[ A x = b \f] avec A matrice N-x-N et x et y vecteurs de taille N.
+  Cette methode calcule la solution du systeme lineaire  \f[ A x = b \f] avec A matrice N-x-N et x et y vecteurs de taille N.
 
   \param x vecteur du second membre
-  \return vecteur solution du syst�me lin�aire
+  \return vecteur solution du systeme lineaire
 
-  \version 0.9.6
 */
 //-----------------------------------------------------------------------------
 Vector MatrixDiag::getSolve(Vector &vec)
@@ -732,12 +689,10 @@ MatrixDiag MatrixDiag::getInverse() const
   return res;
 }
 
-//egalit� de deux matrices
+//egalite de deux matrices
 /*!
-  Cette m�thode teste l'�galit� de deux matrices
+  Cette methode teste l'egalite de deux matrices
   \return true si les deux matrices sont identiques, false dans la cas contraire
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 bool MatrixDiag::operator==(const MatrixDiag &mat) const
@@ -757,12 +712,10 @@ bool MatrixDiag::operator==(const MatrixDiag &mat) const
   return true;
 }
 
-//in�galit� de deux matrices
+//inegalite de deux matrices
 /*!
-  Cette m�thode teste l'in�galit� de deux matrices
+  Cette methode teste l'inegalite de deux matrices
   \return true si les deux matrices sont differentes, false dans la cas contraire
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 bool MatrixDiag::operator!=(const MatrixDiag &mat) const
@@ -773,7 +726,7 @@ bool MatrixDiag::operator!=(const MatrixDiag &mat) const
 
 //sortie sur flux std::ofstream
 /*!
-  Cette m�thode permet d'�crire une matrice dans un fichier (notament) binaire
+  Cette methode permet d'ecrire une matrice dans un fichier (notament) binaire
   
   Exemple :
   \code
@@ -782,8 +735,6 @@ bool MatrixDiag::operator!=(const MatrixDiag &mat) const
   t.write(pfile);
   t.close();
   \endcode
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 void MatrixDiag::write(std::ofstream &ofs) const
@@ -795,7 +746,7 @@ void MatrixDiag::write(std::ofstream &ofs) const
 
 //lecture sur flux std::ifstream
 /*!
-  Cette m�thode permet de lire une matrice depuis un fichier (notament) binaire
+  Cette methode permet de lire une matrice depuis un fichier (notament) binaire
   
   Exemple :
   \code
@@ -803,8 +754,6 @@ void MatrixDiag::write(std::ofstream &ofs) const
   Matrix t;
   t.read(pfile);
   \endcode
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 void MatrixDiag::read(std::ifstream &ifs)
@@ -819,7 +768,7 @@ void MatrixDiag::read(std::ifstream &ifs)
 
 //sortie sur flux std::ofstream
 /*!
-  Cette m�thode permet d'�crire une matrice dans un fichier (notament) binaire
+  Cette methode permet d'ecrire une matrice dans un fichier (notament) binaire
   
   Exemple :
   \code
@@ -827,8 +776,6 @@ void MatrixDiag::read(std::ifstream &ifs)
   Matrix t;
   pfile << t;
   \endcode
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 std::ofstream &operator<<(std::ofstream &os, const MatrixDiag &mat)
@@ -840,7 +787,7 @@ std::ofstream &operator<<(std::ofstream &os, const MatrixDiag &mat)
 
 //lecture sur flux std::ifstream
 /*!
-  Cette m�thode permet de lire une matrice depuis un fichier (notament) binaire
+  Cette methode permet de lire une matrice depuis un fichier (notament) binaire
   
   Exemple :
   \code
@@ -848,8 +795,6 @@ std::ofstream &operator<<(std::ofstream &os, const MatrixDiag &mat)
   Matrix t;
   pfile >> t;
   \endcode
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 std::ifstream &operator>>(std::ifstream &is, MatrixDiag &mat)
@@ -958,9 +903,9 @@ void MatrixDiag::numpyReadZ(std::string filename, std::string name)
 
 //Assemblage d'un vecteur dans un autre
 /*!
-  Cette methode effectue la phase d'assemblage d'ue vecteur dans un autre conformement e ce qui se fait classiquement en Elements Finis.
+  Cette methode effectue la phase d'assemblage d'ue vecteur dans un autre conformement à ce qui se fait classiquement en Elements Finis.
   
-  \param M Vecteur elementaire e assembler dans le grand vecteur
+  \param M Vecteur elementaire à assembler dans le grand vecteur
   \param int tableau d'long correspondant au nombre de NOEUDS de l'element et contenant les Id des noeuds que l'on utilise
   \param numberOfDimensions nombre de dimensions du probleme
   \code
@@ -1040,9 +985,9 @@ void MatrixDiag::gatherFrom(const MatrixDiag &M, long *ind0, int numberOfDimensi
 
 //Assemblage d'un vecteur dans un autre
 /*!
-  Cette methode effectue la phase d'assemblage d'ue vecteur dans un autre conformement e ce qui se fait classiquement en Elements Finis.
+  Cette methode effectue la phase d'assemblage d'ue vecteur dans un autre conformement à ce qui se fait classiquement en Elements Finis.
   
-  \param M Vecteur elementaire e assembler dans le grand vecteur
+  \param M Vecteur elementaire à assembler dans le grand vecteur
   \param int tableau d'long correspondant au nombre de NOEUDS de l'element et contenant les Id des noeuds que l'on utilise
   \param numberOfDimensions nombre de dimensions du probleme
   \code

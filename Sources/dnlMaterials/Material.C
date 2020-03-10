@@ -292,7 +292,4 @@ double Material::getIsotropicYieldHardening(Element *el, double shift)
     return (_hardening->getIsotropicYieldHardening(el, shift));
   return 0;
 }
-
-
-
 */

@@ -439,7 +439,5 @@ struct LateralSurface
 bool compareLateralSurfaces(LateralSurface *p1, LateralSurface *p2);
 
 //------------------------------- Inline -----------------------------------
-
-
 */
 #endif

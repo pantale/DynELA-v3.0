@@ -178,6 +178,4 @@ void ElementAxi::getdU_atIntPoint (Tensor2 & du, short time)
   R=getRadiusAtIntegrationPoint();
   du (2, 2) = v / R;
 }
-
-
 */

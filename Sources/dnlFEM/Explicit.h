@@ -8,10 +8,10 @@
  **************************************************************************/
 
 /*!
-  \file NodeSet.h
-  \brief Declaration file for the NodeSet class
+  \file Explicit.h
+  \brief Declaration file for the Explicit class
 
-  This file is the declaration file for the NodeSet class.
+  This file is the declaration file for the Explicit class.
 
   \ingroup dnlFEM
 */
@@ -20,35 +20,14 @@
 #define __dnlFEM_Explicit_h__
 
 #include <Solver.h>
-//#include <Explicit.h>
-
-/* #include <upFemSolver.h>
-
-#include <Solver.h>
-class Model;
- */
-/*!
-  \file Explicit.h
-  \brief fichier .h de definition des solveurs elements finis
-  \ingroup femExplicitSolverCH
-
-  Ce fichier sert e la definition de la classe Explicit.
-
-
-  \version 1.0.0
-*/
 
 #define defaultSpectralRadius 0.8182
 
 /*!
-  \class Explicit Explicit.h
   \brief Classe de definition et de manipulation des solveurs elements finis.
-  \ingroup femExplicitSolverCH
+  \ingroup dnlFEM
 
-  Cette classe sert e definir et e manipuler les solveurs disponibles au niveau d'un modele. Elle contient toutes les definitions de base concernant la gestion des temps de simulation (increment de temps, temps de debut, de fin ...) ainsi que la gestion complete des increments.
-
-
-  \version 1.0.0
+  Cette classe sert à definir et à manipuler les solveurs disponibles au niveau d'un modele. Elle contient toutes les definitions de base concernant la gestion des temps de simulation (increment de temps, temps de debut, de fin ...) ainsi que la gestion complete des increments.
 */
 class Explicit : public Solver
 {

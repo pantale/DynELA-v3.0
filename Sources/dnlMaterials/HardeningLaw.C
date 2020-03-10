@@ -39,9 +39,8 @@
   \brief fichier .h de definition de la classe generique des materiaux
   \ingroup femLibrary
 
-  Ce fichier sert e la definition la classe generique des materiaux.
+  Ce fichier sert à la definition la classe generique des materiaux.
 
-  \version 0.9.6
 */
 
 #include <HardeningLaw.h>

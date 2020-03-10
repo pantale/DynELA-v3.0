@@ -11,10 +11,10 @@
   \file DiscreteFunction.h
   \brief Declaration file for the discrete function class
 
-  This file is the declaration file for the discrete function class. A discrete function is a function with the following form: \f[ y=f(x) \f] defined from a set of points.
+  This file is the declaration file for the discrete function class. 
+  A discrete function is a function with the following form: \f[ y=f(x) \f] defined from a set of points.
   Linear interpolation is used to obtain data between given points.
-  \ingroup linearAlgebra
-  \since DynELA 1.0
+  \ingroup dnlMaths
 */
 
 #ifndef __dnlMaths_DiscreteFunction_h__
@@ -24,10 +24,10 @@
 #include <Function.h>
 
 /*!
-  \class coupleReal
-  \brief This is a private class used in the DiscreteFunction class to define a couple of points. This one is not directly refered by the user.
-  \ingroup linearAlgebra
-  \since DynELA 1.0
+  \brief Private class used in the DiscreteFunction class to define a couple of points. 
+  
+  This one is not directly refered by the user.
+  \ingroup dnlMaths
 */
 class coupleReal
 {
@@ -35,7 +35,7 @@ class coupleReal
   friend class DiscreteFunction;
   friend class CrackFunction;
   friend bool compare(coupleReal *t1, coupleReal *t2);
-  double x, y;
+  double x, y; //!< Coordinates of the point
 
   coupleReal();
   coupleReal(double x, double y);
@@ -55,8 +55,7 @@ bool compare(coupleReal *t1, coupleReal *t2);
   Combining times to the variable x, we can define a function to vary the boundary condition over time.
   One can also use this function to create nonlinear behavior laws of discretely defined materials with the following form: \f[ \sigma=f(\varepsilon) \f]
   Of course it's also used in the application \b DynELA \b curves for managing digital results as curves.
-  \ingroup linearAlgebra
-  \since DynELA 1.0
+  \ingroup dnlMaths
 */
 class DiscreteFunction : public Function
 {
@@ -69,12 +68,12 @@ public:
   };
 
 protected:
-  List<coupleReal *> lpoints;
-  bool Sort;
+  List<coupleReal *> lpoints; //!< List of points
+  bool Sort;                  //!< Boolean flage telling if the points are sorted or not
 
 public:
-  char style;  // First style variable for the discrete function. This is useful for storing information about this feature
-  char style2; // Second style variable for the discrete function. This is useful for storing information about this feature
+  char style;  //!< First style variable for the discrete function. This is useful for storing information about this feature
+  char style2; //!< Second style variable for the discrete function. This is useful for storing information about this feature
 
 private:
   void sort();
@@ -137,15 +136,20 @@ public:
   void toGnuplot(String);
 };
 
-// Auto sort x coordinates (default value is \b true)
+/*!
+  \brief Auto sort x coordinates (default value is \b true)
+  \param setSorted Boolean defining if coordinates are sorted
+*/
 //-----------------------------------------------------------------------------
-inline void DiscreteFunction::autoSort(bool sr)
+inline void DiscreteFunction::autoSort(bool setSorted)
 //-----------------------------------------------------------------------------
 {
-  Sort = sr;
+  Sort = setSorted;
 }
 
-// Returns the number of points defining the discrete function
+/*!
+  \brief Returns the number of points defining the discrete function
+*/
 //-----------------------------------------------------------------------------
 inline long DiscreteFunction::getNumberOfPoints()
 //-----------------------------------------------------------------------------
@@ -153,7 +157,9 @@ inline long DiscreteFunction::getNumberOfPoints()
   return lpoints.getSize();
 }
 
-// Delete all the points in the current dicrete function
+/*!
+  \brief Delete all the points in the current dicrete function
+*/
 //-----------------------------------------------------------------------------
 inline void DiscreteFunction::flush()
 //-----------------------------------------------------------------------------
@@ -161,20 +167,26 @@ inline void DiscreteFunction::flush()
   lpoints.flush();
 }
 
-// Return the X coordinate of the ith point
+/*!
+  \brief Return the X coordinate of the ith 
+  \param point refers the ith point
+*/
 //-----------------------------------------------------------------------------
-inline double DiscreteFunction::getXPoint(long i)
+inline double DiscreteFunction::getXPoint(long point)
 //-----------------------------------------------------------------------------
 {
-  return lpoints(i)->x;
+  return lpoints(point)->x;
 }
 
-// Return the Y coordinate of the ith point
+/*!
+  \brief Return the Y coordinate of the ith 
+  \param point refers the ith point
+*/
 //-----------------------------------------------------------------------------
-inline double DiscreteFunction::getYPoint(long i)
+inline double DiscreteFunction::getYPoint(long point)
 //-----------------------------------------------------------------------------
 {
-  return lpoints(i)->y;
+  return lpoints(point)->y;
 }
 
 #endif

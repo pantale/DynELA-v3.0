@@ -9,16 +9,19 @@
 
 /*!
   \file ColorMap.C
-  \brief Fichier .C de definitions associees e l'OS ColorMap
-  \ingroup dnlKernel
+  \brief Definition of the ColorMap class.
 
-  Ce fichier regroupe la definition de la classe ColorMap utilisee pour l'environnement de travail ColorMap.
-
-  \since DynELA 0.9.5
+  This file defines the ColorMap class used to produce svg outputs.
+  \ingroup dnlMaths
 */
 
 #include <ColorMap.h>
 
+/*!
+  \brief Default constructor of the ColorMap class
+
+  The default constructor affects the default colormap to a deep color map
+*/
 //-----------------------------------------------------------------------------
 ColorMap::ColorMap()
 //-----------------------------------------------------------------------------
@@ -27,8 +30,20 @@ ColorMap::ColorMap()
   setDeepColorMap();
 }
 
+/*!
+  \brief Default destructor
+*/
 //-----------------------------------------------------------------------------
-void ColorMap::clearMap()
+ColorMap::~ColorMap()
+//-----------------------------------------------------------------------------
+{
+}
+
+/*!
+  \brief Clears the current color map
+*/
+//-----------------------------------------------------------------------------
+void ColorMap::clearColorMap()
 //-----------------------------------------------------------------------------
 {
   _redComponent.flush();
@@ -36,13 +51,16 @@ void ColorMap::clearMap()
   _blueComponent.flush();
 }
 
+/*!
+  \brief Creates an normal color map
+*/
 //-----------------------------------------------------------------------------
 void ColorMap::setColorMap()
 //-----------------------------------------------------------------------------
 {
-  clearMap();
+  clearColorMap();
   double last = double(_levels - 1) / _levels;
-  CM = NormalCM;
+  _currentColorMap = NormalCM;
 
   // 0.00 - Blue color
   _redComponent.add(0.00, BLUE(0));
@@ -75,13 +93,16 @@ void ColorMap::setColorMap()
   _blueComponent.add(1.00, RED(2));
 }
 
+/*!
+  \brief Creates an reverse normal color map
+*/
 //-----------------------------------------------------------------------------
 void ColorMap::setReverseDeepColorMap()
 //-----------------------------------------------------------------------------
 {
-  clearMap();
+  clearColorMap();
   double last = double(_levels - 1) / _levels;
-  CM = RDeepCM;
+  _currentColorMap = RDeepCM;
 
   // 0.00 - Dark Blue color
   _redComponent.add(0, DARKRED(0));
@@ -124,13 +145,16 @@ void ColorMap::setReverseDeepColorMap()
   _blueComponent.add(1.00, DARKBLUE(2));
 }
 
+/*!
+  \brief Creates a deep normal color map
+*/
 //-----------------------------------------------------------------------------
 void ColorMap::setDeepColorMap()
 //-----------------------------------------------------------------------------
 {
-  clearMap();
+  clearColorMap();
   double last = double(_levels - 1) / _levels;
-  CM = DeepCM;
+  _currentColorMap = DeepCM;
 
   // 0.00 - Dark Blue color
   _redComponent.add(0, DARKBLUE(0));
@@ -173,13 +197,16 @@ void ColorMap::setDeepColorMap()
   _blueComponent.add(1.00, DARKRED(2));
 }
 
+/*!
+  \brief Creates a reverse deep normal color map
+*/
 //-----------------------------------------------------------------------------
 void ColorMap::setReverseColorMap()
 //-----------------------------------------------------------------------------
 {
-  clearMap();
+  clearColorMap();
   double last = double(_levels - 1) / _levels;
-  CM = RNormalCM;
+  _currentColorMap = RNormalCM;
 
   // 0.00 - Blue color
   _redComponent.add(0, RED(0));
@@ -212,13 +239,16 @@ void ColorMap::setReverseColorMap()
   _blueComponent.add(1.00, BLUE(2));
 }
 
+/*!
+  \brief Creates a gray normal color map
+*/
 //-----------------------------------------------------------------------------
 void ColorMap::setGrayMap()
 //-----------------------------------------------------------------------------
 {
-  clearMap();
+  clearColorMap();
   double last = double(_levels - 1) / _levels;
-  CM = GrayCM;
+  _currentColorMap = GrayCM;
 
   // 0.00 - Blue color
   _redComponent.add(0, BLACK(0));
@@ -234,13 +264,16 @@ void ColorMap::setGrayMap()
   _blueComponent.add(1.00, WHITE(2));
 }
 
+/*!
+  \brief Creates a reverse gray normal color map
+*/
 //-----------------------------------------------------------------------------
 void ColorMap::setReverseGrayMap()
 //-----------------------------------------------------------------------------
 {
-  clearMap();
+  clearColorMap();
   double last = double(_levels - 1) / _levels;
-  CM = RGrayCM;
+  _currentColorMap = RGrayCM;
 
   // 0.00 - Blue color
   _redComponent.add(0, WHITE(0));
@@ -258,11 +291,14 @@ void ColorMap::setReverseGrayMap()
   _blueComponent.add(1.00, BLACK(2));
 }
 
+/*!
+  \brief Reset and recomputes the colormap
+*/
 //-----------------------------------------------------------------------------
-void ColorMap::resetMap()
+void ColorMap::resetColorMap()
 //-----------------------------------------------------------------------------
 {
-  switch (CM)
+  switch (_currentColorMap)
   {
   case DeepCM:
     setDeepColorMap();
@@ -285,6 +321,11 @@ void ColorMap::resetMap()
   }
 }
 
+/*!
+  \brief Sets the bounds of the current color map
+  \param min min value of the colormap
+  \param max max value of the colormap
+*/
 //-----------------------------------------------------------------------------
 void ColorMap::setBounds(double min, double max)
 //-----------------------------------------------------------------------------
@@ -293,14 +334,23 @@ void ColorMap::setBounds(double min, double max)
   _max = max;
 }
 
+/*!
+  \brief Sets the number of levels of the current color map
+  \param levels number of levels of the colormap
+*/
 //-----------------------------------------------------------------------------
 void ColorMap::setLevels(int levels)
 //-----------------------------------------------------------------------------
 {
   _levels = levels;
-  resetMap();
+  resetColorMap();
 }
 
+/*!
+  \brief get the color index of a value
+  \param value Color value from 0 to 1
+  \return the index level of the color in the colormap
+*/
 //-----------------------------------------------------------------------------
 int ColorMap::getIntColor(double value)
 //-----------------------------------------------------------------------------
@@ -323,6 +373,12 @@ int ColorMap::getIntColor(double value)
   return int((value - _min) / (_max - _min) * _levels);
 }
 
+/*!
+  \brief get the color as RGB components
+  \param value Color value from 0 to 1
+  \param steps 
+  \return the color in the colormap
+*/
 //-----------------------------------------------------------------------------
 Vec3D ColorMap::getVec3DColor(double value, bool steps)
 //-----------------------------------------------------------------------------
@@ -350,6 +406,12 @@ Vec3D ColorMap::getVec3DColor(double value, bool steps)
   return Vec3D(_redComponent.getValue(val), _greenComponent.getValue(val), _blueComponent.getValue(val));
 }
 
+/*!
+  \brief get the color as an hex string
+  \param value Color value from 0 to 1
+  \param steps 
+  \return the color in the colormap
+*/
 //-----------------------------------------------------------------------------
 String ColorMap::getStringColor(double value, bool steps)
 //-----------------------------------------------------------------------------
@@ -367,6 +429,12 @@ String ColorMap::getStringColor(double value, bool steps)
   return code;
 }
 
+/*!
+  \brief get all the bounds of the colormap
+  \param min min value of the colormap
+  \param max max value of the colormap
+  \param levels levels number of levels of the colormap
+*/
 //-----------------------------------------------------------------------------
 void ColorMap::getBounds(double &min, double &max, int &levels)
 //-----------------------------------------------------------------------------
@@ -374,4 +442,34 @@ void ColorMap::getBounds(double &min, double &max, int &levels)
   min = _min;
   max = _max;
   levels = _levels;
+}
+
+/*!
+  \brief get max value of the colormap
+*/
+//-----------------------------------------------------------------------------
+double ColorMap::getMax()
+//-----------------------------------------------------------------------------
+{
+  return _max;
+}
+
+/*!
+  \brief get min value of the colormap
+*/
+//-----------------------------------------------------------------------------
+double ColorMap::getMin()
+//-----------------------------------------------------------------------------
+{
+  return _min;
+}
+
+/*!
+  \brief get levels number value of the colormap
+*/
+//-----------------------------------------------------------------------------
+int ColorMap::getLevels()
+//-----------------------------------------------------------------------------
+{
+  return _levels;
 }

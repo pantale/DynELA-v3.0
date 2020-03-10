@@ -1,31 +1,10 @@
 /***************************************************************************
  *                                                                         *
- *  DynELA Project                                                         *
+ *  DynELA Finite Element Code v 3.0                                       *
+ *  By Olivier PANTALE                                                     *
  *                                                                         *
- *  (c) Copyright 1997-2004                                                *
+ *  (c) Copyright 1997-2020                                                *
  *                                                                         *
- *      Equipe C.M.A.O                                                     *
- *      Laboratoire Genie de production                                    *
- *      Ecole Nationale d'Ingenieurs de Tarbes                             *
- *      BP 1629 - 65016 TARBES cedex                                       *
- *                                                                         *
- *                                                                         *
- *  Main Author: Olivier PANTALE                                           *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc.,                                       *
- *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  **************************************************************************/
 
 // begin date : 05/03/1997
@@ -45,7 +24,7 @@
 /*!
   \file Tensor4.C
   \brief fichier .C de definition et de manipulation tenseurs d'ordre 4
-  \ingroup linearAlgebra
+  \ingroup dnlMaths
 
   Ce fichier definit les methodes permettant de gerer les tenseurs d'ordre 4.
 
@@ -56,7 +35,7 @@
 
 //constructeur de la classe Tensor4
 /*!
-  Cette methode construit un tenseur d'ordre 4. Par defaut, le contenu du tenseur est mis e zero
+  Cette methode construit un tenseur d'ordre 4. Par defaut, le contenu du tenseur est mis à zero
 
   \since DynELA 0.9.5
 */
@@ -125,7 +104,7 @@ void Tensor4::print(std::ostream &os) const
   }
 }
 
-//renvoie un tenseur identite e partir d'un tenseur quelconque
+//renvoie un tenseur identite à partir d'un tenseur quelconque
 /*!
   Cette methode prend en argument un tenseur quelconque et renvoie un tenseur identite
   
@@ -159,7 +138,7 @@ void Tensor4::setToUnity()
   Exemple :
   \code
   Tensor4 t1;
-  t1=1.; // affecte 1 e toutes les composantes du tenseur
+  t1=1.; // affecte 1 à toutes les composantes du tenseur
   \endcode
 
   \since DynELA 0.9.5
@@ -303,7 +282,7 @@ Tensor4::operator/(const double &lambda) const
 
 //multiplication d'un tenseur par un scalaire
 /*!
-  Cette methode permet de surdefinir l'operation de multiplication des tenseurs et d'ecrire simplement la multiplication d'un tenseur par un scalaire sous la forme donnee en exemple. Elle est identique e la forme precedente (et commutative).
+  Cette methode permet de surdefinir l'operation de multiplication des tenseurs et d'ecrire simplement la multiplication d'un tenseur par un scalaire sous la forme donnee en exemple. Elle est identique à la forme precedente (et commutative).
   
   Exemple :
   \code
@@ -329,7 +308,7 @@ operator*(const double &lambda, const Tensor4 &t1)
 
 //multiplication d'un tenseur par un vecteur
 /*!
-  Cette methode permet de surdefinir l'operation de multiplication des tenseurs et d'ecrire simplement la multiplication d'un tenseur par un vecteur sous la forme donnee en exemple. Cette operation correspond e la notion de produit contracte d'un tenseur et d'un vecteur, elle renvoie un vecteur \c Vec3D.
+  Cette methode permet de surdefinir l'operation de multiplication des tenseurs et d'ecrire simplement la multiplication d'un tenseur par un vecteur sous la forme donnee en exemple. Cette operation correspond à la notion de produit contracte d'un tenseur et d'un vecteur, elle renvoie un vecteur \c Vec3D.
   
   Exemple :
   \code
@@ -358,7 +337,7 @@ Tensor3 Tensor4::operator*(const Vec3D &v1) const
 
 //multiplication de deux tenseurs
 /*!
-  Cette methode permet de surdefinir l'operation de multiplication des tenseurs et d'ecrire simplement la multiplication de deux tenseur sous la forme donnee en exemple. Cette operation correspond e la notion de double produit contracte de deux tenseurs.
+  Cette methode permet de surdefinir l'operation de multiplication des tenseurs et d'ecrire simplement la multiplication de deux tenseur sous la forme donnee en exemple. Cette operation correspond à la notion de double produit contracte de deux tenseurs.
   
   \param t1 deuxieme tenseur dans le double produit contracte
   

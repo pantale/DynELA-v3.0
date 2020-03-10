@@ -12,7 +12,6 @@
   This file is the declaration file for the NumpyInterface class.
 
   \ingroup dnlMaths
-  \since DynELA 1.0
 */
 
 #ifndef __dnlMaths_NumpyInterface_h__

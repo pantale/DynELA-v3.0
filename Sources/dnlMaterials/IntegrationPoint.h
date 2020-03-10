@@ -24,7 +24,7 @@
 struct IntegrationPointData;
 
 /**Classe de gestion des donnees aux points d'integration.
-Cette classe sert e definir les donnees scalaires et tensorielles que l'on a au niveau de chaque point d'integration d'un element. Cette classe ne comporte pas de mecanismes de gestion ou de calcul, elle ne sert que de stockage de donnees (la classe "Element" et ses classes derivees dont elle depend gerent tous les calculs relatifs au modele d'integration).
+Cette classe sert à definir les donnees scalaires et tensorielles que l'on a au niveau de chaque point d'integration d'un element. Cette classe ne comporte pas de mecanismes de gestion ou de calcul, elle ne sert que de stockage de donnees (la classe "Element" et ses classes derivees dont elle depend gerent tous les calculs relatifs au modele d'integration).
 see Element
 version DynELA v.0.9.0
 author Olivier PANTALE

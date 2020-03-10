@@ -13,8 +13,7 @@
 
   This file is the definition file for the discrete function class. A discrete function is a function with the following form: \f[ y=f(x) \f] defined from a set of points.
   Linear interpolation is used to obtain data between given points.
-  \ingroup linearAlgebra
-  \since DynELA 1.0
+  \ingroup dnlMaths
 */
 
 #include <Macros.h>
@@ -23,15 +22,17 @@
 #include <DiscreteFunction.h>
 #include <NumpyInterface.h>
 
-//Default constructor for the coupleReal class
+/*!
+  \brief Default constructor for the coupleReal class
+*/  
 //-----------------------------------------------------------------------------
 coupleReal::coupleReal()
 //-----------------------------------------------------------------------------
 {
 }
 
-//Constructor for the coupleReal class with initailisation of the coordinates of the point
 /*!
+  \brief Constructor for the coupleReal class with initailisation of the coordinates of the point
   \param abscissa X coordinate of the new point
   \param ordinate Y coordinate of the new point
 */
@@ -43,21 +44,27 @@ coupleReal::coupleReal(double abscissa, double ordinate)
     y = ordinate;
 }
 
-//Copy constructor for the coupleReal class
+/*!
+  \brief Copy constructor for the coupleReal class
+*/
 //-----------------------------------------------------------------------------
 coupleReal::coupleReal(const coupleReal &X)
 //-----------------------------------------------------------------------------
 {
 }
 
-//Destructor for the coupleReal class
+/*!
+  \brief Destructor for the coupleReal class
+*/
 //-----------------------------------------------------------------------------
 coupleReal::~coupleReal()
 //-----------------------------------------------------------------------------
 {
 }
 
-//Default constructor for the DiscreteFunction class
+/*!
+  \brief Default constructor for the DiscreteFunction class
+*/
 //-----------------------------------------------------------------------------
 DiscreteFunction::DiscreteFunction(char *newName) : Function(newName)
 //-----------------------------------------------------------------------------
@@ -67,15 +74,18 @@ DiscreteFunction::DiscreteFunction(char *newName) : Function(newName)
     Sort = true;
 }
 
-//Copy constructor for the DiscreteFunction class
+/*!
+  \brief Copy constructor for the DiscreteFunction class
+*/
 //-----------------------------------------------------------------------------
 DiscreteFunction::DiscreteFunction(const DiscreteFunction &X)
 //-----------------------------------------------------------------------------
 {
 }
 
-//Add a new point (X,Y) to the current discrete function
 /*!
+  \brief Add a new point (X,Y) to the current discrete function
+
   This method add a new point to the current discrete function.
   Depending of the \ref Sort variable, the new point is added at the end of the curve or inserted at it's right place into the curve depending on it's X value.
   \param abscissa X coordinate of the new point
@@ -102,8 +112,9 @@ void DiscreteFunction::add(double abscissa, double ordinate)
         }
 }
 
-//Add a new point (X,Y) to the current discrete function
 /*!
+  \brief Add a new point (X,Y) to the current discrete function
+
   This method add a new point as the first point of the current discrete function.
   Depending of the \ref Sort variable, the new point is added at the beginning of the curve or inserted at it's right place into the curve depending on it's X value.
   \param abscissa X coordinate of the new point
@@ -127,19 +138,22 @@ void DiscreteFunction::startPointAdd(double abscissa, double ordinate)
     ppoint->x = abscissa;
     ppoint->y = ordinate;
 
-    // ajout e la liste au debut
+    // ajout à la liste au debut
     lpoints.insert(ppoint, 0);
 }
 
-//Destructor of the DiscreteFunction class
+/*!
+  \brief Destructor of the DiscreteFunction class
+*/
 //-----------------------------------------------------------------------------
 DiscreteFunction::~DiscreteFunction()
 //-----------------------------------------------------------------------------
 {
 }
 
-//Returns the number of points defining the discrete function
 /*!
+  \brief Returns the number of points defining the discrete function
+
   \see getNumberOfPoints()
 */
 //-----------------------------------------------------------------------------
@@ -149,8 +163,9 @@ long DiscreteFunction::getSize()
     return lpoints.getSize();
 }
 
-//Verify that the given X coordinate is in the X range of the function.
 /*!
+  \brief Verify that the given X coordinate is in the X range of the function.
+
   \param abscissa X coordinate of the point to test
   \return true if the given coordinate X in in the correct range
 */
@@ -161,8 +176,9 @@ bool DiscreteFunction::intoBoundsX(double abscissa)
     return (abscissa >= lpoints(0)->x && abscissa <= lpoints(lpoints.getSize() - 1)->x);
 }
 
-//Compute the Y coordinate corresponding to the given X coordinate
 /*!
+  \brief Compute the Y coordinate corresponding to the given X coordinate
+
   This method computes the Y coordinate corresponding to the given X coordinate using a linear interpolation method.
   \param abscissa X coordinate of the point to compute
   \return Y coordinate of the corresponding point
@@ -198,8 +214,9 @@ double DiscreteFunction::getValue(double abscissa)
     return 0;
 }
 
-//Compute the X coordinate corresponding to the given Y coordinate
 /*!
+  \brief Compute the X coordinate corresponding to the given Y coordinate
+
   This method computes the X coordinate corresponding to the given Y coordinate using a linear interpolation method.
   \param abscissa Y coordinate of the point to compute
   \return X coordinate of the corresponding point
@@ -254,8 +271,9 @@ double DiscreteFunction::getInverseValue(double ordinate)
     return ((ordinate - lpoints(start)->y) / (lpoints(stop)->y - lpoints(start)->y)) * (lpoints(stop)->x - lpoints(start)->x) + lpoints(start)->x;
 }
 
-//Compute the slope of the discrete function at a given X coordinate
 /*!
+  \brief Compute the slope of the discrete function at a given X coordinate
+
   This method is used to compute the slope of the discrete function at a given X coordinate.
   The slope of the function is more or less equal to the derivative of the function at the given point.
   \param abscissa X coordinate of the point to compute
@@ -288,7 +306,9 @@ double DiscreteFunction::getSlope(double abscissa)
     return 0;
 }
 
-//Printout the discrete function definition
+/*!
+  \brief Printout the discrete function definition
+*/
 //-----------------------------------------------------------------------------
 void DiscreteFunction::print()
 //-----------------------------------------------------------------------------
@@ -301,8 +321,9 @@ void DiscreteFunction::print()
     }
 }
 
-//Returns the maximum X value of the discrete function
 /*!
+  \brief Returns the maximum X value of the discrete function
+
   \return Maximum X value of the discrete function
 */
 //-----------------------------------------------------------------------------
@@ -312,8 +333,9 @@ double DiscreteFunction::maxX()
     return (lpoints(lpoints.getSize() - 1))->x;
 }
 
-//Returns the minimum X value of the discrete function
 /*!
+  \brief Returns the minimum X value of the discrete function
+
   \return Minimum X value of the discrete function
 */
 //-----------------------------------------------------------------------------
@@ -323,8 +345,9 @@ double DiscreteFunction::minX()
     return (lpoints(0))->x;
 }
 
-//Returns the maximum Y value of the discrete function
 /*!
+  \brief Returns the maximum Y value of the discrete function
+
   \return Maximum Y value of the discrete function
 */
 //-----------------------------------------------------------------------------
@@ -340,8 +363,9 @@ double DiscreteFunction::maxY()
     return val;
 }
 
-//Returns the minimum Y value of the discrete function
 /*!
+  \brief Returns the minimum Y value of the discrete function
+
   \return Minimum Y value of the discrete function
 */
 //-----------------------------------------------------------------------------
@@ -372,8 +396,9 @@ bool compare(coupleReal *t1, coupleReal *t2)
     return (t1->x > t2->x);
 }
 
-//Save the current discrete function for using with the Gnuplot software
 /*!
+  \brief Save the current discrete function for using with the Gnuplot software
+
   This method saves the current discrete function for using with the Gnuplot software.
   \param filename Name of the datafile to use for writting the discrete function
 */
@@ -398,8 +423,9 @@ void DiscreteFunction::toGnuplot(String filename)
     fclose(pfile);
 }
 
-//Read a discrete function from an ASCII file
 /*!
+  \brief Read a discrete function from an ASCII file
+
   This method reads a discrete function from an ASCII file.
   The X and Y values of the curve are in separate columns on the same line.
   Several values may be given on the line, the number of values on a line is specified by the number of columns that contain data on X and Y axes.
@@ -438,8 +464,9 @@ void DiscreteFunction::fromFile(String filename, int xCol, int yCol)
     fclose(pfile);
 }
 
-//Remap the discrete function on X or Y axis
 /*!
+  \brief Remap the discrete function on X or Y axis
+
   This method is used to remap a discrete function on X or Y axis.
   Ranges of the X and Y axis are modified by the user.
   This method returns a new discrete function with the same name as the current one + "_remap".
@@ -485,8 +512,9 @@ DiscreteFunction *DiscreteFunction::remapCurve(double xm, double xM, double ym, 
     return remapped;
 }
 
-//Derivate a discrete function
 /*!
+  \brief Derivate a discrete function
+
   This method computes the derivative of a discrete function.
   This method returns a new discrete function with the same name as the current one + "_derivative".
   Therefore, if the current function name is "curve" then the new created function name will be "curve_derivative".
@@ -515,8 +543,9 @@ DiscreteFunction *DiscreteFunction::derivate()
     return derive;
 }
 
-//Euler Backward derivate a discrete function
 /*!
+  \brief Euler Backward derivate a discrete function
+
   This method computes the Euler Backward derivative of a discrete function.
   The Euler Backward derivate of a function is defined by the following equation: \f[ \frac{df(x)}{dx}=\frac{f(x)-f(x-dx)}{dx} \f]
   This method returns a new discrete function with the same name as the current one + "_EBderivate".
@@ -542,8 +571,9 @@ DiscreteFunction *DiscreteFunction::EulerBackwardDerivate()
     return derive;
 }
 
-//Euler Forward derivate a discrete function
 /*!
+  \brief Euler Forward derivate a discrete function
+
   This method computes the Euler Forward derivative of a discrete function.
   The Euler Forward derivate of a function is defined by the following equation: \f[ \frac{df(x)}{dx}=\frac{f(x+dx)-f(x)}{dx} \f]
   This method returns a new discrete function with the same name as the current one + "_EFderivate".
@@ -569,8 +599,9 @@ DiscreteFunction *DiscreteFunction::EulerForwardDerivate()
     return derive;
 }
 
-//Central-Difference derivate a discrete function
 /*!
+  \brief Central-Difference derivate a discrete function
+
   This method computes the Central-Difference derivative of a discrete function.
   The Central-Difference derivate of a function is defined by the following equation: \f[ \frac{df(x)}{dx}=\frac{f(x+dx)-f(x-dx)}{2dx} \f]
   This method returns a new discrete function with the same name as the current one + "_CDderivate".
@@ -596,8 +627,9 @@ DiscreteFunction *DiscreteFunction::CentralDifferenceDerivate()
     return derive;
 }
 
-//Zero Forcing 1 derivate a discrete function
 /*!
+  \brief Zero Forcing 1 derivate a discrete function
+
   This method computes the Zero Forcing 1 derivative of a discrete function.
   The Zero Forcing 1 derivate of a function is defined by the following equation: \f[ \frac{df(x)}{dx}=\frac{0.2047f(x+dx)+0.886f(x)-1.386f(x-dx)+0.2953f(x-2dx)}{dx} \f]
   This method returns a new discrete function with the same name as the current one + "_ZF1derivate".
@@ -623,8 +655,9 @@ DiscreteFunction *DiscreteFunction::ZeroForcing1Derivate()
     return derive;
 }
 
-//Zero Forcing 2 derivate a discrete function
 /*!
+  \brief Zero Forcing 2 derivate a discrete function
+
   This method computes the Zero Forcing 2 derivative of a discrete function.
   The Zero Forcing 2 derivate of a function is defined by the following equation: \f[ \frac{df(x)}{dx}=\frac{-0.2047f(x+dx)-0.886f(x)+1.386f(x-dx)-0.2953f(x-2dx)}{dx} \f]
   This method returns a new discrete function with the same name as the current one + "_ZF2derivate".
@@ -650,8 +683,9 @@ DiscreteFunction *DiscreteFunction::ZeroForcing2Derivate()
     return derive;
 }
 
-//Integration of a discrete function
 /*!
+  \brief Integration of a discrete function
+
   This method computes the integral of a discrete function using the Simpson method.
   This method returns a new discrete function with the same name as the current one + "_integrate".
   Therefore, if the current function name is "curve" then the new created function name will be "curve_integrate".
@@ -683,8 +717,9 @@ DiscreteFunction *DiscreteFunction::integrate()
     return integr;
 }
 
-//Mobile average of a discrete function
 /*!
+  \brief Mobile average of a discrete function
+
   This method computes the mobile average of a discrete function.
   If \f$ f(x) \f$ is the original discrete function, the the mobile average curve \f$ f_{m}(x) \f$ is defined by the following:
   \f[ f_{m}(x)=\frac{1}{n_{1}+n_{2}+1}\sum ^{i=x+n_{2}}_{i=x-n_{1}}f(i) \f] 
@@ -720,8 +755,9 @@ DiscreteFunction *DiscreteFunction::movingAverage(int before, int after)
     return average;
 }
 
-//Combine two functions into a new one
 /*!
+  \brief Combine two functions into a new one
+
   This method combines two functions into a new one.
   From the given two curves \f$ y_{1}=f_{1}(x) \f$ and \f$ y_{2}=f_{2}(x) \f$ we create the new curve \f$ y_{2}=f(y_{1}) \f$
   This method returns a new discrete function with the same name as the current ones + "_vs_".
@@ -752,8 +788,9 @@ DiscreteFunction *DiscreteFunction::xyMerge(DiscreteFunction *fonction, long poi
     return mix;
 }
 
-//Absolute value of a discrete function
 /*!
+  \brief Absolute value of a discrete function
+
   This method creates a new fonction from the given one as the absolute value of the function defined by \f$ f2=ABS(f1) \f$
   This method returns a new discrete function with the same name as the current one + "_abs".
   Therefore, if the current function name is "curve" then the new created function name will be "curve_abs".
@@ -777,8 +814,9 @@ DiscreteFunction *DiscreteFunction::absoluteValueCurve()
     return mix;
 }
 
-//Multiplication by a scalar value of a function
 /*!
+  \brief Multiplication by a scalar value of a function
+
   This method creates a new fonction from the given one as the product of the given function by a scalar value \f$ f2=\lambda.f1 \f$
   This method returns a new discrete function with the same name as the current one + "scale_".
   Therefore, if the current function name is "curve" then the new created function name will be "scale_curve".
@@ -803,8 +841,9 @@ DiscreteFunction *DiscreteFunction::scaleCurve(double factor)
     return mix;
 }
 
-//Offset of a discrete function
 /*!
+  \brief Offset of a discrete function
+
   This method creates a new fonction from the given one with a offset on the Y axis by a scalar value \f$ f2=f1+Cte \f$
   This method returns a new discrete function with the same name as the current one + "offset_".
   Therefore, if the current function name is "curve" then the new created function name will be "offset_curve".
@@ -829,8 +868,9 @@ DiscreteFunction *DiscreteFunction::offsetCurve(double offset)
     return mix;
 }
 
-//Add two discrete functions
 /*!
+  \brief Add two discrete functions
+
   This method creates a new fonction from the given two ones as the sum of the two functions on the common X range.
   Therefore, if the \f$ f_1(x) \f$ function is defined on the range [0;10] and \f$ f_2(x) \f$ is defined on the range [2;15] the resulting function \f$ f(x)=f_1(x)+f_2(x) \f$ will be defined on the range [2;10].
   This method returns a new discrete function with the same name as the current ones + "_plus_".
@@ -861,8 +901,9 @@ DiscreteFunction *DiscreteFunction::addCurves(DiscreteFunction *fonction, long p
     return mix;
 }
 
-//Substract two discrete functions
 /*!
+  \brief Substract two discrete functions
+
   This method creates a new fonction from the given two ones as the sustraction of the two functions on the common X range.
   Therefore, if the \f$ f_1(x) \f$ function is defined on the range [0;10] and \f$ f_2(x) \f$ is defined on the range [2;15] the resulting function \f$ f(x)=f_1(x)-f_2(x) \f$ will be defined on the range [2;10].
   This method returns a new discrete function with the same name as the current ones + "_minus_".
@@ -893,8 +934,9 @@ DiscreteFunction *DiscreteFunction::substractCurves(DiscreteFunction *fonction, 
     return mix;
 }
 
-//Multiply two discrete functions
 /*!
+  \brief Multiply two discrete functions
+
   This method creates a new fonction from the given two ones as the product of the two functions on the common X range.
   Therefore, if the \f$ f_1(x) \f$ function is defined on the range [0;10] and \f$ f_2(x) \f$ is defined on the range [2;15] the resulting function \f$ f(x)=f_1(x)*f_2(x) \f$ will be defined on the range [2;10].
   This method returns a new discrete function with the same name as the current ones + "_mult_".
@@ -926,8 +968,9 @@ DiscreteFunction::multiplyCurves(DiscreteFunction *fonction, long points)
     return mix;
 }
 
-//Divides two discrete functions
 /*!
+  \brief Divides two discrete functions
+
   This method creates a new fonction from the given two ones as the division of the two functions on the common X range.
   Therefore, if the \f$ f_1(x) \f$ function is defined on the range [0;10] and \f$ f_2(x) \f$ is defined on the range [2;15] the resulting function \f$ f(x)=\frac{f_1(x)}{f_2(x)} \f$ will be defined on the range [2;10].
   This method returns a new discrete function with the same name as the current ones + "_div_".
@@ -959,8 +1002,9 @@ DiscreteFunction *DiscreteFunction::divideCurves(DiscreteFunction *fonction, lon
     return mix;
 }
 
-//Relative error of two discrete functions
 /*!
+  \brief Relative error of two discrete functions
+
   This method creates a new fonction from the given two ones as the relative error of the two functions on the common X range.
   Therefore, if the \f$ f_1(x) \f$ function is defined on the range [0;10] and \f$ f_2(x) \f$ is defined on the range [2;15] the resulting function \f$ f(x)=\frac {(f_2(x) - f_1(x))}{ f_1(x)} \f$ will be defined on the range [2;10].
   This method returns a new discrete function with the same name as the current ones + "_error_".
@@ -991,8 +1035,9 @@ DiscreteFunction *DiscreteFunction::errorCurves(DiscreteFunction *fonction, long
     return mix;
 }
 
-//Minimal distance between two curves on the X axis
 /*!
+  \brief Minimal distance between two curves on the X axis
+
   This method creates a new fonction from the given two ones as the minimal distance between the two curves on the X axis.
   This method calculates a minimum distance between two curves and returns a curve having the curvilinear abscissa in abscissa and in ordinate the minimum distance between two curves at the point considered.
   This method returns a new discrete function with the same name as the current ones + "_distanceX_".
@@ -1030,8 +1075,9 @@ DiscreteFunction *DiscreteFunction::distanceCurvesX(DiscreteFunction *fonction)
     return distfunct;
 }
 
-//Minimal distance between two curves on the Y axis
 /*!
+  \brief Minimal distance between two curves on the Y axis
+
   This method creates a new fonction from the given two ones as the minimal distance between the two curves on the Y axis.
   This method calculates a minimum distance between two curves and returns a curve having the curvilinear ordinate in abscissa and in ordinate the minimum distance between two curves at the point considered.
   This method returns a new discrete function with the same name as the current ones + "_distanceY_".
@@ -1069,8 +1115,9 @@ DiscreteFunction *DiscreteFunction::distanceCurvesY(DiscreteFunction *fonction)
     return distfunct;
 }
 
-//Minimal distance between two curves
 /*!
+  \brief Minimal distance between two curves
+
   This method creates a new fonction from the given two ones as the minimal distance between the two curves.
   This method calculates a minimum distance between two curves and returns a curve having the curvilinear ordinate in abscissa and in ordinate the minimum distance between two curves at the point considered.
   This method returns a new discrete function with the same name as the current ones + "_distance_".
@@ -1091,7 +1138,7 @@ DiscreteFunction *DiscreteFunction::distanceCurves(DiscreteFunction *fonction)
 
     for (long i = 0; i < lpoints.getSize(); i++)
     {
-        // mise e jour de l'abcisse
+        // mise à jour de l'abcisse
         if (i > 0)
         {
             absc += sqrt(dnlSquare(lpoints(i)->x - lpoints(i - 1)->x) + dnlSquare(lpoints(i)->y - lpoints(i - 1)->y));
@@ -1121,8 +1168,9 @@ DiscreteFunction *DiscreteFunction::distanceCurves(DiscreteFunction *fonction)
     return distfunct;
 }
 
-//Order 1 low pass filter of a function
 /*!
+  \brief Order 1 low pass filter of a function
+
   This method creates a new fonction from the given one using an order 1 low pass filter. This type of filter has low frequency gain of 1. It is defined by the following equation:
   \f[ f(p)=\frac{1}{ap+1} \f]
   where \f$ p \f$ is the Laplace operator, \f$ p=j\omega \f$ with \f$ j^{2}=-1 \f$. Using a Backward Euler derivative the filtered form \f$ f_{f}(x) \f$ is therefore given by:
@@ -1157,8 +1205,9 @@ DiscreteFunction *DiscreteFunction::lowPass_1(double A, long points, int Init)
     return filtered;
 }
 
-//Order 2 low pass filter of a function
 /*!
+  \brief Order 2 low pass filter of a function
+
   This method creates a new fonction from the given one using an order 2 low pass filter. This type of filter has low frequency gain of 1. It is defined by the following equation:
   \f[ f(p)=\frac{1}{ap^{2}+bp+1} \f]
   where \f$ p \f$ is the Laplace operator, \f$ p=j\omega \f$ with \f$ j^{2}=-1 \f$. Using a Backward Euler derivative the filtered form \f$ f_{f}(x) \f$ is therefore given by:
@@ -1200,8 +1249,9 @@ DiscreteFunction *DiscreteFunction::lowPass_2(double A, double Q, long points, i
     return filtered;
 }
 
-//Average value of a function
 /*!
+  \brief Average value of a function
+
   This method computes the average value of a discrete function.
   \return Average value of a function
 */
@@ -1225,8 +1275,9 @@ double DiscreteFunction::getAverage()
     return avrge;
 }
 
-//Output format to DynELA source file
 /*!
+  \brief Output format to DynELA source file
+
   This method is used to store the architecture of the discrete function using a DynELA source file format.
   The returned string can be written directly to the source file of the DynELA FEM code.
   \return The string containing the definition of the discrete function according to the DynELA source file format
@@ -1249,8 +1300,9 @@ String DiscreteFunction::convertToDynELASourceFile()
     return str;
 }
 
-//Saves the content of a DiscreteFunction into a NumPy file
 /*!
+  \brief Saves the content of a DiscreteFunction into a NumPy file
+
   This method saves the content of a DiscreteFunction object into a NumPy file defined by its filename. If the flag initialize is true, the current file will be concatenated.
 
   Example
@@ -1277,8 +1329,9 @@ void DiscreteFunction::numpyWrite(std::string filename, bool initialize) const
     NumpyInterface::npySave(filename, &buffer[0], {(unsigned long)lpoints.getSize(), 2}, mode);
 }
 
-//Saves the content of a DiscreteFunction into a NumPyZ file
 /*!
+  \brief Saves the content of a DiscreteFunction into a NumPyZ file
+
   This method saves the content of a DiscreteFunction object into a NumPyZ file defined by its filename. If the flag initialize is true, the current file will be concatenated.
 
   Example
@@ -1305,8 +1358,9 @@ void DiscreteFunction::numpyWriteZ(std::string filename, std::string name, bool 
     NumpyInterface::npzSave(filename, name, &buffer[0], {(unsigned long)lpoints.getSize(), 2}, mode);
 }
 
-//Read the content of a DiscreteFunction from a NumPy file
 /*!
+  \brief Read the content of a DiscreteFunction from a NumPy file
+
   This method reads the content of a DiscreteFunction object from a NumPy file defined by its filename.
 
   Example
@@ -1327,8 +1381,9 @@ void DiscreteFunction::numpyRead(std::string filename)
     }
 }
 
-//Read the content of a DiscreteFunction from a NumPyZ file
 /*!
+  \brief Read the content of a DiscreteFunction from a NumPyZ file
+
   This method reads the content of a DiscreteFunction object from a NumPyZ file defined by its filename.
 
   Example

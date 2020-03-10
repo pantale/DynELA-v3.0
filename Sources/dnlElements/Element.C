@@ -1551,7 +1551,7 @@ void Element::computeMomentumEquation(MatrixDiag &M, Vector &F)
 }
 
 
-//Ajout d'un point d'integration e l'element courant
+//Ajout d'un point d'integration à l'element courant
 
 
 //-----------------------------------------------------------------------------

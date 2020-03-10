@@ -1,31 +1,10 @@
 /***************************************************************************
  *                                                                         *
- *  DynELA Project                                                         *
+ *  DynELA Finite Element Code v 3.0                                       *
+ *  By Olivier PANTALE                                                     *
  *                                                                         *
- *  (c) Copyright 1997-2004                                                *
+ *  (c) Copyright 1997-2020                                                *
  *                                                                         *
- *      Equipe C.M.A.O                                                     *
- *      Laboratoire Genie de production                                    *
- *      Ecole Nationale d'Ingenieurs de Tarbes                             *
- *      BP 1629 - 65016 TARBES cedex                                       *
- *                                                                         *
- *                                                                         *
- *  Main Author: Olivier PANTALE                                           *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc.,                                       *
- *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  **************************************************************************/
 
 // begin date : 05/03/1997
@@ -40,7 +19,7 @@
 /*!
   \file Tensor4.h
   \brief fichier .h de definition et de manipulation tenseurs d'ordre 4
-  \ingroup linearAlgebra
+  \ingroup dnlMaths
 
   Ce fichier definit les methodes permettant de gerer les tenseurs d'ordre 4.
 
@@ -62,9 +41,8 @@ class Tensor3;
 /*!
   \class Tensor4 Tensor4.h
   \brief Classe de gestion et manipulation des tenseurs du second ordre.
-  \ingroup linearAlgebra
+  \ingroup dnlMaths
 
-  \version 0.9.5
 
 Cette classe est utilisee pour la gestion et la manipulation des tenseurs du quatrieme ordre. Elle comporte toutes les methodes d'initialisation et de gestion memoire. Les valeurs stockees sont des double. La classe \c Tensor4 contient de plus un certain nombre de methodes de calcul sur les tenseurs comme decrit ci-dessous.
 */
@@ -210,7 +188,7 @@ Tensor4::operator()(long i, long j, long k, long l)
   Exemple :
   \code
   Tensor4 t1;
-  t1=setToValue(1.); // affecte 1 e toutes les composantes du tenseur
+  t1=setToValue(1.); // affecte 1 à toutes les composantes du tenseur
   \endcode
 
   \since DynELA 0.9.5

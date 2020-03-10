@@ -7,24 +7,19 @@
  *                                                                         *
  **************************************************************************/
 
-/*
-	Class Function implementation
-*/
 /*!
-  \file Function.C
-  \brief fichier .C de definition des fonctions discretes
-  \ingroup linearAlgebra
+  \file Function.h
+  \brief Defines of the Function class.
 
-  
-  \since 1.0.4
+  This file defines the Function class.
+  \ingroup dnlMaths
 */
 
 #include <Function.h>
 
-//constructeur par defaut de la classe Function
 /*!
-  Ce constructeur alloue la memoire pour la creation d'une fonction discrete. Par defaut, la nouvelle fonction est definie avec le flag \ref Sort actif, c'est e dire que les points de la fonction sont automatiquement tries sur l'axe des abscisses.
-  \since 0.9.5
+  \brief Default constructor of the Function class
+  \param newName name of the function
 */
 //-----------------------------------------------------------------------------
 Function::Function(char *newName)
@@ -34,6 +29,9 @@ Function::Function(char *newName)
     name = newName;
 }
 
+/*!
+  \brief Default destructor of the Function class
+*/
 //-----------------------------------------------------------------------------
 Function::~Function()
 //-----------------------------------------------------------------------------

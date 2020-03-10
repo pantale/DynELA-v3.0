@@ -1,34 +1,11 @@
 /***************************************************************************
  *                                                                         *
- *  DynELA Project                                                         *
+ *  DynELA Finite Element Code v 3.0                                       *
+ *  By Olivier PANTALE                                                     *
  *                                                                         *
- *  (c) Copyright 1997-2004                                                *
+ *  (c) Copyright 1997-2020                                                *
  *                                                                         *
- *      Equipe C.M.A.O                                                     *
- *      Laboratoire Genie de production                                    *
- *      Ecole Nationale d'Ingenieurs de Tarbes                             *
- *      BP 1629 - 65016 TARBES cedex                                       *
- *                                                                         *
- *                                                                         *
- *  Main Author: Olivier PANTALE                                           *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc.,                                       *
- *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  **************************************************************************/
-
-// begin date :
 
 /*
   Class Matrices definition
@@ -39,11 +16,10 @@
 /*!
   \file Matrices.h
   \brief fichier .h de definition des matrices generales
-  \ingroup linearAlgebra
+  \ingroup dnlMaths
 
-  Ce fichier set e la definition de la classe Matrice qui sert de classe de base pour toutes les matrices de DynELA. Cette classe de base sert e stocker les informations communes e tous les types de matrices tels que la taille de la matrice (nombre de lignes et de colonnes)...
+  Ce fichier set à la definition de la classe Matrice qui sert de classe de base pour toutes les matrices de DynELA. Cette classe de base sert à stocker les informations communes à tous les types de matrices tels que la taille de la matrice (nombre de lignes et de colonnes)...
 
-  \version 0.9.6
 */
 
 #include <ostream>
@@ -59,8 +35,7 @@
 /*
   \enum OutMatrix
   \brief enumeration de format d'affichage de matrices.
-  Cette enumeration permet de definir le format d'affichage des matrices. On a ainsi le choix entre outMatrixTypeNormal qui correspond e un affichage conforme e Mathematica et outMatrixTypeMupad qui correspond e un affichage au format Mupad.
-  \since 1.0.0
+  Cette enumeration permet de definir le format d'affichage des matrices. On a ainsi le choix entre outMatrixTypeNormal qui correspond à un affichage conforme à Mathematica et outMatrixTypeMupad qui correspond à un affichage au format Mupad.
 */
 #ifndef SWIG
 enum OutMatrix
@@ -73,11 +48,10 @@ enum OutMatrix
 /*!
   \class Matrices Matrices.h
   \brief classe de base pour les matrices
-  \ingroup linearAlgebra
+  \ingroup dnlMaths
 
-  Cette classe sert e la definition definition generale des matrices, elle sert de classe de base pour toutes les matrices de DynELA. Cette classe de base sert e stocker les informations communes e tous les types de matrices tels que la taille de la matrice (nombre de lignes et de colonnes)...
+  Cette classe sert à la definition definition generale des matrices, elle sert de classe de base pour toutes les matrices de DynELA. Cette classe de base sert à stocker les informations communes à tous les types de matrices tels que la taille de la matrice (nombre de lignes et de colonnes)...
 
-  \version 0.9.5
 */
 class Matrices
 {
@@ -103,7 +77,6 @@ public:
 //constructeur par defaut
 /*!
   Cette methode est le constructeur par defaut de la classe Matrices. Ce constructeur ne fait rien d'autre que creer l'objet.
-  \version 0.9.6
 */
 //-----------------------------------------------------------------------------
 inline Matrices::Matrices()
@@ -115,7 +88,6 @@ inline Matrices::Matrices()
 //constructeur par recopie
 /*!
   Cette methode est le constructeur par recopie de la classe Matrices. Ce constructeur ne fait rien d'autre que creer l'objet.
-  \version 0.9.6
 */
 //-----------------------------------------------------------------------------
 inline Matrices::Matrices(const Matrices &mat)
@@ -127,7 +99,6 @@ inline Matrices::Matrices(const Matrices &mat)
 //destructeur
 /*!
   Cette methode est le destructeur de la classe Matrices.
-  \version 0.9.6
 */
 //-----------------------------------------------------------------------------
 inline Matrices::~Matrices()
@@ -139,7 +110,6 @@ inline Matrices::~Matrices()
 /*!
   Cette methode calcule et retourne le nombre de lignes de la matrice.
   \nombre de lignes de la matrice
-  \version 0.9.6
 */
 //-----------------------------------------------------------------------------
 inline long Matrices::rows() const
@@ -152,7 +122,6 @@ inline long Matrices::rows() const
 /*!
   Cette methode calcule et retourne le nombre de colonnes de la matrice.
   \nombre de colonnes de la matrice
-  \version 0.9.6
 */
 //-----------------------------------------------------------------------------
 inline long Matrices::columns() const
@@ -165,7 +134,6 @@ inline long Matrices::columns() const
 /*!
   Cette methode permet de selectionner le type d'affichage demande. Le type de sortie est defini par les variables enumerees dans \ref OutMatrix.
 
-  \since 1.0.0
 */
 //-----------------------------------------------------------------------------
 inline void Matrices::setOutType(char outT)

@@ -41,7 +41,7 @@ Element2D::~Element2D()
 
 //Calcul du gradient des deformations F
 ///*!
-//Cette methode effectue le calcul du gradient des deformations F au point d'integration e l'instant time. La relation utilisee pour ce calcul est donnee par:
+//Cette methode effectue le calcul du gradient des deformations F au point d'integration à l'instant time. La relation utilisee pour ce calcul est donnee par:
 //\f[  F=1+\frac{\partial \overrightarrow{u}}{\partial \overrightarrow{X}} \f]
 //\param F Tensor de retour pour le gradient des deformations F
 //\param time valeur permettant de selectionner le champ pour le deplacement (0 reference, 1 courant).
@@ -118,6 +118,4 @@ void Element2D::getdU_atIntPoint (Tensor2 & du, short time)
       du (1, 1) += _integrationPoint->dShapeFunction (k, 1) * field->displacement (1);
     }
 }
-
-
 */

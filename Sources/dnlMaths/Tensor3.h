@@ -13,8 +13,7 @@
 
   This file is the declaration file for the third order tensor class. A third order tensor has the following form:
   \f[ T = T_{ijk} \f]
-  \ingroup linearAlgebra
-  \since DynELA 1.0
+  \ingroup dnlMaths
 */
 
 #ifndef __dnlMaths_Tensor3_h__
@@ -34,8 +33,7 @@ class Tensor2;
 
   A third order tensor has the following form:
   \f[ T = T_{ijk} \f]
-  \ingroup linearAlgebra
-  \since DynELA 1.0
+  \ingroup dnlMaths
 */
 class Tensor3
 {

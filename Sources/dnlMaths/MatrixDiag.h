@@ -29,12 +29,9 @@
 /*!
   \class MatrixDiag MatrixDiag.h
   \brief Classe de gestion et manipulation des matrices disgonales.
-  \ingroup linearAlgebra
+  \ingroup dnlMaths
 
   Cette classe est utilisee pour la gestion et la manipulation des matrices disgonales. Elle comporte toutes les methodes d'initialisation et de gestion memoire. Les valeurs stockees sont des double. La classe \c MatrixDiag contient de plus un certain nombre de methodes de calcul sur les matrices comme decrit ci-dessous.
-
-
-  \version 0.9.4
 */
 class MatrixDiag : public Matrices
 {
@@ -112,8 +109,6 @@ public:
   Cette methode teste les bornes d'une matrice
   \param i long de ligne
   \return true si l'long fourni est dans les bornes, false dans le cas contraire
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 inline bool MatrixDiag::indexOK(long i) const
@@ -133,9 +128,7 @@ inline bool MatrixDiag::indexOK(long i) const
 //acces aux valeurs d'une matrice
 /*!
   \param i long de ligne
-  \return valeur de la matrice e la ligne et colonne \c i
-
-  \version 0.9.4
+  \return valeur de la matrice à la ligne et colonne \c i
 */
 //-----------------------------------------------------------------------------
 inline double &MatrixDiag::operator()(long i)
@@ -151,9 +144,7 @@ inline double &MatrixDiag::operator()(long i)
 //acces aux valeurs d'une matrice
 /*!
   \param i long de ligne
-  \return valeur de la matrice e la ligne et colonne \c i
-
-  \version 0.9.4
+  \return valeur de la matrice à la ligne et colonne \c i
 */
 //-----------------------------------------------------------------------------
 inline double

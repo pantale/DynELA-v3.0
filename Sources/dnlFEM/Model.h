@@ -35,10 +35,6 @@ class Material;
   \class Model Model.h
   \brief Classe de gestion et manipulation des modeles elements finis.
   \ingroup femLibrary
-
-
-
-  \version 0.9.4
 */
 class Model
 {
@@ -125,7 +121,7 @@ public:
   double getReadTimeData (ifstream & pfile);
   void writeData (ofstream & pfile);
 
-  // methodes liees e la lecture des fichiers
+  // methodes liees à la lecture des fichiers
   void createNode(long,double,double,double);
   Node* getNodeByNumber(long);
   //void setGrid(Grid* grid);

@@ -32,12 +32,9 @@ class Tensor2;
 /*!
   \class Matrix Matrix.h
   \brief Classe de gestion et manipulation des matrices denses.
-  \ingroup linearAlgebra
+  \ingroup dnlMaths
 
   Cette classe est utilisee pour la gestion et la manipulation des matrices denses. Elle comporte toutes les methodes d'initialisation et de gestion memoire. Les valeurs stockees sont des double. La classe \c Matrix contient de plus un certain nombre de methodes de calcul sur les matrices comme decrit ci-dessous.
-
-
-  \version 0.9.4
 */
 class Matrix : public Matrices
 {
@@ -154,8 +151,6 @@ public:
   \param i long de ligne
   \param j long de colonne
   \return true si les indices fournis sont dans les bornes, false dans le cas contraire
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 inline bool Matrix::indexOK(long i, long j) const
@@ -175,9 +170,7 @@ inline bool Matrix::indexOK(long i, long j) const
 /*!
   \param i long de ligne
   \param j long de colonne
-  \return valeur de la matrice e la ligne \c i et colonne \c j
-
-  \version 0.9.4
+  \return valeur de la matrice à la ligne \c i et colonne \c j
 */
 //-----------------------------------------------------------------------------
 inline double Matrix::operator()(long i, long j) const
@@ -193,9 +186,7 @@ inline double Matrix::operator()(long i, long j) const
 /*!
   \param i long de ligne
   \param j long de colonne
-  \return valeur de la matrice e la ligne \c i et colonne \c j
-
-  \version 0.9.4
+  \return valeur de la matrice à la ligne \c i et colonne \c j
 */
 //-----------------------------------------------------------------------------
 inline double &Matrix::operator()(long i, long j)
@@ -211,8 +202,6 @@ inline double &Matrix::operator()(long i, long j)
 /*!
   Cette methode calcule la somme de tous les termes d'une matrice
   \return somme de tous les termes de la matrice
-
-  \version 0.9.4
 */
 //-----------------------------------------------------------------------------
 inline double Matrix::sumTerms() const

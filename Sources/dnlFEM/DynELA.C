@@ -33,7 +33,6 @@ DynELA *dynelaData = NULL; // initialisation par defaut sur NULL
   \brief fichier .C de definition des structures elements finis
   \ingroup femLibrary
 
-  \version 1.0.0
   \date 2002
  
 */
@@ -41,7 +40,6 @@ DynELA *dynelaData = NULL; // initialisation par defaut sur NULL
 //constructeur par defaut de la classe DynELA
 /*!
   Cette methode est le constructeur par defaut de la classe DynELA. En pratique, ici, on ne fait rien de plus que les allocations de memoire necessaires.
-
 */
 //-----------------------------------------------------------------------------
 DynELA::DynELA(char *newName)
@@ -102,7 +100,6 @@ DynELA::DynELA(char *newName)
 //constructeur par recopie de la classe DynELA
 /*!
   Cette methode est le constructeur par recopie de la classe DynELA. En pratique, ici, on ne fait rien de plus que les allocations de memoire necessaires.
-  \version 1.0.0
   \date 2002
  
 */
@@ -114,7 +111,6 @@ DynELA::DynELA(const DynELA &X)
 
 //destructeur de la classe DynELA
 /*!
-  \version 1.0.0
   \date 2002
  
 */
@@ -134,9 +130,8 @@ DynELA::~DynELA()
 //recherche d'un noeud dans la structure en fonction de son numero
 /*!
   Cette methode recherche un noeud dans la structure en fonction de son numero et renvoie un pointeur sur celui-ci, ou NULL si celui-ci n'existe pas dans la structure. Le noeud est recherche sur la grille courante du modele courant.
-  \param nodeNumber numero du noeud e rechercher
+  \param nodeNumber numero du noeud à rechercher
   \return pointeur sur le noeud trouve ou NULL en cas d'echec de recherche
-  \version 1.0.0
   \date 2002
  
 */
@@ -158,9 +153,8 @@ Node *DynELA::getNodeByNum(long nodeNumber)
 //recherche d'un element dans la structure en fonction de son numero
 /*!
   Cette methode recherche un element dans la structure en fonction de son numero et renvoie un pointeur sur celui-ci, ou NULL si celui-ci n'existe pas dans la structure. L'element est recherche sur la grille courante du modele courant.
-  \param elementNumber numero de l'element e rechercher
+  \param elementNumber numero de l'element à rechercher
   \return pointeur sur l'element trouve ou NULL en cas d'echec de recherche
-  \version 1.0.0
   \date 2002
  
 */
@@ -179,14 +173,13 @@ Element *DynELA::getElementByNum(long elementNumber)
   return model.elements.dichotomySearch(substractElementsNumber, elementNumber);
 }
 
-//creation d'un noeud et ajout e la structure
+//creation d'un noeud et ajout à la structure
 /*!
-  Cette methode cree un nouveau noeud et l'ajoute e la fois e la liste des noeuds de la structure et e la liste des noeuds de la grille courante du modele courant.
-  \param nodeNumber numero du nouveau noeud e creer
-  \param x coordonnee x du noeud e creer
-  \param y coordonnee y du noeud e creer
-  \param z coordonnee z du noeud e creer
-  \version 1.0.0
+  Cette methode cree un nouveau noeud et l'ajoute à la fois à la liste des noeuds de la structure et à la liste des noeuds de la grille courante du modele courant.
+  \param nodeNumber numero du nouveau noeud à creer
+  \param x coordonnee x du noeud à creer
+  \param y coordonnee y du noeud à creer
+  \param z coordonnee z du noeud à creer
   \date 2002
  
 */
@@ -197,7 +190,7 @@ bool DynELA::createNode(long nodeNumber, double xCoord, double yCoord, double zC
   // pointeur sur le nouveau noeud
   Node *newNode = new Node(nodeNumber, xCoord, yCoord, zCoord);
 
-  // l'ajouter e la grille courante du modele courant
+  // l'ajouter à la grille courante du modele courant
   model.add(newNode);
 
   // add the newNode
@@ -216,7 +209,6 @@ bool DynELA::createNode(long nodeNumber, double xCoord, double yCoord, double zC
   Cette methode renvoie le nombre total de noeuds de la structure
 
   \return nombre de noeuds de la structure
-
 */
 //-----------------------------------------------------------------------------
 long DynELA::getNodesNumber()
@@ -334,13 +326,12 @@ void DynELA::add(Solver *newSolver)
   model.add(newSolver);
 }
 
-//affecte un materiau e un ensemble d'elements
+//affecte un materiau à un ensemble d'elements
 /*!
-  Cette methode affecte un materiau e un ensemble d'elements de la structure.
+  Cette methode affecte un materiau à un ensemble d'elements de la structure.
 
-  \param material materiau e utiliser
-  \param elementSet ElementSet e utiliser
-
+  \param material materiau à utiliser
+  \param elementSet ElementSet à utiliser
 */
 //-----------------------------------------------------------------------------
 void DynELA::add(Material *material, ElementSet *elementSet)
@@ -374,12 +365,11 @@ void DynELA::add(Material *material, ElementSet *elementSet)
     addMaterial(material);
 }
 
-//ajoute un materiau e la structure
+//ajoute un materiau à la structure
 /*!
-  Cette methode ajoute un nouveau materiau e la structure. Le nouveau materiau est initialise et renseigne de maniere externe. Cette methode est uniquement destinee e le stocker au niveau de la stucture. Il est ensuite possible d'y faire reference e partir poissonRatio nom de ce materiau. Cette methode verifie que lorsque l'on ajoute un materiau, si le nom est declare, un autre materiau portant le meme nom n'est pas deje present dans la liste des materiaux. Dans ce cas, une erreur est alors generee.
+  Cette methode ajoute un nouveau materiau à la structure. Le nouveau materiau est initialise et renseigne de maniere externe. Cette methode est uniquement destinee à le stocker au niveau de la stucture. Il est ensuite possible d'y faire reference à partir poissonRatio nom de ce materiau. Cette methode verifie que lorsque l'on ajoute un materiau, si le nom est declare, un autre materiau portant le meme nom n'est pas deje present dans la liste des materiaux. Dans ce cas, une erreur est alors generee.
 
-  \param pmat pointeur sur le nouveau materiau e ajouter e la structure
-
+  \param pmat pointeur sur le nouveau materiau à ajouter à la structure
 */
 //-----------------------------------------------------------------------------
 void DynELA::addMaterial(Material *pmat)
@@ -398,7 +388,7 @@ void DynELA::addMaterial(Material *pmat)
     }
   }
 
-  // ajout e la liste courante
+  // ajout à la liste courante
   model.materials << pmat;
 
   // logFile
@@ -419,13 +409,12 @@ void DynELA::add(ElementSet *elementSet, long startNumber, long endNumber, long 
   model.add(elementSet, startNumber, endNumber, increment);
 }
 
-//affecte des conditions aux limites initiales e un ensemble de noeuds
+//affecte des conditions aux limites initiales à un ensemble de noeuds
 /*!
-  Cette methode affecte des conditions aux limites e un ensemble de noeuds de la structure.
+  Cette methode affecte des conditions aux limites à un ensemble de noeuds de la structure.
 
-  \param boundary condition limite e utiliser
-  \param nodeSet NodeSet e utiliser
-
+  \param boundary condition limite à utiliser
+  \param nodeSet NodeSet à utiliser
 */
 //-----------------------------------------------------------------------------
 void DynELA::attachInitialBC(Boundary *boundary, NodeSet *nodeSet)
@@ -458,13 +447,12 @@ void DynELA::attachInitialBC(Boundary *boundary, NodeSet *nodeSet)
   boundary->typeSet << tp; */
 }
 
-//affecte des conditions aux limites constantes e un ensemble de noeuds
+//affecte des conditions aux limites constantes à un ensemble de noeuds
 /*!
-  Cette methode affecte des conditions aux limites e un ensemble de noeuds de la structure.
+  Cette methode affecte des conditions aux limites à un ensemble de noeuds de la structure.
 
-  \param boundary condition limite e utiliser
-  \param nodeSet NodeSet e utiliser
-
+  \param boundary condition limite à utiliser
+  \param nodeSet NodeSet à utiliser
 */
 //-----------------------------------------------------------------------------
 void DynELA::attachConstantBC(Boundary *boundary, NodeSet *nodeSet)
@@ -680,7 +668,6 @@ void DynELA::rotate(Vec3D axis, double angle, NodeSet *nodeSet)
 
   \param min coordonnee minimale
   \param max coordonnee maximale
-
 */
 //-----------------------------------------------------------------------------
 void DynELA::getGlobalBox(Vec3D &minPoint, Vec3D &maxPoint)
@@ -735,8 +722,6 @@ void DynELA::writeVTKFile()
 //lancement du solveur general
 /*!
   Cette methode lance la procedure de solveur general de la structure. Elle prend en compte tous les types de solveurs possible et gere aussi bien la resolution mono-modele que la resolution multi-modele. C'est le point d'entree de tout solveur.
-
-
 */
 //-----------------------------------------------------------------------------
 void DynELA::solve()
@@ -884,9 +869,9 @@ bool DynELA::initSolve ()
 
 //recherche si un materiau existe actuellement
 /*!
-  Cette methode est utilisee pour recuperer un materiau donne e partir de son nom dans une structure. Elle cherche un materiau donne en fonction de son nom et renvoie un pointeur sur ce materiau (s'il existe) ou NULL dans le cas oe le materiau n'a pu etre trouve dans la liste des materiaux de la structure.
+  Cette methode est utilisee pour recuperer un materiau donne à partir de son nom dans une structure. Elle cherche un materiau donne en fonction de son nom et renvoie un pointeur sur ce materiau (s'il existe) ou NULL dans le cas oe le materiau n'a pu etre trouve dans la liste des materiaux de la structure.
 
-  \param name nom du materiau e recuperer
+  \param name nom du materiau à recuperer
   \return un pointeur sur ce materiau (s'il existe) ou NULL dans le cas oe le materiau n'a pu etre trouve dans la liste des materiaux de la structure.
 
 
@@ -906,12 +891,12 @@ Material * DynELA::getMaterial (String name)
   return NULL;
 }
 
-//affecte des conditions aux limites e un ensemble de noeuds
+//affecte des conditions aux limites à un ensemble de noeuds
 /*!
-  Cette methode affecte des conditions aux limites e un ensemble de noeuds de la structure.
+  Cette methode affecte des conditions aux limites à un ensemble de noeuds de la structure.
 
-  \param BC condition limite e utiliser
-  \param nds NodeSet e utiliser
+  \param BC condition limite à utiliser
+  \param nds NodeSet à utiliser
 
 
 //-----------------------------------------------------------------------------
@@ -926,11 +911,11 @@ void DynELA::attachBCToNodes(BoundaryCondition* BC, NodeSet* nds)
   }
 }
 
-//ajoute un solveur e la structure
+//ajoute un solveur à la structure
 /*!
-  Cette methode ajoute un solveur e la structure. Le solveur est ajoute e la liste des solveurs du modele courant de la structure.
+  Cette methode ajoute un solveur à la structure. Le solveur est ajoute à la liste des solveurs du modele courant de la structure.
 
-  \param solver solveur e utiliser
+  \param solver solveur à utiliser
 
 
 
@@ -1009,7 +994,7 @@ Element* DynELA::getElementById(long i)
 /*!
   Cette methode permet de creer un nouveau modele dans la structure ou de selectionner un autre modele pour le modele courant de la structure.
 
-  \param model pointeur sur le modele e selectionner
+  \param model pointeur sur le modele à selectionner
 
 
 //-----------------------------------------------------------------------------
@@ -1017,7 +1002,7 @@ void DynELA::setModel(Model* model)
 //-----------------------------------------------------------------------------
 {
 //  long ind;
-  // si le modele existe deja, on n'a pas e le creer
+  // si le modele existe deja, on n'a pas à le creer
   if (!models.contains(model)) 
     {
       models << model;

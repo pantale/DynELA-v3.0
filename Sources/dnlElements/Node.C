@@ -29,7 +29,7 @@
   \brief fichier .C de definition des noeuds du maillage
   \ingroup femLibrary
 
-  Ce fichier sert e la definition des noeuds du maillage elements finis sur DynELA.
+  Ce fichier sert à la definition des noeuds du maillage elements finis sur DynELA.
 
   \since DynELA 0.9.5
 */

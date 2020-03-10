@@ -24,7 +24,6 @@
 /*!
   Cette methode construit un ElementSet vide.
 
-  \version 0.9.5
 */
 //-----------------------------------------------------------------------------
 ElementSet::ElementSet(char *_name)
@@ -40,7 +39,6 @@ ElementSet::ElementSet(char *_name)
   Cette methode construit un ElementSet vide par recopie d'un autre. 
   Elle n'est pas finalisee.
 
-  \version 0.9.5
 */
 //-----------------------------------------------------------------------------
 ElementSet::ElementSet(const ElementSet &X)
@@ -54,7 +52,6 @@ ElementSet::ElementSet(const ElementSet &X)
 /*!
   Cette methode detruit un ElementSet.
 
-  \version 0.9.5
 */
 //-----------------------------------------------------------------------------
 ElementSet::~ElementSet()
@@ -69,12 +66,11 @@ void ElementSet::setName(char *_name)
     name = _name;
 }
 
-//ajoute un element e un ElementSet
+//ajoute un element à un ElementSet
 /*!
-  Cette methode ajoute un element existant e un ElementSet. L'element est directement specifie par son pointeur, aucune verification n'est effectuee par cette methode.
+  Cette methode ajoute un element existant à un ElementSet. L'element est directement specifie par son pointeur, aucune verification n'est effectuee par cette methode.
   \param element pointeur sur un element
 
-  \version 0.9.5
 */
 //-----------------------------------------------------------------------------
 void ElementSet::add(Element *element)
@@ -88,7 +84,6 @@ void ElementSet::add(Element *element)
   Cette methode renvoie le nombre d'elements dans un ElementSet
   \return nombre d'elements de la liste
 
-  \version 0.9.5
 */
 //-----------------------------------------------------------------------------
 long ElementSet::getSize()
@@ -97,12 +92,10 @@ long ElementSet::getSize()
   return elements.getSize();
 }
 
-//ajoute un ElementSet e un ElementSet
+//ajoute un ElementSet à un ElementSet
 /*!
-  Cette methode ajoute un ElementSet existant e un ElementSet.
+  Cette methode ajoute un ElementSet existant à un ElementSet.
   \param elementSet ElementSet a fusionner
-
-  \version 1.0.0
 */
 //-----------------------------------------------------------------------------
 void ElementSet::add(ElementSet *elementSet)
@@ -120,7 +113,6 @@ void ElementSet::add(ElementSet *elementSet)
   \param item place de l'element dans la liste.
   \return pointeur sur le element
 
-  \version 0.9.5
 */
 //-----------------------------------------------------------------------------
 Element *ElementSet::getElement(long item)
@@ -135,7 +127,6 @@ Element *ElementSet::getElement(long item)
   \param i place du noeud dans la liste.
   \return pointeur sur le noeud
 
-  \version 0.9.5
 */
 //-----------------------------------------------------------------------------
 long ElementSet::getNumber(long item)

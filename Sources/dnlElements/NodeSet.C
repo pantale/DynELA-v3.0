@@ -79,7 +79,6 @@ void NodeSet::add(NodeSet *nodesSet)
   Cette methode renvoie le nombre de noeuds dans un NodeSet
   \return nombre de noeuds de la liste
 
-  \version 0.9.5
 */
 //-----------------------------------------------------------------------------
 long NodeSet::getSize()
@@ -94,7 +93,6 @@ long NodeSet::getSize()
   \param i place du noeud dans la liste.
   \return pointeur sur le noeud
 
-  \version 0.9.5
 */
 //-----------------------------------------------------------------------------
 Node *NodeSet::getNode(long nodeNumber)
@@ -109,7 +107,6 @@ Node *NodeSet::getNode(long nodeNumber)
   \param i place du noeud dans la liste.
   \return pointeur sur le noeud
 
-  \version 0.9.5
 */
 //-----------------------------------------------------------------------------
 long NodeSet::getNumber(long item)

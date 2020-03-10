@@ -17,8 +17,7 @@
   T_{21} & T_{22} & T_{23}\\
   T_{31} & T_{32} & T_{33}
   \end{array}\right] \f]
-  \ingroup linearAlgebra
-  \since DynELA 1.0
+  \ingroup dnlMaths
 */
 
 #ifndef __dnlMaths_SymTensor2_h__
@@ -46,8 +45,7 @@ struct SymTensor2Index
   T_{21} & T_{22} & T_{23}\\
   T_{31} & T_{32} & T_{33}
   \end{array}\right] \f]
-  \ingroup linearAlgebra
-  \since DynELA 1.0
+  \ingroup dnlMaths
 */
 class SymTensor2
 {

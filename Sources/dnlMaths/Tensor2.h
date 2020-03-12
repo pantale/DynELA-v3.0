@@ -53,7 +53,7 @@ class Tensor2
   double _data[9]; //!< Data storage for 9 double
 
 private:
-  bool indexOK(int, int) const;
+  bool indexOK(short, short) const;
 
 public:
   Tensor2();
@@ -63,7 +63,7 @@ public:
 
   bool operator!=(const Tensor2 &) const;
   bool operator==(const Tensor2 &) const;
-  double operator()(int, int) const;
+  double operator()(short, short) const;
   Tensor2 operator-() const;
   Tensor2 operator-(const Tensor2 &) const;
   Tensor2 operator*(const double)const;
@@ -74,7 +74,7 @@ public:
   Vec3D operator*(const Vec3D &)const;
 
 #ifndef SWIG
-  double &operator()(int, int);
+  double &operator()(short, short);
   friend Tensor2 operator*(const double &, const Tensor2 &);
   Tensor2 &operator=(const double &);
   Tensor2 &operator=(const Tensor2 &);
@@ -109,8 +109,8 @@ public:
   SymTensor2 singleProductNxT() const;
   Tensor2 singleProduct(const Tensor2) const;
   Vec3D columnSum() const;
-  Vec3D getColumn(int) const;
-  Vec3D getRow(int) const;
+  Vec3D getColumn(short) const;
+  Vec3D getRow(short) const;
   Vec3D rowSum() const;
   Vec3D solve(const Vec3D &) const;
   void numpyRead(std::string);
@@ -137,10 +137,10 @@ public:
 //------inline functions-------------------------------------------------------
 
 /*!
-  \brief tests if the couple of _internalIndexes is ok
+  \brief tests if the couple of indexes is ok
 */
 //-----------------------------------------------------------------------------
-inline bool Tensor2::indexOK(int i, int j) const
+inline bool Tensor2::indexOK(short i, short j) const
 //-----------------------------------------------------------------------------
 {
   if ((i >= 0) && (i < 3) && (j >= 0) && (j < 3))
@@ -158,12 +158,12 @@ inline bool Tensor2::indexOK(int i, int j) const
 /*!
   \brief Access to the values T[i,j] of a second order tensor
 
-  \param i int for row
-  \param j int for column
+  \param i short for row
+  \param j short for column
   \return Value of the second order tensor T[i,j]
 */
 //-----------------------------------------------------------------------------
-inline double &Tensor2::operator()(int i, int j)
+inline double &Tensor2::operator()(short i, short j)
 //-----------------------------------------------------------------------------
 {
 #ifdef VERIF_math
@@ -175,12 +175,12 @@ inline double &Tensor2::operator()(int i, int j)
 /*!
   \brief Access to the values T[i,j] of a second order tensor (Read only method)
 
-  \param i int for row
-  \param j int for column
+  \param i short for row
+  \param j short for column
   \return Value of the second order tensor T[i,j]
 */
 //-----------------------------------------------------------------------------
-inline double Tensor2::operator()(int i, int j) const
+inline double Tensor2::operator()(short i, short j) const
 //-----------------------------------------------------------------------------
 {
 #ifdef VERIF_math

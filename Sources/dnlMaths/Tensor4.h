@@ -6,30 +6,19 @@
  *  (c) Copyright 1997-2020                                                *
  *                                                                         *
  **************************************************************************/
-// TODOCXYFILE
 
-// begin date : 05/03/1997
+/*!
+  \file Tensor4.h
+  \brief Declaration file for the fourth order tensor class
 
-/*
-  Class Tensor4 definition
+  This file is the declaration file for the fourth order tensor class. A fourth order tensor has the following form:
+  \f[ T = T_{ijkl} \f]
+  \ingroup dnlMaths
 */
 
 #ifndef __dnlMaths_Tensor4_h__
 #define __dnlMaths_Tensor4_h__
 
-/*!
-  \file Tensor4.h
-  \brief fichier .h de definition et de manipulation tenseurs d'ordre 4
-  \ingroup dnlMaths
-
-  Ce fichier definit les methodes permettant de gerer les tenseurs d'ordre 4.
-
-
-  \since DynELA 0.9.5
-  \date 1997-2004  
-*/
-
-//#include <dnlKernel.h>
 #include <string>
 #include <string.h>
 #include <Errors.h>
@@ -40,17 +29,15 @@ class Tensor2;
 class Tensor3;
 
 /*!
-  \class Tensor4 Tensor4.h
-  \brief Classe de gestion et manipulation des tenseurs du second ordre.
+  \brief Declaration of the fourth order tensor class
+
+  A fourth order tensor has the following form:
+  \f[ T = T_{ijkl} \f]
   \ingroup dnlMaths
-
-
-Cette classe est utilisee pour la gestion et la manipulation des tenseurs du quatrieme ordre. Elle comporte toutes les methodes d'initialisation et de gestion memoire. Les valeurs stockees sont des double. La classe \c Tensor4 contient de plus un certain nombre de methodes de calcul sur les tenseurs comme decrit ci-dessous.
 */
-/** @dia:pos 64,78 */
 class Tensor4
 {
-  double v[81];
+  double v[81]; //!< Data storage for 81 double
 
 public:
   // constructeurs
@@ -58,80 +45,71 @@ public:
   ~Tensor4();
 
   // operations sur les composantes
-  inline double operator()(long i, long j, long k, long l) const;
+  inline double operator()(short, short, short, short) const;
 #ifndef SWIG
-  inline double &operator()(long i, long j, long k, long l);
+  inline double &operator()(short, short, short, short);
 #endif
-  inline bool indexOK(long i, long j, long k, long l) const;
+  inline bool indexOK(short, short, short, short) const;
 
   // operations d'affectation
-  inline void setToValue(double val);
+  inline void setToValue(const double);
   void setToUnity();
 #ifndef SWIG
-  Tensor4 &operator=(const double &val);
-  Tensor4 &operator=(const Tensor4 &tens);
+  Tensor4 &operator=(const double &);
+  Tensor4 &operator=(const Tensor4 &);
 #endif
 
   // operations de comparaison
-  bool operator==(const Tensor4 &tens) const;
-  bool operator!=(const Tensor4 &tens) const;
+  bool operator==(const Tensor4 &) const;
+  bool operator!=(const Tensor4 &) const;
 
   // operations arithmetiques de base entre tenseurs
 #ifndef SWIG
-  inline void operator+=(const Tensor4 &tens);
-  inline void operator-=(const Tensor4 &tens);
-  inline void operator*=(const double val);
-  inline void operator/=(const double val);
+  inline void operator+=(const Tensor4 &);
+  inline void operator-=(const Tensor4 &);
+  inline void operator*=(const double);
+  inline void operator/=(const double);
 #endif
-  Tensor4 operator+(const Tensor4 &tens) const;
-  Tensor4 operator-(const Tensor4 &tens) const;
-  Tensor4 operator*(const double &lambda) const;
-  Tensor4 operator/(const double &tens) const;
+  Tensor4 operator+(const Tensor4 &) const;
+  Tensor4 operator-(const Tensor4 &) const;
+  Tensor4 operator*(const double &)const;
+  Tensor4 operator/(const double &) const;
 #ifndef SWIG
-  friend Tensor4 operator*(const double &val, const Tensor4 &tens);
+  friend Tensor4 operator*(const double &, const Tensor4 &);
 #endif
 
   // multiplications particulieres
   Tensor3 operator*(const Vec3D &vec) const;
   Tensor2 operator*(const Tensor2 &t) const;
-  void numpyWrite(std::string filename, bool initialize = false) const;
-  void numpyWriteZ(std::string filename, std::string name, bool initialize = false) const;
-  void numpyRead(std::string filename);
-  void numpyReadZ(std::string filename, std::string name);
+  void numpyWrite(std::string, bool = false) const;
+  void numpyWriteZ(std::string, std::string, bool = false) const;
+  void numpyRead(std::string);
+  void numpyReadZ(std::string, std::string);
 
   // gestion des flux entree et sortie
 #ifndef SWIG
-  friend std::ostream &operator<<(std::ostream &os, const Tensor4 &tens);
-  friend std::ofstream &operator<<(std::ofstream &os, const Tensor4 &tens);
-  friend std::ifstream &operator>>(std::ifstream &is, Tensor4 &tens);
-  void write(std::ofstream &ofs) const;
-  void read(std::ifstream &ifs);
-  void print(std::ostream &os) const;
+  friend std::ostream &operator<<(std::ostream &, const Tensor4 &);
+  friend std::ofstream &operator<<(std::ofstream &, const Tensor4 &);
+  friend std::ifstream &operator>>(std::ifstream &, Tensor4 &);
+  void write(std::ofstream &) const;
+  void read(std::ifstream &);
+  void print(std::ostream &) const;
 #endif
 };
 
 //------inline functions-------------------------------------------------------
 
-//teste les bornes du tenseur
 /*!
-  Cette methode teste les bornes d'un tenseur
-  \param i long 1
-  \param j long 2
-  \param k long 3
-  \param l long 4
-  \return true si les indices fournis sont dans les bornes, false dans le cas contraire
-
-  \since DynELA 0.9.5
+  \brief tests if the couple of indexes is ok
 */
 //-----------------------------------------------------------------------------
-inline bool
-Tensor4::indexOK(long i, long j, long k, long l) const
+inline bool Tensor4::indexOK(short i, short j, short k, short l) const
 //-----------------------------------------------------------------------------
 {
   if ((i >= 0) && (i < 3) && (j >= 0) && (j < 3) && (k >= 0) && (k < 3) && (l >= 0) && (l < 3))
     return (true);
 
-  printf("Tensor4::indexOK\nindice(s) [%ld,%ld,%ld,%ld] out of allowed range [0-2,0-2,0-2,0-2]",
+  printf("Tensor4::indexOK\nindice(s) [%d,%d,%d,%d] out of allowed range [0-2,0-2,0-2,0-2]",
          i, j, k, l);
   exit(-1);
 
@@ -139,19 +117,13 @@ Tensor4::indexOK(long i, long j, long k, long l) const
   return (false);
 }
 
-//acces aux valeurs d'un tenseur
 /*!
-  \param i long 1
-  \param j long 2
-  \param k long 3
-  \param l long 4
-  \return valeur du tenseur Tijkl
+  \brief Access to the values T[i,j,k,l] of a fourth order tensor
 
-  \since DynELA 0.9.5
+  \return Value of the fourth order tensor T[i,j,k,l]
 */
 //-----------------------------------------------------------------------------
-inline double &
-Tensor4::operator()(long i, long j, long k, long l)
+inline double &Tensor4::operator()(short i, short j, short k, short l)
 //-----------------------------------------------------------------------------
 {
 #ifdef VERIF_math
@@ -160,20 +132,13 @@ Tensor4::operator()(long i, long j, long k, long l)
   return v[dnlTensor4Ind(i, j, k, l, 3)];
 }
 
-//acces aux valeurs d'un tenseur
 /*!
-  \param i long 1
-  \param j long 2
-  \param k long 3
-  \param l long 4
-  \return valeur du tenseur Tijkl
+  \brief Access to the values T[i,j,k,l] of a fourth order tensor
 
-  \since DynELA 0.9.5
+  \return Value of the fourth order tensor T[i,j,k,l]
 */
 //-----------------------------------------------------------------------------
-inline double
-Tensor4::operator()(long i, long j, long k, long l)
-    const
+inline double Tensor4::operator()(short i, short j, short k, short l) const
 //-----------------------------------------------------------------------------
 {
 #ifdef VERIF_math
@@ -182,111 +147,97 @@ Tensor4::operator()(long i, long j, long k, long l)
   return v[dnlTensor4Ind(i, j, k, l, 3)];
 }
 
-//affectation d'egalite
-/*! 
-  Cette methode est une surdefinition de la methode d'egalite permettant d'ecrire simplement le remplissage des valeurs d'un tenseur par un scalaire
+/*!
+  \brief Fill a fourth order tensor with a scalar value
 
-  Exemple :
+  This method is a surdefinition of the = operator for the fourth order tensor class.
   \code
   Tensor4 t1;
-  t1=setToValue(1.); // affecte 1 à toutes les composantes du tenseur
+  t1 = setToValue(1.0); // All components of the tensor are set to 1.0
   \endcode
-
-  \since DynELA 0.9.5
+  \param val double value to give to all components of the fourth order tensor
 */
 //-----------------------------------------------------------------------------
-inline void Tensor4::setToValue(double val)
+inline void Tensor4::setToValue(const double val)
 //-----------------------------------------------------------------------------
 {
-  for (long i = 0; i < 81; i++)
+  for (short i = 0; i < 81; i++)
     v[i] = val;
 }
 
-//addition de deux tenseurs du deuxieme ordre
 /*!
-  Cette methode permet de surdefinir l'operation d'addition des tenseurs et d'ecrire simplement la somme de deux tenseurs sous la forme donnee en exemple
+  \brief Addition of 2 fourth order tensors
 
-  Exemple :
+  This method defines the addition of 2 fourth order tensors.
   \code
   Tensor4 t1,t2;
-  t2+=t1; // somme de deux tenseurs
+  t2 += t1; // sum of two fourth order tensors
   \endcode
-
-  \since DynELA 0.9.5
+  \param tensor fourth order tensor to add
 */
 //-----------------------------------------------------------------------------
-inline void
-Tensor4::operator+=(const Tensor4 &tens)
+inline void Tensor4::operator+=(const Tensor4 &tens)
 //-----------------------------------------------------------------------------
 {
   // calcul de la somme
-  for (long i = 0; i < 81; i++)
+  for (short i = 0; i < 81; i++)
     v[i] += tens.v[i];
 }
 
-//soustraction de deux tenseurs du deuxieme ordre
 /*!
-  Cette methode permet de surdefinir l'operation de soustraction des tenseurs et d'ecrire simplement la soustraction de deux tenseurs sous la forme donnee en exemple
+  \brief Difference of 2 fourth order tensors
 
-  Exemple :
+  This method defines the difference of 2 fourth order tensors.
   \code
   Tensor4 t1,t2;
-  t2-=t1; // soustraction de deux tenseurs
+  t2 -= t1; // difference of two fourth order tensors
   \endcode
-
-  \since DynELA 0.9.5
+  \param tensor fourth order tensor to substract
 */
 //-----------------------------------------------------------------------------
-inline void
-Tensor4::operator-=(const Tensor4 &tens)
+inline void Tensor4::operator-=(const Tensor4 &tens)
 //-----------------------------------------------------------------------------
 {
   // calcul de la difference
-  for (long i = 0; i < 81; i++)
+  for (short i = 0; i < 81; i++)
     v[i] -= tens.v[i];
 }
 
-//multiplication d'un tenseur par un scalaire
 /*!
-  Cette methode permet de surdefinir l'operation de multiplication des tenseurs et d'ecrire simplement la multiplication d'un tenseur par un scalaire sous la forme donnee en exemple
+  \brief Multiplication of a fourth order tensor by a scalar value
 
-  Exemple :
+  This method defines the multiplication of a fourth order tensor by a scalar value  
   \code
   Tensor4 t1;
   double l;
-  t1*=l; // multiplication par un scalaire
+  t1 *= l; // multiplication by a scalar
   \endcode
-
-  \since DynELA 0.9.5
+  \param val Scalar value to use for the multiplication
 */
 //-----------------------------------------------------------------------------
-inline void
-Tensor4::operator*=(const double val)
+inline void Tensor4::operator*=(const double val)
 //-----------------------------------------------------------------------------
 {
-  for (long i = 0; i < 81; i++)
+  for (short i = 0; i < 81; i++)
     v[i] *= val;
 }
 
-//division d'un tenseur par un scalaire
 /*!
-  Cette methode permet de surdefinir l'operation de division des tenseurs et d'ecrire simplement la division d'un tenseur par un scalaire sous la forme donnee en exemple
+  \brief Division of a fourth order tensor by a scalar value
 
-  Exemple :
+  This method defines the division of a fourth order tensor by a scalar value  
   \code
   Tensor4 t1;
   double l;
-  t1/=l; // division par un scalaire
+  t1 /= l; // division by a scalar
   \endcode
-
-  \since DynELA 0.9.5
+  \param val Scalar value to use for the division
 */
 //-----------------------------------------------------------------------------
-inline void
-Tensor4::operator/=(const double val)
+inline void Tensor4::operator/=(const double val)
 //-----------------------------------------------------------------------------
 {
-  for (long i = 0; i < 81; i++)
+  for (short i = 0; i < 81; i++)
     v[i] /= val;
 }
 

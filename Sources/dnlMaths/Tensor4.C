@@ -6,12 +6,14 @@
  *  (c) Copyright 1997-2020                                                *
  *                                                                         *
  **************************************************************************/
-// TODOCXYFILE
 
-// begin date : 05/03/1997
+/*!
+  \file Tensor.C
+  \brief Definition file for the fourth order tensor class
 
-/*
-  Class Tensor4 implementation
+  This file is the declaration file for the fourth order tensor class. A fourth order tensor has the following form:
+  \f[ T = T_{ijkl} \f]
+  \ingroup dnlMaths
 */
 
 #include <fstream>
@@ -23,22 +25,9 @@
 #include <NumpyInterface.h>
 
 /*!
-  \file Tensor4.C
-  \brief fichier .C de definition et de manipulation tenseurs d'ordre 4
-  \ingroup dnlMaths
+  \brief Constructor of the Tensor4 class
 
-  Ce fichier definit les methodes permettant de gerer les tenseurs d'ordre 4.
-
-
-  \since DynELA 0.9.5
-  \date 1997-2004  
-*/
-
-//constructeur de la classe Tensor4
-/*!
-  Cette methode construit un tenseur d'ordre 4. Par defaut, le contenu du tenseur est mis à zero
-
-  \since DynELA 0.9.5
+  This method is the default constructor of a fourth order tensor. All components are initialized to zero by default.
 */
 //-----------------------------------------------------------------------------
 Tensor4::Tensor4()
@@ -48,25 +37,22 @@ Tensor4::Tensor4()
   setToValue(0.);
 }
 
-//destructeur de la classe Tensor4
+/*!
+  \brief Destructor of the Tensor4 class
+*/
 //-----------------------------------------------------------------------------
 Tensor4::~Tensor4()
 //-----------------------------------------------------------------------------
 {
 }
 
-//affichage du contenu d'un tenseur
 /*!
-  Cette methode est une surdefinition de << pour les flux de sortie, son utilisation est donnee comme suit
-  
-  Exemple
+  \brief Send the content of a fourth order tensor to the output flux for display
   \code
   Tensor4 t;
   std::cout << t << endl;
   \endcode
-  \param os flux de sortie
-
-  \since DynELA 0.9.5
+  \param os Output flux
 */
 //-----------------------------------------------------------------------------
 std::ostream &operator<<(std::ostream &os, const Tensor4 &t1)
@@ -76,12 +62,10 @@ std::ostream &operator<<(std::ostream &os, const Tensor4 &t1)
   return os;
 }
 
-//affichage du contenu d'un tenseur
 /*!
-  Cette methode permet d'afficher le contenu d'un tenseur sur la sortie std::ostream
-  \param os flux de sortie
+  \brief Print the content of a fourth order tensor to the output flux for display
 
-  \since DynELA 0.9.5
+  \param os Output flux
 */
 //-----------------------------------------------------------------------------
 void Tensor4::print(std::ostream &os) const
@@ -105,18 +89,15 @@ void Tensor4::print(std::ostream &os) const
   }
 }
 
-//renvoie un tenseur identite à partir d'un tenseur quelconque
 /*!
-  Cette methode prend en argument un tenseur quelconque et renvoie un tenseur identite
-  
-  Exemple :
+  \brief Returns an identity tensor
+
+  This method transforms the current tensor to an identity tensor.
   \code
   Tensor4 t1;
-  t1.setToUnity(); // renvoie identite
+  t1.setToUnity(); // Returns and identity tensor
   \endcode
-  \warning Cette methode modifie son argument
-
-  \since DynELA 0.9.5
+  \warning This method modify it's argument
 */
 //-----------------------------------------------------------------------------
 void Tensor4::setToUnity()
@@ -132,17 +113,15 @@ void Tensor4::setToUnity()
               2.;
 }
 
-//affectation d'egalite
-/*! 
-  Cette methode est une surdefinition de la methode d'egalite permettant d'ecrire simplement le remplissage des valeurs d'un tenseur par un scalaire
-  
-  Exemple :
+/*!
+  \brief Fill a fourth order tensor with a scalar value
+
+  This method is a surdefinition of the = operator for the fourth order tensor class.
   \code
   Tensor4 t1;
-  t1=1.; // affecte 1 à toutes les composantes du tenseur
+  t1 = 1.0; // All components of the tensor are set to 1.0
   \endcode
-
-  \since DynELA 0.9.5
+  \param val double value to give to all components of the fourth order tensor
 */
 //-----------------------------------------------------------------------------
 Tensor4 &Tensor4::operator=(const double &val)
@@ -152,17 +131,15 @@ Tensor4 &Tensor4::operator=(const double &val)
   return *this;
 }
 
-//affectation d'egalite
-/*! 
-  Cette methode est une surdefinition de la methode d'egalite permettant d'ecrire simplement l'affectation sous la forme donnee en exemple
-  
-  Exemple :
-  \code
-  Tensor4 t1,t2;
-  t1=t2; // egalite de deux tenseurs
-  \endcode
+/*!
+  \brief Copy the content of a fourth order tensor into a new one
 
-  \since DynELA 0.9.5
+  This method is the so called = operator between two fourth order tensors. If the \ref MEM_funct is set, the \ref memcpy function is used for the copy.
+  \code
+  Tensor4 t1, t2;
+  t1 = t2; // copy of the tensor
+  \endcode
+  \param t1 Second fourth order tensor to use for the operation
 */
 //-----------------------------------------------------------------------------
 Tensor4 &Tensor4::operator=(const Tensor4 &t1)
@@ -172,21 +149,20 @@ Tensor4 &Tensor4::operator=(const Tensor4 &t1)
   return *this;
 }
 
-//addition de deux tenseurs du deuxieme ordre
 /*!
-  Cette methode permet de surdefinir l'operation d'addition des tenseurs et d'ecrire simplement la somme de deux tenseurs sous la forme donnee en exemple
-  
-  Exemple :
+  \brief Addition of 2 fourth order tensors
+
+  This method defines the addition of 2 fourth order tensors.
+  The result of this operation is also a fourth order tensor defined by:
+  \f[ T = A + B \f]
   \code
   Tensor4 t1,t2,t3;
-  t3=t1+t2; // somme de deux tenseurs
+  t3 = t1 + t2; // sum of 2 fourth order tensors
   \endcode
-
-  \since DynELA 0.9.5
+  \param t1 Second fourth order tensor to use for the operation
 */
 //-----------------------------------------------------------------------------
-Tensor4
-Tensor4::operator+(const Tensor4 &t1) const
+Tensor4 Tensor4::operator+(const Tensor4 &t1) const
 //-----------------------------------------------------------------------------
 {
   // creation d'un nouveau tenseur
@@ -200,21 +176,20 @@ Tensor4::operator+(const Tensor4 &t1) const
   return t2;
 }
 
-//soustraction de deux tenseurs du deuxieme ordre
 /*!
-  Cette methode permet de surdefinir l'operation de soustraction des tenseurs et d'ecrire simplement la soustraction de deux tenseurs sous la forme donnee en exemple
-  
-  Exemple :
+  \brief Difference of 2 fourth order tensors
+
+  This method defines the difference of 2 fourth order tensors.
+  The result of this operation is also a fourth order tensor defined by:
+  \f[ T = A - B \f]
   \code
   Tensor4 t1,t2,t3;
-  t3=t1-t2; // soustraction de deux tenseurs
+  t3 = t1 - t2; // difference of 2 fourth order tensors
   \endcode
-
-  \since DynELA 0.9.5
+  \param t1 Second fourth order tensor to use for the operation
 */
 //-----------------------------------------------------------------------------
-Tensor4
-Tensor4::operator-(const Tensor4 &t1) const
+Tensor4 Tensor4::operator-(const Tensor4 &t1) const
 //-----------------------------------------------------------------------------
 {
   // creation d'un nouveau tenseur
@@ -228,22 +203,21 @@ Tensor4::operator-(const Tensor4 &t1) const
   return t2;
 }
 
-//multiplication d'un tenseur par un scalaire
 /*!
-  Cette methode permet de surdefinir l'operation de multiplication des tenseurs et d'ecrire simplement la multiplication d'un tenseur par un scalaire sous la forme donnee en exemple
-  
-  Exemple :
+  \brief Multiplication of a fourth order tensor by a scalar value
+
+  This method defines the multiplication of a fourth order tensor by a scalar value
+  The result of this operation is also a fourth order tensor defined by:
+  \f[ T = A . \lambda \f]
   \code
   Tensor4 t1,t2;
   double l;
-  t2=t1*l; // multiplication par un scalaire
+  t2 = t1 * l; // multiplication by a scalar
   \endcode
-
-  \since DynELA 0.9.5
+  \param lambda Scalar value to use for the multiplication
 */
 //-----------------------------------------------------------------------------
-Tensor4
-    Tensor4::operator*(const double &lambda) const
+Tensor4 Tensor4::operator*(const double &lambda) const
 //-----------------------------------------------------------------------------
 {
   Tensor4 t2;
@@ -254,23 +228,22 @@ Tensor4
   return t2;
 }
 
-//division d'un tenseur par un scalaire
 /*!
-  Cette methode permet de surdefinir l'operation de division des tenseurs et d'ecrire simplement la division d'un tenseur par un scalaire sous la forme donnee en exemple
-  
-  Exemple :
+  \brief Division of a fourth order tensor by a scalar value
+
+  This method defines the division of a fourth order tensor by a scalar value
+  The result of this operation is also a fourth order tensor defined by:
+  \f[ T = \frac{A}{\lambda} \f]
   \code
   Tensor4 t1,t2;
   double l;
-  t2=t1/l; // division par un scalaire
+  t2 = t1 / l; // division by a scalar
   \endcode
-  \warning Cette operation n'est bien sur pas commutative
-
-  \since DynELA 0.9.5
+  \warning This is not a commutative operation, be also warn not to divide by zero.
+  \param lambda Scalar value to use for the multiplication
 */
 //-----------------------------------------------------------------------------
-Tensor4
-Tensor4::operator/(const double &lambda) const
+Tensor4 Tensor4::operator/(const double &lambda) const
 //-----------------------------------------------------------------------------
 {
   Tensor4 t2;
@@ -281,22 +254,22 @@ Tensor4::operator/(const double &lambda) const
   return t2;
 }
 
-//multiplication d'un tenseur par un scalaire
 /*!
-  Cette methode permet de surdefinir l'operation de multiplication des tenseurs et d'ecrire simplement la multiplication d'un tenseur par un scalaire sous la forme donnee en exemple. Elle est identique à la forme precedente (et commutative).
-  
-  Exemple :
+  \brief Multiplication of a fourth order tensor by a scalar value
+
+  This method defines the multiplication of a fourth order tensor by a scalar value
+  The result of this operation is also a fourth order tensor defined by:
+  \f[ T = \lambda . A \f]
   \code
   Tensor4 t1,t2;
   double l;
-  t2=l*t1; // multiplication par un scalaire
+  t2 = l * t1; // multiplication by a scalar
   \endcode
-
-  \since DynELA 0.9.5
+  \param lambda Scalar value to use for the multiplication
+  \param t1 Second fourth order tensor to use for the operation
 */
 //-----------------------------------------------------------------------------
-Tensor4
-operator*(const double &lambda, const Tensor4 &t1)
+Tensor4 operator*(const double &lambda, const Tensor4 &t1)
 //-----------------------------------------------------------------------------
 {
   Tensor4 t2;
@@ -307,19 +280,19 @@ operator*(const double &lambda, const Tensor4 &t1)
   return t2;
 }
 
-//multiplication d'un tenseur par un vecteur
 /*!
-  Cette methode permet de surdefinir l'operation de multiplication des tenseurs et d'ecrire simplement la multiplication d'un tenseur par un vecteur sous la forme donnee en exemple. Cette operation correspond à la notion de produit contracte d'un tenseur et d'un vecteur, elle renvoie un vecteur \c Vec3D.
-  
-  Exemple :
+  \brief Multiplication of a fourth order tensor by a vector
+
+  This method defines the product of a fourth order tensor by a vector.
+  The result of this operation is also a vector defined by:
+  \f[ B = T . \overrightarrow{a} \f]
   \code
   Tensor4 t1;
   Vec3D v1;
-  Tensor3 t2;
-  t2=t1*v1; // produit contracte
+  Tensor 2 t2;
+  t2 = t1 * v1; // product of the fourth order tensor by a vector
   \endcode
-
-  \since DynELA 0.9.5
+  \param v1 Vector to use for the operation
 */
 //-----------------------------------------------------------------------------
 Tensor3 Tensor4::operator*(const Vec3D &v1) const
@@ -336,24 +309,22 @@ Tensor3 Tensor4::operator*(const Vec3D &v1) const
   return t3;
 }
 
-//multiplication de deux tenseurs
 /*!
-  Cette methode permet de surdefinir l'operation de multiplication des tenseurs et d'ecrire simplement la multiplication de deux tenseur sous la forme donnee en exemple. Cette operation correspond à la notion de double produit contracte de deux tenseurs.
-  
-  \param t1 deuxieme tenseur dans le double produit contracte
-  
-  Exemple :
+  \brief Multiplication of a fourth order tensor by a tensor
+
+  This method defines the product of a fourth order tensor by a tensor.
+  The result of this operation is also a tensor defined by:
+  \f[ B = T . \overrightarrow{a} \f]
   \code
   Tensor4 t1;
-  Tensor2 t2,t3;
-  t3=t1*t2; // double produit contracte
+  Vec3D v1;
+  Tensor 2 t2;
+  t2 = t1 * v1; // product of the fourth order tensor by a tensor
   \endcode
-
-  \since DynELA 0.9.5
+  \param t2 tensor to use for the operation
 */
 //-----------------------------------------------------------------------------
-Tensor2
-    Tensor4::operator*(const Tensor2 &t2) const
+Tensor2 Tensor4::operator*(const Tensor2 &t2) const
 //-----------------------------------------------------------------------------
 {
   Tensor2 t3;
@@ -367,12 +338,13 @@ Tensor2
   return t3;
 }
 
-//egalite de deux tenseurs
 /*!
-  Cette methode teste l'egalite de deux tenseurs
-  \return true si les deux tenseurs sont identiques, false dans la cas contraire
+  \brief Test the equality of two fourth order tensors
 
-  \since DynELA 0.9.5
+  This method tests the equality of two fourth order tensors.
+  It returns \ref true if all components of the two fourth order tensors are equals, \ref false on other case.
+  \return \ref true or \ref false depending on the result of the test.
+  \param t1 Second fourth order tensor to use for the operation
 */
 //-----------------------------------------------------------------------------
 bool Tensor4::operator==(const Tensor4 &t1) const
@@ -386,12 +358,13 @@ bool Tensor4::operator==(const Tensor4 &t1) const
   return true;
 }
 
-//inegalite de deux tenseurs
 /*!
-  Cette methode teste l'inegalite de deux tenseurs
-  \return true si les deux tenseurs sont differents, false dans la cas contraire
+  \brief Test the equality of two fourth order tensors
 
-  \since DynELA 0.9.5
+  This method tests the equality of two fourth order tensors.
+  It returns \ref false if all components of the two fourth order tensors are equals, \ref true on other case.
+  \return \ref true or \ref false depending on the result of the test.
+  \param t1 Second fourth order tensor to use for the operation
 */
 //-----------------------------------------------------------------------------
 bool Tensor4::operator!=(const Tensor4 &t1) const
@@ -400,18 +373,16 @@ bool Tensor4::operator!=(const Tensor4 &t1) const
   return !(*this == t1);
 }
 
-//sortie sur flux std::ofstream
 /*!
-  Cette methode permet d'ecrire un tenseur dans un fichier (notament) binaire
-  
-  Exemple :
+  \brief Writes a fourth order tensor in a binary flux for storage
+
+  This method is used to store the components of a fourth order tensor in a binary file.
   \code
-  std::ofstream pfile("fichier");
+  std::ofstream pfile("file");
   Tensor4 t;
   t.write(pfile);
   \endcode
-
-  \since DynELA 0.9.5
+  \param ofs Output file stream to use for writting operation
 */
 //-----------------------------------------------------------------------------
 void Tensor4::write(std::ofstream &ofs) const
@@ -420,18 +391,16 @@ void Tensor4::write(std::ofstream &ofs) const
   ofs.write((char *)v, 81 * sizeof(double));
 }
 
-//lecture sur flux std::ifstream
 /*!
-  Cette methode permet de lire un tenseur depuis un fichier (notament) binaire
-  
-  Exemple :
+  \brief Reads a fourth order tensor in a binary flux from storage
+
+  This method is used to read the components of a fourth order tensor in a binary file.
   \code
-  std::ifstream pfile("fichier");
+  std::ofstream pfile("file");
   Tensor4 t;
   t.read(pfile);
   \endcode
-
-  \since DynELA 0.9.5
+  \param ofs Input file stream to use for reading operation
 */
 //-----------------------------------------------------------------------------
 void Tensor4::read(std::ifstream &ifs)
@@ -440,18 +409,17 @@ void Tensor4::read(std::ifstream &ifs)
   ifs.read((char *)v, 81 * sizeof(double));
 }
 
-//sortie sur flux std::ofstream
 /*!
-  Cette methode permet d'ecrire un tenseur dans un fichier (notament) binaire
-  
-  Exemple :
+  \brief Writes a fourth order tensor in a binary flux for storage
+
+  This method is used to store the components of a fourth order tensor in a binary file.
   \code
-  std::ofstream pfile("fichier");
+  std::ofstream pfile("file");
   Tensor4 t;
   pfile << t;
   \endcode
-
-  \since DynELA 0.9.5
+  \param os Output file stream to use for writting operation
+  \param t1 Second fourth order tensor to use for the operation
 */
 //-----------------------------------------------------------------------------
 std::ofstream &operator<<(std::ofstream &os, const Tensor4 &t1)
@@ -461,18 +429,17 @@ std::ofstream &operator<<(std::ofstream &os, const Tensor4 &t1)
   return os;
 }
 
-//lecture sur flux std::ifstream
 /*!
-  Cette methode permet de lire un tenseur depuis un fichier (notament) binaire
-  
-  Exemple :
+  \brief Reads a fourth order tensor from a binary flux for storage
+
+  This method is used to read the components of a fourth order tensor in a binary file.
   \code
   std::ifstream pfile("fichier");
   Tensor4 t;
   pfile >> t;
   \endcode
-
-  \since DynELA 0.9.5
+  \param os Input file stream to use for reading operation
+  \param t1 Second fourth order tensor to use for the operation
 */
 //-----------------------------------------------------------------------------
 std::ifstream &operator>>(std::ifstream &is, Tensor4 &t1)
@@ -482,11 +449,10 @@ std::ifstream &operator>>(std::ifstream &is, Tensor4 &t1)
   return is;
 }
 
-//Saves the content of a Tensor4 into a NumPy file
 /*!
-  This method saves the content of a Tensor4 object into a NumPy file defined by its filename. If the flag initialize is true, the current file will be concatenated.
+  \brief Saves the content of a Tensor4 into a NumPy file
 
-  Example
+  This method saves the content of a Tensor4 object into a NumPy file defined by its filename. If the flag initialize is true, the current file will be concatenated.
   \code
   Tensor4 t;
   t.numpyWrite("numpy.npy", true);
@@ -502,11 +468,10 @@ void Tensor4::numpyWrite(std::string filename, bool initialize) const
   NumpyInterface::npySave(filename, &v[0], {3, 3, 3, 3}, mode);
 }
 
-//Saves the content of a Tensor4 into a NumPyZ file
 /*!
-  This method saves the content of a vec3D object into a NumPyZ file defined by its filename. If the flag initialize is true, the current file will be concatenated.
+  \brief Saves the content of a Tensor4 into a NumPyZ file
 
-  Example
+  This method saves the content of a vec3D object into a NumPyZ file defined by its filename. If the flag initialize is true, the current file will be concatenated.
   \code
   Tensor4 t;
   t.numpyWriteZ("numpy.npz", true);
@@ -522,11 +487,10 @@ void Tensor4::numpyWriteZ(std::string filename, std::string name, bool initializ
   NumpyInterface::npzSave(filename, name, &v[0], {3, 3, 3, 3}, mode);
 }
 
-//Read the content of a Tensor4 from a NumPy file
 /*!
-  This method reads the content of a vec3D object from a NumPy file defined by its filename.
+  \brief Read the content of a Tensor4 from a NumPy file
 
-  Example
+  This method reads the content of a vec3D object from a NumPy file defined by its filename.
   \code
   Tensor4 t;
   t.numpyRead("numpy.npy");
@@ -544,11 +508,10 @@ void Tensor4::numpyRead(std::string filename)
   memcpy(v, arr.data<double *>(), arr.num_vals * arr.word_size);
 }
 
-//Read the content of a Tensor4 from a NumPyZ file
 /*!
-  This method reads the content of a vec3D object from a NumPyZ file defined by its filename.
+  \brief Read the content of a Tensor4 from a NumPyZ file
 
-  Example
+  This method reads the content of a vec3D object from a NumPyZ file defined by its filename.
   \code
   Tensor4 t;
   t.numpyReadZ("numpy.npz");

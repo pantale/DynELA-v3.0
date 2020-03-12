@@ -20,6 +20,14 @@
 
 #include <cmath>
 
+/*!
+  \brief Structure to decode indexes
+*/
+struct Tensor2Index
+{
+  short index[3][3]; //!< Set of indexes
+};
+
 /*
  * Predefined constants
  */
@@ -68,5 +76,9 @@
 #define dnlTensor3Ind(i, j, k, m) ((i) * (m * m) + (j) * (m) + k)                                                                                //!< Returns the value of T(i,j,k) in a third order tensor of dimension m
 #define dnlTensor4Ind(i, j, k, l, m) ((i) * (m * m * m) + (j) * (m * m) + k * (m) + l)                                                           //!< Returns the value of T(i,j,k,l) in a fourth order tensor of dimension m
 #define dnlKronecker(i, j) ((i) == (j) ? 1.0 : 0.0)                                                                                              //!< Returns the Kronecker: (1) if i=j, (0) in all other cases
+/*
+ * Standard mathematical defines functions
+ */
+#define precisionPolarDecompose 10.0E-10
 
 #endif

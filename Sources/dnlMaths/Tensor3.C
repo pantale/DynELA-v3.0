@@ -6,7 +6,6 @@
  *  (c) Copyright 1997-2020                                                *
  *                                                                         *
  **************************************************************************/
-// TODOCXYFILE
 
 /*!
   \file Tensor3.C
@@ -24,8 +23,9 @@
 #include <Vec3D.h>
 #include <NumpyInterface.h>
 
-//Constructor of the Tensor3 class
 /*!
+  \brief Constructor of the Tensor3 class
+
   This method is the default constructor of a third order tensor. All components are initialized to zero by default.
 */
 //-----------------------------------------------------------------------------
@@ -36,16 +36,17 @@ Tensor3::Tensor3()
   setToValue(0.);
 }
 
-//Destructor of the Tensor3 class
+/*!
+  \brief Destructor of the Tensor3 class
+*/
 //-----------------------------------------------------------------------------
 Tensor3::~Tensor3()
 //-----------------------------------------------------------------------------
 {
 }
 
-//Send the content of a third order tensor to the output flux for display
 /*!
-  Example
+  \brief Send the content of a third order tensor to the output flux for display
   \code
   Tensor3 t;
   std::cout << t << endl;
@@ -60,15 +61,16 @@ std::ostream &operator<<(std::ostream &os, const Tensor3 &t1)
   return os;
 }
 
-//Print the content of a third order tensor to the output flux for display
 /*!
+  \brief Print the content of a third order tensor to the output flux for display
+
   \param os Output flux
 */
 //-----------------------------------------------------------------------------
 void Tensor3::print(std::ostream &os) const
 //-----------------------------------------------------------------------------
 {
-  long i, j, k;
+  short i, j, k;
   os << "tensor 3x3x3\n";
   for (i = 0; i < 3; i++)
   {
@@ -82,11 +84,10 @@ void Tensor3::print(std::ostream &os) const
   }
 }
 
-//Returns an identity tensor
 /*!
-  This method transforms the current tensor to an identity tensor.
+  \brief Returns an identity tensor
 
-  Example :
+  This method transforms the current tensor to an identity tensor.
   \code
   Tensor3 t1;
   t1.setToUnity(); // Returns and identity tensor
@@ -106,11 +107,10 @@ void Tensor3::setToUnity()
   v[dnlTensor3Ind(0, 2, 1, 3)] = -1.;
 }
 
-//Fill a third order tensor with a scalar value
 /*!
-  This method is a surdefinition of the = operator for the third order tensor class.
+  \brief Fill a third order tensor with a scalar value
 
-  Example :
+  This method is a surdefinition of the = operator for the third order tensor class.
   \code
   Tensor3 t1;
   t1 = 1.0; // All components of the tensor are set to 1.0
@@ -125,11 +125,10 @@ Tensor3 &Tensor3::operator=(const double &val)
   return *this;
 }
 
-//Copy the content of a third order tensor into a new one
 /*!
-  This method is the so called = operator between two third order tensors. If the \ref MEM_funct is set, the \ref memcpy function is used for the copy.
+  \brief Copy the content of a third order tensor into a new one
 
-  Example :
+  This method is the so called = operator between two third order tensors. If the \ref MEM_funct is set, the \ref memcpy function is used for the copy.
   \code
   Tensor3 t1, t2;
   t1 = t2; // copy of the tensor
@@ -144,13 +143,12 @@ Tensor3 &Tensor3::operator=(const Tensor3 &t1)
   return *this;
 }
 
-//Addition of 2 third order tensors
 /*!
+  \brief Addition of 2 third order tensors
+
   This method defines the addition of 2 third order tensors.
   The result of this operation is also a third order tensor defined by:
   \f[ T = A + B \f]
-
-  Example :
   \code
   Tensor3 t1,t2,t3;
   t3 = t1 + t2; // sum of 2 third order tensors
@@ -165,7 +163,7 @@ Tensor3 Tensor3::operator+(const Tensor3 &t1) const
   Tensor3 t2;
 
   // calcul de la somme
-  for (long i = 0; i < 27; i++)
+  for (short i = 0; i < 27; i++)
   {
     t2.v[i] = v[i] + t1.v[i];
   }
@@ -174,13 +172,12 @@ Tensor3 Tensor3::operator+(const Tensor3 &t1) const
   return t2;
 }
 
-//Difference of 2 third order tensors
 /*!
+  \brief Difference of 2 third order tensors
+
   This method defines the difference of 2 third order tensors.
   The result of this operation is also a third order tensor defined by:
   \f[ T = A - B \f]
-
-  Example :
   \code
   Tensor3 t1,t2,t3;
   t3 = t1 - t2; // difference of 2 third order tensors
@@ -195,7 +192,7 @@ Tensor3 Tensor3::operator-(const Tensor3 &t1) const
   Tensor3 t2;
 
   // calcul de la somme
-  for (long i = 0; i < 27; i++)
+  for (short i = 0; i < 27; i++)
   {
     t2.v[i] = v[i] - t1.v[i];
   }
@@ -204,13 +201,12 @@ Tensor3 Tensor3::operator-(const Tensor3 &t1) const
   return t2;
 }
 
-//Multiplication of a third order tensor by a scalar value
 /*!
+  \brief Multiplication of a third order tensor by a scalar value
+
   This method defines the multiplication of a third order tensor by a scalar value
   The result of this operation is also a third order tensor defined by:
   \f[ T = A . \lambda \f]
-  
-  Example :
   \code
   Tensor3 t1,t2;
   double l;
@@ -224,7 +220,7 @@ Tensor3 Tensor3::operator*(const double &lambda) const
 {
   Tensor3 t2;
 
-  for (long i = 0; i < 27; i++)
+  for (short i = 0; i < 27; i++)
   {
     t2.v[i] = lambda * v[i];
   }
@@ -232,13 +228,12 @@ Tensor3 Tensor3::operator*(const double &lambda) const
   return t2;
 }
 
-//Division of a third order tensor by a scalar value
 /*!
+  \brief Division of a third order tensor by a scalar value
+
   This method defines the division of a third order tensor by a scalar value
   The result of this operation is also a third order tensor defined by:
   \f[ T = \frac{A}{\lambda} \f]
-  
-  Example :
   \code
   Tensor3 t1,t2;
   double l;
@@ -253,7 +248,7 @@ Tensor3 Tensor3::operator/(const double &lambda) const
 {
   Tensor3 t2;
 
-  for (long i = 0; i < 27; i++)
+  for (short i = 0; i < 27; i++)
   {
     t2.v[i] = v[i] / lambda;
   }
@@ -261,13 +256,12 @@ Tensor3 Tensor3::operator/(const double &lambda) const
   return t2;
 }
 
-//Multiplication of a third order tensor by a scalar value
 /*!
+  \brief Multiplication of a third order tensor by a scalar value
+
   This method defines the multiplication of a third order tensor by a scalar value
   The result of this operation is also a third order tensor defined by:
   \f[ T = \lambda . A \f]
-  
-  Example :
   \code
   Tensor3 t1,t2;
   double l;
@@ -282,7 +276,7 @@ Tensor3 operator*(const double &lambda, const Tensor3 &t1)
 {
   Tensor3 t2;
 
-  for (long i = 0; i < 27; i++)
+  for (short i = 0; i < 27; i++)
   {
     t2.v[i] = lambda * t1.v[i];
   }
@@ -290,13 +284,12 @@ Tensor3 operator*(const double &lambda, const Tensor3 &t1)
   return t2;
 }
 
-//Multiplication of a third order tensor by a vector
 /*!
+  \brief Multiplication of a third order tensor by a vector
+
   This method defines the product of a third order tensor by a vector.
   The result of this operation is also a vector defined by:
   \f[ B = T . \overrightarrow{a} \f]
-
-  Example :
   \code
   Tensor3 t1;
   Vec3D v1;
@@ -311,9 +304,9 @@ Tensor2 Tensor3::operator*(const Vec3D &v1) const
 {
   Tensor2 t2;
 
-  for (long i = 0; i < 3; i++)
-    for (long j = 0; j < 3; j++)
-      for (long k = 0; k < 3; k++)
+  for (short i = 0; i < 3; i++)
+    for (short j = 0; j < 3; j++)
+      for (short k = 0; k < 3; k++)
       {
         t2(i, j) += v[dnlTensor3Ind(i, j, k, 3)] * v1(k);
       }
@@ -321,8 +314,9 @@ Tensor2 Tensor3::operator*(const Vec3D &v1) const
   return t2;
 }
 
-//Test the equality of two third order tensors
 /*!
+  \brief Test the equality of two third order tensors
+
   This method tests the equality of two third order tensors.
   It returns \ref true if all components of the two third order tensors are equals, \ref false on other case.
   \return \ref true or \ref false depending on the result of the test.
@@ -332,7 +326,7 @@ Tensor2 Tensor3::operator*(const Vec3D &v1) const
 bool Tensor3::operator==(const Tensor3 &t1) const
 //-----------------------------------------------------------------------------
 {
-  long i;
+  short i;
 
   for (i = 0; i < 27; i++)
     if (v[i] != t1.v[i])
@@ -342,8 +336,9 @@ bool Tensor3::operator==(const Tensor3 &t1) const
   return true;
 }
 
-//Test the equality of two third order tensors
 /*!
+  \brief Test the equality of two third order tensors
+
   This method tests the equality of two third order tensors.
   It returns \ref false if all components of the two third order tensors are equals, \ref true on other case.
   \return \ref true or \ref false depending on the result of the test.
@@ -356,11 +351,10 @@ bool Tensor3::operator!=(const Tensor3 &t1) const
   return !(*this == t1);
 }
 
-//Writes a third order tensor in a binary flux for storage
 /*!
-  This method is used to store the components of a third order tensor in a binary file.
+  \brief Writes a third order tensor in a binary flux for storage
 
-  Example :
+  This method is used to store the components of a third order tensor in a binary file.
   \code
   std::ofstream pfile("file");
   Tensor3 t;
@@ -375,11 +369,10 @@ void Tensor3::write(std::ofstream &ofs) const
   ofs.write((char *)v, 27 * sizeof(double));
 }
 
-//Reads a third order tensor in a binary flux from storage
 /*!
-  This method is used to read the components of a third order tensor in a binary file.
+  \brief Reads a third order tensor in a binary flux from storage
 
-  Example :
+  This method is used to read the components of a third order tensor in a binary file.
   \code
   std::ofstream pfile("file");
   Tensor3 t;
@@ -394,11 +387,10 @@ void Tensor3::read(std::ifstream &ifs)
   ifs.read((char *)v, 27 * sizeof(double));
 }
 
-//Writes a third order tensor in a binary flux for storage
 /*!
-  This method is used to store the components of a third order tensor in a binary file.
+  \brief Writes a third order tensor in a binary flux for storage
 
-  Example :
+  This method is used to store the components of a third order tensor in a binary file.
   \code
   std::ofstream pfile("file");
   Tensor3 t;
@@ -415,11 +407,10 @@ std::ofstream &operator<<(std::ofstream &os, const Tensor3 &t1)
   return os;
 }
 
-//Reads a third order tensor from a binary flux for storage
 /*!
-  This method is used to read the components of a third order tensor in a binary file.
+  \brief Reads a third order tensor from a binary flux for storage
 
-  Example :
+  This method is used to read the components of a third order tensor in a binary file.
   \code
   std::ifstream pfile("fichier");
   Tensor3 t;
@@ -436,11 +427,10 @@ std::ifstream &operator>>(std::ifstream &is, Tensor3 &t1)
   return is;
 }
 
-//Saves the content of a Tensor3 into a NumPy file
 /*!
-  This method saves the content of a Tensor3 object into a NumPy file defined by its filename. If the flag initialize is true, the current file will be concatenated.
+  \brief Saves the content of a Tensor3 into a NumPy file
 
-  Example
+  This method saves the content of a Tensor3 object into a NumPy file defined by its filename. If the flag initialize is true, the current file will be concatenated.
   \code
   Tensor3 t;
   t.numpyWrite("numpy.npy", true);
@@ -456,11 +446,10 @@ void Tensor3::numpyWrite(std::string filename, bool initialize) const
   NumpyInterface::npySave(filename, &v[0], {3, 3, 3}, mode);
 }
 
-//Saves the content of a Tensor3 into a NumPyZ file
 /*!
-  This method saves the content of a vec3D object into a NumPyZ file defined by its filename. If the flag initialize is true, the current file will be concatenated.
+  \brief Saves the content of a Tensor3 into a NumPyZ file
 
-  Example
+  This method saves the content of a vec3D object into a NumPyZ file defined by its filename. If the flag initialize is true, the current file will be concatenated.
   \code
   Tensor3 t;
   t.numpyWriteZ("numpy.npz", true);
@@ -476,11 +465,10 @@ void Tensor3::numpyWriteZ(std::string filename, std::string name, bool initializ
   NumpyInterface::npzSave(filename, name, &v[0], {3, 3, 3}, mode);
 }
 
-//Read the content of a Tensor3 from a NumPy file
 /*!
-  This method reads the content of a vec3D object from a NumPy file defined by its filename.
+  \brief Read the content of a Tensor3 from a NumPy file
 
-  Example
+  This method reads the content of a vec3D object from a NumPy file defined by its filename.
   \code
   Tensor3 t;
   t.numpyRead("numpy.npy");
@@ -498,11 +486,10 @@ void Tensor3::numpyRead(std::string filename)
   memcpy(v, arr.data<double *>(), arr.num_vals * arr.word_size);
 }
 
-//Read the content of a Tensor3 from a NumPyZ file
 /*!
-  This method reads the content of a vec3D object from a NumPyZ file defined by its filename.
+  \brief Read the content of a Tensor3 from a NumPyZ file
 
-  Example
+  This method reads the content of a vec3D object from a NumPyZ file defined by its filename.
   \code
   Tensor3 t;
   t.numpyReadZ("numpy.npz");

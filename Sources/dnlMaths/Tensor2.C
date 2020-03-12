@@ -106,7 +106,7 @@ std::ostream &operator<<(std::ostream &outputStream, const Tensor2 &tensor)
 void Tensor2::print(std::ostream &outputStream) const
 //-----------------------------------------------------------------------------
 {
-  int i, j;
+  short i, j;
   outputStream << "tensor 3x3 ={{";
   for (i = 0; i < 3; i++)
   {
@@ -793,12 +793,12 @@ Tensor2 Tensor2::getSkewSymetricPart() const
   \return vecteur containing the corresponding row
 */
 //-----------------------------------------------------------------------------
-Vec3D Tensor2::getRow(int row) const
+Vec3D Tensor2::getRow(short row) const
 //-----------------------------------------------------------------------------
 {
   Vec3D result;
 
-  for (int i = 0; i < 3; i++)
+  for (short i = 0; i < 3; i++)
   {
     result(i) = _data[_internalIndexes.index[row][i]];
   }
@@ -816,12 +816,12 @@ Vec3D Tensor2::getRow(int row) const
   \return vecteur containing the corresponding column
 */
 //-----------------------------------------------------------------------------
-Vec3D Tensor2::getColumn(int col) const
+Vec3D Tensor2::getColumn(short col) const
 //-----------------------------------------------------------------------------
 {
   Vec3D result;
 
-  for (int i = 0; i < 3; i++)
+  for (short i = 0; i < 3; i++)
   {
     result(i) = _data[_internalIndexes.index[i][col]];
   }
@@ -841,7 +841,7 @@ Vec3D Tensor2::getColumn(int col) const
 bool Tensor2::operator==(const Tensor2 &tensor) const
 //-----------------------------------------------------------------------------
 {
-  int i;
+  short i;
 
   for (i = 0; i < 9; i++)
     if (_data[i] != tensor._data[i])
@@ -952,7 +952,7 @@ double Tensor2::maxValue()
 //-----------------------------------------------------------------------------
 {
   double max = _data[0];
-  for (int i = 1; i < 9; i++)
+  for (short i = 1; i < 9; i++)
   {
     if (_data[i] > max)
       max = _data[i];
@@ -970,7 +970,7 @@ double Tensor2::minValue()
 //-----------------------------------------------------------------------------
 {
   double min = _data[0];
-  for (int i = 1; i < 9; i++)
+  for (short i = 1; i < 9; i++)
   {
     if (_data[i] < min)
       min = _data[i];
@@ -988,7 +988,7 @@ double Tensor2::maxAbsoluteValue()
 //-----------------------------------------------------------------------------
 {
   double max = dnlAbs(_data[0]);
-  for (int i = 1; i < 9; i++)
+  for (short i = 1; i < 9; i++)
   {
     if (dnlAbs(_data[i]) > max)
       max = dnlAbs(_data[i]);
@@ -1006,7 +1006,7 @@ double Tensor2::minAbsoluteValue()
 //-----------------------------------------------------------------------------
 {
   double min = dnlAbs(_data[0]);
-  for (int i = 1; i < 9; i++)
+  for (short i = 1; i < 9; i++)
   {
     if (dnlAbs(_data[i]) < min)
       min = dnlAbs(_data[i]);
@@ -1111,12 +1111,12 @@ Vec3D Tensor2::solve(const Vec3D &b) const
 void Tensor2::polarDecomposeLnU(SymTensor2 &LnU, Tensor2 &R) const
 //-----------------------------------------------------------------------------
 {
-  int p, q;
+  short p, q;
   double alpha, theta, Ctheta, Stheta;
   double _tmp1, _tmp2, _tmp3, _tmp4, _tmp5, _tmp6, _tmp7, _tmp8;
   double Rot11, Rot12, Rot13, Rot21, Rot22, Rot23, Rot31, Rot32, Rot33;
   SymTensor2 FF;
-  int it = 1;
+  short it = 1;
 
   // calcul de FF=F(T).F
   FF._data[0] = dnlSquare(_data[0]) + dnlSquare(_data[3]) + dnlSquare(_data[6]);
@@ -1246,12 +1246,12 @@ void Tensor2::polarDecomposeLnU(SymTensor2 &LnU, Tensor2 &R) const
 void Tensor2::polarDecompose(SymTensor2 &U, Tensor2 &R) const
 //-----------------------------------------------------------------------------
 {
-  int p, q;
+  short p, q;
   double alpha, theta, Ctheta, Stheta;
   double _tmp1, _tmp2, _tmp3, _tmp4, _tmp5, _tmp6, _tmp7, _tmp8;
   double Rot11, Rot12, Rot13, Rot21, Rot22, Rot23, Rot31, Rot32, Rot33;
   SymTensor2 FF;
-  int it = 1;
+  short it = 1;
 
   // calcul de FF=F(T).F
   FF._data[0] = dnlSquare(_data[0]) + dnlSquare(_data[3]) + dnlSquare(_data[6]);

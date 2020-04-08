@@ -47,7 +47,7 @@ public:
 
   double getValue(double x);
   double getSlope(double x);
-  void set(short newType, double newMin, double newMax);
+  void setFunction(short newType, double newMin, double newMax);
   short getType(long i);
   void toGnuplot(String filename, long steps = 250);
   String convertToDynELASourceFile();

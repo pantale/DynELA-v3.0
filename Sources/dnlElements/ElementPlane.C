@@ -49,14 +49,14 @@ bool ElementPlane::computeJacobian(bool reference)
 
   for (short intPtId = 0; intPtId < integrationPoints.getSize(); intPtId++)
   {
-    // recuperation du point d'integration courant
+    // Get the current integration point
     setCurrentIntegrationPoint(intPtId);
     integrationPointData = &_elementData->integrationPoint[intPtId];
 
-    // initialisation de J
+    // Initialize the Jacobian J to zero
     _integrationPoint->JxW = 0.0;
 
-    // calcul de J
+    // Computes the Jacobian
     for (short nodeId = 0; nodeId < nodes.getSize(); nodeId++)
     {
       node = nodes(nodeId);
@@ -66,29 +66,34 @@ bool ElementPlane::computeJacobian(bool reference)
       _integrationPoint->JxW(1, 1) += integrationPointData->derShapeFunction(nodeId, 1) * node->coordinates(1);
     }
 
-    // determinant de J
+    // Computes the det of J
     _integrationPoint->detJ = _integrationPoint->JxW.getDeterminant2x2();
 
-    // test de positivite du Jacobien
+    // Test of the jacobian
     if (_integrationPoint->detJ < 0.0)
     {
       std::cerr << "Negative value of detJ encountered in element " << number << " at integration point " << intPtId + 1 << std::endl;
       return false;
     }
 
-    // calcul de l'inverse de J
+    // Computes the inverse of the Jacobian
     _integrationPoint->JxW.computeInverse2x2(_integrationPoint->detJ, _integrationPoint->invJxW);
 
-    // recalcul de dShapeFunction
+    // Computes the derivatives of the Shape functions
     _integrationPoint->dShapeFunction = integrationPointData->derShapeFunction * _integrationPoint->invJxW;
 
+    // Computes the radius at the integration point for axisymmetric element
+    if (getFamily() == Element::Axisymetric)
+      _integrationPoint->radius = getRadiusAtIntegrationPoint();
+
+    // If the computation is made on the initial shape computes Initial values
     if (reference)
     {
       _integrationPoint->detJ0 = _integrationPoint->detJ;
+
+      // If the element is axisymmetric
       if (getFamily() == Element::Axisymetric)
-      {
-        _integrationPoint->detJ0 = _integrationPoint->detJ * getRadiusAtIntegrationPoint();
-      }
+        _integrationPoint->detJ0 = _integrationPoint->detJ * _integrationPoint->radius;
     }
   }
   return true;
@@ -103,14 +108,14 @@ bool ElementPlane::computeUnderJacobian(bool reference)
 
   for (short intPtId = 0; intPtId < underIntegrationPoints.getSize(); intPtId++)
   {
-    // recuperation du point d'integration courant
+    // Get the current integration point
     setCurrentUnderIntegrationPoint(intPtId);
-    integrationPointData = &_elementData->integrationPoint[intPtId];
+    integrationPointData = &_elementData->underIntegrationPoint[intPtId];
 
-    // initialisation de J
+    // Initialize the Jacobian J to zero
     _underIntegrationPoint->JxW = 0.0;
 
-    // calcul de J
+    // Computes the Jacobian
     for (short nodeId = 0; nodeId < nodes.getSize(); nodeId++)
     {
       node = nodes(nodeId);
@@ -120,29 +125,34 @@ bool ElementPlane::computeUnderJacobian(bool reference)
       _underIntegrationPoint->JxW(1, 1) += integrationPointData->derShapeFunction(nodeId, 1) * node->coordinates(1);
     }
 
-    // determinant de J
+    // Computes the det of J
     _underIntegrationPoint->detJ = _underIntegrationPoint->JxW.getDeterminant2x2();
 
-    // test de positivite du Jacobien
+    // Test of the jacobian
     if (_underIntegrationPoint->detJ < 0.0)
     {
       std::cerr << "Negative value of detJ encountered in element " << number << " at integration point " << intPtId + 1 << std::endl;
       return false;
     }
 
-    // calcul de l'inverse de J
+    // Computes the inverse of the Jacobian
     _underIntegrationPoint->JxW.computeInverse2x2(_underIntegrationPoint->detJ, _underIntegrationPoint->invJxW);
 
-    // recalcul de dShapeFunction
+    // Computes the derivatives of the Shape functions
     _underIntegrationPoint->dShapeFunction = integrationPointData->derShapeFunction * _underIntegrationPoint->invJxW;
 
+    // Computes the radius at the integration point for axisymmetric element
+    if (getFamily() == Element::Axisymetric)
+      _underIntegrationPoint->radius = getRadiusAtUnderIntegrationPoint();
+
+    // If the computation is made on the initial shape computes Initial values
     if (reference)
     {
       _underIntegrationPoint->detJ0 = _underIntegrationPoint->detJ;
+
+      // If the element is axisymmetric
       if (getFamily() == Element::Axisymetric)
-      {
-        _underIntegrationPoint->detJ0 = _underIntegrationPoint->detJ * getRadiusAtIntegrationPoint();
-      }
+        _underIntegrationPoint->detJ0 = _underIntegrationPoint->detJ * _underIntegrationPoint->radius;
     }
   }
   return true;
@@ -205,7 +215,6 @@ void ElementPlane::computeElasticStiffnessMatrix(bool underIntegration)
   // boucle sur les points d'integration
   for (pt = 0; pt < pts; pt++)
   {
-
     // recuperation du point d'integration
     if (underIntegration)
     {
@@ -214,8 +223,8 @@ void ElementPlane::computeElasticStiffnessMatrix(bool underIntegration)
       WxdJ = currentIntPoint->integrationPointData->weight * currentIntPoint->detJ;
       if (getFamily() == Element::Axisymetric)
       {
-        setCurrentUnderIntegrationPoint(pt);
-        R = getRadiusAtUnderIntegrationPoint();
+        //setCurrentUnderIntegrationPoint(pt);
+        R = currentIntPoint->radius;
         WxdJ *= dnl2PI * R;
       }
     }
@@ -226,8 +235,8 @@ void ElementPlane::computeElasticStiffnessMatrix(bool underIntegration)
       WxdJ = currentIntPoint->integrationPointData->weight * currentIntPoint->detJ;
       if (getFamily() == Element::Axisymetric)
       {
-        setCurrentIntegrationPoint(pt);
-        R = getRadiusAtIntegrationPoint();
+       // setCurrentIntegrationPoint(pt);
+        R = currentIntPoint->radius;
         WxdJ *= dnl2PI * R;
       }
     }

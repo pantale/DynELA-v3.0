@@ -282,6 +282,12 @@ void Element::initializeData()
     _integrationPoint->density = material->density;
   }
 
+/*   for (int intPoint = 0; intPoint < underIntegrationPoint.getSize(); intPoint++)
+  {
+    setCurrentUnderIntegrationPoint(intPoint);
+    _underIntegrationPoint->temperature = material->initialTemperature;
+    _underIntegrationPoint->density = material->density;
+  } */
   // Compute Jacobian of the element
   //computeJacobian(true);
 
@@ -291,7 +297,7 @@ void Element::initializeData()
     _integrationPoint->detJ0 = _integrationPoint->detJ;
     if (getFamily() == Element::Axisymetric)
     {
-      _integrationPoint->detJ0 = _integrationPoint->detJ * getRadiusAtIntegrationPoint();
+      _integrationPoint->detJ0 = _integrationPoint->detJ * _integrationPoint->radius;
     }
   } */
 }
@@ -325,7 +331,7 @@ void Element::computeMassMatrix(MatrixDiag &elementMassMatrix)
     WxdJ = _integrationPoint->integrationPointData->weight * _integrationPoint->detJ;
     if (getFamily() == Element::Axisymetric)
     {
-      WxdJ *= dnl2PI * getRadiusAtIntegrationPoint();
+      WxdJ *= dnl2PI * _integrationPoint->radius;
     }
 
     // Computes the Element Mass Matrix
@@ -358,9 +364,10 @@ double Element::getElongationWaveSpeed()
 void Element::computeInternalForces(Vector &InternalForce, double timeStep)
 //-----------------------------------------------------------------------------
 {
-  long I, i, j;
+  long I;
+  int i, j;
   double WxdJ;
-  double currentRadius;
+  //double currentRadius;
 
   // redim du vecteur InternalForce
   InternalForce.redim(_elementData->numberOfNodes * _elementData->numberOfDimensions);
@@ -376,8 +383,8 @@ void Element::computeInternalForces(Vector &InternalForce, double timeStep)
     WxdJ = _integrationPoint->integrationPointData->weight * _integrationPoint->detJ;
     if (getFamily() == Element::Axisymetric)
     {
-      currentRadius = getRadiusAtIntegrationPoint();
-      WxdJ *= dnl2PI * currentRadius;
+   //   currentRadius = getRadiusAtIntegrationPoint();
+      WxdJ *= dnl2PI * _integrationPoint->radius;
     }
 
     // calcul des forces internes
@@ -393,7 +400,7 @@ void Element::computeInternalForces(Vector &InternalForce, double timeStep)
       }
       if (getFamily() == Element::Axisymetric)
         InternalForce(I * _elementData->numberOfDimensions) -=
-            _elementData->integrationPoint[intPoint].shapeFunction(I) * _integrationPoint->Stress(2, 2) / currentRadius * WxdJ;
+            _elementData->integrationPoint[intPoint].shapeFunction(I) * _integrationPoint->Stress(2, 2) / _integrationPoint->radius * WxdJ;
     }
   }
 }
@@ -1024,7 +1031,7 @@ void Element::computeDensity()
     _integrationPoint->density = material->density * _integrationPoint->detJ0 / _integrationPoint->detJ;
 
     if (getFamily() == Element::Axisymetric)
-      _integrationPoint->density /= getRadiusAtIntegrationPoint();
+      _integrationPoint->density /= _integrationPoint->radius;
   }
 }
 
@@ -1448,9 +1455,9 @@ void Element::computeMassEquation(MatrixDiag &M, Vector &F)
     WxdJ = _integrationPoint->integrationPointData->weight * _integrationPoint->detJ;
     if (getFamily() == Element::Axisymetric)
     {
-      double currentRadius;
-      currentRadius = getRadiusAtIntegrationPoint();
-      WxdJ *= dnl2PI * currentRadius;
+    //  double currentRadius;
+      //currentRadius = _integrationPoint->radius;
+      WxdJ *= dnl2PI *_integrationPoint->radius;
     }
 
     // calcul de la matrice M consistante
@@ -1474,7 +1481,7 @@ void Element::computeMomentumEquation(MatrixDiag &M, Vector &F)
 {
   long intPoint;
   long i, j, I;
-  double density, WxdJ, currentRadius;
+  double density, WxdJ;//, currentRadius;
 
 #ifdef VERIF_math
   // verifier la taille de la matrice M
@@ -1513,8 +1520,8 @@ void Element::computeMomentumEquation(MatrixDiag &M, Vector &F)
     WxdJ = _integrationPoint->integrationPointData->weight * _integrationPoint->detJ;
     if (getFamily() == Element::Axisymetric)
     {
-      currentRadius = getRadiusAtIntegrationPoint();
-      WxdJ *= dnl2PI * currentRadius;
+     // currentRadius = _integrationPoint->radius;
+      WxdJ *= dnl2PI * _integrationPoint->radius;
     }
 
     // calcul de M consistent et de la contribution en masse
@@ -1540,12 +1547,12 @@ void Element::computeMomentumEquation(MatrixDiag &M, Vector &F)
     if (getFamily() == Element::Axisymetric)
     {
       // currentRadius deja calcule
-      currentRadius = getRadiusAtIntegrationPoint();
+      //currentRadius = _integrationPoint->radius;
 
       for (I = 0; I < _elementData->numberOfNodes; I++)
       {
         F(I * getNumberOfDimensions()) -=
-            (_elementData->integrationPoint[intPoint].shapeFunction(I) * _integrationPoint->Stress(2, 2) / currentRadius) * WxdJ;
+            (_elementData->integrationPoint[intPoint].shapeFunction(I) * _integrationPoint->Stress(2, 2) / _integrationPoint->radius) * WxdJ;
       }
     }
   }
@@ -1675,9 +1682,9 @@ void Element::computeMassEquation (MatrixDiag & M)
       WxdJ = _integrationPoint->integrationPointData->weight * _integrationPoint->detJ;
       if (getFamily() == Element::Axisymetric)
 	{
-	  double currentRadius;
-	  currentRadius=getRadiusAtIntegrationPoint();
-	  WxdJ *= dnl2PI * currentRadius;
+	  //double currentRadius;
+	  //currentRadius=_integrationPoint->radius;
+	  WxdJ *= dnl2PI * _integrationPoint->radius;
 	}
 
       // calcul de la matrice M consistante
@@ -1784,9 +1791,9 @@ void Element::computeEnergyEquation (MatrixDiag & M, Vector & F)
       WxdJ = _integrationPoint->integrationPointData->weight * _integrationPoint->detJ;
       if (getFamily() == Element::Axisymetric)
 	{
-	  double currentRadius;
-	  currentRadius=getRadiusAtIntegrationPoint();
-	  WxdJ *= dnl2PI * currentRadius;
+	  //double currentRadius;
+	  //currentRadius=_integrationPoint->radius;
+	  WxdJ *= dnl2PI * _integrationPoint->radius;
 	}
 
       // calcul de l'increment de masse pour le lumping

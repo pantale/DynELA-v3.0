@@ -35,7 +35,7 @@ RampFunction::~RampFunction()
 }
 
 //-----------------------------------------------------------------------------
-void RampFunction::set(short newType, double newMin, double newMax)
+void RampFunction::setFunction(short newType, double newMin, double newMax)
 //-----------------------------------------------------------------------------
 {
   _min = newMin;

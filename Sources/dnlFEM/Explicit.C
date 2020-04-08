@@ -139,9 +139,7 @@ void Explicit::solve(double solveUpToTime)
 
   // Verify if we need to run the solver
   if (!timeIsBetweenBounds())
-  {
     return;
-  }
 
   // Write information to log file
   dynelaData->logFile << "Solve up to " << solveUpToTime << "\n";
@@ -152,6 +150,7 @@ void Explicit::solve(double solveUpToTime)
   // Compute the Jacobian
   dynelaData->cpuTimes.timer("Jacobian")->start();
   model->computeJacobian(true);
+  model->computeUnderJacobian(true);
   dynelaData->cpuTimes.timer("Jacobian")->stop();
 
   // Compute the Mass Matrix if not already computed
@@ -162,8 +161,30 @@ void Explicit::solve(double solveUpToTime)
   computeTimeStep(true);
   dynelaData->cpuTimes.timer("TimeStep")->stop();
 
+  // Compute the Strains
+  dynelaData->cpuTimes.timer("Strains")->start();
+  model->computeStrains();
+  dynelaData->cpuTimes.timer("Strains")->stop();
+
+  // Compute pressure increment
+  dynelaData->cpuTimes.timer("Pressure")->start();
+  model->computePressure();
+  dynelaData->cpuTimes.timer("Pressure")->stop();
+
+  // calcul des contraintes au sein de l'element
+  dynelaData->cpuTimes.timer("Stress")->start();
+  model->computeStress(timeStep);
+  dynelaData->cpuTimes.timer("Stress")->stop();
+
+  // Use objectivity
+  dynelaData->cpuTimes.timer("FinalRotation")->start();
+  model->computeFinalRotation();
+  dynelaData->cpuTimes.timer("FinalRotation")->stop();
+
   // Compute the Internal Forces
+  dynelaData->cpuTimes.timer("InternalForces")->start();
   model->computeInternalForces();
+  dynelaData->cpuTimes.timer("InternalForces")->stop();
 
   // Call of time History saves
   model->writeHistoryFiles();

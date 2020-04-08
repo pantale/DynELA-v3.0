@@ -67,14 +67,15 @@ bool Element3D::computeJacobian(bool reference)
 
   for (short intPtId = 0; intPtId < integrationPoints.getSize(); intPtId++)
   {
-    // recuperation du point d'integration courant
+    // Get the current integration point
     setCurrentIntegrationPoint(intPtId);
     integrationPointData = &_elementData->integrationPoint[intPtId];
 
-    // initialisation de J
+    // Initialize the Jacobian J to zero
     _integrationPoint->JxW = 0.0;
 
-    for (short nodeId = 0; nodeId < getNumberOfNodes(); nodeId++)
+    // Computes the Jacobian
+    for (short nodeId = 0; nodeId < nodes.getSize(); nodeId++)
     {
       node = nodes(nodeId);
       _integrationPoint->JxW(0, 0) += integrationPointData->derShapeFunction(nodeId, 0) * node->coordinates(0);
@@ -88,22 +89,23 @@ bool Element3D::computeJacobian(bool reference)
       _integrationPoint->JxW(2, 2) += integrationPointData->derShapeFunction(nodeId, 2) * node->coordinates(2);
     }
 
-    // determinant de J
+    // Computes the det of J
     _integrationPoint->detJ = _integrationPoint->JxW.getDeterminant3x3();
 
-    // test de positivite du Jacobien
+    // Test of the jacobian
     if (_integrationPoint->detJ < 0.0)
     {
       std::cerr << "Negative value of detJ encountered in element " << number << " at integration point " << intPtId + 1 << std::endl;
       return false;
     }
 
-    // calcul de l'inverse de J
+    // Computes the inverse of the Jacobian
     _integrationPoint->JxW.computeInverse3x3(_integrationPoint->detJ, _integrationPoint->invJxW);
 
-    // recalcul de dShapeFunction
+    // Computes the derivatives of the Shape functions
     _integrationPoint->dShapeFunction = integrationPointData->derShapeFunction * _integrationPoint->invJxW;
 
+    // If the computation is made on the initial shape computes Initial values
     if (reference)
       _integrationPoint->detJ0 = _integrationPoint->detJ;
   }
@@ -119,14 +121,15 @@ bool Element3D::computeUnderJacobian(bool reference)
 
   for (short intPtId = 0; intPtId < underIntegrationPoints.getSize(); intPtId++)
   {
-    // recuperation du point d'integration courant
+    // Get the current integration point
     setCurrentUnderIntegrationPoint(intPtId);
     integrationPointData = &_elementData->underIntegrationPoint[intPtId];
 
-    // initialisation de J
+    // Initialize the Jacobian J to zero
     _underIntegrationPoint->JxW = 0.0;
 
-    for (short nodeId = 0; nodeId < getNumberOfNodes(); nodeId++)
+    // Computes the Jacobian
+    for (short nodeId = 0; nodeId < nodes.getSize(); nodeId++)
     {
       node = nodes(nodeId);
       _underIntegrationPoint->JxW(0, 0) += integrationPointData->derShapeFunction(nodeId, 0) * node->coordinates(0);
@@ -140,22 +143,23 @@ bool Element3D::computeUnderJacobian(bool reference)
       _underIntegrationPoint->JxW(2, 2) += integrationPointData->derShapeFunction(nodeId, 2) * node->coordinates(2);
     }
 
-    // determinant de J
+    // Computes the det of J
     _underIntegrationPoint->detJ = _underIntegrationPoint->JxW.getDeterminant3x3();
 
-    // test de positivite du Jacobien
+    // Test of the jacobian
     if (_underIntegrationPoint->detJ < 0.0)
     {
       std::cerr << "Negative value of detJ encountered in element " << number << " at integration point " << intPtId + 1 << std::endl;
       return false;
     }
 
-    // calcul de l'inverse de J
+    // Computes the inverse of the Jacobian
     _underIntegrationPoint->JxW.computeInverse3x3(_underIntegrationPoint->detJ, _underIntegrationPoint->invJxW);
 
-    // recalcul de dShapeFunction
+    // Computes the derivatives of the Shape functions
     _underIntegrationPoint->dShapeFunction = integrationPointData->derShapeFunction * _underIntegrationPoint->invJxW;
 
+    // If the computation is made on the initial shape computes Initial values
     if (reference)
       _underIntegrationPoint->detJ0 = _underIntegrationPoint->detJ;
   }

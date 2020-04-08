@@ -6,37 +6,39 @@
  *  (c) Copyright 1997-2020                                                *
  *                                                                         *
  **************************************************************************/
-// TODOCXYFILE
 
 /*!
-\file ElQua4NAx.h
-\brief Declaration file for the ElQua4NAx class
+  \file ElQua4NAx.h
+  \brief Declaration file for the ElQua4NAx class
 
-This file is the declaration file for the ElQua4NAx class.
-
-\ingroup dnlElements
+  This file is the declaration file for the ElQua4NAx class.
+  \ingroup dnlElements
 */
 
 #ifndef __dnlElements_ElQua4nAx_h__
 #define __dnlElements_ElQua4nAx_h__
 
-
 class ElementAxi;
 #include <ElementAxi.h>
 
+/*!
+  \brief Management and manipulation of 4 nodes Axisymmetric element
+
+  \ingroup dnlElements
+*/
 class ElQua4NAx : public ElementAxi
 {
 
 public:
-  static const ElementData _elementData;
+  static const ElementData _elementData; //!< Database storage for the Element
 
 public:
-  ElQua4NAx(long elementNumber = 1);
-  ElQua4NAx(const ElQua4NAx &element);
+  ElQua4NAx(long = 1);
+  ElQua4NAx(const ElQua4NAx &);
   ~ElQua4NAx();
 
-  void getShapeFunctionAtPoint(Vector &shapeFunctions, const Vec3D &point) const;
-  void getDerShapeFunctionAtPoint(Matrix &derShapeFunctions, const Vec3D &point) const;
+  void getShapeFunctionAtPoint(Vector &, const Vec3D &) const;
+  void getDerShapeFunctionAtPoint(Matrix &, const Vec3D &) const;
   double getCharacteristicLength();
   double getArea();
 };

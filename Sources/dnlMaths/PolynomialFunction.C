@@ -47,7 +47,7 @@ double PolynomialFunction::getValue(double x)
 }
 
 //-----------------------------------------------------------------------------
-void PolynomialFunction::set(long fac, double val)
+void PolynomialFunction::setFunction(long fac, double val)
 //-----------------------------------------------------------------------------
 {
   long i;

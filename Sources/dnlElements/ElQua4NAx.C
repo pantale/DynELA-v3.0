@@ -6,14 +6,12 @@
  *  (c) Copyright 1997-2020                                                *
  *                                                                         *
  **************************************************************************/
-// TODOCXYFILE
 
 /*!
   \file ElQua4NAx.C
-  \brief Definition file for the ElQua4N2D class
+  \brief Definition file for the ElQua4NAx class
 
   This file is the definition file for the ElQua4NAx class.
-
   \ingroup dnlElements
 */
 
@@ -21,54 +19,54 @@
 #include <Node.h>
 
 const ElementData ElQua4NAx::_elementData = {
-    "ElQua4NAx",          // name of the Element
-    Element::ElQua4NAx,   // Type of the Element
-    Element::Axisymetric, // Family of the Element
-    2,                    // Number of dimensions of the Element
-    2,                    // Number of degrees of freedom of the Element
-    9,                    // VTK type of element
+    "ElQua4NAx",          // String name (name of the Element)
+    Element::ElQua4NAx,   // short type (Type of the Element)
+    Element::Axisymetric, // short family (Family of the Element)
+    2,                    // short numberOfDimensions (Number of dimensions of the Element)
+    2,                    // short numberOfDDL (Number of degrees of freedom of the Element)
+    9,                    // short vtkType (VTK type of element)
 
-    4, // Number of nodes of the Element
+    4, // int numberOfNodes (Number of nodes of the Element)
     {
         // Node 1
         {
-            Vec3D(-1, -1, 0),                                               // Coordinates of the node
-            2,                                                              // Number of neightbour nodes
-            {1, 3},                                                         // List of the neighbour nodes
-            Vector(4, 1.0 + sqrt(3.0) / 2, -0.5, 1.0 - sqrt(3.0) / 2, -0.5) // Extrapolates integration points values to nodal values
+            Vec3D(-1, -1, 0),                                               // Vec3D localCoords (Coordinates of the node)
+            2,                                                              // short numberOfNeighbourNodes (Number of neightbour nodes)
+            {1, 3},                                                         // short neighbour (List of the neighbour nodes)
+            Vector(4, 1.0 + sqrt(3.0) / 2, -0.5, 1.0 - sqrt(3.0) / 2, -0.5) // Vector integrationPointsToNode (Extrapolates integration points values to nodal values)
         },
         // Node 2
         {
-            Vec3D(+1, -1, 0),                                               // Coordinates of the node
-            2,                                                              // Number of neightbour nodes
-            {0, 2},                                                         // List of the neighbour nodes
-            Vector(4, -0.5, 1.0 + sqrt(3.0) / 2, -0.5, 1.0 - sqrt(3.0) / 2) // Extrapolates integration points values to nodal values
+            Vec3D(+1, -1, 0),                                               // Vec3D localCoords (Coordinates of the node)
+            2,                                                              // short numberOfNeighbourNodes (Number of neightbour nodes)
+            {0, 2},                                                         // short neighbour (List of the neighbour nodes)
+            Vector(4, -0.5, 1.0 + sqrt(3.0) / 2, -0.5, 1.0 - sqrt(3.0) / 2) // Vector integrationPointsToNode (Extrapolates integration points values to nodal values)
         },
         // Node 3
         {
-            Vec3D(+1, +1, 0),                                               // Coordinates of the node
-            2,                                                              // Number of neightbour nodes
-            {1, 3},                                                         // List of the neighbour nodes
-            Vector(4, 1.0 - sqrt(3.0) / 2, -0.5, 1.0 + sqrt(3.0) / 2, -0.5) // Extrapolates integration points values to nodal values
+            Vec3D(+1, +1, 0),                                               // Vec3D localCoords (Coordinates of the node)
+            2,                                                              // short numberOfNeighbourNodes (Number of neightbour nodes)
+            {1, 3},                                                         // short neighbour (List of the neighbour nodes)
+            Vector(4, 1.0 - sqrt(3.0) / 2, -0.5, 1.0 + sqrt(3.0) / 2, -0.5) // Vector integrationPointsToNode (Extrapolates integration points values to nodal values)
         },
         // Node 4
         {
-            Vec3D(-1, +1, 0),                                               // Coordinates of the node
-            2,                                                              // Number of neightbour nodes
-            {0, 2},                                                         // List of the neighbour nodes
-            Vector(4, -0.5, 1.0 - sqrt(3.0) / 2, -0.5, 1.0 + sqrt(3.0) / 2) // Extrapolates integration points values to nodal values
+            Vec3D(-1, +1, 0),                                               // Vec3D localCoords (Coordinates of the node)
+            2,                                                              // short numberOfNeighbourNodes (Number of neightbour nodes)
+            {0, 2},                                                         // short neighbour (List of the neighbour nodes)
+            Vector(4, -0.5, 1.0 - sqrt(3.0) / 2, -0.5, 1.0 + sqrt(3.0) / 2) // Vector integrationPointsToNode (Extrapolates integration points values to nodal values)
         }
         //
     },
 
-    4, // Number of integration points of the Element
+    4, // int numberOfIntegrationPoints (Number of integration points of the Element)
     {
         // Integration point 1
         {
-            Vec3D(-1.0 / sqrt(3.0), -1.0 / sqrt(3.0), 0.0),                            // Coordinates of the integration point
-            1,                                                                         // Weight associated to the integration point
-            Vector(4, (2.0 + sqrt(3.0)) / 6, 1.0 / 6, (2.0 - sqrt(3.0)) / 6, 1.0 / 6), // Shape functions at the integration point
-            Matrix(4, 2,                                                               // Derivatives of the shape functions at the integration point
+            Vec3D(-1.0 / sqrt(3.0), -1.0 / sqrt(3.0), 0.0),                            // Vec3D coords (Coordinates of the integration point)
+            1,                                                                         // double weight (Weight associated to the integration point)
+            Vector(4, (2.0 + sqrt(3.0)) / 6, 1.0 / 6, (2.0 - sqrt(3.0)) / 6, 1.0 / 6), // Vector shapeFunction (Shape functions at the integration point)
+            Matrix(4, 2,                                                               // Matrix derShapeFunction (Derivatives of the shape functions at the integration point)
                    (-3.0 - sqrt(3.0)) / 12, (-3.0 - sqrt(3.0)) / 12,                   //
                    (+3.0 + sqrt(3.0)) / 12, (-3.0 + sqrt(3.0)) / 12,                   //
                    (+3.0 - sqrt(3.0)) / 12, (+3.0 - sqrt(3.0)) / 12,                   //
@@ -76,10 +74,10 @@ const ElementData ElQua4NAx::_elementData = {
         },
         // Integration point 2
         {
-            Vec3D(+1.0 / sqrt(3.0), -1.0 / sqrt(3.0), 0.0),                            // Coordinates of the integration point
-            1,                                                                         // Weight associated to the integration point
-            Vector(4, 1.0 / 6, (2.0 + sqrt(3.0)) / 6, 1.0 / 6, (2.0 - sqrt(3.0)) / 6), // Shape functions at the integration point
-            Matrix(4, 2,                                                               // Derivatives of the shape functions at the integration point
+            Vec3D(+1.0 / sqrt(3.0), -1.0 / sqrt(3.0), 0.0),                            // Vec3D coords (Coordinates of the integration point)
+            1,                                                                         // double weight (Weight associated to the integration point)
+            Vector(4, 1.0 / 6, (2.0 + sqrt(3.0)) / 6, 1.0 / 6, (2.0 - sqrt(3.0)) / 6), // Vector shapeFunction (Shape functions at the integration point)
+            Matrix(4, 2,                                                               // Matrix derShapeFunction (Derivatives of the shape functions at the integration point)
                    (-3.0 - sqrt(3.0)) / 12, (-3.0 + sqrt(3.0)) / 12,                   //
                    (+3.0 + sqrt(3.0)) / 12, (-3.0 - sqrt(3.0)) / 12,                   //
                    (+3.0 - sqrt(3.0)) / 12, (+3.0 + sqrt(3.0)) / 12,                   //
@@ -87,10 +85,10 @@ const ElementData ElQua4NAx::_elementData = {
         },
         // Integration point 3
         {
-            Vec3D(+1.0 / sqrt(3.0), +1.0 / sqrt(3.0), 0.0),                            // Coordinates of the integration point
-            1,                                                                         // Weight associated to the integration point
-            Vector(4, (2.0 - sqrt(3.0)) / 6, 1.0 / 6, (2.0 + sqrt(3.0)) / 6, 1.0 / 6), // Shape functions at the integration point
-            Matrix(4, 2,                                                               // Derivatives of the shape functions at the integration point
+            Vec3D(+1.0 / sqrt(3.0), +1.0 / sqrt(3.0), 0.0),                            // Vec3D coords (Coordinates of the integration point)
+            1,                                                                         // double weight (Weight associated to the integration point)
+            Vector(4, (2.0 - sqrt(3.0)) / 6, 1.0 / 6, (2.0 + sqrt(3.0)) / 6, 1.0 / 6), // Vector shapeFunction (Shape functions at the integration point)
+            Matrix(4, 2,                                                               // Matrix derShapeFunction (Derivatives of the shape functions at the integration point)
                    (-3.0 + sqrt(3.0)) / 12, (-3.0 + sqrt(3.0)) / 12,                   //
                    (+3.0 - sqrt(3.0)) / 12, (-3.0 - sqrt(3.0)) / 12,                   //
                    (+3.0 + sqrt(3.0)) / 12, (+3.0 + sqrt(3.0)) / 12,                   //
@@ -98,10 +96,10 @@ const ElementData ElQua4NAx::_elementData = {
         },
         // Integration point 4
         {
-            Vec3D(-1.0 / sqrt(3.0), +1.0 / sqrt(3.0), 0.0),                            // Coordinates of the integration point
-            1,                                                                         // Weight associated to the integration point
-            Vector(4, 1.0 / 6, (2.0 - sqrt(3.0)) / 6, 1.0 / 6, (2.0 + sqrt(3.0)) / 6), // Shape functions at the integration point
-            Matrix(4, 2,                                                               // Derivatives of the shape functions at the integration point
+            Vec3D(-1.0 / sqrt(3.0), +1.0 / sqrt(3.0), 0.0),                            // Vec3D coords (Coordinates of the integration point)
+            1,                                                                         // double weight (Weight associated to the integration point)
+            Vector(4, 1.0 / 6, (2.0 - sqrt(3.0)) / 6, 1.0 / 6, (2.0 + sqrt(3.0)) / 6), // Vector shapeFunction (Shape functions at the integration point)
+            Matrix(4, 2,                                                               // Matrix derShapeFunction (Derivatives of the shape functions at the integration point)
                    (-3.0 + sqrt(3.0)) / 12, (-3.0 - sqrt(3.0)) / 12,                   //
                    (+3.0 - sqrt(3.0)) / 12, (-3.0 + sqrt(3.0)) / 12,                   //
                    (+3.0 + sqrt(3.0)) / 12, (+3.0 - sqrt(3.0)) / 12,                   //
@@ -114,10 +112,10 @@ const ElementData ElQua4NAx::_elementData = {
     {
         // Under integration point 1
         {
-            Vec3D(0.0, 0.0, 0.0),                              // Coordinates of the under integration point
-            4.0,                                               // Weight associated to the under integration point
-            Vector(4, +1.0 / 4, +1.0 / 4, +1.0 / 4, +1.0 / 4), // Shape functions at the under integration point
-            Matrix(4, 2,                                       // Derivatives of the shape functions at the under integration point
+            Vec3D(0.0, 0.0, 0.0),                              // Vec3D coords (Coordinates of the under integration point)
+            4.0,                                               // double weight (Weight associated to the under integration point)
+            Vector(4, +1.0 / 4, +1.0 / 4, +1.0 / 4, +1.0 / 4), // Vector shapeFunction (Shape functions at the under integration point)
+            Matrix(4, 2,                                       // Matrix derShapeFunction (Derivatives of the shape functions at the under integration point)
                    -1.0 / 4, -1.0 / 4,                         //
                    +1.0 / 4, -1.0 / 4,                         //
                    +1.0 / 4, +1.0 / 4,                         //
@@ -236,7 +234,7 @@ const ElementData ElQua4NAx::_elementData = {
     },*/
     // Check element
     10010110
-    // END
+    // END of Data
 };
 
 //-----------------------------------------------------------------------------

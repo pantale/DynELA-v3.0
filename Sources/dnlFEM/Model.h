@@ -92,6 +92,7 @@ public:
   void computeFinalRotation();
   void computeInternalForces();
   void computeJacobian(bool reference = false);
+  void computeUnderJacobian(bool reference = false);
   void computeMassMatrix(bool forceComputation = false);
   void computePressure();
   void computeStrains();

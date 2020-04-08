@@ -94,7 +94,7 @@ void ElementAxi::computeDeformationGradient(Tensor2 &F, short time)
   }
 
   // calcul F terme axisymetrique
-  F(2, 2) += Vr / getRadiusAtIntegrationPoint();
+  F(2, 2) += Vr / _integrationPoint->radius;
 }
 
 //-----------------------------------------------------------------------------
@@ -145,7 +145,7 @@ void ElementAxi::getdV_atIntPoint(Tensor2 &dv, short time)
 
   // calcul du terme axisymetrique
   getV_atIntPoint(v, time);
-  dv(2, 2) = v(0) / getRadiusAtIntegrationPoint();
+  dv(2, 2) = v(0) / _integrationPoint->radius;
 }
 
 /*
@@ -176,7 +176,7 @@ void ElementAxi::getdU_atIntPoint (Tensor2 & du, short time)
     }
 
   // calcul du terme axisymetrique
-  R=getRadiusAtIntegrationPoint();
+  R=_integrationPoint->radius;
   du (2, 2) = v / R;
 }
 */

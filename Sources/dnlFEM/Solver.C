@@ -233,7 +233,7 @@ void Solver::computeTimeStep(bool forceComputation)
     break;
     case PowerIteration:
     {
-      maximumFrequency = model->computePowerIterationTimeStep();
+      maximumFrequency = model->computePowerIterationTimeStep(false);
     }
     break;
     case PowerIterationUnder:

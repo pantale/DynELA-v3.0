@@ -40,7 +40,7 @@ public:
   ~PolynomialFunction();
 
   double getValue(double x);
-  void set(long i, double val);
+  void setFunction(long i, double val);
   double get(long i);
   double getSlope(double x);
   long getNumberOfFragments();

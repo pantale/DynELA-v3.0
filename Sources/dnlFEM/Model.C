@@ -772,6 +772,28 @@ void Model::computeJacobian(bool reference)
 }
 
 //-----------------------------------------------------------------------------
+void Model::computeUnderJacobian(bool reference)
+//-----------------------------------------------------------------------------
+{
+#pragma omp parallel
+  {
+    ElementsChunk *chunk = dynelaData->parallel.getElementsOfCurrentCore();
+
+    Element *pel = chunk->elements.first();
+    while ((pel = chunk->elements.currentUp()) != NULL)
+    {
+      if (pel->computeUnderJacobian(reference) == false)
+      {
+        std::cerr << "Emergency save of the last result\n";
+        std::cerr << "Program aborted\n";
+        dynelaData->writeVTKFile();
+        exit(-1);
+      }
+    }
+  }
+}
+
+//-----------------------------------------------------------------------------
 void Model::computeStrains()
 //-----------------------------------------------------------------------------
 {

@@ -36,6 +36,7 @@ class IntegrationPointBase
 public:
   double detJ;                                      // Determinant du Jacobien
   double detJ0;                                     // Determinant du Jacobien de la configuration de reference
+  double radius = 1;                                // Radius at the current integration point
   Matrix dShapeFunction;                            // Matrice des derivees des fonctions d'interpolation par rapport aux coordonnees physiques
   Matrix invJxW;                                    // Inverse du Jacobien de l'element au point d'integration
   Matrix JxW;                                       // Jacobien de l'element au point d'integration

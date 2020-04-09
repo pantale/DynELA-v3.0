@@ -93,65 +93,60 @@ void Material::setColor(double red, double green, double blue)
 }
 
 //-----------------------------------------------------------------------------
-Matrix Material::getHookeMatrix(short type)
+Matrix Material::getHookeStiffnessMatrix(short type)
 //-----------------------------------------------------------------------------
 {
-  Matrix hookeMatrix;
+  Matrix matrix;
 
   switch (type)
   {
   case planeStrain:
-    hookeMatrix.redim(3, 3);
-    hookeMatrix = 0.0;
-    hookeMatrix(0, 0) = 1.0;
-    hookeMatrix(1, 1) = 1.0;
-    hookeMatrix(2, 2) = (1.0 - 2.0 * poissonRatio) / (2.0 * (1.0 - poissonRatio));
-    hookeMatrix(1, 0) = hookeMatrix(0, 1) = poissonRatio / (1.0 - poissonRatio);
-    hookeMatrix *= (youngModulus * (1.0 - poissonRatio) / ((1.0 + poissonRatio) * (1.0 - 2.0 * poissonRatio)));
+    matrix.redim(3, 3);
+    matrix = 0;
+    matrix(0, 0) = matrix(1, 1) = 1 - poissonRatio;
+    matrix(2, 2) = 1 - 2 * poissonRatio;
+    //matrix(2, 2) = (1 - 2 * poissonRatio) / 2;
+    matrix(1, 0) = matrix(0, 1) = poissonRatio;
+    matrix *= youngModulus / ((1 + poissonRatio) * (1 - 2 * poissonRatio));
     break;
 
   case planeStress:
-    hookeMatrix.redim(3, 3);
-    hookeMatrix = 0.0;
-    hookeMatrix(0, 0) = 1.0;
-    hookeMatrix(1, 1) = 1.0;
-    hookeMatrix(2, 2) = (1.0 - poissonRatio) / 2;
-    hookeMatrix(1, 0) = hookeMatrix(0, 1) = poissonRatio;
-    hookeMatrix *= (youngModulus / (1.0 - dnlSquare(poissonRatio)));
+    matrix.redim(3, 3);
+    matrix = 0;
+    matrix(0, 0) = 1;
+    matrix(1, 1) = 1;
+    matrix(2, 2) = 1 - poissonRatio;
+    //matrix(2, 2) = (1 - poissonRatio) / 2;
+    matrix(1, 0) = matrix(0, 1) = poissonRatio;
+    matrix *= youngModulus / (1 - dnlSquare(poissonRatio));
     break;
 
   case axisymetric:
-    hookeMatrix.redim(4, 4);
-    hookeMatrix = 0.0;
-    hookeMatrix(0, 0) = 1.0;
-    hookeMatrix(1, 1) = 1.0;
-    hookeMatrix(2, 2) = (1.0 - 2.0 * poissonRatio) / (2. * (1.0 - poissonRatio));
-    hookeMatrix(3, 3) = 1.0;
-    hookeMatrix(1, 0) = hookeMatrix(0, 1) = poissonRatio / (1.0 - poissonRatio);
-    hookeMatrix(3, 0) = hookeMatrix(0, 3) = poissonRatio / (1.0 - poissonRatio);
-    hookeMatrix(3, 1) = hookeMatrix(1, 3) = poissonRatio / (1.0 - poissonRatio);
-    hookeMatrix *= (youngModulus * (1.0 - poissonRatio) / ((1.0 + poissonRatio) * (1.0 - 2.0 * poissonRatio)));
+    matrix.redim(4, 4);
+    matrix = 0;
+    matrix(0, 0) = matrix(1, 1) = matrix(3, 3) = 1 - poissonRatio;
+    matrix(2, 2) = 1 - 2 * poissonRatio;
+    //matrix(2, 2) = (1 - 2 * poissonRatio) / 2;
+    matrix(1, 0) = matrix(0, 1) = matrix(3, 0) = matrix(0, 3) = matrix(3, 1) = matrix(1, 3) = poissonRatio;
+    matrix *= youngModulus / ((1 + poissonRatio) * (1 - 2 * poissonRatio));
     break;
 
   case threedimensional:
-    hookeMatrix.redim(6, 6);
-    hookeMatrix = 0.0;
-    hookeMatrix(0, 0) = 1.0;
-    hookeMatrix(1, 1) = 1.0;
-    hookeMatrix(2, 2) = 1.0;
-    hookeMatrix(3, 3) = (1.0 - 2.0 * poissonRatio) / (2. * (1.0 - poissonRatio));
-    hookeMatrix(4, 4) = (1.0 - 2.0 * poissonRatio) / (2. * (1.0 - poissonRatio));
-    hookeMatrix(5, 5) = (1.0 - 2.0 * poissonRatio) / (2. * (1.0 - poissonRatio));
-    hookeMatrix(0, 1) = hookeMatrix(1, 0) = poissonRatio / (1.0 - poissonRatio);
-    hookeMatrix(0, 2) = hookeMatrix(2, 0) = poissonRatio / (1.0 - poissonRatio);
-    hookeMatrix(1, 2) = hookeMatrix(2, 1) = poissonRatio / (1.0 - poissonRatio);
-    hookeMatrix *= (youngModulus * (1.0 - poissonRatio) / ((1.0 + poissonRatio) * (1.0 - 2.0 * poissonRatio)));
+    matrix.redim(6, 6);
+    matrix = 0;
+    matrix(0, 0) = matrix(1, 1) = matrix(2, 2) = 1 - poissonRatio;
+    matrix(3, 3) = matrix(4, 4) = matrix(5, 5) = 1 - 2 * poissonRatio;
+    //matrix(3, 3) = (1 - 2 * poissonRatio) / 2;
+    //matrix(4, 4) = (1 - 2 * poissonRatio) / 2;
+    //matrix(5, 5) = (1 - 2 * poissonRatio) / 2;
+    matrix(0, 1) = matrix(1, 0) = matrix(0, 2) = matrix(2, 0) = matrix(1, 2) = matrix(2, 1) = poissonRatio;
+    matrix *= youngModulus / ((1 + poissonRatio) * (1 - 2 * poissonRatio));
     break;
 
   default:
-    fatalError("Material::getHookeMatrix", "Matrix not computed for this case");
+    fatalError("Material::getHookeStiffnessMatrix", "Matrix not computed for this case");
   }
-  return hookeMatrix;
+  return matrix;
 }
 
 //-----------------------------------------------------------------------------

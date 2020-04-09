@@ -180,21 +180,21 @@ void ElementPlane::getV_atIntPoint(Vec3D &v, short time)
 void ElementPlane::computeElasticStiffnessMatrix(bool underIntegration)
 //-----------------------------------------------------------------------------
 {
-  long pt;
+  short currentIntPt;
   double WxdJ, R;
-  long i, I, j, J;
-  long pts;
+  short i, I, j, J;
+  short numberOfIntPts;
   IntegrationPointBase *currentIntPoint;
 
-  // initialisation
+  // Initialization of the Stiffness Matrix
   stiffnessMatrix = 0;
-  Matrix C;
 
-  // chargement de la matrice de comportement C
+  // Elastic behavior Matrix
+  Matrix C;
   if (getFamily() == Element::Axisymetric)
-    C = material->getHookeMatrix(Material::axisymetric);
+    C = material->getHookeStiffnessMatrix(Material::axisymetric);
   else
-    C = material->getHookeMatrix(Material::planeStrain);
+    C = material->getHookeStiffnessMatrix(Material::planeStrain);
 
   // matrice temporaire
   Matrix CB(C.rows(), getNumberOfDimensions() * getNumberOfNodes());
@@ -203,39 +203,39 @@ void ElementPlane::computeElasticStiffnessMatrix(bool underIntegration)
   if (underIntegration)
   {
     computeUnderJacobian();
-    pts = underIntegrationPoints.getSize();
+    numberOfIntPts = underIntegrationPoints.getSize();
   }
   else
   {
-    pts = integrationPoints.getSize();
+    numberOfIntPts = integrationPoints.getSize();
   }
 
   // parallelisation
   //#pragma omp parallel for private(WxdJ),shared(stiffnessMatrix)
   // boucle sur les points d'integration
-  for (pt = 0; pt < pts; pt++)
+  for (currentIntPt = 0; currentIntPt < numberOfIntPts; currentIntPt++)
   {
     // recuperation du point d'integration
     if (underIntegration)
     {
-      currentIntPoint = getUnderIntegrationPoint(pt);
+      currentIntPoint = getUnderIntegrationPoint(currentIntPt);
       // calcul du terme d'integration numerique
       WxdJ = currentIntPoint->integrationPointData->weight * currentIntPoint->detJ;
       if (getFamily() == Element::Axisymetric)
       {
-        //setCurrentUnderIntegrationPoint(pt);
+        //setCurrentUnderIntegrationPoint(currentIntPt);
         R = currentIntPoint->radius;
         WxdJ *= dnl2PI * R;
       }
     }
     else
     {
-      currentIntPoint = getIntegrationPoint(pt);
+      currentIntPoint = getIntegrationPoint(currentIntPt);
       // calcul du terme d'integration numerique
       WxdJ = currentIntPoint->integrationPointData->weight * currentIntPoint->detJ;
       if (getFamily() == Element::Axisymetric)
       {
-       // setCurrentIntegrationPoint(pt);
+        // setCurrentIntegrationPoint(currentIntPt);
         R = currentIntPoint->radius;
         WxdJ *= dnl2PI * R;
       }
@@ -244,40 +244,48 @@ void ElementPlane::computeElasticStiffnessMatrix(bool underIntegration)
     // calcul de C.B
     for (i = 0; i < getNumberOfNodes(); i++)
     {
+      double dNx = currentIntPoint->dShapeFunction(i, 0);
+      double dNy = currentIntPoint->dShapeFunction(i, 1);
+      double NoverR = currentIntPoint->integrationPointData->shapeFunction(i) / R;
       I = getNumberOfDimensions() * i;
-      CB(0, I) = (C(0, 0) * currentIntPoint->dShapeFunction(i, 0) + C(0, 2) * currentIntPoint->dShapeFunction(i, 1));
-      CB(1, I) = (C(1, 0) * currentIntPoint->dShapeFunction(i, 0) + C(1, 2) * currentIntPoint->dShapeFunction(i, 1));
-      CB(2, I) = (C(2, 0) * currentIntPoint->dShapeFunction(i, 0) + C(2, 2) * currentIntPoint->dShapeFunction(i, 1));
-      CB(0, I + 1) = (C(0, 1) * currentIntPoint->dShapeFunction(i, 1) + C(0, 2) * currentIntPoint->dShapeFunction(i, 0));
-      CB(1, I + 1) = (C(1, 1) * currentIntPoint->dShapeFunction(i, 1) + C(1, 2) * currentIntPoint->dShapeFunction(i, 0));
-      CB(2, I + 1) = (C(2, 1) * currentIntPoint->dShapeFunction(i, 1) + C(2, 2) * currentIntPoint->dShapeFunction(i, 0));
+      CB(0, I) = (C(0, 0) * dNx + C(0, 2) * dNy);
+      CB(1, I) = (C(1, 0) * dNx + C(1, 2) * dNy);
+      CB(2, I) = (C(2, 0) * dNx + C(2, 2) * dNy);
+      CB(0, I + 1) = (C(0, 1) * dNy + C(0, 2) * dNx);
+      CB(1, I + 1) = (C(1, 1) * dNy + C(1, 2) * dNx);
+      CB(2, I + 1) = (C(2, 1) * dNy + C(2, 2) * dNx);
       if (getFamily() == Element::Axisymetric)
       {
-        CB(3, I) = (C(3, 0) * currentIntPoint->dShapeFunction(i, 0) + C(3, 2) * currentIntPoint->dShapeFunction(i, 1));
-        CB(3, I + 1) = (C(3, 1) * currentIntPoint->dShapeFunction(i, 1) + C(3, 2) * currentIntPoint->dShapeFunction(i, 0));
-        CB(0, I) += C(0, 3) * currentIntPoint->integrationPointData->shapeFunction(i) / R;
-        CB(1, I) += C(1, 3) * currentIntPoint->integrationPointData->shapeFunction(i) / R;
-        CB(2, I) += C(2, 3) * currentIntPoint->integrationPointData->shapeFunction(i) / R;
-        CB(3, I) += C(3, 3) * currentIntPoint->integrationPointData->shapeFunction(i) / R;
+        CB(3, I) = (C(3, 0) * dNx + C(3, 2) * dNy);
+        CB(3, I + 1) = (C(3, 1) * dNy + C(3, 2) * dNx);
+        CB(0, I) += C(0, 3) * NoverR;
+        CB(1, I) += C(1, 3) * NoverR;
+        CB(2, I) += C(2, 3) * NoverR;
+        CB(3, I) += C(3, 3) * NoverR;
       }
     }
 
     // calcul de BT [C B]
     for (i = 0; i < getNumberOfNodes(); i++)
+    {
+      double dNx = currentIntPoint->dShapeFunction(i, 0);
+      double dNy = currentIntPoint->dShapeFunction(i, 1);
+      double NoverR = currentIntPoint->integrationPointData->shapeFunction(i) / R;
       for (j = 0; j < getNumberOfNodes(); j++)
       {
         I = getNumberOfDimensions() * i;
         J = getNumberOfDimensions() * j;
-        stiffnessMatrix(I, J) += (currentIntPoint->dShapeFunction(i, 0) * CB(0, J) + currentIntPoint->dShapeFunction(i, 1) * CB(2, J)) * WxdJ;
-        stiffnessMatrix(I, J + 1) += (currentIntPoint->dShapeFunction(i, 0) * CB(0, J + 1) + currentIntPoint->dShapeFunction(i, 1) * CB(2, J + 1)) * WxdJ;
-        stiffnessMatrix(I + 1, J) += (currentIntPoint->dShapeFunction(i, 1) * CB(1, J) + currentIntPoint->dShapeFunction(i, 0) * CB(2, J)) * WxdJ;
-        stiffnessMatrix(I + 1, J + 1) += (currentIntPoint->dShapeFunction(i, 1) * CB(1, J + 1) + currentIntPoint->dShapeFunction(i, 0) * CB(2, J + 1)) * WxdJ;
+        stiffnessMatrix(I, J) += (dNx * CB(0, J) + dNy * CB(2, J)) * WxdJ;
+        stiffnessMatrix(I, J + 1) += (dNx * CB(0, J + 1) + dNy * CB(2, J + 1)) * WxdJ;
+        stiffnessMatrix(I + 1, J) += (dNy * CB(1, J) + dNx * CB(2, J)) * WxdJ;
+        stiffnessMatrix(I + 1, J + 1) += (dNy * CB(1, J + 1) + dNx * CB(2, J + 1)) * WxdJ;
         if (getFamily() == Element::Axisymetric)
         {
-          stiffnessMatrix(I, J) += CB(3, J) * currentIntPoint->integrationPointData->shapeFunction(i) / R * WxdJ;
-          stiffnessMatrix(I, J + 1) += CB(3, J + 1) * currentIntPoint->integrationPointData->shapeFunction(i) / R * WxdJ;
+          stiffnessMatrix(I, J) += CB(3, J) * NoverR * WxdJ;
+          stiffnessMatrix(I, J + 1) += CB(3, J + 1) * NoverR * WxdJ;
         }
       }
+    }
   }
 }
 

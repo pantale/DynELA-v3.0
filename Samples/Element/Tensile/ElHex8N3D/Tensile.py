@@ -93,7 +93,7 @@ model.attachConstantBC(rightBC, rightNS)
 
 # Declaration of a ramp function to apply the load
 ramp = dnl.RampFunction("constantFunction")
-ramp.set(dnl.RampFunction.Constant, 0, stopTime)
+ramp.setFunction(dnl.RampFunction.Constant, 0, stopTime)
 
 # Declaration of a boundary condition for right part
 rightSpeed = dnl.BoundarySpeed()

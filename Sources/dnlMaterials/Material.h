@@ -87,7 +87,7 @@ public:
   double getTwoShearModulus();
   double getHeatFraction();
   HardeningLaw *getHardeningLaw() const;
-  Matrix getHookeMatrix(short type);
+  Matrix getHookeStiffnessMatrix(short type);
   Tensor4 &hookeTensor();
   Vec3D &color();
   void computeHookeTensor();

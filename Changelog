@@ -1,5 +1,8 @@
+09/04/2020 - Correction of a bug in Elastic Stiffness for 3D
+           - Correction of expressions of elastic material matrices for shear
+
 08/04/2020 - Add radius in element
-	   - Bug fixes concerning underIntegration jacobian
+	       - Bug fixes concerning underIntegration jacobian
 
 24/03/2020 - GPL 3.0 License
 

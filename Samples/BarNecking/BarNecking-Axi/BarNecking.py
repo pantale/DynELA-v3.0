@@ -116,15 +116,20 @@ axisBC = dnl.BoundaryRestrain('BC_axis')
 axisBC.setValue(1, 0, 1)
 model.attachConstantBC(axisBC, axisNS)
 
+# Declaration of a ramp function to apply the load
+ramp = dnl.RampFunction("constantFunction")
+ramp.setFunction(dnl.RampFunction.Constant, 0, stopTime)
+
 # Declaration of a boundary condition for top line
 speedBC = dnl.BoundarySpeed('BC_speed')
-speedBC.setValue(0, speed, 0)
+speedBC.setValue(0, displacement, 0)
+speedBC.setFunction(ramp)
 model.attachConstantBC(speedBC, topNS)
 
 solver = dnl.Explicit("Solver")
 solver.setTimes(0, stopTime)
 model.add(solver)
-#solver.setTimeStepMethod(solver.PowerIteration)
+solver.setTimeStepMethod(solver.PowerIteration)
 #solver.setTimeStepSafetyFactor(0.6)
 model.setSaveTimes(0, stopTime, stopTime / nbreSaves)
 

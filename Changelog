@@ -1,3 +1,5 @@
+28/04/2020 - Correction of a bug in Model concerning compaction of nodes and elements lists during reading
+
 09/04/2020 - Correction of a bug in Elastic Stiffness for 3D
            - Correction of expressions of elastic material matrices for shear
 

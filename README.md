@@ -35,9 +35,9 @@ Download and compilation is done using the following procedure:
 	cmake ../Sources
 	make
 
-There is no need to install. Modify the .bashrc file and add the following lines where _path_to_DynELA_ points to the top directory of your DynELA installation:
+There is no need to install the executable or something similar to use the FEM code. Modify the .bashrc file and add the following lines where _path_to_DynELA_ points to the top directory of your DynELA installation:
 
-	export DYNELA="_path_to_DynELA_"
+	export DYNELA="path_to_DynELA"
 	export PATH=$PATH:$DYNELA/bin
 	export DYNELA_BIN=$DYNELA/Build/bin
 	export DYNELA_LIB=$DYNELA/Build/lib
@@ -47,17 +47,17 @@ There is no need to install. Modify the .bashrc file and add the following lines
 
 ## Testing and usage:
 
-Running one of the provided samples in Samples floder:
+Running one of the provided samples in Samples floder is done using the following command in one of the subdirectories:
 
 	python sample.py
 
-Running the tests in the Samples directory can be done through the Makefiles contained in the Samples directory. Benchmark tests can be run from any subdirectory of the Sample folder using the following command:
+Running the tests in the Samples directories can be done through the Makefiles contained in the Samples directories. Benchmark tests can be run from any subdirectory of the Sample folder using the following command:
 
 	make
 	
 ## Postprocessing:
 
-DynELA now has a class for direct export of contourplot results using SVG vectorial format for a 2D or 3D mesh via the Python command interface.
+DynELA now has a class for direct export of contourplot results using SVG vectorial format for a 2D or 3D mesh via the Python command interface. See the documentation for all instructions concerning SVG outputs and the examples included in the Samples directories.
 
 The DynELA FEM code can generate VTK files for the results. I'm using the Paraview postprocessor to visualize those results. Paraview is available here: https://www.paraview.org/download
 

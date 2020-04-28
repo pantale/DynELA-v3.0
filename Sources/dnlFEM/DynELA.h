@@ -62,13 +62,13 @@ class DynELA
   friend class VtkInterface;
 
 private:
-  double _displayTimeIncrement = 10;
-  double _lastElapsedComputeTime = 0;
-  double _lastElapsedTime = 0; // Last elapsed time for computing endtime
-  double _nextDisplayTime = 10;
-  short _defaultElement;      // Current default Element
-  short _VTKresultFileIndex = 0; // Current result file index
-  String _VTKresultFileName;     // Current result file name
+  double _displayTimeIncrement = 10;  // Display time increment
+  double _lastElapsedComputeTime = 0; // last elapsed compute time
+  double _lastElapsedTime = 0;        // Last elapsed time for computing endtime
+  double _nextDisplayTime = 10;       // Next display time
+  short _defaultElement;              // Current default Element
+  short _VTKresultFileIndex = 0;      // Current result file index
+  String _VTKresultFileName;          // Current result file name
 
 public:
   double endSaveTime = 0.0;       // Final save time

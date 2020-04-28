@@ -106,6 +106,9 @@ bool Model::add(Node *newNode)
     nodes << newNode;
   }
 
+  // Compact the F**king list of nodes
+  nodes.compact();
+
   // return happy
   return true;
 }
@@ -133,6 +136,9 @@ bool Model::add(Element *newElement)
     // add the element to the grid
     elements << newElement;
   }
+
+  // Compact the F**king list of elements
+  elements.compact();
 
   // return happy
   return true;

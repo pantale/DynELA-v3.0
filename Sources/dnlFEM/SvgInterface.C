@@ -24,6 +24,7 @@
 #include <Element.h>
 #include <Field.h>
 #include <Model.h>
+#include <Solver.h>
 
 //-----------------------------------------------------------------------------
 SvgInterface::SvgInterface(char *newName)
@@ -320,6 +321,27 @@ void SvgInterface::legendWrite()
 }
 
 //-----------------------------------------------------------------------------
+void SvgInterface::dataInfoWrite()
+//-----------------------------------------------------------------------------
+{
+  System system;
+  int yInc = 22;
+  String textVal;
+  Vec3D pos(_dataInfosX, _dataInfosY, 0);
+  textWrite(pos, "DynELA FEM code v.3.0", 20);
+  pos(1) += yInc;
+  textWrite(pos, system.getDate(), 20);
+  pos(1) += yInc;
+  textWrite(pos, "host : " + system.getHostname(), 20);
+  pos(1) += yInc + 8;
+  textVal.convert(dynelaData->model.currentTime, "%10.3E");
+  textWrite(pos, "time : " + textVal, 20);
+  pos(1) += yInc;
+  textVal.convert(dynelaData->model.solver->currentIncrement, "%g");
+  textWrite(pos, "incr : " + textVal, 20);
+}
+
+//-----------------------------------------------------------------------------
 void SvgInterface::write(String fileName, short _field)
 //-----------------------------------------------------------------------------
 {
@@ -358,7 +380,11 @@ void SvgInterface::write(String fileName, short _field)
       legendWrite();
   }
 
-  // Wites the title of application
+  // Writes the informations text
+  if (_dataInfosDisplay)
+    dataInfoWrite();
+
+  // Writes the title of application
   if (_titleDisplay)
     textWrite(Vec3D(_titleX, _titleY, 0), "DynELA FEM code v.3.0", 40);
 
@@ -382,6 +408,14 @@ void SvgInterface::setTitlePosition(int x, int y)
 {
   _titleX = x;
   _titleY = y;
+}
+
+//-----------------------------------------------------------------------------
+void SvgInterface::setInfoPosition(int x, int y)
+//-----------------------------------------------------------------------------
+{
+  _dataInfosX = x;
+  _dataInfosY = y;
 }
 
 //-----------------------------------------------------------------------------
@@ -414,6 +448,13 @@ void SvgInterface::setTitleDisplay(bool display)
 //-----------------------------------------------------------------------------
 {
   _titleDisplay = display;
+}
+
+//-----------------------------------------------------------------------------
+void SvgInterface::setInfoDisplay(bool display)
+//-----------------------------------------------------------------------------
+{
+  _dataInfosDisplay = display;
 }
 
 //-----------------------------------------------------------------------------

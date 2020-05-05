@@ -39,6 +39,7 @@ struct SvgRotate
 class SvgInterface
 {
 private:
+  bool _dataInfosDisplay = false;
   bool _initialized = false;
   bool _legendDisplay = true;
   bool _meshDisplay = true;
@@ -51,6 +52,8 @@ private:
   double _scale = 1;
   double _scaleRatio = 0.95;
   double _width = 16;
+  int _dataInfosX = 50;
+  int _dataInfosY = 1200;
   int _legendX = 30;
   int _legendY = 30;
   int _patchDecompLevel = 1;
@@ -63,6 +66,7 @@ private:
 
 #ifndef SWIG
   void closeSvgFile();
+  void dataInfoWrite();
   void filledRectangleWrite(int x1, int y1, int x2, int y2, String col);
   void flatPolygonsWrite();
   void headerWrite();
@@ -89,12 +93,14 @@ public:
   void initDrawing();
   void resetView();
   void rotate(Vec3D axis, double angle);
+  void setInfoDisplay(bool display);
+  void setInfoPosition(int x, int y);
   void setLegendDisplay(bool display);
   void setLegendPosition(int x, int y);
   void setMeshDisplay(bool display);
-  void setTitleDisplay(bool display);
   void setMeshWidth(double width);
   void setPatchLevel(int level);
+  void setTitleDisplay(bool display);
   void setTitlePosition(int x, int y);
   void write(String fileName, short field = -1);
 };

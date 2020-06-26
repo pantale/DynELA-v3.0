@@ -1,3 +1,7 @@
+26/06/2020 - Update of Makefiles in Samples directory according to updateDataFile utility
+
+05/05/2020 - Update of svg interface class
+
 28/04/2020 - Correction of a bug in Model concerning compaction of nodes and elements lists during reading
 
 09/04/2020 - Correction of a bug in Elastic Stiffness for 3D

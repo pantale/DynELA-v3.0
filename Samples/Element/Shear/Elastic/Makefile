@@ -1,16 +1,28 @@
+#
+# DynELA Finite Element Code Makefile
+#
+#@!CODEFILE = Makefile-sample-dynela
+#
+# -------------------------------------------------------------------------------
+# Start of Private zone for the Makefile
+# -------------------------------------------------------------------------------
+#@!BEGIN = PRIVATE
+
 # DynELA file to treat
 FILE = Shear-Elastic
 
 # Pictures for documentation
-GENERIC = $(FILE)
+GENERIC = Shear-Elastic
 OUTPUTS = stress_11.svg stress_12.svg stress_22.svg vonMises.svg
 OUTDIR = $(DYNELA)/Documentation/Figures/Samples/Element
 
-# Nothing to touch here after
-TOP = $(DYNELA)/Samples
+#@!BEGIN = COMMON
+# -------------------------------------------------------------------------------
+# There is nothing to touch here after
+# If there is not any changes to make, this has to be done in tha master Makefile
+# -------------------------------------------------------------------------------
 
-# Store current path
-HERE = $(PWD)
+TOP = $(DYNELA)/Samples
 
 all:
 	./runBench.py --run
@@ -20,12 +32,13 @@ reference:
 	./runBench.py --reference
 
 install:
-	@for OUTPUT in $(OUTPUTS); do rsync --checksum --no-times $$OUTPUT $(OUTDIR)/$(GENERIC)_$$OUTPUT; done
+	@svgToPdf -dest $(OUTDIR) -prefix $(GENERIC)_
 
 clean:
 	@echo "Cleaning: $(PWD)"
 	@rm -f *.vtk *.ref *.svg *.plot *.log _bench.png
 
 subclean: clean
-	@cd $(HERE)/Abaqus; make subclean
-	@cd $(HERE)/Analytic; make subclean
+	@cd Abaqus; make subclean
+
+

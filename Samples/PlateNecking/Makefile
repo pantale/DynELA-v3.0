@@ -1,7 +1,22 @@
+#
+# DynELA Finite Element Code Makefile
+#
+#@!CODEFILE = Makefile-sample-dynela
+#
+# -------------------------------------------------------------------------------
+# Start of Private zone for the Makefile
+# -------------------------------------------------------------------------------
+#@!BEGIN = PRIVATE
+
 # DynELA file to treat
 FILE = PlateNecking
 
-# Nothing to touch here after
+#@!BEGIN = COMMON
+# -------------------------------------------------------------------------------
+# There is nothing to touch here after
+# If there is not any changes to make, this has to be done in tha master Makefile
+# -------------------------------------------------------------------------------
+
 TOP = $(DYNELA)/Samples
 
 all:
@@ -10,6 +25,9 @@ all:
 
 reference:
 	./runBench.py --reference
+
+install:
+	@svgToPdf -dest $(OUTDIR) -prefix $(GENERIC)_
 
 clean:
 	@echo "Cleaning: $(PWD)"

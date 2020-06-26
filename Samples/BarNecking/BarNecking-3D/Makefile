@@ -1,7 +1,27 @@
+#
+# DynELA Finite Element Code Makefile
+#
+#@!CODEFILE = Makefile-sample-dynela
+#
+# -------------------------------------------------------------------------------
+# Start of Private zone for the Makefile
+# -------------------------------------------------------------------------------
+#@!BEGIN = PRIVATE
+
 # DynELA file to treat
 FILE = BarNecking
 
-# Nothing to touch here after
+# Pictures for documentation
+GENERIC = BarNecking-3D
+OUTPUTS = vonMisesCP.svg temperatureCP.svg radius.svg temperature.svg plasticStrain.svg vonMises.svg timeStep.svg kineticEnergy.svg
+OUTDIR = $(DYNELA)/Documentation/Figures/Samples/Plasticity
+
+#@!BEGIN = COMMON
+# -------------------------------------------------------------------------------
+# There is nothing to touch here after
+# If there is not any changes to make, this has to be done in tha master Makefile
+# -------------------------------------------------------------------------------
+
 TOP = $(DYNELA)/Samples
 
 all:
@@ -10,6 +30,9 @@ all:
 
 reference:
 	./runBench.py --reference
+
+install:
+	@svgToPdf -dest $(OUTDIR) -prefix $(GENERIC)_
 
 clean:
 	@echo "Cleaning: $(PWD)"

@@ -1,3 +1,13 @@
+#
+# DynELA Finite Element Code Makefile
+#
+#@!CODEFILE = Makefile-sample-abaqus
+#
+# -------------------------------------------------------------------------------
+# Start of Private zone for the Makefile
+# -------------------------------------------------------------------------------
+#@!BEGIN = PRIVATE
+
 # Abaqus file to treat
 FILE = Taylor
 
@@ -6,7 +16,11 @@ GENERIC = Taylor-Axi-Abaqus
 OUTPUTS = PlasticStrain.svg Temperature.svg
 OUTDIR = $(DYNELA)/Documentation/Figures/Samples/Impact
 
-# Nothing to touch here after
+#@!BEGIN = COMMON
+# -------------------------------------------------------------------------------
+# There is nothing to touch here after
+# If there is not any changes to make, this has to be done in tha master Makefile
+# -------------------------------------------------------------------------------
 all:
 	abaqus job=$(FILE) input=$(FILE) double=both interactive ask_delete=OFF
 	abaqus python Extract.py
@@ -18,7 +32,7 @@ all:
 	@rm -f $(FILE)*.abq $(FILE)*.com $(FILE)*.log $(FILE)*.mdl $(FILE)*.msg $(FILE)*.pac $(FILE)*.prt $(FILE)*.res $(FILE)*.sel $(FILE)*.stt $(FILE)*.dat $(FILE)*.sta
 
 install:
-	@for OUTPUT in $(OUTPUTS); do rsync --checksum --no-times $$OUTPUT $(OUTDIR)/$(GENERIC)_$$OUTPUT; done
+	@svgToPdf -dest $(OUTDIR) -prefix $(GENERIC)_
 
 clean:
 	@echo "Cleaning: $(PWD)"

@@ -4,7 +4,8 @@
 #@!CODEFILE = Makefile-sample-subdir
 #
 # -------------------------------------------------------------------------------
-# Start of Private zone for the Makefile
+# Beginning of the private area for the Makefile
+# Local modifications must be made in this area.
 # -------------------------------------------------------------------------------
 #@!BEGIN = PRIVATE
 
@@ -13,19 +14,23 @@ SUBDIRS = Shear Tensile Torus Radial
 
 #@!BEGIN = COMMON
 # -------------------------------------------------------------------------------
-# There is nothing to touch here after
-# If there is not any changes to make, this has to be done in tha master Makefile
+# There's nothing to touch here next in the Makefile
+# If there are any changes to be made, they must be made in the main Makefile
+# or else these changes will be overwritten the next time the file is automatically updated.
 # -------------------------------------------------------------------------------
 
-# Store current path
+# Store the current path
 HERE = $(PWD)
 
+# Default option for the Makefile
 all:
 	@for SUBDIR in $(SUBDIRS); do cd $(HERE)/$$SUBDIR; make; done
-	
+
+# Propagates the clean command to subdirectories
 clean:
 	@for SUBDIR in $(SUBDIRS); do cd $(HERE)/$$SUBDIR; make clean; done
 
+# Propagates the subclean command to subdirectories
 subclean:
 	@for SUBDIR in $(SUBDIRS); do cd $(HERE)/$$SUBDIR; make subclean; done
 

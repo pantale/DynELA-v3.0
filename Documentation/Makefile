@@ -1,21 +1,67 @@
-TOP = DynELA.pdf
+#
+# Makefile for creating PDF from Latex
+#
+# (c) by Olivier Pantalé 2020
+#
+# -------------------------------------------------------------------------------
+# Beginning of the private area for the Makefile
+# Local modifications must be made in this area.
+# -------------------------------------------------------------------------------
+#@!BEGIN = PRIVATE
 
-# No modification below this line
-SOURCES = $(wildcard *.lyx)
-MAINTOP = $(TOP:.pdf=.lyx)
+# Define the top file to create
+TOP      = DynELA.pdf
 
-all : $(TOP)
+# Define the location of all figures where SVG files can be found
+#FIGURES_FOLDERS = Figures Figures/Samples/Element Figures/Samples/Impact Figures/Samples/Plasticity
+#FIGURES         = $(wildcard Figures/* Figures/Samples/Element/* Figures/Samples/Impact/* Figures/Samples/Plasticity/*)
+FIGURES_FOLDERS = Figures
+FIGURES         = $(wildcard Figures/*)
 
-$(TOP) : $(SOURCES) pageGarde.pdf
-	@rm -f $(TOP)
-	lyx -e pdf2 $(MAINTOP)
+#@!BEGIN = COMMON
+# -------------------------------------------------------------------------------
+# There's nothing to touch here next in the Makefile
+# If there are any changes to be made, they must be made in the main Makefile
+# or else these changes will be overwritten the next time the file is automatically updated.
+# -------------------------------------------------------------------------------
 
-clean: cleanTex
-	@rm -f  *.dvi *.aux *.log *.toc *~ *.lof *.lot *.ind *.ilg *.idx *.bbl *.blg *.brf *.loa *.lop *.out
+# Programs to use
+TEX2PDF      = pdflatex -interaction=batchmode 
+BIBTEX       = -bibtex
 
-cleanTex:
-	@rm -f *.tex
+# Internal variables
+SOURCES      = $(wildcard *.tex)
+MAINTOP      = $(TOP:.pdf=.tex)
+ROOT         = $(TOP:.pdf=)
 
-force:
-	@rm -f $(TOP)	
-	make $(TOP)
+# Store current path
+HERE = $(PWD)
+
+# Default option for the Makefile
+all: figures $(TOP)
+
+# Convert all SVG figures in Figures folder to PDF
+figures:
+	@for FIGURES_FOLDER in $(FIGURES_FOLDERS); do cd $(HERE)/$$FIGURES_FOLDER; svgToPdf --silent; done
+
+# Makes the top target
+$(TOP) : $(SOURCES) $(FIGURES)
+	# Remove old file
+	-rm $(TOP)
+	# Run pass 1
+	$(TEX2PDF) $(MAINTOP)
+	# Run bibtex skipping error
+	$(BIBTEX) $(ROOT).aux
+	# Run pass 2
+	$(TEX2PDF) $(MAINTOP)
+	# Run pass 3
+	$(TEX2PDF) $(MAINTOP)
+
+# Clean the LateX temp files
+clean: 
+	rm -rf *.aux *.log *.nav *.out *.toc *.vrb *.bbl *.blg *.snm *.mtc* *.idx *.maf *.ptc *.brf *.lof *.lot $(ROOT).synctex.gz
+
+# Clean the target to force compilation again
+forceClean:
+	rm $(TOP)
+

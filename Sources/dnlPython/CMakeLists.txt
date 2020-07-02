@@ -1,3 +1,14 @@
+#
+# DynELA Finite Element Code CMakeList
+#
+#@!CODEFILE = DynELA-CMakeList
+#
+# -------------------------------------------------------------------------------
+# Beginning of the private area for the Makefile
+# Local modifications must be made in this area.
+# -------------------------------------------------------------------------------
+#@!BEGIN = PRIVATE
+
 INCLUDE(${SWIG_USE_FILE})
 
 INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_PATH})

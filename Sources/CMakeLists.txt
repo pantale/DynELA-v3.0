@@ -1,3 +1,14 @@
+#
+# DynELA Finite Element Code CMakeList
+#
+#@!CODEFILE = DynELA-CMakeList
+#
+# -------------------------------------------------------------------------------
+# Beginning of the private area for the Makefile
+# Local modifications must be made in this area.
+# -------------------------------------------------------------------------------
+#@!BEGIN = PRIVATE
+
 CMAKE_MINIMUM_REQUIRED(VERSION 3.8)
 
 PROJECT(DynELA C CXX)

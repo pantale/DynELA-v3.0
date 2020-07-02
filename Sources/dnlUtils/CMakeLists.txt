@@ -1,3 +1,13 @@
+#
+# DynELA Finite Element Code CMakeList
+#
+#@!CODEFILE = DynELA-CMakeList
+#
+# -------------------------------------------------------------------------------
+# Beginning of the private area for the Makefile
+# Local modifications must be made in this area.
+# -------------------------------------------------------------------------------
+#@!BEGIN = PRIVATE
 
 # dnlCurves.py Utility File
 add_custom_target(copy-dnlCurves.py ALL DEPENDS ${EXECUTABLE_OUTPUT_PATH}/dnlCurves.py)

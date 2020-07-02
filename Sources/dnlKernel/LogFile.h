@@ -1,11 +1,13 @@
 /***************************************************************************
  *                                                                         *
  *  DynELA Finite Element Code v 3.0                                       *
- *  By Olivier PANTALE                                                     *
+ *  by Olivier PANTALE                                                     *
  *                                                                         *
  *  (c) Copyright 1997-2020                                                *
  *                                                                         *
  **************************************************************************/
+//@!CODEFILE = DynELA-H-file
+//@!BEGIN = PRIVATE
 
 /*!
   \file LogFile.h

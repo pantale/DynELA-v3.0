@@ -1,3 +1,14 @@
+#
+# DynELA Finite Element Code CMakeList
+#
+#@!CODEFILE = DynELA-CMakeList
+#
+# -------------------------------------------------------------------------------
+# Beginning of the private area for the Makefile
+# Local modifications must be made in this area.
+# -------------------------------------------------------------------------------
+#@!BEGIN = PRIVATE
+
 # configuration.dnl Utility File
 add_custom_target(copy-configuration.dnl ALL DEPENDS ${EXECUTABLE_OUTPUT_PATH}/configuration.dnl)
 add_custom_command(

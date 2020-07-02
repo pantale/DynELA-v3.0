@@ -6,7 +6,8 @@
  *  (c) Copyright 1997-2020                                                *
  *                                                                         *
  **************************************************************************/
-
+//@!CODEFILE = DynELA-inc-file
+//@!BEGIN = PRIVATE
 
 %{
   #include "Boundary.h"

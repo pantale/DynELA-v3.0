@@ -6,6 +6,8 @@
  *  (c) Copyright 1997-2020                                                *
  *                                                                         *
  **************************************************************************/
+//@!CODEFILE = DynELA-inc-file
+//@!BEGIN = PRIVATE
 
 %varargs(30, long val = 0) DynELA::createElement;
 

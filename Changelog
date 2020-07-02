@@ -1,3 +1,5 @@
+02/07/2020 - Unification of sources heading parts using updateDataFile utility
+
 01/07/2020 - DynELA now uses TexStudio
 
 26/06/2020 - Update of Makefiles in Samples directory according to updateDataFile utility

@@ -1,11 +1,14 @@
 /***************************************************************************
  *                                                                         *
  *  DynELA Finite Element Code v 3.0                                       *
- *  By Olivier PANTALE                                                     *
+ *  by Olivier PANTALE                                                     *
  *                                                                         *
  *  (c) Copyright 1997-2020                                                *
  *                                                                         *
  **************************************************************************/
+//@!CODEFILE = DynELA-C-file
+//@!BEGIN = PRIVATE
+
 // TODOCXYFILE
 
 /*!
@@ -73,8 +76,8 @@ void BoundarySpeed::applyInitial(Node *node, double currentTime, double timeStep
 //Application d'une condition limite Imposee en vitesse sur un noeud
 /*!
   Cette methode applique des conditions aux limites imposees en vitesse sur un noeud. Deux cas se presentent selon la nature de la vitesse imposee (constante ou variable dans le temps).
-  Dans le cas oe la vitesse imposee est constante dans le temps, on applique simplement dans la direction contrainte une acceleration nulle et une vitesse imposee constante egale à la vitesse de la CL.
-  Dans le cas oe la CL est variable dans le temps, on utilise les relations suivantes \f[ \stackrel{\bullet }{v_{0}}=\frac{\overline{v}(t+\Delta t)-\overline{v}(t)}{\Delta t} \f] et  \f[  v_{0}=\overline{v}(t) \f] relations dans lesquelles  \f$ \overline{v}(t) \f$ represente la valeur de la vitesse imposee à l'instant t definie à partir de la fonction discrete. 
+  Dans le cas oe la vitesse imposee est constante dans le temps, on applique simplement dans la direction contrainte une acceleration nulle et une vitesse imposee constante egale a la vitesse de la CL.
+  Dans le cas oe la CL est variable dans le temps, on utilise les relations suivantes \f[ \stackrel{\bullet }{v_{0}}=\frac{\overline{v}(t+\Delta t)-\overline{v}(t)}{\Delta t} \f] et  \f[  v_{0}=\overline{v}(t) \f] relations dans lesquelles  \f$ \overline{v}(t) \f$ represente la valeur de la vitesse imposee a l'instant t definie a partir de la fonction discrete. 
   \param node Noeud sur lequel la condition limite est appliquee
 
   \since DynELA 0.9.1

@@ -1,11 +1,14 @@
 /***************************************************************************
  *                                                                         *
  *  DynELA Finite Element Code v 3.0                                       *
- *  By Olivier PANTALE                                                     *
+ *  by Olivier PANTALE                                                     *
  *                                                                         *
  *  (c) Copyright 1997-2020                                                *
  *                                                                         *
  **************************************************************************/
+//@!CODEFILE = DynELA-C-file
+//@!BEGIN = PRIVATE
+
 // TODOCXYFILE
 
 /*!
@@ -70,7 +73,7 @@ Cette methode applique des conditions aux limites imposees sur un noeud. Les con
 void BoundaryForce::applyConstantOnCurrentFields(Node *node, double currentTime, double timeStep)
 //-----------------------------------------------------------------------------
 {
- /*  // l'idee est la, mais reste à le faire
+ /*  // l'idee est la, mais reste a le faire
   double facteur =
       1.2 * dynelaData->models.current()->currentTime / dynelaData->models.current()->solver->getEndTime();
   if (facteur > 1.0)

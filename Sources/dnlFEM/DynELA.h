@@ -97,6 +97,7 @@ public:
 
   bool createElement(long elementNumber, long nodesIndex, ...);
   bool createNode(long nodeNumber, double xCoord, double yCoord, double zCoord);
+  bool createNode(long nodeNumber, Vec3D coords);
   Element *getElementByNum(long elementNumber);
   long getElementsNumber();
   long getNodesNumber();

@@ -185,7 +185,6 @@ Element *DynELA::getElementByNum(long elementNumber)
   \param y coordonnee y du noeud à creer
   \param z coordonnee z du noeud à creer
   \date 2002
- 
 */
 //-----------------------------------------------------------------------------
 bool DynELA::createNode(long nodeNumber, double xCoord, double yCoord, double zCoord)
@@ -206,6 +205,13 @@ bool DynELA::createNode(long nodeNumber, double xCoord, double yCoord, double zC
   logFile << "Node : " << st << " added to " << name << "\n";
 
   return true;
+}
+
+//-----------------------------------------------------------------------------
+bool DynELA::createNode(long nodeNumber, Vec3D coords)
+//-----------------------------------------------------------------------------
+{
+  createNode(nodeNumber, coords(0), coords(1), coords(2));
 }
 
 //renvoie le nombre de noeuds de la structure

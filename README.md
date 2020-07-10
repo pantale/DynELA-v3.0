@@ -12,7 +12,7 @@ The DynELA FEM code is developped under Linux (an Ubuntu 18.04 LTS is currently 
 
 Compilation of the FEM code requires a number of libraries.
 
-Genaration of Makefiles for DynELA compilation is based on the use of the CMake application. CMAke is a cross-platform, open-source build system generator. It can be installed with the following command:
+Generation of Makefiles for DynELA compilation is based on the use of the CMake application. CMake is a cross-platform, open-source build system generator. It can be installed with the following command:
 
 	sudo apt install cmake
 
@@ -47,7 +47,7 @@ There is no need to install the executable or something similar to use the FEM c
 
 ## Testing and usage:
 
-Running one of the provided samples in Samples floder is done using the following command in one of the subdirectories:
+Running one of the provided samples in Samples folder is done using the following command in one of the subdirectories:
 
 	python sample.py
 

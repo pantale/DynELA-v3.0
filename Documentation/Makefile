@@ -7,14 +7,13 @@
 # Beginning of the private area for the Makefile
 # Local modifications must be made in this area.
 # -------------------------------------------------------------------------------
+#@!CODEFILE = Makefile-documentation
 #@!BEGIN = PRIVATE
 
 # Define the top file to create
 TOP      = DynELA.pdf
 
 # Define the location of all figures where SVG files can be found
-#FIGURES_FOLDERS = Figures Figures/Samples/Element Figures/Samples/Impact Figures/Samples/Plasticity
-#FIGURES         = $(wildcard Figures/* Figures/Samples/Element/* Figures/Samples/Impact/* Figures/Samples/Plasticity/*)
 FIGURES_FOLDERS = Figures
 FIGURES         = $(wildcard Figures/*)
 

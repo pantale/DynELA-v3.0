@@ -5,7 +5,7 @@
 % (c) by Olivier Pantalé 2020
 %
 \documentclass[11pt,french,english,twoside]{book}
-\input{../../Cours/Templates/macrosHyperlinkEnglish.tex}
+\input{macrosHyperlinkEnglish.tex}
 
 \begin{document}
 \includepdf[pages=1-2]{pageGarde.pdf}
@@ -22,9 +22,11 @@
 
 \renewcommand{\thepage}{\arabic{page}}\setcounter{page}{1}
 
-\part{DynELA FEM code theory}
+\input{NotationsMec.tex}
 
-\input{../../Cours/Templates/Cours/NotationsMec.tex}
+\input{Installation.tex} 
+
+\part{DynELA FEM code theory}
 
 \cleardoublepage
 
@@ -48,14 +50,14 @@
 
 \cleardoublepage
 
-\cite{pantale_parallelization_2005}
-
 \bibliographystyle{unsrt}
-\addcontentsline{toc}{chapter}{\bibname}\bibliography{../../Cours/Templates/Bibliographie/Bibliography}
+\addcontentsline{toc}{chapter}{\bibname}
 
 \begin{center}
-\includegraphics[width=0.4\columnwidth]{../../Cours/Templates/Figures/Bibliography}
+\includegraphics[width=0.4\columnwidth]{Figures/Bibliography}
 \par\end{center}
+
+\bibliography{Private}
 
 \cleardoublepage
 

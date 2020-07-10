@@ -1,12 +1,13 @@
 #
 # DynELA Finite Element Code Makefile
 #
-#@!CODEFILE = Makefile-sample-dynela
+# (c) by Olivier Pantalé 2020
 #
 # -------------------------------------------------------------------------------
 # Beginning of the private area for the Makefile
 # Local modifications must be made in this area.
 # -------------------------------------------------------------------------------
+#@!CODEFILE = Makefile-sample-dynela
 #@!BEGIN = PRIVATE
 
 # DynELA file to treat

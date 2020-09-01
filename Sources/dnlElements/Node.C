@@ -358,8 +358,6 @@ double Node::getNodalValue(short field)
     Element *pel;
     long j, pt;
     double value = 0.0;
-    //    SymTensor2 tensor;
-    //    tensor = 0.0;
     for (j = 0; j < elements.getSize(); j++)
     {
       pel = elements(j);
@@ -369,9 +367,7 @@ double Node::getNodalValue(short field)
         value += pel->_elementData->nodes[loc].integrationPointsToNode(pt) * pel->integrationPoints(pt)->Stress.getMisesEquivalent();
         // tensor += pel->_elementData->nodes[loc].integrationPointsToNode(pt) * pel->integrationPoints(pt)->Stress;
       }
-      //     nb++;
     }
-    //   tensor = tensor / nb;
     return value / elements.getSize();
   }
 

@@ -12,11 +12,9 @@
 // TODOCXYFILE
 
 /*!
-  \file NodeSet.h
-  \brief Declaration file for the NodeSet class
-
-  This file is the declaration file for the NodeSet class.
-
+  \file DynELA.C
+  \brief Declaration file for the DynELA class
+  This file is the declaration file for the DynELA class.
   \ingroup dnlFEM
 */
 
@@ -32,19 +30,10 @@
 class DynELA;
 DynELA *dynelaData = NULL; // initialisation par defaut sur NULL
 
+//Default constructor of the DynELA class
 /*!
-  \file DynELA.C
-  \brief fichier .C de definition des structures elements finis
-  \ingroup femLibrary
-
-  \date 2002
- 
-*/
-
-//constructeur par defaut de la classe DynELA
-/*!
-  Cette methode est le constructeur par defaut de la classe DynELA. En pratique, ici, on ne fait rien de plus que les allocations de memoire necessaires.
-*/
+  This method is the default constructor of the DynELA class.
+  */
 //-----------------------------------------------------------------------------
 DynELA::DynELA(char *newName)
 //-----------------------------------------------------------------------------
@@ -105,7 +94,6 @@ DynELA::DynELA(char *newName)
 /*!
   Cette methode est le constructeur par recopie de la classe DynELA. En pratique, ici, on ne fait rien de plus que les allocations de memoire necessaires.
   \date 2002
- 
 */
 //-----------------------------------------------------------------------------
 DynELA::DynELA(const DynELA &X)

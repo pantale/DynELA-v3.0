@@ -30,19 +30,6 @@
 #include <Model.h>
 
 class DynELA;
-#ifndef SWIG
-extern DynELA *dynelaData;
-#endif
-
-/*!
-  \file DynELA.h
-  \brief fichier .h de definition des grilles elements finis
-  \ingroup femSolver
-
-  Ce fichier sert à la definition de la classe DynELA.
-
-*/
-
 class VtkInterface;
 class Boundary;
 class HistoryFile;
@@ -51,18 +38,20 @@ class Material;
 class ElementSet;
 class NodeSet;
 
+#ifndef SWIG
+extern DynELA *dynelaData;
+#endif
+
 /*!
   \class DynELA DynELA.h
   \brief Classe de definition et de manipulation des structures elements finis.
-  \ingroup femLibrary
-
-
+  \ingroup dnlFEM
 */
 class DynELA
 {
-  friend class Drawing;
-  friend class SvgInterface;
-  friend class VtkInterface;
+  friend class Drawing;      // To allow Drawing class to access private data
+  friend class SvgInterface; // To allow SvgInterface class to access private data
+  friend class VtkInterface; // To allow VtkInterface class to access private data
 
 private:
   double _displayTimeIncrement = 10;  // Display time increment
@@ -78,13 +67,13 @@ public:
   double nextSaveTime = 0.0;      // Next save time
   double saveTimeIncrement = 0.0; // Increment of save time
   double startSaveTime = 0.0;     // Start save time
-  Drawing drawing;
-  Model model;
-  Parallel parallel;             // Parallel computation
-  Settings *settings = NULL;     // Settings
-  String name = "_noname_";      // name of the object
-  Timers cpuTimes;               // Store the CPU Times
-  VtkInterface *dataFile = NULL; // Interface for results
+  Drawing drawing;                //
+  Model model;                    //
+  Parallel parallel;              // Parallel computation
+  Settings *settings = NULL;      // Settings
+  String name = "_noname_";       // name of the object
+  Timers cpuTimes;                // Store the CPU Times
+  VtkInterface *dataFile = NULL;  // Interface for results
 
 #ifndef SWIG
   LogFile logFile; // Log file
@@ -107,7 +96,7 @@ public:
   void add(Material *material, ElementSet *elementSet);
   void add(NodeSet *nodeSet, long startNumber = -1, long endNumber = -1, long increment = 1);
   void add(Solver *newSolver);
-  void addMaterial(Material *pmat);
+  void addMaterial(Material *material);
   void attachConstantBC(Boundary *boundary, NodeSet *nodeSet);
   void attachInitialBC(Boundary *boundary, NodeSet *nodeSet);
   void displayEstimatedEnd();

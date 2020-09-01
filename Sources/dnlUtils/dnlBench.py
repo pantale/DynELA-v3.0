@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
 Created on Thu Nov  7 14:14:48 2019
@@ -37,7 +37,7 @@ class Benchmark:
     
     def runBench(self):
         print("Run the " + self.Benchmark + " benchmark\n")
-        bashCommand = "python " + self.Benchmark + ".py"
+        bashCommand = "python3 " + self.Benchmark + ".py"
         benchRun = subprocess.run(bashCommand, shell=True, check=True)
         return benchRun.returncode
 

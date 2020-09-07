@@ -26,6 +26,7 @@ model = dnl.DynELA()    # Creates the main Object
 ...                     # Set of instructions to build the FE model
 ...                     # conforming to the DynELA language and Python 3
 model.solve()           # Runs the solver
+...                     # Set of instructions to postprocess the FE model
 \end{PythonListing}
 
 In the preceding piece of code, line 2 is used to load into the namespace \textsf{dnl} the \textsf{dnlPython} module containing the interface to all \Cpp~methods of the \DynELA, based on the use of the SWIG Python interface. Therefore, all public methods of the \DynELA~written in \Cpp~can be called from the Python script to build the Finite Element Model, launch the solver, produce output results,\ldots
@@ -36,53 +37,53 @@ As the interpreter of the \DynELA~is based on Python 3 language, we can use all 
 
 \section{The Kernel library}
 
-\#include \textquotedbl LogFile.h\textquotedbl{}
+\#include "LogFile.h"
 
-\#include \textquotedbl MacAddress.h\textquotedbl{}
+\#include "MacAddress.h"
 
-\#include \textquotedbl Settings.h\textquotedbl{}
+\#include "Settings.h"
 
-\#include \textquotedbl String.h\textquotedbl{}
+\#include "String.h"
 
-\#include \textquotedbl System.h\textquotedbl{}
+\#include "System.h"
 
-\#include \textquotedbl Timer.h\textquotedbl{}
+\#include "Timer.h"
 
-\#include \textquotedbl Field.h\textquotedbl{}
+\#include "Field.h"
 
 \section{The Maths library}
 
-\#include \textquotedbl DiscreteFunction.h\textquotedbl{}
+\#include "DiscreteFunction.h"
 
-\#include \textquotedbl DiscreteFunctionSet.h\textquotedbl{}
+\#include "DiscreteFunctionSet.h"
 
-\#include \textquotedbl Function.h\textquotedbl{}
+\#include "Function.h"
 
-\#include \textquotedbl Matrices.h\textquotedbl{}
+\#include "Matrices.h"
 
-\#include \textquotedbl Matrix.h\textquotedbl{}
+\#include "Matrix.h"
 
-\#include \textquotedbl MatrixDiag.h\textquotedbl{}
+\#include "MatrixDiag.h"
 
-\#include \textquotedbl PolynomialFunction.h\textquotedbl{}
+\#include "PolynomialFunction.h"
 
-\#include \textquotedbl RampFunction.h\textquotedbl{}
+\#include "RampFunction.h"
 
-\#include \textquotedbl SinusFunction.h\textquotedbl{}
+\#include "SinusFunction.h"
 
-\#include \textquotedbl SymTensor2.h\textquotedbl{}
+\#include "SymTensor2.h"
 
-\#include \textquotedbl Tensor2.h\textquotedbl{}
+\#include "Tensor2.h"
 
-\#include \textquotedbl Tensor3.h\textquotedbl{}
+\#include "Tensor3.h"
 
-\#include \textquotedbl Tensor4.h\textquotedbl{}
+\#include "Tensor4.h"
 
-\#include \textquotedbl Vec3D.h\textquotedbl{}
+\#include "Vec3D.h"
 
-\#include \textquotedbl Vector.h\textquotedbl{}
+\#include "Vector.h"
 
-\#include \textquotedbl ColorMap.h\textquotedbl{}
+\#include "ColorMap.h"
 
 \section{Model, Nodes and Elements}
 
@@ -424,8 +425,6 @@ Element fields are defined at integration points and cover types defined in tabl
 
 \section{Data Output during computation}
 
-\subsection{Database files}
-
 \subsection{VTK Data files}
 
 \begin{PythonListing}
@@ -466,15 +465,5 @@ model.parallel.setCores(2)
 model.solve()
 \end{PythonListing}
 
-\section{Vectorial contourplots}
+\section{Vectorial SVG contourplots}
 
-\subsection{SVG datafile}
-
-\section{Utilities}
-
-\begin{PythonListing}
-# Plot the results as curves
-import dnlCurves as cu
-curves = cu.Curves()
-curves.plotFile('Curves.ex')
-\end{PythonListing}

@@ -200,6 +200,8 @@ bool DynELA::createNode(long nodeNumber, Vec3D coords)
 //-----------------------------------------------------------------------------
 {
   createNode(nodeNumber, coords(0), coords(1), coords(2));
+  
+  return true;
 }
 
 //renvoie le nombre de noeuds de la structure

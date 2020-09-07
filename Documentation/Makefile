@@ -25,7 +25,7 @@ FIGURES         = $(wildcard Figures/*)
 # -------------------------------------------------------------------------------
 
 # Programs to use
-TEX2PDF      = pdflatex -interaction=batchmode 
+TEX2PDF      = pdflatex -interaction=batchmode -synctex=1
 BIBTEX       = -bibtex
 
 # Internal variables

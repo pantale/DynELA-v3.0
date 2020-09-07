@@ -38,7 +38,7 @@ public:
 
   void getShapeFunctionAtPoint(Vector &shapeFunctions, const Vec3D &point) const;
   void getDerShapeFunctionAtPoint(Matrix &derShapeFunctions, const Vec3D &point) const;
-  double getCharacteristicLength (){}
+  double getCharacteristicLength() { return 0; }
 
   /*  long numberOfUnderIntegrationPoints ()
   {

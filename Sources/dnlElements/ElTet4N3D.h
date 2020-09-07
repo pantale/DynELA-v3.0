@@ -38,8 +38,8 @@ public:
   ~ElTet4N3D();
 
   void getShapeFunctionAtPoint(Vector &shapeFunctions, const Vec3D &point) const;
-  void getDerShapeFunctionAtPoint(Matrix &derShapeFunctions, const Vec3D &point) const  ;
-  double getCharacteristicLength (){}
+  void getDerShapeFunctionAtPoint(Matrix &derShapeFunctions, const Vec3D &point) const;
+  double getCharacteristicLength() { return 0; }
 
   /*  // fonction de manipulation
   long numberOfUnderIntegrationPoints ()

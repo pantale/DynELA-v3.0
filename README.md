@@ -6,7 +6,7 @@ This repository contains the DynELA Finite Element Code v.3.0. The DynELA Finite
 
 ## Download and installation procedure:
 
-The DynELA FEM code is developped under Linux (an Ubuntu 18.04 LTS is currently used for the development).
+The DynELA FEM code is developped under Linux (an Ubuntu 20.04 LTS is currently used for the development).
 
 ### Prerequisites:
 

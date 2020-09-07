@@ -498,9 +498,6 @@ void Node::toFileBound (FILE * pfile)
     }
 }
 
-
-
-
 #define _getScalarNodalFieldScalar(FIELD,VAR)  if (field==#FIELD) \
     {\
       if (component>1) fatalError("Node::getNodalValue::get","No sense for component >1 for a scalar quantity");\

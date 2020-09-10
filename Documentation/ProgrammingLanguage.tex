@@ -1,3 +1,10 @@
+% !TeX spellcheck = en_US
+% !TeX root = DynELA.tex
+%
+% LaTeX source file of DynELA FEM Code
+%
+% (c) by Olivier Pantalé 2020
+%
 \chapter{DynELA programming language}
 
 \startcontents[chapters]
@@ -243,8 +250,8 @@ steel = dnl.Material("Steel")
 
 General properties of materials in \DynELA~concerns the general constants such as Young's modulus, Poisson's ratio, density,\ldots The complete list of parameters is reported in Table \ref{tab:Programming!GeneralProperties}.
 \begin{table}[h]
-	\begin{center}\begin{tcolorbox}[width=.75\textwidth,myTab,tabularx={c|c|c|R}]
-			Name & Symbol &  Unit & description \\ \hline\hline
+	\begin{center}\begin{tcolorbox}[width=.75\textwidth,myTab,tabularx={l|c|c|R}]
+			\multicolumn{1}{c|}{Name} & Symbol & Unit & \multicolumn{1}{c}{Description} \\ \hline\hline
 			youngModulus & $E$ & $MPa$ & Young modulus\\
 			poissonRatio & $\nu$ &  & Poisson ratio\\
 			density & $\rho$ & $kg/m^3$ & Density\\
@@ -353,8 +360,8 @@ Nodal fields are defined at nodes and cover types defined in table \ref{tab:Prog
 	\item [{tensor}] : Access to all $9$ components of a tensor using \textsf{nameXX}, \textsf{nameXY},\ldots, \textsf{nameZZ} or the norm of the tensor using \textsf{name}.
 \end{description}
 \begin{table}[h]
-	\begin{center}\begin{tcolorbox}[width=.75\textwidth,myTab,tabularx={c|c|c|c|C}]
-			name & type & label & loc & description \\ \hline\hline
+	\begin{center}\begin{tcolorbox}[width=.75\textwidth,myTab,tabularx={l|c|c|c|R}]
+			\multicolumn{1}{c|}{Name} & Type & Label & Loc & \multicolumn{1}{c}{Description} \\ \hline\hline
 			density & scalar & & IntPt &\\ \hline
 			displacementIncrement & vec3D & & node & \\ \hline
 			displacement & vec3D & & node & \\ \hline
@@ -392,8 +399,8 @@ Element fields are defined at integration points and cover types defined in tabl
 	\item [{tensor}] : Access to all $9$ components of a tensor using \textsf{nameXX}, \textsf{nameXY},\ldots, \textsf{nameZZ} or the norm of the tensor using \textsf{name}.
 \end{description}
 \begin{table}[h]
-	\begin{center}\begin{tcolorbox}[width=.75\textwidth,myTab,tabularx={c|c|c|C}]
-			name & type & label & description \\ \hline\hline
+	\begin{center}\begin{tcolorbox}[width=.75\textwidth,myTab,tabularx={l|c|c|R}]
+			\multicolumn{1}{c|}{Name} & Type & Label & \multicolumn{1}{c}{Description} \\ \hline\hline
 			density & scalar & & \\ \hline
 			gammaCumulate & scalar  & & \\ \hline
 			gamma & scalar & & \\ \hline
@@ -415,8 +422,8 @@ Element fields are defined at integration points and cover types defined in tabl
 \subsection{Global fields}
 
 \begin{table}[h]
-	\begin{center}\begin{tcolorbox}[width=.75\textwidth,myTab,tabularx={c|c|c|C}]
-			name & type & label & description \\ \hline\hline
+	\begin{center}\begin{tcolorbox}[width=.75\textwidth,myTab,tabularx={l|c|c|R}]
+			\multicolumn{1}{c|}{Name} & Type & Label & \multicolumn{1}{c}{Description} \\ \hline\hline
 			kineticEnergy & scalar & & \\ \hline
 			realTimeStep & scalar & & \\ \hline
 			timeStep & scalar & & 

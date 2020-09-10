@@ -1,177 +1,116 @@
-\selectlanguage{french}%
+% !TeX spellcheck = en_US
+% !TeX root = DynELA.tex
+%
+% LaTeX source file of DynELA FEM Code
+%
+% (c) by Olivier Pantalé 2020
+%
+%\selectlanguage{french}%
 
 \chapter*{Notations\addcontentsline{toc}{chapter}{Notations}\markboth{Notations}{Notations}}
 
-\frEn
-{\LETTRINE{D}'un point de vue général, il est habituel de constater que dans le domaine de la mécanique, comme dans d'autres domaines sûrement, une des principales difficultés vient de la non homogénéité des notations entre les différents auteurs. Il est alors aisé de rendre complètement incompréhensible la moindre théorie lorsque l'on décide de changer de notation. La notion de notation universelle n'étant pas encore d'actualité (même si certaines conventions peuvent être assimilées à des concepts universels), on présente alors ci-dessous le jeu de notations utilisé tout au long de ce document et de manière plus large dans les autres documents faisant partie de cette même série.}
-{\LETTRINE{F}rom a general point of view, it is usual to observe that one of the main difficulties in the field of mechanics, as in other fields, is the non-homogeneity of notations between the various authors. It is then easy to make completely incomprehensible the slightest theory when one decides to change notation. As the notion of universal notation is not yet valid (even if certain conventions can be assimilated to universal concepts), then we present below the set of notations used throughout this document and in a broader way in all the other documents in that series.}
+\LETTRINE{F}rom a general point of view, it is usual to observe that one of the main difficulties in the field of mechanics, as in other fields, is the non-homogeneity of notations between the various authors. It is then easy to make completely incomprehensible the slightest theory when one decides to change notation. As the notion of universal notation is not yet valid (even if certain conventions can be assimilated to universal concepts), then we present below the set of notations used throughout this document and in a broader way in all the other documents in that series.
 
-\subsection*{\frEn{Conventions de notations}{Notations Conventions}\vspace{-1ex}}
+\subsection*{Notations Conventions \vspace{-1ex}}
 
 \begin{longtable}[l]{>{\raggedright}p{0.2\paperwidth}>{\raggedright}p{0.8\paperwidth}}
-$a$ & \frEn{Scalaire}
-{Scalar}\tabularnewline
-$\overrightarrow{a}$ & \frEn{Vecteur}
-{Vector} \tabularnewline
-$\A$ & \frEn{Tenseur d'ordre $2$ ou matrice}
-{$2^{nd}$ order Tensor or matrix}\tabularnewline
-$\IiA$ & \frEn{Tenseur d'ordre $3$}
-{$3^{rd}$ order Tensor}\tabularnewline
-$\IIA$ & \frEn{Tenseur d'ordre $4$}
-{$4^{th}$ order Tensor}\tabularnewline
+$a$ & Scalar\tabularnewline
+$\overrightarrow{a}$ & Vector\tabularnewline
+$\A$ & $2^{nd}$ order Tensor or matrix\tabularnewline
+$\IiA$ & $3^{rd}$ order Tensor\tabularnewline
+$\IIA$ & $4^{th}$ order Tensor\tabularnewline
 \end{longtable}
 
-\subsection*{\frEn{Opérateurs linéaires et mathématiques}{Linear Algebra and Mathematical Operators}\vspace{-1ex}}
+\subsection*{Linear Algebra and Mathematical Operators \vspace{-1ex}}
 
 \begin{longtable}[l]{>{\raggedright}p{0.2\paperwidth}>{\raggedright}p{0.8\paperwidth}}
-$\overrightarrow{a}\cdot\overrightarrow{b}$ & \frEn{Produit scalaire des vecteurs $\overrightarrow{a}$ et $\overrightarrow{b}$}
-{Dot product of the vectors $\overrightarrow{a}$ and $\overrightarrow{b}$}\tabularnewline
-$\overrightarrow{a}\otimes\overrightarrow{b}$ & \frEn{Produit tensoriel (ou Dyadic) des vecteurs $\overrightarrow{a}$ et $\overrightarrow{b}$}
-{Tensor (or Dyadic) product of the vectors $\overrightarrow{a}$ and $\overrightarrow{b}$} \tabularnewline
-$\overrightarrow{a}\wedge\overrightarrow{b}$ & \frEn{Produit vectoriel des vecteurs $\overrightarrow{a}$ et $\overrightarrow{b}$}
-{Vectorial product of the vectors $\overrightarrow{a}$ and $\overrightarrow{b}$}\tabularnewline
-$\A:\B$ & \frEn{Double produit contracté des deux tenseurs $\A$ et $\B$}
-{Double contracted product of the two tensors $\A$ et $\B$}\tabularnewline
-$\stackrel{\bullet}{\boxempty}$ & \frEn{Dérivée temporelle de la quantité $\boxempty$}
-{Time derivative of quantity $\boxempty$}\tabularnewline
-$\stackrel{\bullet\bullet}{\boxempty}$ & \frEn{Dérivée seconde temporelle de la quantité $\boxempty$}
-{Second order time derivative of quantity $\boxempty$}\tabularnewline
-$\boxempty_{,\boxempty}$ & \frEn{Dérivée partielle de la quantité $\boxempty$ par rapport à $_{\boxempty}$}
-{Partial derivative of quantity $\boxempty$ with respect to $_{\boxempty}$}\tabularnewline
-$\boxempty^{T}$ & \frEn{Transposée d'une matrice ou d'un vecteur $\boxempty$}
-{Transpose of a matrix or a vector $\boxempty$}\tabularnewline
-$\tr\,\boxempty$ & \frEn{Trace d'une matrice ou d'un tenseur $\boxempty$ ($\tr\,\boxempty=\sum\boxempty_{ii}$)}
-{Trace of a matrix or a tensor $\boxempty$ ($\tr\,\boxempty=\sum\boxempty_{ii}$)}\tabularnewline
-$\dev\,\boxempty$ & \frEn{Déviateur d'un tenseur $\boxempty$ ($\dev\,\boxempty=\boxempty-\frac{1}{3}\tr\,\boxempty \Id$)}
-{Deviatoric part of a tensor $\boxempty$ ($\dev\,\boxempty=\boxempty-\frac{1}{3}\tr\,\boxempty \Id$)}\tabularnewline
-$\delta_{ij}$ & \frEn{Identité unitaire de Kronecker}
-{Kronecker delta identity}\tabularnewline
-$\Id$ & \frEn{Tenseur ou matrice unitaire du deuxième ordre}
-{Unity matrix or second order tensor}\tabularnewline
-$\IId$ & \frEn{Tenseur unitaire du quatrième ordre}
-{Unity fourth order tensor}\tabularnewline
+$\overrightarrow{a}\cdot\overrightarrow{b}$ & Dot product of the vectors $\overrightarrow{a}$ and $\overrightarrow{b}$\tabularnewline
+$\overrightarrow{a}\otimes\overrightarrow{b}$ & Tensor (or Dyadic) product of the vectors $\overrightarrow{a}$ and $\overrightarrow{b}$\tabularnewline
+$\overrightarrow{a}\wedge\overrightarrow{b}$ & Vectorial product of the vectors $\overrightarrow{a}$ and $\overrightarrow{b}$\tabularnewline
+$\A:\B$ & Double contracted product of the two tensors $\A$ et $\B$\tabularnewline
+$\stackrel{\bullet}{\boxempty}$ & Time derivative of quantity $\boxempty$\tabularnewline
+$\stackrel{\bullet\bullet}{\boxempty}$ & Second order time derivative of quantity $\boxempty$\tabularnewline
+$\boxempty_{,\boxempty}$ & Partial derivative of quantity $\boxempty$ with respect to $_{\boxempty}$\tabularnewline
+$\boxempty^{T}$ & Transpose of a matrix or a vector $\boxempty$\tabularnewline
+$\tr\,\boxempty$ & Trace of a matrix or a tensor $\boxempty$ ($\tr\,\boxempty=\sum\boxempty_{ii}$)\tabularnewline
+$\dev\,\boxempty$ & Deviatoric part of a tensor $\boxempty$ ($\dev\,\boxempty=\boxempty-\frac{1}{3}\tr\,\boxempty \Id$)\tabularnewline
+$\delta_{ij}$ & Kronecker delta identity\tabularnewline
+$\Id$ & Unity matrix or second order tensor\tabularnewline
+$\IId$ & Unity fourth order tensor\tabularnewline
 \end{longtable}
 
-\subsection*{\frEn{Mécanique des milieux continus}{Basic Continuum Mechanics}\vspace{-1ex}}
+\subsection*{Basic Continuum Mechanics\vspace{-1ex}}
 
 \begin{longtable}[l]{>{\raggedright}p{0.2\paperwidth}>{\raggedright}p{0.8\paperwidth}}
 $\overrightarrow{x}=\left[\begin{array}{ccc}
-x & y & z\end{array}\right]^{T}$ & \frEn{Coordonnées dans le domaine physique}
-{Coordinates in the physical domain}\tabularnewline
+x & y & z\end{array}\right]^{T}$ & Coordinates in the physical domain\tabularnewline
 $\overrightarrow{u}=\left[\begin{array}{ccc}
-u & v & w\end{array}\right]^{T}$ & \frEn{Champ de déplacement}
-{Displacement field} \tabularnewline
+u & v & w\end{array}\right]^{T}$ & Displacement field\tabularnewline
 $\overrightarrow{\omega}=\left[\begin{array}{ccc}
-\omega_{x} & \omega_{y} & \omega_{z}\end{array}\right]^{T}$ & \frEn{Champ de rotations}
-{Rotation field}\tabularnewline
-$\Om$ & \frEn{Volume arbitraire dans la configuration courante}
-{Arbitrary body in the current configuration}\tabularnewline
-$\Gam$ & \frEn{Frontière d'un volume arbitraire $\Om$ dans la configuration courante}
-{Boundary of an arbitrary body $\Om$ in the current configuration}\tabularnewline
-$\rho$ & \frEn{Masse volumique du matériau}{}\tabularnewline
-$E$ & \frEn{Module de Young d'un matériau}
-{Young's modulus of a material}\tabularnewline
-$\nu$ & \frEn{Coefficient de Poisson d'un matériau}
-{Poisson's ratio of a material}\tabularnewline
-$K$ & \frEn{Module de compressibilité d'un matériau}
-{Bulk modulus of a material}\tabularnewline
-$\lambda$ & \frEn{Premier paramètre de Lamé d'un matériau}
-{Lamé's first parameter of a material}\tabularnewline
-$\mu=G$ & \frEn{Second paramètre de Lamé / module de cisaillement de Coulomb}
-{Lamé's second parameter / Coulomb's shear modulus}\tabularnewline
-$\overrightarrow{F}$ & \frEn{Vecteur des efforts externes surfaciques}
-{External load vector}\tabularnewline
-$\overrightarrow{f}$ & \frEn{Vecteur des efforts externes volumiques}
-{External load vector}\tabularnewline
-$\Eps$ & \frEn{Tenseur des déformations de Green-Lagrange}
-{Green-Lagrange strain tensor}\tabularnewline
-$\Sig$ & \frEn{Tenseur des contraintes de Cauchy}
-{Cauchy stress tensor}\tabularnewline
-$\Dev$ & \frEn{Déviateur du tenseur des contraintes de Cauchy}
-{Deviatoric part of the Cauchy stress tensor}\tabularnewline
-$\Alp$ & \frEn{Mouvement de l'origine de la surface de charge}
-{Backstress tensor}\tabularnewline
-$\Fi$ & \frEn{$\Fi=\Dev-\Alp$}
-{}\tabularnewline
+\omega_{x} & \omega_{y} & \omega_{z}\end{array}\right]^{T}$ & Rotation field\tabularnewline
+$\Om$ & Arbitrary body in the current configuration\tabularnewline
+$\Gam$ & Boundary of an arbitrary body $\Om$ in the current configuration\tabularnewline
+$\rho$ & Material density\tabularnewline
+$E$ & Young's modulus of a material\tabularnewline
+$\nu$ & Poisson's ratio of a material\tabularnewline
+$K$ & Bulk modulus of a material\tabularnewline
+$\lambda$ & Lamé's first parameter of a material\tabularnewline
+$\mu=G$ & Lamé's second parameter / Coulomb's shear modulus\tabularnewline
+$\overrightarrow{F}$ & External load vector\tabularnewline
+$\overrightarrow{f}$ & External load vector\tabularnewline
+$\Eps$ & Green-Lagrange strain tensor\tabularnewline
+$\Sig$ & Cauchy stress tensor\tabularnewline
+$\Dev$ & Deviatoric part of the Cauchy stress tensor\tabularnewline
+$\Alp$ & Backstress tensor\tabularnewline
+$\Fi$ & $\Fi=\Dev-\Alp$\tabularnewline
 \end{longtable}
 
-\subsection*{\frEn{Lois de comportement}{Constitutive laws}\vspace{-1ex}}
+\subsection*{Constitutive laws\vspace{-1ex}}
 
 \begin{longtable}[l]{>{\raggedright}p{0.2\paperwidth}>{\raggedright}p{0.8\paperwidth}}
-$f$ & \frEn{Fonction de charge}
-{}\tabularnewline
-$\n$ & \frEn{Direction de l'écoulement plastique}
-{Direction of the plastic flow}\tabularnewline
-$\q$ & \frEn{Ensemble des variables d'hérédité dans la formulation élastoplastique}
-{Heredity variables in an elastoplastic behavior}\tabularnewline
-$\overline{\sigma}$ & \frEn{Contrainte équivalente de von Mises}
-{von Mises equivalent stress}\tabularnewline
-$\overline{\varepsilon}^{p}$ & \frEn{Déformation plastique équivalente}
-{Equivalent plastic strain}\tabularnewline
-$\stackrel{\bullet}{\overline{\varepsilon}^{p}}$ & \frEn{Vitesse de déformation plastique équivalente}
-{Equivalent plastic strain rate}\tabularnewline
-$\Lambda$ & \frEn{Scalaire représentant la norme de l'écoulement plastique}
-{Norm of the plastic strain}\tabularnewline
-$\sigma^{v}$ & \frEn{Limite apparente d'élasticité du matériau}
-{}\tabularnewline
-$\sigma_{0}^{v}$ & \frEn{Limite d'élasticité initiale du matériau}
-{}\tabularnewline
-$\sigma_{\infty}^{v}$ & \frEn{Limite asymptotique de plasticité du matériau}
-{}\tabularnewline
+$f$ & \tabularnewline
+$\n$ & Direction of the plastic flow\tabularnewline
+$\q$ & Heredity variables in an elastoplastic behavior\tabularnewline
+$\overline{\sigma}$ & von Mises equivalent stress\tabularnewline
+$\overline{\varepsilon}^{p}$ & Equivalent plastic strain\tabularnewline
+$\stackrel{\bullet}{\overline{\varepsilon}^{p}}$ & Equivalent plastic strain rate\tabularnewline
+$\Lambda$ & Norm of the plastic strain\tabularnewline
+$\sigma^{v}$ & \tabularnewline
+$\sigma_{0}^{v}$ & \tabularnewline
+$\sigma_{\infty}^{v}$ & \tabularnewline
 \end{longtable}
 
-\subsection*{\frEn{Grandes déformations}{Large Deformations}\vspace{-1ex}}
+\subsection*{Large Deformations\vspace{-1ex}}
 
 \begin{longtable}[l]{>{\raggedright}p{0.2\paperwidth}>{\raggedright}p{0.8\paperwidth}}
 $\overrightarrow{X}=\left[\begin{array}{ccc}
-X & Y & Z\end{array}\right]^{T}$ & \frEn{Coordonnées dans le domaine de référence}
-{Coordinates in the reference domain}\tabularnewline
-$\E$ & \frEn{Tenseur des déformations de Green-Lagrange}
-{Green-Lagrange deformation tensor}\tabularnewline
-$\F$ & \frEn{Tenseur gradient de déformation}
-{Deformation gradient tensor}\tabularnewline
-$\U,\ \V$ & \frEn{Tenseurs des déformations pures droit et gauche}
-{Right and left pure deformation tensors}\tabularnewline
-$\R$ & \frEn{Tenseur de rotation}
-{Rotation tensor}\tabularnewline
-$\iL$ & \frEn{Tenseur des vitesses de déformation}
-{Deformation speed tensor}\tabularnewline
-$\D$ & \frEn{Partie symétrique du tenseur $\iL$}
-{Symmetric part of the $\iL$ tensor}\tabularnewline
-$\W$ & \frEn{Partie anti-symétrique du tenseur $\iL$}
-{Skew-symmetric part of the $\iL$ tensor}\tabularnewline
+X & Y & Z\end{array}\right]^{T}$ & Coordinates in the reference domain\tabularnewline
+$\E$ & Green-Lagrange deformation tensor\tabularnewline
+$\F$ & Deformation gradient tensor\tabularnewline
+$\U,\ \V$ & Right and left pure deformation tensors\tabularnewline
+$\R$ & Rotation tensor\tabularnewline
+$\iL$ & Deformation speed tensor\tabularnewline
+$\D$ &Symmetric part of the $\iL$ tensor\tabularnewline
+$\W$ & Skew-symmetric part of the $\iL$ tensor\tabularnewline
 \end{longtable}
 
-\subsection*{\frEn{Structures de données pour les éléments finis}{Finite Element Data Structures}\vspace{-1ex}}
+\subsection*{Finite Element Data Structures\vspace{-1ex}}
 \begin{flushleft}
 \begin{longtable}[l]{>{\raggedright}p{0.2\paperwidth}>{\raggedright}p{0.8\paperwidth}}
-$\N$ & \frEn{Matrice des fonctions d'interpolation}
-{Shape functions matrix}\tabularnewline
+$\N$ &Shape functions matrix\tabularnewline
 $\overrightarrow{\xi}=\left[\begin{array}{ccc}
-\xi & \eta & \zeta\end{array}\right]^{T}$ & \frEn{Coordonnées dans le domaine de parent}
-{Coordinates in the parent domain}\tabularnewline
-$\B$ & \frEn{Dérivées des fonctions d'interpolation}
-{Derivatives of the shape functions}\tabularnewline
-$\boxempty^{e}$ & \frEn{Quantité $\boxempty$ relative à l'élément $e$}
-{Quantity $\boxempty$ related to element $e$}\tabularnewline
-$\J$ & \frEn{Matrice Jacobienne de la transformation physique/parent}
-{Jacobian matrix}\tabularnewline
-$\M$ & \frEn{Matrice de masse}
-{Mass matrix}\tabularnewline
-$\K$ & \frEn{Matrice de rigidité}
-{Stiffness matrix}\tabularnewline
-$\overline{\F}$ & \frEn{Vecteur des efforts externes surfaciques}
-{External surfacic load vector}\tabularnewline
-$\F$ & \frEn{Vecteur des efforts externes surfaciques et volumiques}
-{External load vector}\tabularnewline
-$\overline{\f}$ & \frEn{Vecteur des efforts externes volumiques}
-{External volumic load vector}\tabularnewline
-$\q$ & \frEn{Vecteur des inconnues nodales}
-{Nodal unknowns vector}\tabularnewline
-$n_{g}$ & \frEn{Nombre de noeuds (généralement) de l'élément}
-{Number of nodes of the current element}\tabularnewline
-$n_{Q}$ & \frEn{Nombre de points d'intégration de l'élément}
-{Number of integration points of the current element}\tabularnewline
+\xi & \eta & \zeta\end{array}\right]^{T}$ & Coordinates in the parent domain\tabularnewline
+$\B$ & Derivatives of the shape functions\tabularnewline
+$\boxempty^{e}$ & Quantity $\boxempty$ related to element $e$\tabularnewline
+$\J$ & Jacobian matrix\tabularnewline
+$\M$ & Mass matrix\tabularnewline
+$\K$ & Stiffness matrix\tabularnewline
+$\overline{\F}$ & External surfacic load vector\tabularnewline
+$\F$ & External load vector\tabularnewline
+$\overline{\f}$ & External volumic load vector\tabularnewline
+$\q$ & Nodal unknowns vector\tabularnewline
+$n_{g}$ & Number of nodes of the current element\tabularnewline
+$n_{Q}$ & Number of integration points of the current element\tabularnewline
 \end{longtable}
-\par\end{flushleft}\selectlanguage{english}%
+\par\end{flushleft}
 
